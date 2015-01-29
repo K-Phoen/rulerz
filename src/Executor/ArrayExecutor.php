@@ -17,10 +17,12 @@ class ArrayExecutor implements Executor
         $this->asserter = new Asserter();
     }
 
-    public function filter(Model $rule, $target)
+    public function filter(Model $rule, $target, array $parameters = [])
     {
-        return array_filter($target, function($row) use ($rule) {
-            return $this->filterRow($rule, $row);
+        $newParameters = $this->prepareParameters($parameters);
+
+        return array_filter($target, function($row) use ($rule, $newParameters) {
+            return $this->filterRow($rule, $row, $newParameters);
         });
     }
 
@@ -29,15 +31,28 @@ class ArrayExecutor implements Executor
         return is_array($target);
     }
 
-    private function filterRow(Model $rule, $row)
+    private function filterRow(Model $rule, $row, array $parameters)
     {
-        $this->asserter->setContext($this->createContext($row));
+        $this->asserter->setContext($this->createContext($row, $parameters));
 
         return $this->asserter->visit($rule);
     }
 
-    private function createContext($row)
+    private function createContext($row, array $parameters)
     {
-        return is_array($row) ? new ArrayContext($row) : new ObjectContext($row);
+        return is_array($row)
+            ? new ArrayContext(array_merge($row, $parameters))
+            : new ObjectContext($row, $parameters);
+    }
+
+    private function prepareParameters(array $parameters)
+    {
+        $newParameters = [];
+
+        foreach ($parameters as $name => $value) {
+            $newParameters[':'.$name] = $value;
+        }
+
+        return $newParameters;
     }
 }

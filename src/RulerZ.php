@@ -19,12 +19,12 @@ class RulerZ
         $this->executors[] = $executor;
     }
 
-    public function filter($rule, $target)
+    public function filter($rule, $target, array $parameters = array())
     {
         $executor = $this->findExecutor($target);
         $ast = $this->parse($rule);
 
-        return $executor->filter($ast, $target);
+        return $executor->filter($ast, $target, $parameters);
     }
 
     private function findExecutor($target)

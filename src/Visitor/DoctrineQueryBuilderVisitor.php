@@ -95,7 +95,7 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     }
 
     /**
-     * Visit a context (ie: a column access)
+     * Visit a context (ie: a column access or a parameter)
      *
      * @param   \Hoa\Visitor\Element  $element    Element to visit.
      * @param   mixed                 &$handle    Handle (reference).
@@ -104,6 +104,13 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
      */
     private function visitContext(Visitor\Element $element, &$handle = null, $eldnah = null)
     {
+        $name = $element->getId();
+
+        // parameter
+        if ($name[0] === ':') {
+            return sprintf('(%s)', $name); // wrap the parameter in parenthesis to make it work with arrays
+        }
+
         return sprintf('%s.%s', $this->getRootAlias(), $element->getId());
     }
 

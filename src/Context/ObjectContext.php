@@ -7,78 +7,68 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class ObjectContext extends BaseContext
 {
+    /**
+     * @var mixed
+     */
     private $object;
+
+    /**
+     * @var PropertyAccess
+     */
     private $accessor;
 
     /**
      * Constructor.
      *
-     * @access  public
-     * @param   array  $data    Initial data.
-     * @return  void
+     * @param mixed $object The object to extract data from.
+     * @param array $data   Additionnal data.
      */
-    public function __construct ( $object ) {
-
-        $this->object = $object;
+    public function __construct($object, array $data = [])
+    {
+        $this->object   = $object;
+        $this->_data    = $data;
         $this->accessor = PropertyAccess::createPropertyAccessor();
-
-        return;
     }
 
     /**
      * Set a data.
      *
-     * @access  public
      * @param   string  $id       ID.
      * @param   mixed   $value    Value.
-     * @return  void
      */
-    public function offsetSet ( $id, $value ) {
+    public function offsetSet($id, $value)
+    {
+        if ($this->accessor->isReadable($this->object, $id)) {
+            $this->accessor->setValue($this->object, $id, $value);
+            return;
+        }
 
-        $this->accessor->setValue($this->object, $id, $value);
-
-        return;
+        parent::offsetSet($id, $value);
     }
 
     /**
      * Get a data.
      *
-     * @access  public
      * @param   string  $id    ID.
      * @return  mixed
      * @throw   \Hoa\Ruler\Exception
      */
-    public function offsetGet ( $id ) {
+    public function offsetGet($id)
+    {
+        if (array_key_exists($id, $this->_data)) {
+            return parent::offsetGet($id);
+        }
 
-        $value = $this->accessor->getValue($this->object, $id);
-
-        if($value instanceof DynamicCallable)
-            return $value($this);
-
-        if(true === is_callable($value))
-            $value = $this->_data[$id] = $value($this);
-
-        return $value;
+        return $this->accessor->getValue($this->object, $id);
     }
 
     /**
      * Check if a data exists.
      *
-     * @access  public
      * @return  bool
      */
-    public function offsetExists ( $id ) {
-
-        return $this->accessor->isReadable($this->object, $id);
-    }
-
-    /**
-     * Unset a data.
-     *
-     * @access  public
-     * @param   string  $id    ID.
-     * @return  void
-     */
-    public function offsetUnset ( $id ) {
+    public function offsetExists($id)
+    {
+        return parent::offsetExists($id) || $this->accessor->isReadable($this->object, $id);
     }
 }

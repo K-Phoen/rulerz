@@ -15,7 +15,7 @@ $rulerz = new RulerZ([
 ]);
 
 // 1. Write a rule.
-$rule  = 'group in ["customer", "guest"] and points > 30';
+$rule  = 'group in :groups and points > :points';
 
 // 2. Filter a collection
 $usersQb = $entityManager
@@ -39,6 +39,11 @@ $usersObj = [
 ];
 
 // 3. Enjoy!
-var_dump($rulerz->filter($rule, $usersQb));
-var_dump($rulerz->filter($rule, $usersArr));
-var_dump($rulerz->filter($rule, $usersObj));
+$parameters = array(
+    'points' => 30,
+    'groups' => ['customer', 'guest'],
+);
+
+var_dump($rulerz->filter($rule, $usersQb, $parameters));
+var_dump($rulerz->filter($rule, $usersArr, $parameters));
+var_dump($rulerz->filter($rule, $usersObj, $parameters));
