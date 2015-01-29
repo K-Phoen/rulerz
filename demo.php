@@ -44,6 +44,6 @@ $parameters = array(
     'groups' => ['customer', 'guest'],
 );
 
-var_dump($rulerz->filter($rule, $usersQb, $parameters));
-var_dump($rulerz->filter($rule, $usersArr, $parameters));
-var_dump($rulerz->filter($rule, $usersObj, $parameters));
+var_dump($rulerz->filter($usersQb, $rule, $parameters));
+var_dump($rulerz->filter($usersArr, $rule, $parameters));
+var_dump($rulerz->filter($usersObj, $rule, $parameters));

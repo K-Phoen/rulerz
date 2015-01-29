@@ -1,5 +1,7 @@
 <?php
 
+use Hoa\Ruler\Ruler;
+
 use Exception\TargetUnsupportedException;
 use Executor\Executor;
 
@@ -19,12 +21,12 @@ class RulerZ
         $this->executors[] = $executor;
     }
 
-    public function filter($rule, $target, array $parameters = array())
+    public function filter($target, $rule, array $parameters = array())
     {
         $executor = $this->findExecutor($target);
         $ast = $this->parse($rule);
 
-        return $executor->filter($ast, $target, $parameters);
+        return $executor->filter($target, $ast, $parameters);
     }
 
     private function findExecutor($target)
@@ -40,6 +42,6 @@ class RulerZ
 
     private function parse($rule)
     {
-        return \Hoa\Ruler\Ruler::interprete($rule);
+        return Ruler::interprete($rule);
     }
 }
