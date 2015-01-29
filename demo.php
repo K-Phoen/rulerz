@@ -10,12 +10,14 @@ use Executor\DoctrineQueryBuilderExecutor;
 $entityManager = require 'bootstrap.php';
 
 $rulerz = new RulerZ([
-    new ArrayExecutor(),
+    new ArrayExecutor([
+        'length' => 'strlen',
+    ]),
     new DoctrineQueryBuilderExecutor(),
 ]);
 
 // 1. Write a rule.
-$rule  = 'group in :groups and points > :points';
+$rule  = 'group in :groups and points > :points and length(name) > 2';
 
 // 2. Filter a collection
 $usersQb = $entityManager
@@ -30,6 +32,7 @@ $usersQb = $entityManager
 $usersArr = [
     ['name' => 'Joe', 'group' => 'guest', 'points' => 40],
     ['name' => 'Moe', 'group' => 'guest', 'points' => 20],
+    ['name' => 'Al',  'group' => 'guest', 'points' => 40],
 ];
 
 // or an array of objects

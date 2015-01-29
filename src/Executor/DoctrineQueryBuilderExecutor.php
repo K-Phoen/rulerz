@@ -12,6 +12,16 @@ use Visitor\DoctrineQueryBuilderVisitor;
 class DoctrineQueryBuilderExecutor implements Executor
 {
     /**
+     * @var array A list of additionnal operators.
+     */
+    private $operators = [];
+
+    public function __construct(array $operators = [])
+    {
+        $this->operators = $operators;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function filter($target, Model $rule, array $parameters = [])
@@ -31,6 +41,14 @@ class DoctrineQueryBuilderExecutor implements Executor
     public function supports($target)
     {
         return $target instanceof QueryBuilder;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function registerOperators(array $operators)
+    {
+        $this->operators = array_merge($this->operators, $operators);
     }
 
     /**

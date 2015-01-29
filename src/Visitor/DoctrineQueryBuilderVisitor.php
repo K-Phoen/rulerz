@@ -21,16 +21,25 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
      *
      * @var array
      */
-    private $_operators = [];
+    private $operators = [];
+
+    /**
+     * Allow star operator.
+     *
+     * @var bool
+     */
+    private $allowStarOperator = true;
 
     /**
      * Constructor.
      *
-     * @param   \Hoa\Ruler\Context  $context    Context.
+     * @param QueryBuilder $qb                The query builder being manipulated.a
+     * @param bool         $allowStarOperator Whether to allow the star operator or not (ie: implicit support of unknown operators).
      */
-    public function __construct(QueryBuilder $qb)
+    public function __construct(QueryBuilder $qb, $allowStarOperator = true)
     {
         $this->qb = $qb;
+        $this->allowStarOperator = (bool) $allowStarOperator;
 
         $this->setOperator('and', function ($a, $b) { return sprintf('%s AND %s', $a, $b); });
         $this->setOperator('or', function ($a, $b) { return sprintf('%s OR %s', $a, $b); });
@@ -156,7 +165,18 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
      */
     private function visitOperator(Visitor\Element $element, &$handle = null, $eldnah = null)
     {
-        $operator  = $this->getOperator($element->getName());
+        try {
+            $operator  = $this->getOperator($element->getName());
+        } catch (Ruler\Exception\Asserter $e) {
+            if (!$this->allowStarOperator) {
+                throw $e;
+            }
+
+            $operator = xcallable(function() use ($element) {
+                return sprintf('%s(%s)', $element->getName(), implode(', ', func_get_args()));
+            });
+        }
+
         $arguments = array_map(function ($argument) use ($handle, $eldnah) {
             return $argument->accept($this, $handle, $eldnah);
         }, $element->getArguments());
@@ -174,7 +194,7 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
      */
     public function setOperator($operator, callable $transformer)
     {
-        $this->_operators[$operator] = $transformer;
+        $this->operators[$operator] = $transformer;
 
         return $this;
     }
@@ -187,7 +207,7 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
      */
     public function operatorExists($operator)
     {
-        return true === array_key_exists($operator, $this->_operators);
+        return true === array_key_exists($operator, $this->operators);
     }
 
     /**
@@ -202,13 +222,13 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
             throw new Ruler\Exception\Asserter('Operator "%s" does not exist.', 1, $operator);
         }
 
-        $handle = &$this->_operators[$operator];
+        $handle = &$this->operators[$operator];
 
         if (!$handle instanceof Core\Consistency\Xcallable) {
             $handle = xcallable($handle);
         }
 
-        return $this->_operators[$operator];
+        return $this->operators[$operator];
     }
 
     /**
@@ -219,5 +239,19 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     private function getRootAlias()
     {
         return $this->qb->getRootAliases()[0];
+    }
+
+    /**
+     * Return a "*" or "catch all" operator.
+     *
+     * @param Visitor\Element $element The node representing the operator.
+     *
+     * @return Core\Consistency\Xcallable
+     */
+    private function getStarOperator(Visitor\Element $element)
+    {
+        $operator = xcallable(function() use ($element) {
+            return sprintf('%s(%s)', $element->getName(), implode(', ', func_get_args()));
+        });
     }
 }

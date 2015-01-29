@@ -11,16 +11,22 @@ use Context\ObjectContext;
 /**
  * Execute a rule on an array.
  */
-class ArrayExecutor implements Executor
+class ArrayExecutor implements ExtendableExecutor
 {
     /**
      * @var Asserter
      */
     private $asserter;
 
-    public function __construct()
+    /**
+     * @var array A list of additionnal operators.
+     */
+    private $operators = [];
+
+    public function __construct(array $operators = [])
     {
         $this->asserter = new Asserter();
+        $this->operators = $operators;
     }
 
     /**
@@ -29,6 +35,10 @@ class ArrayExecutor implements Executor
     public function filter($target, Model $rule, array $parameters = [])
     {
         $newParameters = $this->prepareParameters($parameters);
+
+        foreach ($this->operators as $name => $callable) {
+            $this->asserter->setOperator($name, $callable);
+        }
 
         return array_filter($target, function($row) use ($rule, $newParameters) {
             return $this->filterRow($row, $rule, $newParameters);
@@ -41,6 +51,14 @@ class ArrayExecutor implements Executor
     public function supports($target)
     {
         return is_array($target);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function registerOperators(array $operators)
+    {
+        $this->operators = array_merge($this->operators, $operators);
     }
 
     /**
