@@ -4,9 +4,18 @@ use Hoa\Ruler\Ruler;
 
 use Exception\TargetUnsupportedException;
 use Executor\Executor;
+use Interpreter\Interpreter;
 
 class RulerZ
 {
+    /**
+     * @var Interpreter $interpreter
+     */
+    private $interpreter;
+
+    /**
+     * @var array $executors
+     */
     private $executors = [];
 
     /**
@@ -14,8 +23,10 @@ class RulerZ
      *
      * @param array $executors A list of executors to register immediatly.
      */
-    public function __construct(array $executors = [])
+    public function __construct(Interpreter $interpreter, array $executors = [])
     {
+        $this->interpreter = $interpreter;
+
         foreach ($executors as $executor) {
             $this->registerExecutor($executor);
         }
@@ -44,7 +55,7 @@ class RulerZ
     public function filter($target, $rule, array $parameters = array())
     {
         $executor = $this->findExecutor($target);
-        $ast = $this->parse($rule);
+        $ast = $this->interpret($rule);
 
         return $executor->filter($target, $ast, $parameters);
     }
@@ -76,8 +87,8 @@ class RulerZ
      *
      * @return \Hoa\Ruler\Model
      */
-    private function parse($rule)
+    private function interpret($rule)
     {
-        return Ruler::interprete($rule);
+        return $this->interpreter->interpret($rule);
     }
 }

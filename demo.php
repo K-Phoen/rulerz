@@ -1,20 +1,25 @@
 <?php
 
-use Doctrine\ORM\Tools\Setup;
-use Doctrine\ORM\EntityManager;
-
 use Entity\User;
 use Executor\ArrayExecutor;
 use Executor\DoctrineQueryBuilderExecutor;
+use Interpreter\HoaInterpreter;
+use Interpreter\CachedInterpreter;
 
 $entityManager = require 'bootstrap.php';
 
-$rulerz = new RulerZ([
-    new ArrayExecutor([
-        'length' => 'strlen',
-    ]),
-    new DoctrineQueryBuilderExecutor(),
-]);
+$cache = new \Doctrine\Common\Cache\ArrayCache();
+$interpreter = new CachedInterpreter(new HoaInterpreter(), $cache);
+$interpreter = new HoaInterpreter();
+
+$rulerz = new RulerZ(
+    $interpreter, [
+        new ArrayExecutor([
+            'length' => 'strlen',
+        ]),
+        new DoctrineQueryBuilderExecutor(),
+    ]
+);
 
 // 1. Write a rule.
 $rule  = 'group in :groups and points > :points and length(name) > 2';

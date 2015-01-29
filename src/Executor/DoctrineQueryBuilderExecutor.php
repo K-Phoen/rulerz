@@ -18,7 +18,7 @@ class DoctrineQueryBuilderExecutor implements Executor
 
     public function __construct(array $operators = [])
     {
-        $this->operators = $operators;
+        $this->registerOperators($operators);
     }
 
     /**

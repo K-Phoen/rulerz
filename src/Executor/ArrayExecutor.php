@@ -26,7 +26,8 @@ class ArrayExecutor implements ExtendableExecutor
     public function __construct(array $operators = [])
     {
         $this->asserter = new Asserter();
-        $this->operators = $operators;
+
+        $this->registerOperators($operators);
     }
 
     /**
