@@ -11,4 +11,4 @@ before_script:
     - phpenv config-rm xdebug.ini
     - composer install --prefer-source
 
-script: vendor/bin/phpspec run -f dots
+script: vendor/bin/phpspec run -f dot
