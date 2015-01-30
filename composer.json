@@ -8,7 +8,8 @@
     },
     "require-dev": {
         "doctrine/orm": "~2.4",
-        "doctrine/cache": "~1.0"
+        "doctrine/cache": "~1.0",
+        "phpspec/phpspec": "~2.0"
     },
     "suggests": {
         "doctrine/orm": "To execute rules as Doctrine queries",
