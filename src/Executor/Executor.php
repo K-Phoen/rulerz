@@ -18,7 +18,7 @@ interface Executor
      *
      * @return mixed The filtered target.
      */
-    function filter($target, Model $rule, array $parameters = []);
+    public function filter($target, Model $rule, array $parameters = []);
 
     /**
      * Indicates whether the given object can be filtered by the executor.
@@ -27,5 +27,5 @@ interface Executor
      *
      * @return boolean
      */
-    function supports($target);
+    public function supports($target);
 }

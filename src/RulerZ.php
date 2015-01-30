@@ -1,7 +1,6 @@
 <?php
 
 use Hoa\Ruler\Ruler;
-
 use Exception\TargetUnsupportedException;
 use Executor\Executor;
 use Interpreter\Interpreter;

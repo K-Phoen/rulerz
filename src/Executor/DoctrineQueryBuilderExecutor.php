@@ -3,7 +3,6 @@ namespace Executor;
 
 use Doctrine\ORM\QueryBuilder;
 use Hoa\Ruler\Model;
-
 use Visitor\DoctrineQueryBuilderVisitor;
 
 /**

@@ -5,7 +5,6 @@ namespace Executor;
 use Hoa\Ruler\Context as ArrayContext;
 use Hoa\Ruler\Model;
 use Hoa\Ruler\Visitor\Asserter;
-
 use Context\ObjectContext;
 
 /**
@@ -41,7 +40,7 @@ class ArrayExecutor implements ExtendableExecutor
             $this->asserter->setOperator($name, $callable);
         }
 
-        return array_filter($target, function($row) use ($rule, $newParameters) {
+        return array_filter($target, function ($row) use ($rule, $newParameters) {
             return $this->filterRow($row, $rule, $newParameters);
         });
     }

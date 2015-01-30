@@ -58,11 +58,11 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     /**
      * Visit an element.
      *
-     * @param   \Hoa\Visitor\Element  $element    Element to visit.
-     * @param   mixed                 &$handle    Handle (reference).
-     * @param   mixed                 $eldnah     Handle (not reference).
+     * @param \Hoa\Visitor\Element $element Element to visit.
+     * @param mixed                &$handle Handle (reference).
+     * @param mixed                $eldnah  Handle (not reference).
      *
-     * @return  string The DQL code for the given rule.
+     * @return string The DQL code for the given rule.
      */
     public function visit(Visitor\Element $element, &$handle = null, $eldnah = null)
     {
@@ -92,11 +92,11 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     /**
      * Visit a model
      *
-     * @param   \Hoa\Visitor\Element  $element    Element to visit.
-     * @param   mixed                 &$handle    Handle (reference).
-     * @param   mixed                 $eldnah     Handle (not reference).
+     * @param \Hoa\Visitor\Element $element Element to visit.
+     * @param mixed                &$handle Handle (reference).
+     * @param mixed                $eldnah  Handle (not reference).
      *
-     * @return  string
+     * @return string
      */
     public function visitModel(Visitor\Element $element, &$handle = null, $eldnah = null)
     {
@@ -106,10 +106,10 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     /**
      * Visit a context (ie: a column access or a parameter)
      *
-     * @param   \Hoa\Visitor\Element  $element    Element to visit.
-     * @param   mixed                 &$handle    Handle (reference).
-     * @param   mixed                 $eldnah     Handle (not reference).
-     * @return  mixed
+     * @param  \Hoa\Visitor\Element $element Element to visit.
+     * @param  mixed                &$handle Handle (reference).
+     * @param  mixed                $eldnah  Handle (not reference).
+     * @return mixed
      */
     private function visitContext(Visitor\Element $element, &$handle = null, $eldnah = null)
     {
@@ -126,10 +126,10 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     /**
      * Visit a scalar
      *
-     * @param   \Hoa\Visitor\Element  $element    Element to visit.
-     * @param   mixed                 &$handle    Handle (reference).
-     * @param   mixed                 $eldnah     Handle (not reference).
-     * @return  mixed
+     * @param  \Hoa\Visitor\Element $element Element to visit.
+     * @param  mixed                &$handle Handle (reference).
+     * @param  mixed                $eldnah  Handle (not reference).
+     * @return mixed
      */
     private function visitScalar(Visitor\Element $element, &$handle = null, $eldnah = null)
     {
@@ -141,10 +141,10 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     /**
      * Visit an array
      *
-     * @param   \Hoa\Visitor\Element  $element    Element to visit.
-     * @param   mixed                 &$handle    Handle (reference).
-     * @param   mixed                 $eldnah     Handle (not reference).
-     * @return  array
+     * @param  \Hoa\Visitor\Element $element Element to visit.
+     * @param  mixed                &$handle Handle (reference).
+     * @param  mixed                $eldnah  Handle (not reference).
+     * @return array
      */
     private function visitArray(Visitor\Element $element, &$handle = null, $eldnah = null)
     {
@@ -158,10 +158,10 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     /**
      * Visit an operator
      *
-     * @param   \Hoa\Visitor\Element  $element    Element to visit.
-     * @param   mixed                 &$handle    Handle (reference).
-     * @param   mixed                 $eldnah     Handle (not reference).
-     * @return  mixed
+     * @param  \Hoa\Visitor\Element $element Element to visit.
+     * @param  mixed                &$handle Handle (reference).
+     * @param  mixed                $eldnah  Handle (not reference).
+     * @return mixed
      */
     private function visitOperator(Visitor\Element $element, &$handle = null, $eldnah = null)
     {
@@ -172,7 +172,7 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
                 throw $e;
             }
 
-            $operator = xcallable(function() use ($element) {
+            $operator = xcallable(function () use ($element) {
                 return sprintf('%s(%s)', $element->getName(), implode(', ', func_get_args()));
             });
         }
@@ -187,10 +187,10 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     /**
      * Set an operator.
      *
-     * @param   string  $operator     Operator.
-     * @param   string  $classname    Classname.
+     * @param string $operator  Operator.
+     * @param string $classname Classname.
      *
-     * @return  DoctrineQueryBuilderVisitor
+     * @return DoctrineQueryBuilderVisitor
      */
     public function setOperator($operator, callable $transformer)
     {
@@ -202,8 +202,8 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     /**
      * Check if an operator exists.
      *
-     * @param   string  $operator    Operator.
-     * @return  bool
+     * @param  string $operator Operator.
+     * @return bool
      */
     public function operatorExists($operator)
     {
@@ -213,8 +213,8 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     /**
      * Get an operator.
      *
-     * @param   string  $operator    Operator.
-     * @return  string
+     * @param  string $operator Operator.
+     * @return string
      */
     private function getOperator($operator)
     {
@@ -250,7 +250,7 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
      */
     private function getStarOperator(Visitor\Element $element)
     {
-        $operator = xcallable(function() use ($element) {
+        $operator = xcallable(function () use ($element) {
             return sprintf('%s(%s)', $element->getName(), implode(', ', func_get_args()));
         });
     }

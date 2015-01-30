@@ -33,13 +33,14 @@ class ObjectContext extends BaseContext
     /**
      * Set a data.
      *
-     * @param   string  $id       ID.
-     * @param   mixed   $value    Value.
+     * @param string $id    ID.
+     * @param mixed  $value Value.
      */
     public function offsetSet($id, $value)
     {
         if ($this->accessor->isReadable($this->object, $id)) {
             $this->accessor->setValue($this->object, $id, $value);
+
             return;
         }
 
@@ -49,8 +50,8 @@ class ObjectContext extends BaseContext
     /**
      * Get a data.
      *
-     * @param   string  $id    ID.
-     * @return  mixed
+     * @param  string $id ID.
+     * @return mixed
      * @throw   \Hoa\Ruler\Exception
      */
     public function offsetGet($id)
@@ -65,7 +66,7 @@ class ObjectContext extends BaseContext
     /**
      * Check if a data exists.
      *
-     * @return  bool
+     * @return bool
      */
     public function offsetExists($id)
     {

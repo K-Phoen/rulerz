@@ -12,5 +12,5 @@ interface ExtendableExecutor extends Executor
      *
      * @param array $operators A list of new operators of the form 'name' => callable
      */
-    function registerOperators(array $operators);
+    public function registerOperators(array $operators);
 }

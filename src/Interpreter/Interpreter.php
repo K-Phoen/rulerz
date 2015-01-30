@@ -14,5 +14,5 @@ interface Interpreter
      *
      * @return \Hoa\Ruler\Model
      */
-    function interpret($rule);
+    public function interpret($rule);
 }
