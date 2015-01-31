@@ -53,6 +53,7 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
         $this->setOperator('<',   function ($a, $b) { return sprintf('%s < %s', $a,  $b); });
         $this->setOperator('<=',   function ($a, $b) { return sprintf('%s <= %s', $a,  $b); });
         $this->setOperator('in',  function ($a, $b) { return sprintf('%s IN %s', $a, $b[0] === '(' ? $b : '('.$b.')'); });
+        $this->setOperator('like',  function ($a, $b) { return sprintf('%s LIKE %s', $a, $b); });
     }
 
     /**
