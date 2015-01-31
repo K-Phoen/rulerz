@@ -1,9 +1,10 @@
 <?php
-namespace Executor;
+namespace RulerZ\Executor;
 
 use Doctrine\ORM\QueryBuilder;
 use Hoa\Ruler\Model;
-use Visitor\DoctrineQueryBuilderVisitor;
+
+use RulerZ\Visitor\DoctrineQueryBuilderVisitor;
 
 /**
  * Execute a rule on a query builder.

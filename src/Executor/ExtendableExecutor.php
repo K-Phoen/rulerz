@@ -1,6 +1,6 @@
 <?php
 
-namespace Executor;
+namespace RulerZ\Executor;
 
 /**
  * An executor which can be extended (currently, only by registering new operators).

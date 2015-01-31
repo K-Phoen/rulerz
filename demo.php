@@ -1,10 +1,10 @@
 <?php
 
 use Entity\User;
-use Executor\ArrayExecutor;
-use Executor\DoctrineQueryBuilderExecutor;
-use Interpreter\HoaInterpreter;
-use Interpreter\CachedInterpreter;
+use RulerZ\Executor\ArrayExecutor;
+use RulerZ\Executor\DoctrineQueryBuilderExecutor;
+use RulerZ\Interpreter\HoaInterpreter;
+use RulerZ\Interpreter\CachedInterpreter;
 
 $entityManager = require 'bootstrap.php';
 
@@ -12,7 +12,7 @@ $cache = new \Doctrine\Common\Cache\ArrayCache();
 $interpreter = new CachedInterpreter(new HoaInterpreter(), $cache);
 $interpreter = new HoaInterpreter();
 
-$rulerz = new RulerZ(
+$rulerz = new RulerZ\RulerZ(
     $interpreter, [
         new ArrayExecutor([
             'length' => 'strlen',

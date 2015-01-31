@@ -1,6 +1,6 @@
 <?php
 
-namespace Interpreter;
+namespace RulerZ\Interpreter;
 
 use Hoa\Compiler;
 use Hoa\File;

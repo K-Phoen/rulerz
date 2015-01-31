@@ -1,6 +1,6 @@
 <?php
 
-namespace Interpreter;
+namespace RulerZ\Interpreter;
 
 /**
  * Interpretes a rule.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Visitor;
+namespace RulerZ\Visitor;
 
 use Doctrine\ORM\QueryBuilder;
 use Hoa\Core;

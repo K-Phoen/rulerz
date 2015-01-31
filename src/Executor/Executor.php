@@ -1,6 +1,6 @@
 <?php
 
-namespace Executor;
+namespace RulerZ\Executor;
 
 use Hoa\Ruler\Model;
 

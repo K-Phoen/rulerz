@@ -1,11 +1,12 @@
 <?php
 
-namespace Executor;
+namespace RulerZ\Executor;
 
 use Hoa\Ruler\Context as ArrayContext;
 use Hoa\Ruler\Model;
 use Hoa\Ruler\Visitor\Asserter;
-use Context\ObjectContext;
+
+use RulerZ\Context\ObjectContext;
 
 /**
  * Execute a rule on an array.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Exception;
+namespace RulerZ\Exception;
 
 class TargetUnsupportedException extends \RuntimeException
 {

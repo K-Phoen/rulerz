@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Executor;
+namespace spec\RulerZ\Executor;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -9,7 +9,7 @@ class ArrayExecutorSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('Executor\ArrayExecutor');
+        $this->shouldHaveType('RulerZ\Executor\ArrayExecutor');
     }
 
     function it_supports_arrays()

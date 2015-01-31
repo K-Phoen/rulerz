@@ -1,13 +1,13 @@
 <?php
 
-namespace spec;
+namespace spec\RulerZ;
 
+use Hoa\Ruler\Model\Model as AST;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-use Executor\Executor;
-use Hoa\Ruler\Model\Model as AST;
-use Interpreter\Interpreter;
+use RulerZ\Executor\Executor;
+use RulerZ\Interpreter\Interpreter;
 
 class RulerZSpec extends ObjectBehavior
 {
@@ -18,7 +18,7 @@ class RulerZSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('RulerZ');
+        $this->shouldHaveType('RulerZ\RulerZ');
     }
 
     function it_accepts_new_executors_during_construction(Interpreter $interpreter, Executor $executor)
@@ -67,8 +67,8 @@ class RulerZSpec extends ObjectBehavior
     function it_cant_filter_without_an_executor()
     {
         $this
-            ->shouldThrow('Exception\TargetUnsupportedException')
-            ->during('filter', [['some target'], 'points > 30']);
+            ->shouldThrow('RulerZ\Exception\TargetUnsupportedException')
+            ->duringFilter(['some target'], 'points > 30');
     }
 
     private function getTarget()

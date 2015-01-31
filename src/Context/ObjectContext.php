@@ -1,6 +1,6 @@
 <?php
 
-namespace Context;
+namespace RulerZ\Context;
 
 use Hoa\Ruler\Context as BaseContext;
 use Symfony\Component\PropertyAccess\PropertyAccess;

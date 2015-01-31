@@ -1,9 +1,12 @@
 <?php
 
+namespace RulerZ;
+
 use Hoa\Ruler\Ruler;
-use Exception\TargetUnsupportedException;
-use Executor\Executor;
-use Interpreter\Interpreter;
+
+use RulerZ\Exception\TargetUnsupportedException;
+use RulerZ\Executor\Executor;
+use RulerZ\Interpreter\Interpreter;
 
 class RulerZ
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace spec\Interpreter;
+namespace spec\RulerZ\Interpreter;
 
 use Doctrine\Common\Cache\Cache;
 use Hoa\Ruler\Model\Model as AST;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-use Interpreter\Interpreter;
+use RulerZ\Interpreter\Interpreter;
 
 class CachedInterpreterSpec extends ObjectBehavior
 {
@@ -15,7 +15,7 @@ class CachedInterpreterSpec extends ObjectBehavior
     {
         $this->beConstructedWith($interpreter, $cache);
 
-        $this->shouldHaveType('Interpreter\CachedInterpreter');
+        $this->shouldHaveType('RulerZ\Interpreter\CachedInterpreter');
     }
 
     function it_uses_the_wrapped_interpreter_when_cache_is_missed(Interpreter $interpreter, Cache $cache, AST $ast)

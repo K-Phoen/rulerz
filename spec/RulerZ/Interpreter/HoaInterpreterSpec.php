@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Interpreter;
+namespace spec\RulerZ\Interpreter;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -9,7 +9,7 @@ class HoaInterpreterSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('Interpreter\HoaInterpreter');
+        $this->shouldHaveType('RulerZ\Interpreter\HoaInterpreter');
     }
 
     function it_returns_an_ast_for_a_valid_rule()
@@ -19,6 +19,6 @@ class HoaInterpreterSpec extends ObjectBehavior
 
     function it_throws_an_exception_for_an_invalid_rule()
     {
-        $this->shouldThrow('Hoa\Compiler\Exception')->during('interpret', ['> and']);
+        $this->shouldThrow('Hoa\Compiler\Exception')->duringInterpret('> and');
     }
 }
