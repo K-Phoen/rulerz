@@ -52,7 +52,7 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
         $this->setOperator('>=',   function ($a, $b) { return sprintf('%s >= %s', $a,  $b); });
         $this->setOperator('<',   function ($a, $b) { return sprintf('%s < %s', $a,  $b); });
         $this->setOperator('<=',   function ($a, $b) { return sprintf('%s <= %s', $a,  $b); });
-        $this->setOperator('in',  function ($a, $b) { return sprintf('%s IN %s', $a, $b); });
+        $this->setOperator('in',  function ($a, $b) { return sprintf('%s IN %s', $a, $b[0] === '(' ? $b : '('.$b.')'); });
     }
 
     /**
@@ -117,7 +117,7 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
 
         // parameter
         if ($name[0] === ':') {
-            return sprintf('(%s)', $name); // wrap the parameter in parenthesis to make it work with arrays
+            return $name;
         }
 
         return sprintf('%s.%s', $this->getRootAlias(), $element->getId());
