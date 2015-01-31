@@ -1,4 +1,4 @@
-RulerZ
+RulerZ [![Build Status](https://travis-ci.org/K-Phoen/rulerz.svg?branch=master)](https://travis-ci.org/K-Phoen/rulerz)
 ======
 
 This library allows to filter multiple types of targets using the same rule
