@@ -44,6 +44,7 @@ $usersArr = [
 $usersObj = [
     new User('Joe', 'guest', 40),
     new User('Moe', 'guest', 20),
+    new User('Al',  'guest', 40),
 ];
 
 // 3. Enjoy!
