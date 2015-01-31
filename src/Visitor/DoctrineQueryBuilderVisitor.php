@@ -173,9 +173,7 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
                 throw $e;
             }
 
-            $operator = xcallable(function () use ($element) {
-                return sprintf('%s(%s)', $element->getName(), implode(', ', func_get_args()));
-            });
+            $operator = $this->getStarOperator($element);
         }
 
         $arguments = array_map(function ($argument) use ($handle, $eldnah) {
@@ -251,7 +249,7 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
      */
     private function getStarOperator(Visitor\Element $element)
     {
-        $operator = xcallable(function () use ($element) {
+        return xcallable(function () use ($element) {
             return sprintf('%s(%s)', $element->getName(), implode(', ', func_get_args()));
         });
     }
