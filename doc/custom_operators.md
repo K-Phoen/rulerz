@@ -31,7 +31,7 @@ existing collection but transforms a rule in a query.
 Because of this, the callables must return the DQL equivalent of the operator
 being defined.
 
-```
+```php
 $executor = new DoctrineQueryBuilderExecutor([
     'like' => function ($a, $b) {
         return sprintf('%s LIKE %s', $a, $b);

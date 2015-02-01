@@ -6,9 +6,9 @@ language.
 
 Here is a summary of what you will have to do:
 
-    * [instanciate the RulerZ engine](#step-1-instanciate the RulerZ engine) ;
-    * [write a rule](#step-2-write-a-rule) ;
-    * [filter your target](#step-3-filter-your-target).
+ * [instanciate the RulerZ engine](#step-1-instanciate the RulerZ engine) ;
+ * [write a rule](#step-2-write-a-rule) ;
+ * [filter your target](#step-3-filter-your-target).
 
 ## Context
 
