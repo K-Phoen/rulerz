@@ -9,11 +9,11 @@ they can be written by a user and saved in a database.
 
 The rule engine used by RulerZ is [hoa/ruler](https://github.com/hoaproject/Ruler).
 
-Currently supported target types :
+Currently supported target types:
 
-    * array of arrays ;
-    * array of objects ;
-    * Doctrine ORM QueryBuilder.
+ * array of arrays ;
+ * array of objects ;
+ * Doctrine ORM QueryBuilder.
 
 Installation
 ------------
