@@ -71,7 +71,6 @@ The following operators are supported by default by all executors: `and`, `or`,
 If the filter that you are trying to express needs a function, you can use the
 syntax shown in the next example to write your rule:
 
-
 ```php
 $rule  = 'group in :groups and points > :min_points and length(name) > 3';
 ```
