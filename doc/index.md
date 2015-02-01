@@ -13,4 +13,4 @@ composer require 'kphoen/rulerz'
 
     * [Basic usage](usage.md)
     * [Caching rules](caching_rules.md)
-    * [Adding custom operators](custom_operators.md)
+    * [Custom operators](custom_operators.md)

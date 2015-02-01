@@ -69,6 +69,12 @@ var_dump($rulerz->filter($usersArr, $rule, $parameters));
 var_dump($rulerz->filter($usersObj, $rule, $parameters));
 ```
 
+Documentation
+-------------
+
+The documentation can be found in the `doc` directory. Have a look at the
+[index.md](doc/index.md) if you don't know what you are looking for.
+
 Licence
 -------
 
