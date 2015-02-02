@@ -4,7 +4,7 @@ namespace RulerZ\Visitor;
 
 use Doctrine\ORM\QueryBuilder;
 use Hoa\Core\Consistency\Xcallable;
-use Hoa\Ruler\Exception\AsserterException;
+use Hoa\Ruler\Exception\Asserter as AsserterException;
 use Hoa\Ruler\Model as AST;
 use Hoa\Visitor\Element as VisitorElement;
 use Hoa\Visitor\Visit as Visitor;
@@ -173,20 +173,20 @@ class DoctrineQueryBuilderVisitor implements Visitor
     private function visitOperator(AST\Operator $element, &$handle = null, $eldnah = null)
     {
         try {
-            $operator  = $this->getOperator($element->getName());
+            $xcallable = $this->getOperator($element->getName());
         } catch (AsserterException $e) {
             if (!$this->allowStarOperator) {
                 throw $e;
             }
 
-            $operator = $this->getStarOperator($element);
+            $xcallable = $this->getStarOperator($element);
         }
 
         $arguments = array_map(function ($argument) use ($handle, $eldnah) {
             return $argument->accept($this, $handle, $eldnah);
         }, $element->getArguments());
 
-        return $operator->distributeArguments($arguments);
+        return $xcallable->distributeArguments($arguments);
     }
 
     /**
@@ -221,7 +221,7 @@ class DoctrineQueryBuilderVisitor implements Visitor
      *
      * @param string $operator Operator.
      *
-     * @return callable
+     * @return Xcallable
      */
     private function getOperator($operator)
     {
