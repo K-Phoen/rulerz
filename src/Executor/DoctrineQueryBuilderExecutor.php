@@ -63,6 +63,10 @@ class DoctrineQueryBuilderExecutor implements Executor
     {
         $dqlBuilder = new DoctrineQueryBuilderVisitor($target);
 
+        foreach ($this->operators as $name => $callable) {
+            $dqlBuilder->setOperator($name, $callable);
+        }
+
         return $dqlBuilder->visit($rule);
     }
 }
