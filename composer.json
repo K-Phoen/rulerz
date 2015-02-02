@@ -3,7 +3,7 @@
     "type": "library",
     "license": "MIT",
     "autoload": {
-        "psr-4": { "RulerZ\\": "src/", "Entity\\": "entities/" }
+        "psr-4": { "RulerZ\\": "src/", "Entity\\": "examples/entities/" }
     },
     "require": {
         "hoa/ruler": "~1.0",

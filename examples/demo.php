@@ -1,5 +1,7 @@
 <?php
 
+use Doctrine\Common\Cache\ArrayCache;
+
 use Entity\User;
 use RulerZ\Executor\ArrayExecutor;
 use RulerZ\Executor\DoctrineQueryBuilderExecutor;
@@ -7,10 +9,10 @@ use RulerZ\Interpreter\HoaInterpreter;
 use RulerZ\Interpreter\CachedInterpreter;
 
 $entityManager = require 'bootstrap.php';
+require __DIR__ . '/../vendor/autoload.php';
 
-$cache = new \Doctrine\Common\Cache\ArrayCache();
-$interpreter = new CachedInterpreter(new HoaInterpreter(), $cache);
-$interpreter = new HoaInterpreter();
+$interpreter = new CachedInterpreter(new HoaInterpreter(), new ArrayCache());
+//$interpreter = new HoaInterpreter();
 
 $rulerz = new RulerZ\RulerZ(
     $interpreter, [
