@@ -3,11 +3,13 @@
 namespace RulerZ\Visitor;
 
 use Doctrine\ORM\QueryBuilder;
-use Hoa\Core;
-use Hoa\Ruler;
-use Hoa\Visitor;
+use Hoa\Core\Consistency\Xcallable;
+use Hoa\Ruler\Exception\AsserterException;
+use Hoa\Ruler\Model as AST;
+use Hoa\Visitor\Element as VisitorElement;
+use Hoa\Visitor\Visit as Visitor;
 
-class DoctrineQueryBuilderVisitor implements Visitor\Visit
+class DoctrineQueryBuilderVisitor implements Visitor
 {
     /**
      * The QueryBuilder to update.
@@ -59,31 +61,31 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     /**
      * Visit an element.
      *
-     * @param \Hoa\Visitor\Element $element Element to visit.
-     * @param mixed                &$handle Handle (reference).
-     * @param mixed                $eldnah  Handle (not reference).
+     * @param \VisitorElement $element Element to visit.
+     * @param mixed           &$handle Handle (reference).
+     * @param mixed           $eldnah  Handle (not reference).
      *
      * @return string The DQL code for the given rule.
      */
-    public function visit(Visitor\Element $element, &$handle = null, $eldnah = null)
+    public function visit(VisitorElement $element, &$handle = null, $eldnah = null)
     {
-        if ($element instanceof Ruler\Model) {
+        if ($element instanceof AST\Model) {
             return $this->visitModel($element, $handle, $eldnah);
         }
 
-        if ($element instanceof Ruler\Model\Operator) {
+        if ($element instanceof AST\Operator) {
             return $this->visitOperator($element, $handle, $eldnah);
         }
 
-        if ($element instanceof Ruler\Model\Bag\Scalar) {
+        if ($element instanceof AST\Bag\Scalar) {
             return $this->visitScalar($element, $handle, $eldnah);
         }
 
-        if ($element instanceof Ruler\Model\Bag\RulerArray) {
+        if ($element instanceof AST\Bag\RulerArray) {
             return $this->visitArray($element, $handle, $eldnah);
         }
 
-        if ($element instanceof Ruler\Model\Bag\Context) {
+        if ($element instanceof AST\Bag\Context) {
             return $this->visitContext($element, $handle, $eldnah);
         }
 
@@ -93,13 +95,13 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     /**
      * Visit a model
      *
-     * @param \Hoa\Visitor\Element $element Element to visit.
-     * @param mixed                &$handle Handle (reference).
-     * @param mixed                $eldnah  Handle (not reference).
+     * @param AST\Model $element Element to visit.
+     * @param mixed     &$handle Handle (reference).
+     * @param mixed     $eldnah  Handle (not reference).
      *
      * @return string
      */
-    public function visitModel(Visitor\Element $element, &$handle = null, $eldnah = null)
+    public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
     {
         return $element->getExpression()->accept($this, $handle, $eldnah);
     }
@@ -107,12 +109,13 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     /**
      * Visit a context (ie: a column access or a parameter)
      *
-     * @param  \Hoa\Visitor\Element $element Element to visit.
-     * @param  mixed                &$handle Handle (reference).
-     * @param  mixed                $eldnah  Handle (not reference).
-     * @return mixed
+     * @param AST\Bag\Context $element Element to visit.
+     * @param mixed           &$handle Handle (reference).
+     * @param mixed           $eldnah  Handle (not reference).
+     *
+     * @return string
      */
-    private function visitContext(Visitor\Element $element, &$handle = null, $eldnah = null)
+    private function visitContext(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
         $name = $element->getId();
 
@@ -127,12 +130,13 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     /**
      * Visit a scalar
      *
-     * @param  \Hoa\Visitor\Element $element Element to visit.
-     * @param  mixed                &$handle Handle (reference).
-     * @param  mixed                $eldnah  Handle (not reference).
-     * @return mixed
+     * @param AST\Bag\Scalar $element Element to visit.
+     * @param mixed          &$handle Handle (reference).
+     * @param mixed          $eldnah  Handle (not reference).
+     *
+     * @return string
      */
-    private function visitScalar(Visitor\Element $element, &$handle = null, $eldnah = null)
+    private function visitScalar(AST\Bag\Scalar $element, &$handle = null, $eldnah = null)
     {
         $value = $element->getValue();
 
@@ -142,12 +146,13 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     /**
      * Visit an array
      *
-     * @param  \Hoa\Visitor\Element $element Element to visit.
-     * @param  mixed                &$handle Handle (reference).
-     * @param  mixed                $eldnah  Handle (not reference).
-     * @return array
+     * @param AST\Bag\RulerArray $element Element to visit.
+     * @param mixed              &$handle Handle (reference).
+     * @param mixed              $eldnah  Handle (not reference).
+     *
+     * @return string
      */
-    private function visitArray(Visitor\Element $element, &$handle = null, $eldnah = null)
+    private function visitArray(AST\Bag\RulerArray $element, &$handle = null, $eldnah = null)
     {
         $out = array_map(function ($item) use ($handle, $eldnah) {
             return $item->accept($this, $handle, $eldnah);
@@ -159,16 +164,17 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     /**
      * Visit an operator
      *
-     * @param  \Hoa\Visitor\Element $element Element to visit.
-     * @param  mixed                &$handle Handle (reference).
-     * @param  mixed                $eldnah  Handle (not reference).
-     * @return mixed
+     * @param AST\Operator $element Element to visit.
+     * @param mixed        &$handle Handle (reference).
+     * @param mixed        $eldnah  Handle (not reference).
+     *
+     * @return string
      */
-    private function visitOperator(Visitor\Element $element, &$handle = null, $eldnah = null)
+    private function visitOperator(AST\Operator $element, &$handle = null, $eldnah = null)
     {
         try {
             $operator  = $this->getOperator($element->getName());
-        } catch (Ruler\Exception\Asserter $e) {
+        } catch (AsserterException $e) {
             if (!$this->allowStarOperator) {
                 throw $e;
             }
@@ -186,8 +192,8 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     /**
      * Set an operator.
      *
-     * @param string $operator  Operator.
-     * @param string $classname Classname.
+     * @param string   $operator    Operator.
+     * @param callable $transformer Callable.
      *
      * @return DoctrineQueryBuilderVisitor
      */
@@ -201,7 +207,8 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     /**
      * Check if an operator exists.
      *
-     * @param  string $operator Operator.
+     * @param string $operator Operator.
+     *
      * @return bool
      */
     public function operatorExists($operator)
@@ -212,18 +219,19 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
     /**
      * Get an operator.
      *
-     * @param  string $operator Operator.
-     * @return string
+     * @param string $operator Operator.
+     *
+     * @return callable
      */
     private function getOperator($operator)
     {
         if (false === $this->operatorExists($operator)) {
-            throw new Ruler\Exception\Asserter('Operator "%s" does not exist.', 1, $operator);
+            throw new AsserterException('Operator "%s" does not exist.', 1, $operator);
         }
 
         $handle = &$this->operators[$operator];
 
-        if (!$handle instanceof Core\Consistency\Xcallable) {
+        if (!$handle instanceof Xcallable) {
             $handle = xcallable($handle);
         }
 
@@ -245,9 +253,9 @@ class DoctrineQueryBuilderVisitor implements Visitor\Visit
      *
      * @param Visitor\Element $element The node representing the operator.
      *
-     * @return Core\Consistency\Xcallable
+     * @return Xcallable
      */
-    private function getStarOperator(Visitor\Element $element)
+    private function getStarOperator(AST\Operator $element)
     {
         return xcallable(function () use ($element) {
             return sprintf('%s(%s)', $element->getName(), implode(', ', func_get_args()));

@@ -13,7 +13,7 @@ class ObjectContext extends BaseContext
     private $object;
 
     /**
-     * @var PropertyAccess
+     * @var \Symfony\Component\PropertyAccess\PropertyAccessor
      */
     private $accessor;
 

@@ -82,7 +82,6 @@ class ArrayExecutor implements ExtendableExecutor
      * Create a context to be used by the asserter.
      *
      * @param mixed $row        The row to test.
-     * @param Model $rule       The rule to apply.
      * @param array $parameters The parameters used in the rule.
      *
      * @return \Hoa\Ruler\Context
