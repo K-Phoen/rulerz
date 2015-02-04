@@ -25,7 +25,7 @@ class CachedInterpreterSpec extends ObjectBehavior
         $this->beConstructedWith($interpreter, $cache);
 
         $cache->contains($rule)->willReturn(false);
-        $cache->save($rule, Argument::any())->shouldBeCalled();
+        $cache->save($rule, Argument::any(), 0)->shouldBeCalled();
         $cache->fetch()->shouldNotBeCalled();
 
         $interpreter->interpret($rule)->willReturn($ast);

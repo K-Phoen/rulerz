@@ -4,6 +4,9 @@ namespace RulerZ\Interpreter;
 
 use Doctrine\Common\Cache\Cache;
 
+/**
+ * Caches rules.
+ */
 class CachedInterpreter implements Interpreter
 {
     /**
@@ -16,10 +19,21 @@ class CachedInterpreter implements Interpreter
      */
     private $cache;
 
-    public function __construct(Interpreter $wrappedInterpreter, Cache $cache)
+    /**
+     * @var integer $lifeTime
+     */
+    private $lifeTime;
+
+    /**
+     * @param Interpreter $wrappedInterpreter The interpreter to cache.
+     * @param Cache       $cache              The cache provider to use.
+     * @param int         $lifeTime           The lifetime of a cached rule (0 to disable).
+     */
+    public function __construct(Interpreter $wrappedInterpreter, Cache $cache, $lifeTime = 0)
     {
         $this->interpreter = $wrappedInterpreter;
         $this->cache = $cache;
+        $this->lifeTime = $lifeTime;
     }
 
     /**
@@ -33,7 +47,7 @@ class CachedInterpreter implements Interpreter
 
         $ast = $this->interpreter->interpret($rule);
 
-        $this->cache->save($rule, serialize($ast));
+        $this->cache->save($rule, serialize($ast), $this->lifeTime);
 
         return $ast;
     }
