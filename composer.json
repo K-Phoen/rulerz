@@ -2,6 +2,12 @@
     "name": "kphoen/rulerz",
     "type": "library",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Kévin Gomez",
+            "email": "contact@kevingomez.fr"
+        }
+    ],
     "autoload": {
         "psr-4": { "RulerZ\\": "src/", "Entity\\": "examples/entities/" }
     },
