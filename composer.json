@@ -2,6 +2,9 @@
     "name": "kphoen/rulerz",
     "type": "library",
     "license": "MIT",
+    "homepage": "https://github.com/K-Phoen/RulerZ",
+    "description": "Powerful implementation of the Specification pattern",
+    "keywords": ["specification", "doctrine"],
     "authors": [
         {
             "name": "Kévin Gomez",
