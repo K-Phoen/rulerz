@@ -40,7 +40,7 @@ class DoctrineQueryBuilderExecutor implements Executor
      */
     public function satisfies($target, Model $rule, array $parameters = [])
     {
-        throw new \LogicException('A QueryBuilder can not satisfy a rule');
+        return count($this->filter($target, $rule, $parameters)) !== 0;
     }
 
     /**
