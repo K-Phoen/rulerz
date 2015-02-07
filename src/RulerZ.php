@@ -56,25 +56,44 @@ class RulerZ
      */
     public function filter($target, $rule, array $parameters = array())
     {
-        $executor = $this->findExecutor($target);
+        $executor = $this->findExecutor($target, Executor::MODE_FILTER);
         $ast = $this->interpret($rule);
 
         return $executor->filter($target, $ast, $parameters);
     }
 
     /**
+     * Tells if aa target satisfies the given rule and parameters.
+     * The executor to use is determined at runtime using the registered ones.
+     *
+     * @param mixed $target     The target.
+     * @param Model $rule       The rule to test.
+     * @param array $parameters The parameters used in the rule.
+     *
+     * @return boolean
+     */
+    public function satisfies($target, $rule, array $parameters = array())
+    {
+        $executor = $this->findExecutor($target, Executor::MODE_SATISFIES);
+        $ast = $this->interpret($rule);
+
+        return $executor->satisfies($target, $ast, $parameters);
+    }
+
+    /**
      * Finds an executor supporting the given target.
      *
-     * @param mixed $target The target to filter.
+     * @param mixed  $target The target to filter.
+     * @param string $mode   The execution mode (MODE_FILTER or MODE_SATISFIES).
      *
      * @throws TargetUnsupportedException
      *
      * @return Executor
      */
-    private function findExecutor($target)
+    private function findExecutor($target, $mode)
     {
         foreach ($this->executors as $executor) {
-            if ($executor->supports($target)) {
+            if ($executor->supports($target, $mode)) {
                 return $executor;
             }
         }

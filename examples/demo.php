@@ -58,3 +58,5 @@ $parameters = array(
 var_dump($rulerz->filter($usersQb, $rule, $parameters));
 var_dump($rulerz->filter($usersArr, $rule, $parameters));
 var_dump($rulerz->filter($usersObj, $rule, $parameters));
+
+var_dump($rulerz->satisfies($usersObj[1], $rule, $parameters));

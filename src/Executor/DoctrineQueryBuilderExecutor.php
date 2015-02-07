@@ -38,7 +38,15 @@ class DoctrineQueryBuilderExecutor implements Executor
     /**
      * {@inheritDoc}
      */
-    public function supports($target)
+    public function satisfies($target, Model $rule, array $parameters = [])
+    {
+        throw new \LogicException('A QueryBuilder can not satisfy a rule');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function supports($target, $mode)
     {
         return $target instanceof QueryBuilder;
     }

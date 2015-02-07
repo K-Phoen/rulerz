@@ -11,9 +11,9 @@ $isDevMode = true;
 // the connection configuration
 $dbParams = array(
     'driver'   => 'pdo_mysql',
-    'user'     => 'foo',
-    'password' => 'foo',
-    'dbname'   => 'foo',
+    'user'     => 'joblist',
+    'password' => 'joblist',
+    'dbname'   => 'joblist',
 );
 
 $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);

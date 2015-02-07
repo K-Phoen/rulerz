@@ -18,11 +18,6 @@ class ArrayExecutor implements ExtendableExecutor
      */
     private $asserter;
 
-    /**
-     * @var array A list of additionnal operators.
-     */
-    private $operators = [];
-
     public function __construct(array $operators = [])
     {
         $this->asserter = new Asserter();
@@ -37,21 +32,31 @@ class ArrayExecutor implements ExtendableExecutor
     {
         $newParameters = $this->prepareParameters($parameters);
 
-        foreach ($this->operators as $name => $callable) {
-            $this->asserter->setOperator($name, $callable);
-        }
-
         return array_filter($target, function ($row) use ($rule, $newParameters) {
-            return $this->filterRow($row, $rule, $newParameters);
+            return $this->filterItem($row, $rule, $newParameters);
         });
     }
 
     /**
      * {@inheritDoc}
      */
-    public function supports($target)
+    public function satisfies($target, Model $rule, array $parameters = [])
     {
-        return is_array($target);
+        $newParameters = $this->prepareParameters($parameters);
+
+        return $this->filterItem($target, $rule, $newParameters) === true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function supports($target, $mode)
+    {
+        if ($mode === self::MODE_FILTER) {
+            return is_array($target) || $target instanceof \Traversable;
+        }
+
+        return true;
     }
 
     /**
@@ -59,11 +64,13 @@ class ArrayExecutor implements ExtendableExecutor
      */
     public function registerOperators(array $operators)
     {
-        $this->operators = array_merge($this->operators, $operators);
+        foreach ($operators as $name => $callable) {
+            $this->asserter->setOperator($name, $callable);
+        }
     }
 
     /**
-     * Test if a row matches the given rule.
+     * Test if an item matches the given rule.
      *
      * @param mixed $row        The row to test.
      * @param Model $rule       The rule to apply.
@@ -71,7 +78,7 @@ class ArrayExecutor implements ExtendableExecutor
      *
      * @return boolean
      */
-    private function filterRow($row, Model $rule, array $parameters)
+    private function filterItem($row, Model $rule, array $parameters)
     {
         $this->asserter->setContext($this->createContext($row, $parameters));
 
