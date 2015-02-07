@@ -79,4 +79,4 @@ Licence
 -------
 
 This library is under the
-[MIT](https://github.com/K-Phoen/rulerz/blob/master/README.md) licence.
+[MIT](https://github.com/K-Phoen/rulerz/blob/master/LICENSE) licence.
