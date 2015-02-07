@@ -12,7 +12,10 @@
         }
     ],
     "autoload": {
-        "psr-4": { "RulerZ\\": "src/", "Entity\\": "examples/entities/" }
+        "psr-4": { "RulerZ\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Entity\\": "examples/entities/" }
     },
     "require": {
         "hoa/ruler": "~1.0",
