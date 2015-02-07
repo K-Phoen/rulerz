@@ -4,7 +4,6 @@ namespace spec\RulerZ;
 
 use Hoa\Ruler\Model\Model as AST;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 use RulerZ\Executor\Executor;
 use RulerZ\Interpreter\Interpreter;
@@ -38,10 +37,10 @@ class RulerZSpec extends ObjectBehavior
 
         $interpreter->interpret($rule)->willReturn($ast);
 
-        $executor_a->supports($target)->willReturn(false);
+        $executor_a->supports($target, Executor::MODE_FILTER)->willReturn(false);
         $executor_a->filter()->shouldNotBeCalled();
 
-        $executor_b->supports($target)->willReturn(true);
+        $executor_b->supports($target, Executor::MODE_FILTER)->willReturn(true);
         $executor_b->filter($target, $ast, [])->shouldBeCalled();
 
         $this->beConstructedWith($interpreter, [$executor_a, $executor_b]);
@@ -56,7 +55,7 @@ class RulerZSpec extends ObjectBehavior
         $rule = $this->getRule();
 
         $interpreter->interpret($rule)->willReturn($ast);
-        $executor->supports($target)->willReturn(true);
+        $executor->supports($target, Executor::MODE_FILTER)->willReturn(true);
         $executor->filter($target, $ast, [])->willReturn($result);
 
         $this->beConstructedWith($interpreter, [$executor]);

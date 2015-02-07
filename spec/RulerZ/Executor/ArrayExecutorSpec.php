@@ -3,7 +3,8 @@
 namespace spec\RulerZ\Executor;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
+
+use RulerZ\Executor\Executor;
 
 class ArrayExecutorSpec extends ObjectBehavior
 {
@@ -12,21 +13,36 @@ class ArrayExecutorSpec extends ObjectBehavior
         $this->shouldHaveType('RulerZ\Executor\ArrayExecutor');
     }
 
-    function it_supports_arrays()
+    function it_supports_satisfies_mode()
     {
-        $this->supports([])->shouldReturn(true);
+        $this->supports([], Executor::MODE_SATISFIES)->shouldReturn(true);
     }
 
-    function it_does_not_supports_other_types()
+    function it_supports_filtering_arrays()
+    {
+        $this->supports([], Executor::MODE_FILTER)->shouldReturn(true);
+    }
+
+    function it_does_not_support_filtering_other_types()
     {
         foreach ($this->unsupportedTypes() as $type) {
-            $this->supports($type)->shouldReturn(false);
+            $this->supports($type, Executor::MODE_FILTER)->shouldReturn(false);
         }
+    }
+
+    function it_supports_satisfaction_tests_for_arrays()
+    {
+        $this->supports([], Executor::MODE_SATISFIES)->shouldReturn(true);
     }
 
     function it_can_filter_an_array_with_a_rule()
     {
         $this->filter($this->getTarget(), $this->getSimpleRule())->shouldReturn($this->getResult());
+    }
+
+    function it_can_tell_if_a_target_satisfies_a_rule()
+    {
+        $this->satisfies($this->getTarget()[0], $this->getSimpleRule())->shouldReturn(true);
     }
 
     function it_can_filter_an_array_of_objects()

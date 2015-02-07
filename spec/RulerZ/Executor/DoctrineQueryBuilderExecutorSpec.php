@@ -5,7 +5,8 @@ namespace spec\RulerZ\Executor;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\AbstractQuery as Query;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
+
+use RulerZ\Executor\Executor;
 
 class DoctrineQueryBuilderExecutorSpec extends ObjectBehavior
 {
@@ -14,15 +15,20 @@ class DoctrineQueryBuilderExecutorSpec extends ObjectBehavior
         $this->shouldHaveType('RulerZ\Executor\DoctrineQueryBuilderExecutor');
     }
 
-    function it_supports_query_builders(QueryBuilder $qb)
+    function it_supports_satisfies_mode(QueryBuilder $qb)
     {
-        $this->supports($qb)->shouldReturn(true);
+        $this->supports($qb, Executor::MODE_SATISFIES)->shouldReturn(true);
     }
 
-    function it_does_not_supports_other_types()
+    function it_can_filter_query_builders(QueryBuilder $qb)
+    {
+        $this->supports($qb, Executor::MODE_FILTER)->shouldReturn(true);
+    }
+
+    function it_can_not_filter_other_types()
     {
         foreach ($this->unsupportedTypes() as $type) {
-            $this->supports($type)->shouldReturn(false);
+            $this->supports($type, Executor::MODE_FILTER)->shouldReturn(false);
         }
     }
 
