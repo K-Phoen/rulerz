@@ -15,6 +15,9 @@ Currently supported target types:
  * array of objects ;
  * Doctrine ORM QueryBuilder.
 
+There also is a blog post explaining [the motivation behind this
+library](http://blog.kevingomez.fr/2015/02/07/on-taming-repository-classes-in-doctrine-among-other-things/).
+
 Installation
 ------------
 
