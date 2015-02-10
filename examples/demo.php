@@ -16,10 +16,10 @@ $interpreter = new CachedInterpreter(new HoaInterpreter(), new ArrayCache());
 
 $rulerz = new RulerZ\RulerZ(
     $interpreter, [
+        new DoctrineQueryBuilderExecutor(),
         new ArrayExecutor([
             'length' => 'strlen',
         ]),
-        new DoctrineQueryBuilderExecutor(),
     ]
 );
 
@@ -59,4 +59,12 @@ var_dump($rulerz->filter($usersQb, $rule, $parameters));
 var_dump($rulerz->filter($usersArr, $rule, $parameters));
 var_dump($rulerz->filter($usersObj, $rule, $parameters));
 
+
+// check if a target satisfies a rule
+$qb = $entityManager
+    ->createQueryBuilder()
+    ->select('u')
+    ->from('Entity\User', 'u');
+
 var_dump($rulerz->satisfies($usersObj[1], $rule, $parameters));
+var_dump($rulerz->satisfies($qb, $rule, $parameters));
