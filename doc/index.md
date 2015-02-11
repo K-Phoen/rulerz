@@ -11,6 +11,11 @@ composer require 'kphoen/rulerz'
 
 ## Usage
 
- * [Basic usage](usage.md)
+ * [Writing rules](writing_rules.md)
+ * [Using a rule to filter a target](filter.md)
+ * [Checking if a target satisfies a rule](satisfies.md)
+
+## Going further
+
  * [Caching rules](caching_rules.md)
- * [Custom operators](custom_operators.md)
+ * [Defining custom operators](custom_operators.md)
