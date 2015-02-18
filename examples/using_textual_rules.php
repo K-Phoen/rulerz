@@ -1,39 +1,29 @@
 <?php
 
-use Doctrine\Common\Cache\ArrayCache;
-
 use Entity\User;
 use RulerZ\Executor\ArrayExecutor;
 use RulerZ\Executor\DoctrineQueryBuilderExecutor;
 use RulerZ\Interpreter\HoaInterpreter;
-use RulerZ\Interpreter\CachedInterpreter;
 
 $entityManager = require 'bootstrap.php';
-require __DIR__ . '/../vendor/autoload.php';
-
-$interpreter = new CachedInterpreter(new HoaInterpreter(), new ArrayCache());
-//$interpreter = new HoaInterpreter();
 
 $rulerz = new RulerZ\RulerZ(
-    $interpreter, [
+    new HoaInterpreter(), [
         new DoctrineQueryBuilderExecutor(),
-        new ArrayExecutor([
-            'length' => 'strlen',
-        ]),
+        new ArrayExecutor(),
     ]
 );
 
 // 1. Write a rule.
-$rule  = 'group in :groups and points > :points and length(name) > 2';
+$rule  = 'group in :groups and points > :points';
 
-// 2. Filter a collection
+// 2. Define a few targets to filter
+
+// a QueryBuilder
 $usersQb = $entityManager
     ->createQueryBuilder()
     ->select('u')
-    ->from('Entity\User', 'u')
-    ->orderBy('u.name')
-    ->setFirstResult(0)
-    ->setMaxResults(5);
+    ->from('Entity\User', 'u');
 
 // or an array of arrays
 $usersArr = [
@@ -50,10 +40,10 @@ $usersObj = [
 ];
 
 // 3. Enjoy!
-$parameters = array(
+$parameters = [
     'points' => 30,
     'groups' => ['customer', 'guest'],
-);
+];
 
 var_dump($rulerz->filter($usersQb, $rule, $parameters));
 var_dump($rulerz->filter($usersArr, $rule, $parameters));
@@ -61,10 +51,5 @@ var_dump($rulerz->filter($usersObj, $rule, $parameters));
 
 
 // check if a target satisfies a rule
-$qb = $entityManager
-    ->createQueryBuilder()
-    ->select('u')
-    ->from('Entity\User', 'u');
-
 var_dump($rulerz->satisfies($usersObj[1], $rule, $parameters));
-var_dump($rulerz->satisfies($qb, $rule, $parameters));
+var_dump($rulerz->satisfies($usersQb, $rule, $parameters));
