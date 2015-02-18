@@ -63,7 +63,7 @@ class RulerZ
     }
 
     /**
-     * Tells if aa target satisfies the given rule and parameters.
+     * Tells if a target satisfies the given rule and parameters.
      * The executor to use is determined at runtime using the registered ones.
      *
      * @param mixed $target     The target.
