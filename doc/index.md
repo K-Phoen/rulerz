@@ -14,6 +14,7 @@ composer require 'kphoen/rulerz'
  * [Writing rules](writing_rules.md)
  * [Using a rule to filter a target](filter.md)
  * [Checking if a target satisfies a rule](satisfies.md)
+ * [From rules to specifications](specifications.md)
 
 ## Going further
 
