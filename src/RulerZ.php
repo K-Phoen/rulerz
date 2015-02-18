@@ -7,6 +7,7 @@ use Hoa\Ruler\Ruler;
 use RulerZ\Exception\TargetUnsupportedException;
 use RulerZ\Executor\Executor;
 use RulerZ\Interpreter\Interpreter;
+use RulerZ\Spec\Specification;
 
 class RulerZ
 {
@@ -63,6 +64,20 @@ class RulerZ
     }
 
     /**
+     * Filters a target using the given specification.
+     * The executor to use is determined at runtime using the registered ones.
+     *
+     * @param mixed         $target The target to filter.
+     * @param Specification $spec   The specification to apply.
+     *
+     * @return mixed The filtered target.
+     */
+    public function filterSpec($target, Specification $spec)
+    {
+        return $this->filter($target, $spec->getRule(), $spec->getParameters());
+    }
+
+    /**
      * Tells if a target satisfies the given rule and parameters.
      * The executor to use is determined at runtime using the registered ones.
      *
@@ -78,6 +93,20 @@ class RulerZ
         $ast = $this->interpret($rule);
 
         return $executor->satisfies($target, $ast, $parameters);
+    }
+
+    /**
+     * Tells if a target satisfies the given specification.
+     * The executor to use is determined at runtime using the registered ones.
+     *
+     * @param mixed         $target The target.
+     * @param Specification $spec   The specification to use.
+     *
+     * @return boolean
+     */
+    public function satisfiesSpec($target, Specification $spec)
+    {
+        return $this->satisfies($target, $spec->getRule(), $spec->getParameters());
     }
 
     /**

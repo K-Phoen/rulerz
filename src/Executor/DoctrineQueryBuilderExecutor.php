@@ -26,6 +26,7 @@ class DoctrineQueryBuilderExecutor implements Executor
      */
     public function filter($target, Model $rule, array $parameters = [])
     {
+        $target = clone $target;
         $target->andWhere($this->buildWhereClause($target, $rule));
 
         foreach ($parameters as $name => $value) {

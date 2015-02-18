@@ -7,6 +7,7 @@ use PhpSpec\ObjectBehavior;
 
 use RulerZ\Executor\Executor;
 use RulerZ\Interpreter\Interpreter;
+use RulerZ\Spec\Specification;
 
 class RulerZSpec extends ObjectBehavior
 {
@@ -61,6 +62,59 @@ class RulerZSpec extends ObjectBehavior
         $this->beConstructedWith($interpreter, [$executor]);
 
         $this->filter($target, $rule)->shouldReturn($result);
+    }
+
+    function it_can_filter_a_target_with_a_specification(Interpreter $interpreter, Executor $executor, AST $ast, Specification $spec)
+    {
+        $target = $this->getTarget();
+        $result = $this->getResult();
+        $rule   = $this->getRule();
+        $params = [];
+
+        $spec->getRule()->willReturn($rule);
+        $spec->getParameters()->willReturn($params);
+
+        $interpreter->interpret($rule)->willReturn($ast);
+        $executor->supports($target, Executor::MODE_FILTER)->willReturn(true);
+        $executor->filter($target, $ast, $params)->willReturn($result);
+
+        $this->beConstructedWith($interpreter, [$executor]);
+
+        $this->filterSpec($target, $spec)->shouldReturn($result);
+    }
+
+    function it_can_check_if_a_target_satisfies_a_rule(Interpreter $interpreter, Executor $executor, AST $ast)
+    {
+        $target = $this->getTarget();
+        $result = $this->getResult();
+        $rule   = $this->getRule();
+
+        $interpreter->interpret($rule)->willReturn($ast);
+        $executor->supports($target, Executor::MODE_SATISFIES)->willReturn(true);
+        $executor->satisfies($target, $ast, [])->willReturn(true);
+
+        $this->beConstructedWith($interpreter, [$executor]);
+
+        $this->satisfies($target, $rule)->shouldReturn(true);
+    }
+
+    function it_can_check_if_a_target_satisfies_a_specification(Interpreter $interpreter, Executor $executor, AST $ast, Specification $spec)
+    {
+        $target = $this->getTarget();
+        $result = $this->getResult();
+        $rule   = $this->getRule();
+        $params = [];
+
+        $spec->getRule()->willReturn($rule);
+        $spec->getParameters()->willReturn($params);
+
+        $interpreter->interpret($rule)->willReturn($ast);
+        $executor->supports($target, Executor::MODE_SATISFIES)->willReturn(true);
+        $executor->satisfies($target, $ast, $params)->willReturn(true);
+
+        $this->beConstructedWith($interpreter, [$executor]);
+
+        $this->satisfiesSpec($target, $spec)->shouldReturn(true);
     }
 
     function it_cant_filter_without_an_executor()
