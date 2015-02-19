@@ -1,8 +1,31 @@
 RulerZ [![Build Status](https://travis-ci.org/K-Phoen/rulerz.svg?branch=master)](https://travis-ci.org/K-Phoen/rulerz) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/K-Phoen/rulerz/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/K-Phoen/rulerz/?branch=master)
 ======
 
-This library allows to filter multiple types of targets using the same rule
-engine.
+> The central idea of Specification is to separate the statement of how to match
+> a candidate, from the candidate object that it is matched against.
+>
+> Specifications, [explained by Eric Evans and Martin Fowler](http://www.martinfowler.com/apsupp/spec.pdf)
+
+RulerZ is a PHP implementation of the **Specification pattern** which puts the
+emphasis on three main aspects:
+
+ * an easy and **data-agnostic [DSL](http://en.wikipedia.org/wiki/Domain-specific_language)**
+   to define business rules and specifications;
+ * the ability to check if a candidate **satisfies** a specification ;
+ * the ability to filter or **query any datasource** to only retrieve
+   candidates matching a specification.
+
+
+Table of contents
+-----------------
+
+ 1. [Introduction](#introduction) and [rationale](http://blog.kevingomez.fr/2015/02/07/on-taming-repository-classes-in-doctrine-among-other-things/)
+ 2. [Quick usage](#quick-usage)
+ 3. [Installation and documentation](doc/)
+
+
+Introduction
+------------
 
 Rules can be written by using a dedicated language, very close to SQL. Therefore,
 they can be written by a user and saved in a database.
@@ -15,33 +38,19 @@ Currently supported target types:
  * array of objects ;
  * Doctrine ORM QueryBuilder.
 
-There also is a blog post explaining [the motivation behind this
-library](http://blog.kevingomez.fr/2015/02/07/on-taming-repository-classes-in-doctrine-among-other-things/).
 
-Installation
-------------
+Quick usage
+-----------
 
-```
-composer require 'kphoen/rulerz'
-```
-
-Usage
------
+### Using a rule to query a datasource
 
 ```php
-$rulerz = new \RulerZ\RulerZ(
-    new \RulerZ\Interpreter\HoaInterpreter(), [
-        new \RulerZ\Executor\ArrayExecutor([
-            'length' => 'strlen',
-        ]),
-        new \RulerZ\Executor\DoctrineQueryBuilderExecutor(),
-    ]
-);
-
 // 1. Write a rule.
-$rule  = 'group in :groups and points > :points and length(name) > 2';
+$rule  = 'group = "guest" and points > 30';
 
-// 2. Filter a collection
+// 2. Define a few targets to filter data from
+
+// a Doctrine QueryBuilder
 $usersQb = $entityManager
     ->createQueryBuilder()
     ->select('u')
@@ -61,22 +70,13 @@ $usersObj = [
     new User('Al',  'guest', 40),
 ];
 
-// 3. Enjoy!
-$parameters = array(
-    'points' => 30,
-    'groups' => ['customer', 'guest'],
-);
+// 3. And apply your rule on the targets.
 
-var_dump($rulerz->filter($usersQb, $rule, $parameters));
-var_dump($rulerz->filter($usersArr, $rule, $parameters));
-var_dump($rulerz->filter($usersObj, $rule, $parameters));
+$powerGuests = $rulerz->filter($usersQb, $rule);
+$powerGuests = $rulerz->filter($usersArr, $rule);
+$powerGuests = $rulerz->filter($usersObj, $rule);
 ```
 
-Documentation
--------------
-
-The documentation can be found in the `doc` directory. Have a look at the
-[index.md](doc/index.md) if you don't know what you are looking for.
 
 Licence
 -------
