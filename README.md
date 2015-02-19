@@ -12,7 +12,7 @@ emphasis on three main aspects:
  * an easy and **data-agnostic [DSL](http://en.wikipedia.org/wiki/Domain-specific_language)**
    to define business rules and specifications;
  * the ability to check if a candidate **satisfies** a specification ;
- * the ability to filter or **query any datasource** to only retrieve
+ * the ability to **filter or query any datasource** to only retrieve
    candidates matching a specification.
 
 
@@ -21,35 +21,45 @@ Table of contents
 
  1. [Introduction](#introduction) and [rationale](http://blog.kevingomez.fr/2015/02/07/on-taming-repository-classes-in-doctrine-among-other-things/)
  2. [Quick usage](#quick-usage)
- 3. [Installation and documentation](doc/)
+ 3. [Installation and documentation](doc/index.md)
 
 
 Introduction
 ------------
 
-Rules can be written by using a dedicated language, very close to SQL. Therefore,
-they can be written by a user and saved in a database.
+Business rules can be written as text using a dedicated language, very close to
+SQL, in which case we refer to them as *rules* or they can be encapsulated in
+single classes and referred to as *specifications*.
 
-The rule engine used by RulerZ is [hoa/ruler](https://github.com/hoaproject/Ruler).
+Once a rule (or a specification) is written, it can be used to check if a single
+candidate satisfies it or directly to query a datasource.
 
-Currently supported target types:
+The currently supported datasources are:
 
  * array of arrays ;
  * array of objects ;
- * Doctrine ORM QueryBuilder.
+ * Doctrine ORM QueryBuilders.
+
+**Killer feature:** when working with QueryBuilders, RulerZ is able to convert
+rules directly into DQL and does not need to fetch data beforehand.
 
 
 Quick usage
 -----------
 
-### Using a rule to query a datasource
+As a quick overview, we propose to see a little example that manipulates a
+simple rule and several datasources.
+
+The rule described below describes what a "power guest" is (basically, a user
+having more than 42 points and whose group is *guest*).
 
 ```php
-// 1. Write a rule.
-$rule  = 'group = "guest" and points > 30';
+$powerGuestsRule = 'group = "guest" and points > 42';
+```
 
-// 2. Define a few targets to filter data from
+We have as our disposal the following datasources:
 
+```php
 // a Doctrine QueryBuilder
 $usersQb = $entityManager
     ->createQueryBuilder()
@@ -58,28 +68,41 @@ $usersQb = $entityManager
 
 // or an array of arrays
 $usersArr = [
-    ['name' => 'Joe', 'group' => 'guest', 'points' => 40],
-    ['name' => 'Moe', 'group' => 'guest', 'points' => 20],
-    ['name' => 'Al',  'group' => 'guest', 'points' => 40],
+    ['name' => 'Joe', 'group' => 'guest', 'points' => 50],
+    ['name' => 'Moe', 'group' => 'guest', 'points' => 25],
+    ['name' => 'Al',  'group' => 'guest', 'points' => 50],
 ];
 
 // or an array of objects
 $usersObj = [
-    new User('Joe', 'guest', 40),
-    new User('Moe', 'guest', 20),
-    new User('Al',  'guest', 40),
+    new User('Joe', 'guest', 50),
+    new User('Moe', 'guest', 25),
+    new User('Al',  'guest', 50),
 ];
+```
 
-// 3. And apply your rule on the targets.
+#### Using a rule to query a datasource
 
+For any of our datasource, retrieving the *power guests* is as simple as calling
+the `filter` method:
+
+```php
 $powerGuests = $rulerz->filter($usersQb, $rule);
 $powerGuests = $rulerz->filter($usersArr, $rule);
 $powerGuests = $rulerz->filter($usersObj, $rule);
+```
+
+#### Checking if a candidate satisfies a rule
+
+Given a candidate, checking if it satisfies a rule boils down to calling the
+`satisfies` method:
+
+```php
+$isPowerGuest = $rulerz->satisfies($usersObj[0], $rule);
 ```
 
 
 Licence
 -------
 
-This library is under the
-[MIT](https://github.com/K-Phoen/rulerz/blob/master/LICENSE) licence.
+This library is under the [MIT](LICENSE) licence.
