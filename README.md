@@ -110,7 +110,8 @@ Given a candidate, checking if it satisfies a rule boils down to calling the
 $isPowerGuest = $rulerz->satisfies($usersObj[0], $powerGuestsRule);
 ```
 
-### Going further
+Going further
+-------------
 
 Check out [the documentation](doc/index.md) to discover what RulerZ can do for
 you.
