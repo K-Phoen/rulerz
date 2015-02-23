@@ -18,6 +18,11 @@ class ArrayExecutor implements ExtendableExecutor
      */
     private $asserter;
 
+    /**
+     * Constructs the Array executor.
+     *
+     * @param array $operators A list of custom operators to register.
+     */
     public function __construct(array $operators = [])
     {
         $this->asserter = new Asserter();

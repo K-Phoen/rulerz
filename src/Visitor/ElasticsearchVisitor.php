@@ -2,21 +2,13 @@
 
 namespace RulerZ\Visitor;
 
-use Doctrine\ORM\QueryBuilder;
-use Hoa\Core\Consistency\Xcallable;
-use Hoa\Ruler\Exception\Asserter as AsserterException;
 use Hoa\Ruler\Model as AST;
 use Hoa\Visitor\Element as VisitorElement;
 use Hoa\Visitor\Visit as Visitor;
 
 class ElasticsearchVisitor implements Visitor
 {
-    /**
-     * List of operators.
-     *
-     * @var array
-     */
-    private $operators = [];
+    use Polyfill\CustomOperators;
 
     /**
      * List of parameters.
@@ -115,9 +107,7 @@ class ElasticsearchVisitor implements Visitor
      */
     private function visitScalar(AST\Bag\Scalar $element, &$handle = null, $eldnah = null)
     {
-        $value = $element->getValue();
-
-        return is_numeric($value) ? $value : sprintf("'%s'", $value);
+        return $element->getValue();
     }
 
     /**
@@ -131,11 +121,9 @@ class ElasticsearchVisitor implements Visitor
      */
     private function visitArray(AST\Bag\RulerArray $element, &$handle = null, $eldnah = null)
     {
-        $out = array_map(function ($item) use ($handle, $eldnah) {
+        return array_map(function ($item) use ($handle, $eldnah) {
             return $item->accept($this, $handle, $eldnah);
         }, $element->getArray());
-
-        return sprintf('(%s)', implode(', ', $out));
     }
 
     /**
@@ -156,69 +144,6 @@ class ElasticsearchVisitor implements Visitor
         }, $element->getArguments());
 
         return $xcallable->distributeArguments($arguments);
-    }
-
-    /**
-     * Set an operator.
-     *
-     * @param string   $operator    Operator.
-     * @param callable $transformer Callable.
-     *
-     * @return DoctrineQueryBuilderVisitor
-     */
-    public function setOperator($operator, callable $transformer)
-    {
-        $this->operators[$operator] = $transformer;
-
-        return $this;
-    }
-
-    /**
-     * Check if an operator exists.
-     *
-     * @param string $operator Operator.
-     *
-     * @return bool
-     */
-    public function operatorExists($operator)
-    {
-        return true === array_key_exists($operator, $this->operators);
-    }
-
-    /**
-     * Get an operator.
-     *
-     * @param string $operator Operator.
-     *
-     * @return Xcallable
-     */
-    private function getOperator($operator)
-    {
-        if (false === $this->operatorExists($operator)) {
-            throw new AsserterException('Operator "%s" does not exist.', 1, $operator);
-        }
-
-        $handle = &$this->operators[$operator];
-
-        if (!$handle instanceof Xcallable) {
-            $handle = xcallable($handle);
-        }
-
-        return $this->operators[$operator];
-    }
-
-    /**
-     * Return a "*" or "catch all" operator.
-     *
-     * @param Visitor\Element $element The node representing the operator.
-     *
-     * @return Xcallable
-     */
-    private function getStarOperator(AST\Operator $element)
-    {
-        return xcallable(function () use ($element) {
-            return sprintf('%s(%s)', $element->getName(), implode(', ', func_get_args()));
-        });
     }
 
     /**

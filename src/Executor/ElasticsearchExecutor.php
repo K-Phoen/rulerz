@@ -8,15 +8,18 @@ use Hoa\Ruler\Model;
 use RulerZ\Visitor\ElasticsearchVisitor;
 
 /**
- * Execute a rule on an elasticsearch client.
+ * Execute a rule on an Elasticsearch client.
  */
-class ElasticsearchExecutor implements Executor
+class ElasticsearchExecutor implements ExtendableExecutor
 {
-    /**
-     * @var array A list of additionnal operators.
-     */
-    private $operators = [];
+    use Polyfill\ExtendableExecutor;
+    use Polyfill\FilterBasedSatisfaction;
 
+    /**
+     * Constructs the Elasticsearch executor.
+     *
+     * @param array $operators A list of custom operators to register.
+     */
     public function __construct(array $operators = [])
     {
         $this->registerOperators($operators);
@@ -60,14 +63,6 @@ class ElasticsearchExecutor implements Executor
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public function registerOperators(array $operators)
-    {
-        $this->operators = array_merge($this->operators, $operators);
-    }
-
-    /**
      * Builds the search query for the given rule.
      *
      * @param Model $rule       The rule to apply.
@@ -79,7 +74,7 @@ class ElasticsearchExecutor implements Executor
     {
         $searchBuilder = new ElasticsearchVisitor($parameters);
 
-        foreach ($this->operators as $name => $callable) {
+        foreach ($this->getOperators() as $name => $callable) {
             $searchBuilder->setOperator($name, $callable);
         }
 

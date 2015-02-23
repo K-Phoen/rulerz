@@ -10,13 +10,16 @@ use RulerZ\Visitor\DoctrineQueryBuilderVisitor;
 /**
  * Execute a rule on a query builder.
  */
-class DoctrineQueryBuilderExecutor implements Executor
+class DoctrineQueryBuilderExecutor implements ExtendableExecutor
 {
-    /**
-     * @var array A list of additionnal operators.
-     */
-    private $operators = [];
+    use Polyfill\ExtendableExecutor;
+    use Polyfill\FilterBasedSatisfaction;
 
+    /**
+     * Constructs the Doctrine QueryBuilder executor.
+     *
+     * @param array $operators A list of custom operators to register.
+     */
     public function __construct(array $operators = [])
     {
         $this->registerOperators($operators);
@@ -40,40 +43,24 @@ class DoctrineQueryBuilderExecutor implements Executor
     /**
      * {@inheritDoc}
      */
-    public function satisfies($target, Model $rule, array $parameters = [])
-    {
-        return count($this->filter($target, $rule, $parameters)) !== 0;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function supports($target, $mode)
     {
         return $target instanceof QueryBuilder;
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public function registerOperators(array $operators)
-    {
-        $this->operators = array_merge($this->operators, $operators);
-    }
-
-    /**
      * Builds the DQL code for the given rule.
      *
-     * @param mixed $target The target to filter.
-     * @param Model $rule   The rule to apply.
+     * @param QueryBuilder $qb   The QueryBuilder to filter.
+     * @param Model        $rule The rule to apply.
      *
      * @return string The DQL code.
      */
-    private function buildWhereClause($target, Model $rule)
+    private function buildWhereClause(QueryBuilder $qb, Model $rule)
     {
-        $dqlBuilder = new DoctrineQueryBuilderVisitor($target);
+        $dqlBuilder = new DoctrineQueryBuilderVisitor($qb);
 
-        foreach ($this->operators as $name => $callable) {
+        foreach ($this->getOperators() as $name => $callable) {
             $dqlBuilder->setOperator($name, $callable);
         }
 

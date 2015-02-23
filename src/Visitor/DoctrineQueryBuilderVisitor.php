@@ -4,26 +4,22 @@ namespace RulerZ\Visitor;
 
 use Doctrine\ORM\QueryBuilder;
 use Hoa\Core\Consistency\Xcallable;
-use Hoa\Ruler\Exception\Asserter as AsserterException;
 use Hoa\Ruler\Model as AST;
 use Hoa\Visitor\Element as VisitorElement;
 use Hoa\Visitor\Visit as Visitor;
 
+use Exception\OperatorNotFoundException;
+
 class DoctrineQueryBuilderVisitor implements Visitor
 {
+    use Polyfill\CustomOperators;
+
     /**
      * The QueryBuilder to update.
      *
      * @var QueryBuilder
      */
     private $qb;
-
-    /**
-     * List of operators.
-     *
-     * @var array
-     */
-    private $operators = [];
 
     /**
      * Allow star operator.
@@ -174,7 +170,7 @@ class DoctrineQueryBuilderVisitor implements Visitor
     {
         try {
             $xcallable = $this->getOperator($element->getName());
-        } catch (AsserterException $e) {
+        } catch (OperatorNotFoundException $e) {
             if (!$this->allowStarOperator) {
                 throw $e;
             }
@@ -187,55 +183,6 @@ class DoctrineQueryBuilderVisitor implements Visitor
         }, $element->getArguments());
 
         return $xcallable->distributeArguments($arguments);
-    }
-
-    /**
-     * Set an operator.
-     *
-     * @param string   $operator    Operator.
-     * @param callable $transformer Callable.
-     *
-     * @return DoctrineQueryBuilderVisitor
-     */
-    public function setOperator($operator, callable $transformer)
-    {
-        $this->operators[$operator] = $transformer;
-
-        return $this;
-    }
-
-    /**
-     * Check if an operator exists.
-     *
-     * @param string $operator Operator.
-     *
-     * @return bool
-     */
-    public function operatorExists($operator)
-    {
-        return true === array_key_exists($operator, $this->operators);
-    }
-
-    /**
-     * Get an operator.
-     *
-     * @param string $operator Operator.
-     *
-     * @return Xcallable
-     */
-    private function getOperator($operator)
-    {
-        if (false === $this->operatorExists($operator)) {
-            throw new AsserterException('Operator "%s" does not exist.', 1, $operator);
-        }
-
-        $handle = &$this->operators[$operator];
-
-        if (!$handle instanceof Xcallable) {
-            $handle = xcallable($handle);
-        }
-
-        return $this->operators[$operator];
     }
 
     /**
