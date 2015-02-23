@@ -3,12 +3,11 @@
 namespace RulerZ\Visitor;
 
 use Doctrine\ORM\QueryBuilder;
-use Hoa\Core\Consistency\Xcallable;
 use Hoa\Ruler\Model as AST;
 use Hoa\Visitor\Element as VisitorElement;
 use Hoa\Visitor\Visit as Visitor;
 
-use Exception\OperatorNotFoundException;
+use RulerZ\Exception\OperatorNotFoundException;
 
 class DoctrineQueryBuilderVisitor implements Visitor
 {
@@ -200,7 +199,7 @@ class DoctrineQueryBuilderVisitor implements Visitor
      *
      * @param Visitor\Element $element The node representing the operator.
      *
-     * @return Xcallable
+     * @return \Hoa\Core\Consistency\Xcallable
      */
     private function getStarOperator(AST\Operator $element)
     {
