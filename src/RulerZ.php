@@ -49,13 +49,13 @@ class RulerZ
      * Filters a target using the given rule and parameters.
      * The executor to use is determined at runtime using the registered ones.
      *
-     * @param mixed $target     The target to filter.
-     * @param Model $rule       The rule to apply.
-     * @param array $parameters The parameters used in the rule.
+     * @param mixed  $target     The target to filter.
+     * @param string $rule       The rule to apply.
+     * @param array  $parameters The parameters used in the rule.
      *
      * @return mixed The filtered target.
      */
-    public function filter($target, $rule, array $parameters = array())
+    public function filter($target, $rule, array $parameters = [])
     {
         $executor = $this->findExecutor($target, Executor::MODE_FILTER);
         $ast = $this->interpret($rule);
@@ -81,13 +81,13 @@ class RulerZ
      * Tells if a target satisfies the given rule and parameters.
      * The executor to use is determined at runtime using the registered ones.
      *
-     * @param mixed $target     The target.
-     * @param Model $rule       The rule to test.
-     * @param array $parameters The parameters used in the rule.
+     * @param mixed  $target     The target.
+     * @param string $rule       The rule to test.
+     * @param array  $parameters The parameters used in the rule.
      *
      * @return boolean
      */
-    public function satisfies($target, $rule, array $parameters = array())
+    public function satisfies($target, $rule, array $parameters = [])
     {
         $executor = $this->findExecutor($target, Executor::MODE_SATISFIES);
         $ast = $this->interpret($rule);
