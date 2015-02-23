@@ -1,4 +1,5 @@
 <?php
+
 namespace RulerZ\Executor;
 
 use Doctrine\ORM\QueryBuilder;

@@ -30,7 +30,8 @@ The currently supported datasources are:
 
  * array of arrays,
  * array of objects,
- * Doctrine ORM QueryBuilders.
+ * Doctrine ORM QueryBuilders,
+ * Elasticsearch (using the [official client](https://github.com/elasticsearch/elasticsearch-php)).
 
 **Killer feature:** when working with QueryBuilders, RulerZ is able to convert
 rules directly into DQL and does not need to fetch data beforehand.
