@@ -60,6 +60,17 @@ class DoctrineQueryBuilderExecutorSpec extends ObjectBehavior
         $this->filter($qb, $this->getCustomOperatorRule())->shouldReturn('result');
     }
 
+    function it_implicitly_converts_unknown_operators(QueryBuilder $qb, Query $query)
+    {
+        $qb->getQuery()->willReturn($query);
+        $qb->getRootAliases()->willReturn(['u']);
+        $query->getResult()->willReturn('result');
+
+        $qb->andWhere('u.points > 30 AND always_true()')->shouldBeCalled();
+
+        $this->filter($qb, $this->getCustomOperatorRule())->shouldReturn('result');
+    }
+
     private function unsupportedTypes()
     {
         return [

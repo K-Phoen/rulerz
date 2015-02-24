@@ -4,9 +4,11 @@ namespace RulerZ\Executor;
 
 use Hoa\Ruler\Context as ArrayContext;
 use Hoa\Ruler\Model;
+use Hoa\Ruler\Exception\Asserter as AsserterException;
 use Hoa\Ruler\Visitor\Asserter;
 
 use RulerZ\Context\ObjectContext;
+use RulerZ\Exception\OperatorNotFoundException;
 
 /**
  * Execute a rule on an array.
@@ -87,7 +89,15 @@ class ArrayExecutor implements ExtendableExecutor
     {
         $this->asserter->setContext($this->createContext($row, $parameters));
 
-        return $this->asserter->visit($rule);
+        try {
+            return $this->asserter->visit($rule);
+        } catch (AsserterException $e) {
+            if (strpos($e->getMessage(), 'Operator') !== false) {
+                throw new OperatorNotFoundException($e->getArguments()[0], $e->getMessage());
+            }
+
+            throw $e;
+        }
     }
 
     /**

@@ -68,6 +68,13 @@ class ArrayExecutorSpec extends ObjectBehavior
         $this->filter($this->getTarget(), $this->getCustomOperatorRule())->shouldReturn($this->getResult());
     }
 
+    function it_throws_an_exception_when_calling_an_unknown_operator()
+    {
+        $this
+            ->shouldThrow('RulerZ\Exception\OperatorNotFoundException')
+            ->duringFilter($this->getTarget(), $this->getCustomOperatorRule());
+    }
+
     private function getSimpleRule()
     {
         // serialized rule for "points > 30"
