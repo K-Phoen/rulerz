@@ -4,7 +4,7 @@ namespace RulerZ\Visitor\Polyfill;
 
 use Hoa\Core\Consistency\Xcallable;
 
-use Exception\OperatorNotFoundException;
+use RulerZ\Exception\OperatorNotFoundException;
 
 trait CustomOperators
 {
