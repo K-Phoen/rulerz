@@ -88,12 +88,33 @@ class ElasticsearchVisitor implements Visitor
     {
         $name = $element->getId();
 
+        // nested path
+        $dimensions = $element->getDimensions();
+        if (!empty($dimensions)) {
+            return $this->flattenAccessPath($element);
+        }
+
         // parameter
         if ($name[0] === ':') {
             return $this->lookupParameter(substr($name, 1));
         }
 
         return $element->getId();
+    }
+
+    /**
+     * @param AST\Bag\Context $element Element to visit.
+     *
+     * @return string
+     */
+    private function flattenAccessPath(AST\Bag\Context $element)
+    {
+        $flattenedDimensions = [$element->getId()];
+        foreach ($element->getDimensions() as $dimension) {
+            $flattenedDimensions[] = $dimension[1];
+        }
+
+        return implode('.', $flattenedDimensions);
     }
 
     /**
