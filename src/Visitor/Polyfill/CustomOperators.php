@@ -52,7 +52,7 @@ trait CustomOperators
     private function getOperator($operator)
     {
         if (false === $this->operatorExists($operator)) {
-            throw new OperatorNotFoundException($operator, 'Operator "%s" does not exist.');
+            throw new OperatorNotFoundException($operator, sprintf('Operator "%s" does not exist.', $operator));
         }
 
         $handle = &$this->operators[$operator];
