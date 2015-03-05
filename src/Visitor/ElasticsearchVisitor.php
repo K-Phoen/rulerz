@@ -220,7 +220,19 @@ class ElasticsearchVisitor implements Visitor
             ]);
         });
 
+        $this->setOperator('=', function ($a, $b) use ($must) {
+            return $must([
+                'term' => [
+                    $a => $b,
+                ]
+            ]);
+        });
+
         $this->setOperator('not', $mustNot);
+
+        $this->setOperator('match_all', function() {
+            return ['match_all' => []];
+        });
 
         $this->setOperator('>', function ($a, $b) use ($range) {
             return $range($a, $b, 'gt');
