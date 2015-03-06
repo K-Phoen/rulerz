@@ -211,6 +211,11 @@ class ElasticsearchVisitor implements Visitor
         $this->setOperator('and', function ($a, $b) use ($must) {
             return $must([$a, $b]);
         });
+        $this->setOperator('or', function ($a, $b) use ($must) {
+            return [
+                'bool' => ['should' => [$a, $b], 'minimum_should_match' => 1]
+            ];
+        });
 
         $this->setOperator('like', function ($a, $b) use ($must) {
             return $must([
@@ -254,6 +259,19 @@ class ElasticsearchVisitor implements Visitor
             return $mustNot([
                 'terms' => [
                     $a => is_array($b) ? $b : [$b],
+                ]
+            ]);
+        });
+
+        $this->setOperator('in_envelope', function ($a, $b) use ($must) {
+            return $must([
+                'geo_shape' => [
+                    $a => [
+                        'shape' => [
+                            'type'        => 'envelope',
+                            'coordinates' => $b,
+                        ]
+                    ]
                 ]
             ]);
         });
