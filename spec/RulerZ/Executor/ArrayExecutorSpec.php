@@ -57,6 +57,11 @@ class ArrayExecutorSpec extends ObjectBehavior
         $this->filter($target, $this->getSimpleRule())->shouldBeLike($result);
     }
 
+    function it_supports_complex_targets()
+    {
+        $this->satisfies($this->getComplexTarget(), $this->getComplexRule())->shouldReturn(true);
+    }
+
     function it_supports_custom_operators()
     {
         $this->registerOperators([
@@ -97,6 +102,24 @@ class ArrayExecutorSpec extends ObjectBehavior
             ['name' => 'Joe', 'points' => 40],
             ['name' => 'Moe', 'points' => 20],
         ];
+    }
+
+    private function getComplexTarget()
+    {
+        return [
+            'name'  => 'Joe',
+            'stats' => (object) [
+                'score' => 50
+            ]
+        ];
+    }
+
+    public function getComplexRule()
+    {
+        // serialized rule for "stats.score > 40"
+        $rule = 'O:21:"Hoa\\Ruler\\Model\\Model":1:{s:8:"' . "\0" . '*' . "\0" . '_root";O:24:"Hoa\\Ruler\\Model\\Operator":3:{s:8:"' . "\0" . '*' . "\0" . '_name";s:1:">";s:13:"' . "\0" . '*' . "\0" . '_arguments";a:2:{i:0;O:27:"Hoa\\Ruler\\Model\\Bag\\Context":2:{s:6:"' . "\0" . '*' . "\0" . '_id";s:5:"stats";s:14:"' . "\0" . '*' . "\0" . '_dimensions";a:1:{i:0;a:2:{i:0;i:1;i:1;s:5:"score";}}}i:1;O:26:"Hoa\\Ruler\\Model\\Bag\\Scalar":1:{s:9:"' . "\0" . '*' . "\0" . '_value";i:40;}}s:12:"' . "\0" . '*' . "\0" . '_function";b:0;}}';
+
+        return unserialize($rule);
     }
 
     private function getResult()

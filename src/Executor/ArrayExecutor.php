@@ -5,10 +5,10 @@ namespace RulerZ\Executor;
 use Hoa\Ruler\Context as ArrayContext;
 use Hoa\Ruler\Model;
 use Hoa\Ruler\Exception\Asserter as AsserterException;
-use Hoa\Ruler\Visitor\Asserter;
 
 use RulerZ\Context\ObjectContext;
 use RulerZ\Exception\OperatorNotFoundException;
+use RulerZ\Visitor\ArrayVisitor;
 
 /**
  * Execute a rule on an array.
@@ -16,7 +16,7 @@ use RulerZ\Exception\OperatorNotFoundException;
 class ArrayExecutor implements ExtendableExecutor
 {
     /**
-     * @var Asserter
+     * @var ArrayVisitor
      */
     private $asserter;
 
@@ -27,7 +27,7 @@ class ArrayExecutor implements ExtendableExecutor
      */
     public function __construct(array $operators = [])
     {
-        $this->asserter = new Asserter();
+        $this->asserter = new ArrayVisitor();
 
         $this->registerOperators($operators);
     }
