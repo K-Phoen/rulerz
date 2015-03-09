@@ -224,6 +224,8 @@ class ElasticsearchVisitor implements Visitor
                 ]
             ]);
         });
+        $this->setOperator('has', $this->getOperator('like'));
+        $this->setOperator('in', $this->getOperator('like'));
 
         $this->setOperator('=', function ($a, $b) use ($must) {
             return $must([
