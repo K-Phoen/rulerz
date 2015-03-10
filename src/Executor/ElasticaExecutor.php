@@ -2,6 +2,7 @@
 
 namespace RulerZ\Executor;
 
+use Elastica\Search;
 use Elastica\SearchableInterface as ElasticaSearchable;
 use FOS\ElasticaBundle\Finder\TransformedFinder;
 use Hoa\Ruler\Model;
@@ -33,7 +34,7 @@ class ElasticaExecutor implements ExtendableExecutor
     {
         $searchQuery = $this->buildSearchQuery($rule, $parameters);
 
-        if ($target instanceof ElasticaSearchable) {
+        if ($target instanceof ElasticaSearchable || $target instanceof Search) {
             return $target->search(['query' => $searchQuery]);
         }
 
@@ -53,7 +54,7 @@ class ElasticaExecutor implements ExtendableExecutor
      */
     public function supports($target, $mode)
     {
-        return $target instanceof ElasticaSearchable || $target instanceof TransformedFinder;
+        return $target instanceof ElasticaSearchable || $target instanceof TransformedFinder || $target instanceof Search;
     }
 
     /**
