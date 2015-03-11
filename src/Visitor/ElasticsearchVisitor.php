@@ -219,13 +219,19 @@ class ElasticsearchVisitor implements Visitor
 
         $this->setOperator('like', function ($a, $b) use ($must) {
             return $must([
+                'match' => [
+                    $a => is_array($b) ? implode(' ', $b) : $b,
+                ]
+            ]);
+        });
+        $this->setOperator('has', function ($a, $b) use ($must) {
+            return $must([
                 'terms' => [
                     $a => is_array($b) ? $b : [$b],
                 ]
             ]);
         });
-        $this->setOperator('has', $this->getOperator('like'));
-        $this->setOperator('in', $this->getOperator('like'));
+        $this->setOperator('in', $this->getOperator('has'));
 
         $this->setOperator('=', function ($a, $b) use ($must) {
             return $must([
