@@ -27,7 +27,7 @@
         "elasticsearch/elasticsearch": "~1.0",
         "phpspec/phpspec": "~2.0"
     },
-    "suggests": {
+    "suggest": {
         "doctrine/cache": "To cache rules.",
         "doctrine/orm": "To execute rules as Doctrine queries",
         "elasticsearch/elasticsearch": "To execute rules as Elasticsearch queries"
