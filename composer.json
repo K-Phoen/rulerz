@@ -18,6 +18,7 @@
         "psr-4": { "Entity\\": "examples/entities/", "SampleSpecs\\": "examples/specs/" }
     },
     "require": {
+        "php": ">=5.4",
         "hoa/ruler": "~1.0",
         "symfony/property-access": "~2.3"
     },
