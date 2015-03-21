@@ -2,6 +2,8 @@
 
 namespace RulerZ\Spec;
 
+use RulerZ\Exception\ParameterOverridenException;
+
 class Composite implements Specification
 {
     /**
@@ -44,9 +46,32 @@ class Composite implements Specification
      */
     public function getParameters()
     {
-        return call_user_func_array('array_merge', array_map(function (Specification $specification) {
+        $parametersCount = 0;
+
+        $parametersList = array_map(function (Specification $specification) use (&$parametersCount) {
+            $parametersCount += count($specification->getParameters());
+
             return $specification->getParameters();
-        }, $this->specifications));
+        }, $this->specifications);
+
+        $mergedParameters = call_user_func_array('array_merge', $parametersList);
+
+        // error handling in case of overriden parameters
+        if ($parametersCount !== count($mergedParameters)) {
+            $overridenParameters = $this->searchOverridenParameters($parametersList, $mergedParameters);
+            $specificationsTypes = array_map(function(Specification $spec) {
+                return get_class($spec);
+            }, $this->specifications);
+
+            throw new ParameterOverridenException(sprintf(
+                'Looks like some parameters were overriden (%s) while combining specifications of types %s' . "\n" .
+                'More information on how to solve this can be found here: https://github.com/K-Phoen/rulerz/issues/3',
+                implode(', ', $overridenParameters),
+                implode(', ', $specificationsTypes)
+            ));
+        }
+
+        return $mergedParameters;
     }
 
     /**
@@ -57,5 +82,34 @@ class Composite implements Specification
     public function addSpecification(Specification $specification)
     {
         $this->specifications[] = $specification;
+    }
+
+    /**
+     * Search the parameters that were overriden during the parameters-merge phase.
+     *
+     * @param array $parametersList
+     * @param array $mergedParameters
+     *
+     * @return array Names of the overriden parameters.
+     */
+    private function searchOverridenParameters(array $parametersList, array $mergedParameters)
+    {
+        $parametersUsageCount = [];
+
+        foreach ($parametersList as $list) {
+            foreach (array_keys($list) as $parameter) {
+                if (!isset($parametersUsageCount[$parameter])) {
+                    $parametersUsageCount[$parameter] = 0;
+                }
+
+                $parametersUsageCount[$parameter] += 1;
+            }
+        }
+
+        $overridenParameters = array_filter($parametersUsageCount, function($count) {
+            return $count > 1;
+        });
+
+        return array_keys($overridenParameters);
     }
 }

@@ -45,4 +45,20 @@ class AndXSpec extends ObjectBehavior
             'bar' => 'baz',
         ]);
     }
+
+    function it_detects_parameter_collisions(Specification $spec, Specification $otherSpec)
+    {
+        $spec->getParameters()->willReturn([
+            'foo' => 'bar',
+        ]);
+        $otherSpec->getParameters()->willReturn([
+            'foo' => 'baz',
+        ]);
+
+        $this->beConstructedWith([$spec, $otherSpec]);
+
+        $this
+            ->shouldThrow('RulerZ\Exception\ParameterOverridenException')
+            ->duringGetParameters();
+    }
 }
