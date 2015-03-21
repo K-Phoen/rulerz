@@ -30,6 +30,8 @@
         "doctrine/cache": "~1.0",
         "elasticsearch/elasticsearch": "~1.0",
         "ruflin/elastica": "~1.0",
+        "pomm-project/model-manager": "2.0.*@dev",
+        "pomm-project/foundation": "2.0.*@dev",
 
         "coduo/phpspec-data-provider-extension": "~1.0",
         "phpspec/phpspec": "~2.0"
