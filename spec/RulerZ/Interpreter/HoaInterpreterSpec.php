@@ -41,6 +41,7 @@ class HoaInterpreterSpec extends ObjectBehavior
             [ 'distance(lat1, long1, lat2, long2) < 50' ],
             [ 'name = :user_name' ], // should not be allowed
             [ 'name = ?' ],
+            [ 'points > 30 and group = "member"' ],
         ];
     }
 
@@ -49,6 +50,7 @@ class HoaInterpreterSpec extends ObjectBehavior
         return [
             [ '> 30' ],
             [ 'name[0] = "a"' ],
+            [ 'name.foo() = "a"' ],
         ];
     }
 }

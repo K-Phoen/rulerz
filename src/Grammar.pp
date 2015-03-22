@@ -93,7 +93,7 @@ variable:
     <identifier> ( object_access() #variable_access )*
 
 object_access:
-    ::dot:: ( <identifier> #attribute_access | function_call() #method_access )
+    ::dot:: <identifier> #attribute_access
 
 #array_declaration:
     ::bracket_:: value() ( ::comma:: value() )* ::_bracket::
