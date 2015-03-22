@@ -17,6 +17,9 @@
     "autoload-dev": {
         "psr-4": { "Entity\\": "examples/entities/", "SampleSpecs\\": "examples/specs/" }
     },
+    "config": {
+        "bin-dir": "bin/"
+    },
     "require": {
         "php": ">=5.4",
         "hoa/ruler": "~1.0",
