@@ -1,0 +1,3 @@
+formatter.name: dot
+extensions:
+  - Coduo\PhpSpec\DataProvider\DataProviderExtension
