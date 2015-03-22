@@ -28,7 +28,7 @@ class HoaInterpreter implements Interpreter
     public function __construct()
     {
         $this->compiler = Compiler\Llk::load(
-            new File\Read('hoa://Library/Ruler/Grammar.pp')
+            new File\Read(__DIR__ .'/../Grammar.pp')
         );
         $this->interpreter = new RulerInterpreter();
     }
