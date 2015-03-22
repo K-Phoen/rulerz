@@ -90,10 +90,7 @@ value:
   | function_call()
 
 variable:
-    <identifier> ( ( array_access() | object_access() ) #variable_access )*
-
-#array_access:
-    ::bracket_:: value() ::_bracket::
+    <identifier> ( object_access() #variable_access )*
 
 object_access:
     ::dot:: ( <identifier> #attribute_access | function_call() #method_access )

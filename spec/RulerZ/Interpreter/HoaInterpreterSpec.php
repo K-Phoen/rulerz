@@ -20,9 +20,12 @@ class HoaInterpreterSpec extends ObjectBehavior
         $this->interpret($rule)->shouldHaveType('Hoa\Ruler\Model');
     }
 
-    function it_throws_an_exception_for_an_invalid_rule()
+    /**
+     * @dataProvider invalidRules
+     */
+    function it_throws_an_exception_for_an_invalid_rule($rule)
     {
-        $this->shouldThrow('Hoa\Compiler\Exception')->duringInterpret('> and');
+        $this->shouldThrow('Hoa\Compiler\Exception')->duringInterpret($rule);
     }
 
     public function validRules()
@@ -38,7 +41,14 @@ class HoaInterpreterSpec extends ObjectBehavior
             [ 'distance(lat1, long1, lat2, long2) < 50' ],
             [ 'name = :user_name' ], // should not be allowed
             [ 'name = ?' ],
-            [ 'name[0] = "a"' ], // should not be allowed
+        ];
+    }
+
+    public function invalidRules()
+    {
+        return [
+            [ '> 30' ],
+            [ 'name[0] = "a"' ],
         ];
     }
 }
