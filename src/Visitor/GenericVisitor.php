@@ -9,6 +9,9 @@ use Hoa\Visitor\Visit as Visitor;
 
 use RulerZ\Exception\OperatorNotFoundException;
 
+/**
+ * Generic visitor intended to be extended.
+ */
 abstract class GenericVisitor implements RuleVisitor
 {
     /**
