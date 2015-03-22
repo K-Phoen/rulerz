@@ -2,7 +2,6 @@
 
 namespace RulerZ\Executor;
 
-use PommProject\ModelManager\Model\Model as ModelQuery;
 use Hoa\Ruler\Model;
 
 use RulerZ\Visitor\PommVisitor;
@@ -40,7 +39,14 @@ class PommExecutor implements ExtendableExecutor
      */
     public function supports($target, $mode)
     {
-        return $target instanceof ModelQuery;
+        if (!is_object($target)) {
+            return false;
+        }
+
+        $usedTraits = class_uses($target);
+
+        return in_array('PommProject\ModelManager\Model\ModelTrait\WriteQueries', $usedTraits)
+            || in_array('PommProject\ModelManager\Model\ModelTrait\ReadQueries', $usedTraits);
     }
 
     /**
@@ -53,7 +59,7 @@ class PommExecutor implements ExtendableExecutor
      */
     private function buildSearchQuery(Model $rule, array $parameters)
     {
-        $searchBuilder = new PommVisitor($parameters);
+        $searchBuilder = new PommVisitor();
 
         foreach ($this->getOperators() as $name => $callable) {
             $searchBuilder->setOperator($name, $callable);

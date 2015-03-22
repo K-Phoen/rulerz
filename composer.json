@@ -15,7 +15,7 @@
         "psr-4": { "RulerZ\\": "src/" }
     },
     "autoload-dev": {
-        "psr-4": { "Entity\\": "examples/entities/", "SampleSpecs\\": "examples/specs/" }
+        "psr-4": { "Entity\\": "examples/entities/", "SampleSpecs\\": "examples/specs/", "RulerZ\\Stub\\": "stub/" }
     },
     "config": {
         "bin-dir": "bin/"
@@ -39,6 +39,7 @@
     "suggest": {
         "doctrine/cache": "To cache rules.",
         "doctrine/orm": "To execute rules as Doctrine queries",
-        "elasticsearch/elasticsearch": "To execute rules as Elasticsearch queries"
+        "elasticsearch/elasticsearch": "To execute rules as Elasticsearch queries",
+        "pomm-project/foundation": "To execute rules as Pomm queries"
     }
 }
