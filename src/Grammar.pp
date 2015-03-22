@@ -31,15 +31,13 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Grammar \Hoa\Ruler\Grammar.
-//
-// Provide grammar for ruler.
+// Inspired from \Hoa\Ruler\Grammar.
 //
 // @author     Stéphane Py <stephane.py@hoa-project.net>
 // @author     Ivan Enderlin <ivan.enderlin@hoa-project.net>
-// @copyright  Copyright © 2007-2015 Stéphane Py, Ivan Enderlin.
+// @author     Kévin Gomez <contact@kevingomez.fr>
+// @copyright  Copyright © 2007-2015 Stéphane Py, Ivan Enderlin, Kévin Gomez.
 // @license    New BSD License
-//
 
 
 %skip   space         \s
