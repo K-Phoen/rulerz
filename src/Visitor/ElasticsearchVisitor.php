@@ -3,13 +3,9 @@
 namespace RulerZ\Visitor;
 
 use Hoa\Ruler\Model as AST;
-use Hoa\Visitor\Element as VisitorElement;
-use Hoa\Visitor\Visit as Visitor;
 
-class ElasticsearchVisitor implements Visitor
+class ElasticsearchVisitor extends GenericVisitor
 {
-    use Polyfill\CustomOperators;
-
     /**
      * List of parameters.
      *
@@ -28,63 +24,9 @@ class ElasticsearchVisitor implements Visitor
     }
 
     /**
-     * Visit an element.
-     *
-     * @param \VisitorElement $element Element to visit.
-     * @param mixed           &$handle Handle (reference).
-     * @param mixed           $eldnah  Handle (not reference).
-     *
-     * @return string The DQL code for the given rule.
+     * {@inheritDoc}
      */
-    public function visit(VisitorElement $element, &$handle = null, $eldnah = null)
-    {
-        if ($element instanceof AST\Model) {
-            return $this->visitModel($element, $handle, $eldnah);
-        }
-
-        if ($element instanceof AST\Operator) {
-            return $this->visitOperator($element, $handle, $eldnah);
-        }
-
-        if ($element instanceof AST\Bag\Scalar) {
-            return $this->visitScalar($element, $handle, $eldnah);
-        }
-
-        if ($element instanceof AST\Bag\RulerArray) {
-            return $this->visitArray($element, $handle, $eldnah);
-        }
-
-        if ($element instanceof AST\Bag\Context) {
-            return $this->visitContext($element, $handle, $eldnah);
-        }
-
-        throw new \LogicException(sprintf('Element of type "%s" not handled', get_class($element)));
-    }
-
-    /**
-     * Visit a model
-     *
-     * @param AST\Model $element Element to visit.
-     * @param mixed     &$handle Handle (reference).
-     * @param mixed     $eldnah  Handle (not reference).
-     *
-     * @return string
-     */
-    public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
-    {
-        return $element->getExpression()->accept($this, $handle, $eldnah);
-    }
-
-    /**
-     * Visit a context (ie: a column access or a parameter)
-     *
-     * @param AST\Bag\Context $element Element to visit.
-     * @param mixed           &$handle Handle (reference).
-     * @param mixed           $eldnah  Handle (not reference).
-     *
-     * @return string
-     */
-    private function visitContext(AST\Bag\Context $element, &$handle = null, $eldnah = null)
+    public function visitAccess(AST\Bag\Context $element)
     {
         $name = $element->getId();
 
@@ -115,56 +57,6 @@ class ElasticsearchVisitor implements Visitor
         }
 
         return implode('.', $flattenedDimensions);
-    }
-
-    /**
-     * Visit a scalar
-     *
-     * @param AST\Bag\Scalar $element Element to visit.
-     * @param mixed          &$handle Handle (reference).
-     * @param mixed          $eldnah  Handle (not reference).
-     *
-     * @return string
-     */
-    private function visitScalar(AST\Bag\Scalar $element, &$handle = null, $eldnah = null)
-    {
-        return $element->getValue();
-    }
-
-    /**
-     * Visit an array
-     *
-     * @param AST\Bag\RulerArray $element Element to visit.
-     * @param mixed              &$handle Handle (reference).
-     * @param mixed              $eldnah  Handle (not reference).
-     *
-     * @return string
-     */
-    private function visitArray(AST\Bag\RulerArray $element, &$handle = null, $eldnah = null)
-    {
-        return array_map(function ($item) use ($handle, $eldnah) {
-            return $item->accept($this, $handle, $eldnah);
-        }, $element->getArray());
-    }
-
-    /**
-     * Visit an operator
-     *
-     * @param AST\Operator $element Element to visit.
-     * @param mixed        &$handle Handle (reference).
-     * @param mixed        $eldnah  Handle (not reference).
-     *
-     * @return string
-     */
-    private function visitOperator(AST\Operator $element, &$handle = null, $eldnah = null)
-    {
-        $xcallable = $this->getOperator($element->getName());
-
-        $arguments = array_map(function ($argument) use ($handle, $eldnah) {
-            return $argument->accept($this, $handle, $eldnah);
-        }, $element->getArguments());
-
-        return $xcallable->distributeArguments($arguments);
     }
 
     /**
