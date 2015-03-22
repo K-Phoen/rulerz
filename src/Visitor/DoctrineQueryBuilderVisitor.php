@@ -4,28 +4,24 @@ namespace RulerZ\Visitor;
 
 use Doctrine\ORM\QueryBuilder;
 use Hoa\Ruler\Model as AST;
-use Hoa\Visitor\Element as VisitorElement;
-use Hoa\Visitor\Visit as Visitor;
 
 use RulerZ\Exception\OperatorNotFoundException;
 
-class DoctrineQueryBuilderVisitor implements Visitor
+class DoctrineQueryBuilderVisitor extends GenericVisitor
 {
-    use Polyfill\CustomOperators;
-
     /**
      * The QueryBuilder to update.
      *
      * @var QueryBuilder
      */
-    private $qb;
+    public $qb;
 
     /**
      * Allow star operator.
      *
      * @var bool
      */
-    private $allowStarOperator = true;
+    public $allowStarOperator = true;
 
     /**
      * Constructor.
@@ -38,79 +34,25 @@ class DoctrineQueryBuilderVisitor implements Visitor
         $this->qb = $qb;
         $this->allowStarOperator = (bool) $allowStarOperator;
 
-        $this->setOperator('and', function ($a, $b) { return sprintf('%s AND %s', $a, $b); });
-        $this->setOperator('or', function ($a, $b) { return sprintf('%s OR %s', $a, $b); });
+        $this->setOperator('and',  function ($a, $b) { return sprintf('%s AND %s', $a, $b); });
+        $this->setOperator('or',   function ($a, $b) { return sprintf('%s OR %s', $a, $b); });
         //$this->setOperator('xor', function ($a, $b) { return (bool) ($a ^ $b); });
-        $this->setOperator('not', function ($a) { return sprintf('NOT (%s)', $a); });
-        $this->setOperator('=', function ($a, $b) { return sprintf('%s = %s', $a, $b); });
-        $this->setOperator('!=', function ($a, $b) { return sprintf('%s != %s', $a, $b); });
+        $this->setOperator('not',  function ($a) {     return sprintf('NOT (%s)', $a); });
+        $this->setOperator('=',    function ($a, $b) { return sprintf('%s = %s', $a, $b); });
+        $this->setOperator('!=',   function ($a, $b) { return sprintf('%s != %s', $a, $b); });
         //$this->setOperator('is',  $this->getOperator('='));
-        $this->setOperator('>',   function ($a, $b) { return sprintf('%s > %s', $a,  $b); });
+        $this->setOperator('>',    function ($a, $b) { return sprintf('%s > %s', $a,  $b); });
         $this->setOperator('>=',   function ($a, $b) { return sprintf('%s >= %s', $a,  $b); });
-        $this->setOperator('<',   function ($a, $b) { return sprintf('%s < %s', $a,  $b); });
+        $this->setOperator('<',    function ($a, $b) { return sprintf('%s < %s', $a,  $b); });
         $this->setOperator('<=',   function ($a, $b) { return sprintf('%s <= %s', $a,  $b); });
-        $this->setOperator('in',  function ($a, $b) { return sprintf('%s IN %s', $a, $b[0] === '(' ? $b : '('.$b.')'); });
-        $this->setOperator('like',  function ($a, $b) { return sprintf('%s LIKE %s', $a, $b); });
+        $this->setOperator('in',   function ($a, $b) { return sprintf('%s IN %s', $a, $b[0] === '(' ? $b : '('.$b.')'); });
+        $this->setOperator('like', function ($a, $b) { return sprintf('%s LIKE %s', $a, $b); });
     }
 
     /**
-     * Visit an element.
-     *
-     * @param \VisitorElement $element Element to visit.
-     * @param mixed           &$handle Handle (reference).
-     * @param mixed           $eldnah  Handle (not reference).
-     *
-     * @return string The DQL code for the given rule.
+     * {@inheritDoc}
      */
-    public function visit(VisitorElement $element, &$handle = null, $eldnah = null)
-    {
-        if ($element instanceof AST\Model) {
-            return $this->visitModel($element, $handle, $eldnah);
-        }
-
-        if ($element instanceof AST\Operator) {
-            return $this->visitOperator($element, $handle, $eldnah);
-        }
-
-        if ($element instanceof AST\Bag\Scalar) {
-            return $this->visitScalar($element, $handle, $eldnah);
-        }
-
-        if ($element instanceof AST\Bag\RulerArray) {
-            return $this->visitArray($element, $handle, $eldnah);
-        }
-
-        if ($element instanceof AST\Bag\Context) {
-            return $this->visitContext($element, $handle, $eldnah);
-        }
-
-        throw new \LogicException(sprintf('Element of type "%s" not handled', get_class($element)));
-    }
-
-    /**
-     * Visit a model
-     *
-     * @param AST\Model $element Element to visit.
-     * @param mixed     &$handle Handle (reference).
-     * @param mixed     $eldnah  Handle (not reference).
-     *
-     * @return string
-     */
-    public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
-    {
-        return $element->getExpression()->accept($this, $handle, $eldnah);
-    }
-
-    /**
-     * Visit a context (ie: a column access or a parameter)
-     *
-     * @param AST\Bag\Context $element Element to visit.
-     * @param mixed           &$handle Handle (reference).
-     * @param mixed           $eldnah  Handle (not reference).
-     *
-     * @return string
-     */
-    private function visitContext(AST\Bag\Context $element, &$handle = null, $eldnah = null)
+    public function visitAccess(AST\Bag\Context $element)
     {
         $name = $element->getId();
 
@@ -123,15 +65,9 @@ class DoctrineQueryBuilderVisitor implements Visitor
     }
 
     /**
-     * Visit a scalar
-     *
-     * @param AST\Bag\Scalar $element Element to visit.
-     * @param mixed          &$handle Handle (reference).
-     * @param mixed          $eldnah  Handle (not reference).
-     *
-     * @return string
+     * {@inheritDoc}
      */
-    private function visitScalar(AST\Bag\Scalar $element, &$handle = null, $eldnah = null)
+    public function visitScalar(AST\Bag\Scalar $element)
     {
         $value = $element->getValue();
 
@@ -139,33 +75,21 @@ class DoctrineQueryBuilderVisitor implements Visitor
     }
 
     /**
-     * Visit an array
-     *
-     * @param AST\Bag\RulerArray $element Element to visit.
-     * @param mixed              &$handle Handle (reference).
-     * @param mixed              $eldnah  Handle (not reference).
-     *
-     * @return string
+     * {@inheritDoc}
      */
-    private function visitArray(AST\Bag\RulerArray $element, &$handle = null, $eldnah = null)
+    public function visitArray(AST\Bag\RulerArray $element)
     {
-        $out = array_map(function ($item) use ($handle, $eldnah) {
-            return $item->accept($this, $handle, $eldnah);
+        $out = array_map(function ($item) {
+            return $item->accept($this);
         }, $element->getArray());
 
         return sprintf('(%s)', implode(', ', $out));
     }
 
     /**
-     * Visit an operator
-     *
-     * @param AST\Operator $element Element to visit.
-     * @param mixed        &$handle Handle (reference).
-     * @param mixed        $eldnah  Handle (not reference).
-     *
-     * @return string
+     * {@inheritDoc}
      */
-    private function visitOperator(AST\Operator $element, &$handle = null, $eldnah = null)
+    public function visitOperator(AST\Operator $element)
     {
         try {
             $xcallable = $this->getOperator($element->getName());
@@ -177,8 +101,8 @@ class DoctrineQueryBuilderVisitor implements Visitor
             $xcallable = $this->getStarOperator($element);
         }
 
-        $arguments = array_map(function ($argument) use ($handle, $eldnah) {
-            return $argument->accept($this, $handle, $eldnah);
+        $arguments = array_map(function ($argument) {
+            return $argument->accept($this);
         }, $element->getArguments());
 
         return $xcallable->distributeArguments($arguments);
