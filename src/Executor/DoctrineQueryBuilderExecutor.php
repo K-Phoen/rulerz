@@ -59,10 +59,7 @@ class DoctrineQueryBuilderExecutor implements ExtendableExecutor
     private function buildWhereClause(QueryBuilder $qb, Model $rule)
     {
         $dqlBuilder = new DoctrineQueryBuilderVisitor($qb);
-
-        foreach ($this->getOperators() as $name => $callable) {
-            $dqlBuilder->setOperator($name, $callable);
-        }
+        $dqlBuilder->setOperators($this->getOperators());
 
         return $dqlBuilder->visit($rule);
     }

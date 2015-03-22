@@ -60,10 +60,7 @@ class ElasticaExecutor implements ExtendableExecutor
     private function buildSearchQuery(Model $rule, array $parameters)
     {
         $searchBuilder = new ElasticsearchVisitor($parameters);
-
-        foreach ($this->getOperators() as $name => $callable) {
-            $searchBuilder->setOperator($name, $callable);
-        }
+        $searchBuilder->setOperators($this->getOperators());
 
         return $searchBuilder->visit($rule);
     }

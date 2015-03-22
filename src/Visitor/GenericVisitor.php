@@ -109,6 +109,22 @@ abstract class GenericVisitor implements RuleVisitor
     }
 
     /**
+     * Add operators.
+     *
+     * @param array $operators A list of operators to add.
+     *
+     * @return self
+     */
+    public function setOperators(array $operators)
+    {
+        foreach ($operators as $name => $callable) {
+            $this->setOperator($name, $callable);
+        }
+
+        return $this;
+    }
+
+    /**
      * Set an operator.
      *
      * @param string   $operator    Operator.
