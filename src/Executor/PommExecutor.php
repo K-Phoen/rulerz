@@ -29,7 +29,7 @@ class PommExecutor implements ExtendableExecutor
      */
     public function filter($target, Model $rule, array $parameters = [])
     {
-        $searchQuery = $this->buildSearchQuery($rule, $parameters);
+        $searchQuery = $this->buildSearchQuery($rule);
 
         return $target->findWhere($searchQuery, $parameters);
     }
@@ -52,12 +52,11 @@ class PommExecutor implements ExtendableExecutor
     /**
      * Builds the search query for the given rule.
      *
-     * @param Model $rule       The rule to apply.
-     * @param array $parameters The search parameters.
+     * @param Model $rule The rule to apply.
      *
-     * @return array The search.
+     * @return string The search.
      */
-    private function buildSearchQuery(Model $rule, array $parameters)
+    private function buildSearchQuery(Model $rule)
     {
         $searchBuilder = new PommVisitor();
 
