@@ -44,14 +44,6 @@ class ElasticaExecutor implements ExtendableExecutor
     /**
      * {@inheritDoc}
      */
-    public function satisfies($target, Model $rule, array $parameters = [])
-    {
-        return count($this->filter($target, $rule, $parameters)) !== 0;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function supports($target, $mode)
     {
         return $target instanceof ElasticaSearchable || $target instanceof TransformedFinder || $target instanceof Search;
