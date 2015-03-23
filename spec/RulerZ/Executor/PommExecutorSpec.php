@@ -3,6 +3,7 @@
 namespace spec\RulerZ\Executor;
 
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 use RulerZ\Executor\Executor;
 use RulerZ\Stub\ModelStub;
@@ -33,7 +34,9 @@ class PommExecutorSpec extends ObjectBehavior
 
     function it_can_filter_a_clause_with_a_rule(ModelStub $query)
     {
-        $query->findWhere('points > 30', [])->willReturn('result');
+        $query->findWhere(Argument::that(function($where) {
+            return (string) $where === 'points > 30';
+        }))->willReturn('result');
 
         $this->filter($query, $this->getSimpleRule())->shouldReturn('result');
     }
@@ -46,14 +49,18 @@ class PommExecutorSpec extends ObjectBehavior
             }
         ]);
 
-        $query->findWhere('points > 30 AND 1 = 1', [])->willReturn('result');
+        $query->findWhere(Argument::that(function($where) {
+            return (string) $where === '(points > 30 AND 1 = 1)';
+        }))->willReturn('result');
 
         $this->filter($query, $this->getCustomOperatorRule())->shouldReturn('result');
     }
 
     function it_implicitly_converts_unknown_operators(ModelStub $query)
     {
-        $query->findWhere('points > 30 AND always_true()', [])->willReturn('result');
+        $query->findWhere(Argument::that(function($where) {
+            return (string) $where === '(points > 30 AND always_true())';
+        }))->willReturn('result');
 
         $this->filter($query, $this->getCustomOperatorRule())->shouldReturn('result');
     }

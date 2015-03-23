@@ -16,7 +16,7 @@ abstract class SqlVisitor extends GenericVisitor
      *
      * @var bool
      */
-    private $allowStarOperator = true;
+    protected $allowStarOperator = true;
 
     /**
      * Constructor.
@@ -33,7 +33,7 @@ abstract class SqlVisitor extends GenericVisitor
     /**
      * {@inheritDoc}
      */
-    public function visitScalar(AST\Bag\Scalar $element)
+    public function visitScalar(AST\Bag\Scalar $element, &$handle = null, $eldnah = null)
     {
         $value = $element->getValue();
 
@@ -43,19 +43,17 @@ abstract class SqlVisitor extends GenericVisitor
     /**
      * {@inheritDoc}
      */
-    public function visitArray(AST\Bag\RulerArray $element)
+    public function visitArray(AST\Bag\RulerArray $element, &$handle = null, $eldnah = null)
     {
-        $out = array_map(function ($item) {
-            return $item->accept($this);
-        }, $element->getArray());
+        $array = parent::visitArray($element, $handle, $eldnah);
 
-        return sprintf('(%s)', implode(', ', $out));
+        return sprintf('(%s)', implode(', ', $array));
     }
 
     /**
      * {@inheritDoc}
      */
-    public function visitOperator(AST\Operator $element)
+    public function visitOperator(AST\Operator $element, &$handle = null, $eldnah = null)
     {
         try {
             $xcallable = $this->getOperator($element->getName());
@@ -67,8 +65,8 @@ abstract class SqlVisitor extends GenericVisitor
             $xcallable = $this->getStarOperator($element);
         }
 
-        $arguments = array_map(function ($argument) {
-            return $argument->accept($this);
+        $arguments = array_map(function ($argument) use (&$handle, $eldnah) {
+            return $argument->accept($this, $handle, $eldnah);
         }, $element->getArguments());
 
         return $xcallable->distributeArguments($arguments);
@@ -81,7 +79,7 @@ abstract class SqlVisitor extends GenericVisitor
      *
      * @return \Hoa\Core\Consistency\Xcallable
      */
-    private function getStarOperator(AST\Operator $element)
+    protected function getStarOperator(AST\Operator $element)
     {
         return xcallable(function () use ($element) {
             return sprintf('%s(%s)', $element->getName(), implode(', ', func_get_args()));

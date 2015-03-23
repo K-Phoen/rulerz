@@ -3,6 +3,7 @@
 namespace RulerZ\Executor;
 
 use Hoa\Ruler\Model;
+use PommProject\ModelManager\Model\Model as PommModel;
 
 use RulerZ\Visitor\PommVisitor;
 
@@ -29,9 +30,9 @@ class PommExecutor implements ExtendableExecutor
      */
     public function filter($target, Model $rule, array $parameters = [])
     {
-        $searchQuery = $this->buildSearchQuery($rule);
+        $whereClause = $this->buildWhereClause($rule, $parameters);
 
-        return $target->findWhere($searchQuery, $parameters);
+        return $target->findWhere($whereClause);
     }
 
     /**
@@ -39,30 +40,23 @@ class PommExecutor implements ExtendableExecutor
      */
     public function supports($target, $mode)
     {
-        if (!is_object($target)) {
-            return false;
-        }
-
-        $usedTraits = class_uses($target);
-
-        return in_array('PommProject\ModelManager\Model\ModelTrait\WriteQueries', $usedTraits)
-            || in_array('PommProject\ModelManager\Model\ModelTrait\ReadQueries', $usedTraits);
+        // we make the assumption that pomm models use at least the
+        // \PommProject\ModelManager\Model\ModelTrait\ReadQueries trait
+        return $target instanceof PommModel;
     }
 
     /**
-     * Builds the search query for the given rule.
+     * Builds the Where clause for the given rule.
      *
-     * @param Model $rule The rule to apply.
+     * @param Model $rule       The rule to apply.
+     * @param array $parameters The parameters used in the rule.
      *
-     * @return string The search.
+     * @return Where The clause.
      */
-    private function buildSearchQuery(Model $rule)
+    private function buildWhereClause(Model $rule, array $parameters)
     {
-        $searchBuilder = new PommVisitor();
-
-        foreach ($this->getOperators() as $name => $callable) {
-            $searchBuilder->setOperator($name, $callable);
-        }
+        $searchBuilder = new PommVisitor($parameters);
+        $searchBuilder->setOperators($this->getOperators());
 
         return $searchBuilder->visit($rule);
     }
