@@ -4,6 +4,8 @@ namespace RulerZ\Executor;
 
 use Hoa\Ruler\Model;
 
+use RulerZ\Context\ExecutionContext;
+
 /**
  * An executor executes a rule against a target.
  */
@@ -21,7 +23,7 @@ interface Executor
      *
      * @return mixed The filtered target.
      */
-    public function filter($target, Model $rule, array $parameters = []);
+    public function filter($target, Model $rule, array $parameters, ExecutionContext $context);
 
     /**
      * Tells if aa target satisfies the given rule and parameters.
@@ -32,7 +34,7 @@ interface Executor
      *
      * @return boolean
      */
-    public function satisfies($target, Model $rule, array $parameters = []);
+    public function satisfies($target, Model $rule, array $parameters, ExecutionContext $context);
 
     /**
      * Indicates whether the given object can be filtered by the executor.

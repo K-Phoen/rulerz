@@ -4,6 +4,7 @@ namespace spec\RulerZ\Executor;
 
 use PhpSpec\ObjectBehavior;
 
+use RulerZ\Context\ExecutionContext;
 use RulerZ\Executor\Executor;
 
 class ArrayExecutorSpec extends ObjectBehavior
@@ -35,17 +36,17 @@ class ArrayExecutorSpec extends ObjectBehavior
         $this->supports([], Executor::MODE_SATISFIES)->shouldReturn(true);
     }
 
-    function it_can_filter_an_array_with_a_rule()
+    function it_can_filter_an_array_with_a_rule(ExecutionContext $context)
     {
-        $this->filter($this->getTarget(), $this->getSimpleRule())->shouldReturn($this->getResult());
+        $this->filter($this->getTarget(), $this->getSimpleRule(), [], $context)->shouldReturn($this->getResult());
     }
 
-    function it_can_tell_if_a_target_satisfies_a_rule()
+    function it_can_tell_if_a_target_satisfies_a_rule(ExecutionContext $context)
     {
-        $this->satisfies($this->getTarget()[0], $this->getSimpleRule())->shouldReturn(true);
+        $this->satisfies($this->getTarget()[0], $this->getSimpleRule(), [], $context)->shouldReturn(true);
     }
 
-    function it_can_filter_an_array_of_objects()
+    function it_can_filter_an_array_of_objects(ExecutionContext $context)
     {
         $target = array_map(function($row) {
             return (object) $row;
@@ -54,15 +55,15 @@ class ArrayExecutorSpec extends ObjectBehavior
             return (object) $row;
         }, $this->getResult());
 
-        $this->filter($target, $this->getSimpleRule())->shouldBeLike($result);
+        $this->filter($target, $this->getSimpleRule(), [], $context)->shouldBeLike($result);
     }
 
-    function it_supports_complex_targets()
+    function it_supports_complex_targets(ExecutionContext $context)
     {
-        $this->satisfies($this->getComplexTarget(), $this->getComplexRule())->shouldReturn(true);
+        $this->satisfies($this->getComplexTarget(), $this->getComplexRule(), [], $context)->shouldReturn(true);
     }
 
-    function it_supports_custom_operators()
+    function it_supports_custom_operators(ExecutionContext $context)
     {
         $this->registerOperators([
             'always_true' => function() {
@@ -70,14 +71,14 @@ class ArrayExecutorSpec extends ObjectBehavior
             }
         ]);
 
-        $this->filter($this->getTarget(), $this->getCustomOperatorRule())->shouldReturn($this->getResult());
+        $this->filter($this->getTarget(), $this->getCustomOperatorRule(), [], $context)->shouldReturn($this->getResult());
     }
 
-    function it_throws_an_exception_when_calling_an_unknown_operator()
+    function it_throws_an_exception_when_calling_an_unknown_operator(ExecutionContext $context)
     {
         $this
             ->shouldThrow('RulerZ\Exception\OperatorNotFoundException')
-            ->duringFilter($this->getTarget(), $this->getCustomOperatorRule());
+            ->duringFilter($this->getTarget(), $this->getCustomOperatorRule(), [], $context);
     }
 
     private function getSimpleRule()

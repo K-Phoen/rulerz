@@ -7,6 +7,7 @@ use Elastica\SearchableInterface;
 use FOS\ElasticaBundle\Finder\TransformedFinder;
 use Hoa\Ruler\Model;
 
+use RulerZ\Context\ExecutionContext;
 use RulerZ\Visitor\ElasticsearchVisitor;
 
 /**
@@ -30,7 +31,7 @@ class ElasticaExecutor implements ExtendableExecutor
     /**
      * {@inheritDoc}
      */
-    public function filter($target, Model $rule, array $parameters = [])
+    public function filter($target, Model $rule, array $parameters, ExecutionContext $context)
     {
         $searchQuery = $this->buildSearchQuery($rule, $parameters);
 

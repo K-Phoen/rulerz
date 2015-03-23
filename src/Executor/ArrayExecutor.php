@@ -6,6 +6,7 @@ use Hoa\Ruler\Context as ArrayContext;
 use Hoa\Ruler\Model;
 use Hoa\Ruler\Exception\Asserter as AsserterException;
 
+use RulerZ\Context\ExecutionContext;
 use RulerZ\Context\ObjectContext;
 use RulerZ\Exception\OperatorNotFoundException;
 use RulerZ\Visitor\ArrayVisitor;
@@ -35,7 +36,7 @@ class ArrayExecutor implements ExtendableExecutor
     /**
      * {@inheritDoc}
      */
-    public function filter($target, Model $rule, array $parameters = [])
+    public function filter($target, Model $rule, array $parameters, ExecutionContext $context)
     {
         $newParameters = $this->prepareParameters($parameters);
 
@@ -47,7 +48,7 @@ class ArrayExecutor implements ExtendableExecutor
     /**
      * {@inheritDoc}
      */
-    public function satisfies($target, Model $rule, array $parameters = [])
+    public function satisfies($target, Model $rule, array $parameters, ExecutionContext $context)
     {
         $newParameters = $this->prepareParameters($parameters);
 

@@ -6,6 +6,7 @@ use Elastica\Search;
 use Elastica\SearchableInterface;
 use PhpSpec\ObjectBehavior;
 
+use RulerZ\Context\ExecutionContext;
 use RulerZ\Executor\Executor;
 
 class ElasticaExecutorSpec extends ObjectBehavior
@@ -43,7 +44,7 @@ class ElasticaExecutorSpec extends ObjectBehavior
         $this->supports($type, Executor::MODE_FILTER)->shouldReturn(false);
     }
 
-    function it_can_filter_with_a_rule(Search $search)
+    function it_can_filter_with_a_rule(Search $search, ExecutionContext $context)
     {
         $expectedQuery = [
             'bool' => [
@@ -55,14 +56,14 @@ class ElasticaExecutorSpec extends ObjectBehavior
 
         $search->search(['query' => $expectedQuery])->willReturn('result');
 
-        $this->filter($search, $this->getSimpleRule())->shouldReturn('result');
+        $this->filter($search, $this->getSimpleRule(), [], $context)->shouldReturn('result');
     }
 
-    function it_throws_an_exception_when_calling_an_unknown_operator(Search $search)
+    function it_throws_an_exception_when_calling_an_unknown_operator(Search $search, ExecutionContext $context)
     {
         $this
             ->shouldThrow('RulerZ\Exception\OperatorNotFoundException')
-            ->duringFilter($search, $this->getCustomOperatorRule());
+            ->duringFilter($search, $this->getCustomOperatorRule(), [], $context);
     }
 
     public function unsupportedTypes()

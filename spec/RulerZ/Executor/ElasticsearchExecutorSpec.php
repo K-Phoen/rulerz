@@ -5,6 +5,7 @@ namespace spec\RulerZ\Executor;
 use Elasticsearch\Client;
 use PhpSpec\ObjectBehavior;
 
+use RulerZ\Context\ExecutionContext;
 use RulerZ\Executor\Executor;
 
 class ElasticsearchExecutorSpec extends ObjectBehavior
@@ -47,20 +48,27 @@ class ElasticsearchExecutorSpec extends ObjectBehavior
             'body'  => ['query' => $expectedQuery],
         ])->willReturn('result');
 
-        $this->filter($client, $this->getSimpleRule(), [
+        $this->filter($client, $this->getSimpleRule(), [], new ExecutionContext([
             'index' => 'es_index',
             'type'  => 'es_type',
-        ])->shouldReturn('result');
+        ]))->shouldReturn('result');
     }
 
     function it_throws_an_exception_when_calling_an_unknown_operator(Client $client)
     {
         $this
             ->shouldThrow('RulerZ\Exception\OperatorNotFoundException')
-            ->duringFilter($client, $this->getCustomOperatorRule(), [
-            'index' => 'es_index',
-            'type'  => 'es_type',
-        ]);
+            ->duringFilter($client, $this->getCustomOperatorRule(), [], new ExecutionContext([
+                'index' => 'es_index',
+                'type'  => 'es_type',
+            ]));
+    }
+
+    function it_throws_an_exception_when_the_execution_context_is_incomplete(Client $client)
+    {
+        $this
+            ->shouldThrow('BadMethodCallException')
+            ->duringFilter($client, $this->getCustomOperatorRule(), [], new ExecutionContext());
     }
 
     private function unsupportedTypes()

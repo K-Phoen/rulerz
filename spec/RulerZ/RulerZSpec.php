@@ -4,6 +4,7 @@ namespace spec\RulerZ;
 
 use Hoa\Ruler\Model\Model as AST;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 use RulerZ\Executor\Executor;
 use RulerZ\Interpreter\Interpreter;
@@ -42,7 +43,7 @@ class RulerZSpec extends ObjectBehavior
         $executor_a->filter()->shouldNotBeCalled();
 
         $executor_b->supports($target, Executor::MODE_FILTER)->willReturn(true);
-        $executor_b->filter($target, $ast, [])->shouldBeCalled();
+        $executor_b->filter($target, $ast, [], Argument::type('\RulerZ\Context\ExecutionContext'))->shouldBeCalled();
 
         $this->beConstructedWith($interpreter, [$executor_a, $executor_b]);
 
@@ -57,7 +58,7 @@ class RulerZSpec extends ObjectBehavior
 
         $interpreter->interpret($rule)->willReturn($ast);
         $executor->supports($target, Executor::MODE_FILTER)->willReturn(true);
-        $executor->filter($target, $ast, [])->willReturn($result);
+        $executor->filter($target, $ast, [], Argument::type('\RulerZ\Context\ExecutionContext'))->willReturn($result);
 
         $this->beConstructedWith($interpreter, [$executor]);
 
@@ -76,7 +77,7 @@ class RulerZSpec extends ObjectBehavior
 
         $interpreter->interpret($rule)->willReturn($ast);
         $executor->supports($target, Executor::MODE_FILTER)->willReturn(true);
-        $executor->filter($target, $ast, $params)->willReturn($result);
+        $executor->filter($target, $ast, $params, Argument::type('\RulerZ\Context\ExecutionContext'))->willReturn($result);
 
         $this->beConstructedWith($interpreter, [$executor]);
 
@@ -91,7 +92,7 @@ class RulerZSpec extends ObjectBehavior
 
         $interpreter->interpret($rule)->willReturn($ast);
         $executor->supports($target, Executor::MODE_SATISFIES)->willReturn(true);
-        $executor->satisfies($target, $ast, [])->willReturn(true);
+        $executor->satisfies($target, $ast, [], Argument::type('\RulerZ\Context\ExecutionContext'))->willReturn(true);
 
         $this->beConstructedWith($interpreter, [$executor]);
 
@@ -110,7 +111,7 @@ class RulerZSpec extends ObjectBehavior
 
         $interpreter->interpret($rule)->willReturn($ast);
         $executor->supports($target, Executor::MODE_SATISFIES)->willReturn(true);
-        $executor->satisfies($target, $ast, $params)->willReturn(true);
+        $executor->satisfies($target, $ast, $params, Argument::type('\RulerZ\Context\ExecutionContext'))->willReturn(true);
 
         $this->beConstructedWith($interpreter, [$executor]);
 

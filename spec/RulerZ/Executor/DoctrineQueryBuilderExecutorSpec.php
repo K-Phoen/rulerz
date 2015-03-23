@@ -6,6 +6,7 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\AbstractQuery as Query;
 use PhpSpec\ObjectBehavior;
 
+use RulerZ\Context\ExecutionContext;
 use RulerZ\Executor\Executor;
 
 class DoctrineQueryBuilderExecutorSpec extends ObjectBehavior
@@ -32,7 +33,7 @@ class DoctrineQueryBuilderExecutorSpec extends ObjectBehavior
         }
     }
 
-    function it_can_filter_a_query_builder_with_a_rule(QueryBuilder $qb, Query $query)
+    function it_can_filter_a_query_builder_with_a_rule(QueryBuilder $qb, Query $query, ExecutionContext $context)
     {
         $qb->getQuery()->willReturn($query);
         $qb->getRootAliases()->willReturn(['u']);
@@ -40,10 +41,10 @@ class DoctrineQueryBuilderExecutorSpec extends ObjectBehavior
 
         $qb->andWhere('u.points > 30')->shouldBeCalled();
 
-        $this->filter($qb, $this->getSimpleRule())->shouldReturn('result');
+        $this->filter($qb, $this->getSimpleRule(), [], $context)->shouldReturn('result');
     }
 
-    function it_supports_custom_operators(QueryBuilder $qb, Query $query)
+    function it_supports_custom_operators(QueryBuilder $qb, Query $query, ExecutionContext $context)
     {
         $this->registerOperators([
             'always_true' => function() {
@@ -57,10 +58,10 @@ class DoctrineQueryBuilderExecutorSpec extends ObjectBehavior
 
         $qb->andWhere('u.points > 30 AND 1 = 1')->shouldBeCalled();
 
-        $this->filter($qb, $this->getCustomOperatorRule())->shouldReturn('result');
+        $this->filter($qb, $this->getCustomOperatorRule(), [], $context)->shouldReturn('result');
     }
 
-    function it_implicitly_converts_unknown_operators(QueryBuilder $qb, Query $query)
+    function it_implicitly_converts_unknown_operators(QueryBuilder $qb, Query $query, ExecutionContext $context)
     {
         $qb->getQuery()->willReturn($query);
         $qb->getRootAliases()->willReturn(['u']);
@@ -68,7 +69,7 @@ class DoctrineQueryBuilderExecutorSpec extends ObjectBehavior
 
         $qb->andWhere('u.points > 30 AND always_true()')->shouldBeCalled();
 
-        $this->filter($qb, $this->getCustomOperatorRule())->shouldReturn('result');
+        $this->filter($qb, $this->getCustomOperatorRule(), [], $context)->shouldReturn('result');
     }
 
     private function unsupportedTypes()

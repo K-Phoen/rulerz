@@ -5,6 +5,7 @@ namespace RulerZ\Executor;
 use Elasticsearch\Client;
 use Hoa\Ruler\Model;
 
+use RulerZ\Context\ExecutionContext;
 use RulerZ\Visitor\ElasticsearchVisitor;
 
 /**
@@ -28,20 +29,17 @@ class ElasticsearchExecutor implements ExtendableExecutor
     /**
      * {@inheritDoc}
      */
-    public function filter($target, Model $rule, array $parameters = [])
+    public function filter($target, Model $rule, array $parameters, ExecutionContext $context)
     {
-        if (empty($parameters['index']) || empty($parameters['type'])) {
+        if (empty($context['index']) || empty($context['type'])) {
             throw new \BadMethodCallException('Parameters "index" and "type" are mandatory for the ElasticsearchExecutor"');
         }
-
-        list($index, $type) = [$parameters['index'], $parameters['type']];
-        unset($parameters['index'], $parameters['type']);
 
         $searchQuery = $this->buildSearchQuery($rule, $parameters);
 
         return $target->search([
-            'index' => $index,
-            'type'  => $type,
+            'index' => $context['index'],
+            'type'  => $context['type'],
             'body'  => ['query' => $searchQuery],
         ]);
     }

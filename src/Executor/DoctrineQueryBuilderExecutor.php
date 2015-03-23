@@ -5,6 +5,7 @@ namespace RulerZ\Executor;
 use Doctrine\ORM\QueryBuilder;
 use Hoa\Ruler\Model;
 
+use RulerZ\Context\ExecutionContext;
 use RulerZ\Visitor\DoctrineQueryBuilderVisitor;
 
 /**
@@ -28,7 +29,7 @@ class DoctrineQueryBuilderExecutor implements ExtendableExecutor
     /**
      * {@inheritDoc}
      */
-    public function filter($target, Model $rule, array $parameters = [])
+    public function filter($target, Model $rule, array $parameters, ExecutionContext $context)
     {
         $target = clone $target;
         $target->andWhere($this->buildWhereClause($target, $rule));

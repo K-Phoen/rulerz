@@ -4,6 +4,7 @@ namespace RulerZ;
 
 use Hoa\Ruler\Ruler;
 
+use RulerZ\Context\ExecutionContext;
 use RulerZ\Exception\TargetUnsupportedException;
 use RulerZ\Executor\Executor;
 use RulerZ\Interpreter\Interpreter;
@@ -49,50 +50,53 @@ class RulerZ
      * Filters a target using the given rule and parameters.
      * The executor to use is determined at runtime using the registered ones.
      *
-     * @param mixed  $target     The target to filter.
-     * @param string $rule       The rule to apply.
-     * @param array  $parameters The parameters used in the rule.
+     * @param mixed  $target           The target to filter.
+     * @param string $rule             The rule to apply.
+     * @param array  $parameters       The parameters used in the rule.
+     * @param array  $executionContext The execution context.
      *
      * @return mixed The filtered target.
      */
-    public function filter($target, $rule, array $parameters = [])
+    public function filter($target, $rule, array $parameters = [], array $executionContext = [])
     {
         $executor = $this->findExecutor($target, Executor::MODE_FILTER);
-        $ast = $this->interpret($rule);
+        $ast      = $this->interpret($rule);
 
-        return $executor->filter($target, $ast, $parameters);
+        return $executor->filter($target, $ast, $parameters, new ExecutionContext($executionContext));
     }
 
     /**
      * Filters a target using the given specification.
      * The executor to use is determined at runtime using the registered ones.
      *
-     * @param mixed         $target The target to filter.
-     * @param Specification $spec   The specification to apply.
+     * @param mixed         $target           The target to filter.
+     * @param Specification $spec             The specification to apply.
+     * @param array         $executionContext The execution context.
      *
      * @return mixed The filtered target.
      */
-    public function filterSpec($target, Specification $spec)
+    public function filterSpec($target, Specification $spec, array $executionContext = [])
     {
-        return $this->filter($target, $spec->getRule(), $spec->getParameters());
+        return $this->filter($target, $spec->getRule(), $spec->getParameters(), $executionContext);
     }
 
     /**
      * Tells if a target satisfies the given rule and parameters.
      * The executor to use is determined at runtime using the registered ones.
      *
-     * @param mixed  $target     The target.
-     * @param string $rule       The rule to test.
-     * @param array  $parameters The parameters used in the rule.
+     * @param mixed  $target           The target.
+     * @param string $rule             The rule to test.
+     * @param array  $parameters       The parameters used in the rule.
+     * @param array  $executionContext The execution context.
      *
      * @return boolean
      */
-    public function satisfies($target, $rule, array $parameters = [])
+    public function satisfies($target, $rule, array $parameters = [], array $executionContext = [])
     {
         $executor = $this->findExecutor($target, Executor::MODE_SATISFIES);
-        $ast = $this->interpret($rule);
+        $ast      = $this->interpret($rule);
 
-        return $executor->satisfies($target, $ast, $parameters);
+        return $executor->satisfies($target, $ast, $parameters, new ExecutionContext($executionContext));
     }
 
     /**
@@ -104,9 +108,9 @@ class RulerZ
      *
      * @return boolean
      */
-    public function satisfiesSpec($target, Specification $spec)
+    public function satisfiesSpec($target, Specification $spec, array $executionContext = [])
     {
-        return $this->satisfies($target, $spec->getRule(), $spec->getParameters());
+        return $this->satisfies($target, $spec->getRule(), $spec->getParameters(), $executionContext);
     }
 
     /**
