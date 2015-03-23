@@ -5,6 +5,7 @@ namespace RulerZ\Executor;
 use Hoa\Ruler\Model;
 use PommProject\ModelManager\Model\Model as PommModel;
 
+use RulerZ\Context\ExecutionContext;
 use RulerZ\Visitor\PommVisitor;
 
 /**
@@ -28,11 +29,12 @@ class PommExecutor implements ExtendableExecutor
     /**
      * {@inheritDoc}
      */
-    public function filter($target, Model $rule, array $parameters = [])
+    public function filter($target, Model $rule, array $parameters, ExecutionContext $context)
     {
         $whereClause = $this->buildWhereClause($rule, $parameters);
+        $method      = !empty($context['method']) ? $context['method'] : 'findWhere';
 
-        return $target->findWhere($whereClause);
+        return call_user_func([$target, $method], $whereClause);
     }
 
     /**

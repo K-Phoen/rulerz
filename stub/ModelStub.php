@@ -8,4 +8,8 @@ use PommProject\ModelManager\Model\Model;
 class ModelStub extends Model
 {
     use ReadQueries;
+
+    public function findCustom()
+    {
+    }
 }
