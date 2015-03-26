@@ -53,7 +53,7 @@ $usersQueryBuilder = $entityManager
     ->from('Entity\User', 'u');
 ```
 
-And as usual, we call RulerZ with our target (the `QueryBuilder object) and our
+And as usual, we call RulerZ with our target (the `QueryBuilder` object) and our
 rule.
 RulerZ will find the right executor for the given target and use it to filter
 the data, or in our case to retrieve data from a database.
@@ -70,4 +70,4 @@ var_dump($rulerz->filter($usersQueryBuilder, $rule, $parameters));
 
 ## That was it!
 
-[Return to the index to explore the other possibilities of the library](index.md)
+[Return to the index to explore the other possibilities of the library](../index.md)
