@@ -20,3 +20,7 @@ composer require 'kphoen/rulerz'
 
  * [Caching rules](caching_rules.md)
  * [Defining custom operators](custom_operators.md)
+
+## Cookbooks
+
+ * [Using Doctrine ORM](cookbooks/doctrine_orm.md)
