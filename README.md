@@ -31,11 +31,12 @@ The currently supported datasources are:
  * array of arrays,
  * array of objects,
  * Doctrine ORM QueryBuilders,
+ * [Pomm](http://www.pomm-project.org/) models,
  * Elasticsearch (using the [official client](https://github.com/elasticsearch/elasticsearch-php)
    or [ruflin/Elastica](https://github.com/ruflin/Elastica)).
 
-**Killer feature:** when working with QueryBuilders or Elasticsearch, RulerZ is
-able to convert rules directly in queries and does not need to fetch data
+**Killer feature:** when working with Doctrine, Pomm, or Elasticsearch, RulerZ
+is able to convert rules directly in queries and does not need to fetch data
 beforehand.
 
 #### That's cool, but why do I need that?
