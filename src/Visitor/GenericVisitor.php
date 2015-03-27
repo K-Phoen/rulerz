@@ -9,6 +9,9 @@ use Hoa\Visitor\Visit as Visitor;
 
 use RulerZ\Exception\OperatorNotFoundException;
 
+/**
+ * Generic visitor intended to be extended.
+ */
 abstract class GenericVisitor implements RuleVisitor
 {
     /**
@@ -19,90 +22,68 @@ abstract class GenericVisitor implements RuleVisitor
     private $operators = [];
 
     /**
-     * Visit an element.
-     *
-     * @param \VisitorElement $element Element to visit.
-     * @param mixed           &$handle Handle (reference).
-     * @param mixed           $eldnah  Handle (not reference).
-     *
-     * @return string The interpreted equivalent of the given rule.
+     * {@inheritDoc}
      */
     public function visit(VisitorElement $element, &$handle = null, $eldnah = null)
     {
         if ($element instanceof AST\Model) {
-            return $this->visitModel($element);
+            return $this->visitModel($element, $handle, $eldnah);
         }
 
         if ($element instanceof AST\Operator) {
-            return $this->visitOperator($element);
+            return $this->visitOperator($element, $handle, $eldnah);
         }
 
         if ($element instanceof AST\Bag\Scalar) {
-            return $this->visitScalar($element);
+            return $this->visitScalar($element, $handle, $eldnah);
         }
 
         if ($element instanceof AST\Bag\RulerArray) {
-            return $this->visitArray($element);
+            return $this->visitArray($element, $handle, $eldnah);
         }
 
         if ($element instanceof AST\Bag\Context) {
-            return $this->visitAccess($element);
+            return $this->visitAccess($element, $handle, $eldnah);
         }
 
         throw new \LogicException(sprintf('Element of type "%s" not handled', get_class($element)));
     }
 
     /**
-     * Visit a model
-     *
-     * @param AST\Model $element Element to visit.
-     *
-     * @return mixed
+     * {@inheritDoc}
      */
-    public function visitModel(AST\Model $element)
+    public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
     {
-        return $element->getExpression()->accept($this);
+        return $element->getExpression()->accept($this, $handle, $eldnah);
     }
 
     /**
-     * Visit a scalar
-     *
-     * @param AST\Bag\Scalar $element Element to visit.
-     *
-     * @return mixed
+     * {@inheritDoc}
      */
-    public function visitScalar(AST\Bag\Scalar $element)
+    public function visitScalar(AST\Bag\Scalar $element, &$handle = null, $eldnah = null)
     {
         return $element->getValue();
     }
 
     /**
-     * Visit an array
-     *
-     * @param AST\Bag\RulerArray $element Element to visit.
-     *
-     * @return array
+     * {@inheritDoc}
      */
-    public function visitArray(AST\Bag\RulerArray $element)
+    public function visitArray(AST\Bag\RulerArray $element, &$handle = null, $eldnah = null)
     {
-        return array_map(function ($item) {
-            return $item->accept($this);
+        return array_map(function ($item) use (&$handle, $eldnah) {
+            return $item->accept($this, $handle, $eldnah);
         }, $element->getArray());
     }
 
     /**
-     * Visit an operator
-     *
-     * @param AST\Operator $element Element to visit.
-     *
-     * @return Xcallable
+     * {@inheritDoc}
      */
-    public function visitOperator(AST\Operator $element)
+    public function visitOperator(AST\Operator $element, &$handle = null, $eldnah = null)
     {
         $xcallable = $this->getOperator($element->getName());
 
-        $arguments = array_map(function ($argument) {
-            return $argument->accept($this);
+        $arguments = array_map(function ($argument) use (&$handle, $eldnah) {
+            return $argument->accept($this, $handle, $eldnah);
         }, $element->getArguments());
 
         return $xcallable->distributeArguments($arguments);

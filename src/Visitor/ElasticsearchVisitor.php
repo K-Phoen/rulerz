@@ -26,7 +26,7 @@ class ElasticsearchVisitor extends GenericVisitor
     /**
      * {@inheritDoc}
      */
-    public function visitAccess(AST\Bag\Context $element)
+    public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
         $name = $element->getId();
 

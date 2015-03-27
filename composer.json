@@ -15,7 +15,7 @@
         "psr-4": { "RulerZ\\": "src/" }
     },
     "autoload-dev": {
-        "psr-4": { "Entity\\": "examples/entities/", "SampleSpecs\\": "examples/specs/" }
+        "psr-4": { "Entity\\": "examples/entities/", "SampleSpecs\\": "examples/specs/", "RulerZ\\Stub\\": "stub/" }
     },
     "config": {
         "bin-dir": "bin/"
@@ -30,6 +30,8 @@
         "doctrine/cache": "~1.0",
         "elasticsearch/elasticsearch": "~1.0",
         "ruflin/elastica": "~1.0",
+        "pomm-project/foundation": "@dev",
+        "pomm-project/model-manager": "2.0.*@dev",
 
         "coduo/phpspec-data-provider-extension": "~1.0",
         "phpspec/phpspec": "~2.0"
@@ -37,6 +39,7 @@
     "suggest": {
         "doctrine/cache": "To cache rules.",
         "doctrine/orm": "To execute rules as Doctrine queries",
-        "elasticsearch/elasticsearch": "To execute rules as Elasticsearch queries"
+        "elasticsearch/elasticsearch": "To execute rules as Elasticsearch queries",
+        "pomm-project/model-manager": "To execute rules as Pomm queries"
     }
 }

@@ -26,7 +26,7 @@ interface Executor
     public function filter($target, Model $rule, array $parameters, ExecutionContext $context);
 
     /**
-     * Tells if aa target satisfies the given rule and parameters.
+     * Tells if a target satisfies the given rule and parameters.
      *
      * @param mixed $target     The target.
      * @param Model $rule       The rule to test.
