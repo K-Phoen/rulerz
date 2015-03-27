@@ -14,7 +14,7 @@ Here is a summary of what you will have to do:
 
 ## Configure Doctrine ORM
 
-This subject won't be directly treated here? You can either follow the [official
+This subject won't be directly treated here. You can either follow the [official
 documentation](http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/configuration.html)
 or use a bundle/module/whatever the framework you're using promotes.
 
