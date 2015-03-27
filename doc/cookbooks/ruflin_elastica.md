@@ -1,7 +1,7 @@
 Using Elasticsearch and ruflin/Elastica
 =======================================
 
-[ruflin/Elastica](http://www.doctrine-project.org/projects/orm.html) is one of the
+[ruflin/Elastica](https://github.com/ruflin/Elastica) is one of the
 targets supported by RulerZ. It allows tne engine to query an Elasticsearch
 server.
 

@@ -25,3 +25,4 @@ composer require 'kphoen/rulerz'
 
  * [Using Doctrine ORM](cookbooks/doctrine_orm.md)
  * [Using Elasticsearch and ruflin/Elastica](cookbooks/ruflin_elastica.md)
+ * [Using Elasticsearch and elastic/elasticsearch-php](cookbooks/elastic_elasticsearch_php.md)
