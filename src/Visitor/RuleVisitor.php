@@ -6,6 +6,8 @@ use Hoa\Ruler\Model as AST;
 use Hoa\Visitor\Element as VisitorElement;
 use Hoa\Visitor\Visit as Visitor;
 
+use RulerZ\Model;
+
 interface RuleVisitor extends Visitor
 {
     /**
@@ -62,4 +64,15 @@ interface RuleVisitor extends Visitor
      * @return Xcallable
      */
     public function visitOperator(AST\Operator $element, &$handle = null, $eldnah = null);
+
+    /**
+     * Visit a parameter
+     *
+     * @param Model\Parameter $element Element to visit.
+     * @param mixed           &$handle Handle (reference).
+     * @param mixed           $eldnah  Handle (not reference).
+     *
+     * @return mixed
+     */
+    public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null);
 }

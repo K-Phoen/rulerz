@@ -4,6 +4,8 @@ namespace RulerZ\Visitor;
 
 use Hoa\Ruler\Model as AST;
 
+use RulerZ\Model;
+
 class ElasticsearchVisitor extends GenericVisitor
 {
     /**
@@ -28,20 +30,22 @@ class ElasticsearchVisitor extends GenericVisitor
      */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
-        $name = $element->getId();
+        $dimensions = $element->getDimensions();
 
         // nested path
-        $dimensions = $element->getDimensions();
         if (!empty($dimensions)) {
             return $this->flattenAccessPath($element);
         }
 
-        // parameter
-        if ($name[0] === ':') {
-            return $this->lookupParameter(substr($name, 1));
-        }
-
         return $element->getId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
+    {
+        return $this->lookupParameter($element->getName());
     }
 
     /**
@@ -69,7 +73,7 @@ class ElasticsearchVisitor extends GenericVisitor
     private function lookupParameter($name)
     {
         if (!array_key_exists($name, $this->parameters)) {
-            throw new \RuntimeException(sprintf('Parameter "%s" not defined', $name));
+            throw new \RuntimeException(sprintf('Parameter "%s" not defined', $name)); // @todo this should be a more specific exception
         }
 
         return $this->parameters[$name];

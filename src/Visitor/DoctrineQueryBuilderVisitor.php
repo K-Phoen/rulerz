@@ -5,6 +5,8 @@ namespace RulerZ\Visitor;
 use Doctrine\ORM\QueryBuilder;
 use Hoa\Ruler\Model as AST;
 
+use RulerZ\Model;
+
 class DoctrineQueryBuilderVisitor extends SqlVisitor
 {
     /**
@@ -32,14 +34,16 @@ class DoctrineQueryBuilderVisitor extends SqlVisitor
      */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
-        $name = $element->getId();
-
-        // parameter
-        if ($name[0] === ':') {
-            return $name;
-        }
-
         return sprintf('%s.%s', $this->getRootAlias(), $element->getId());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
+    {
+        // make it a placeholder
+        return ':'.$element->getName();
     }
 
     /**

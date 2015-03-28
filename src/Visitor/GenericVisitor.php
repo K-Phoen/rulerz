@@ -8,6 +8,7 @@ use Hoa\Visitor\Element as VisitorElement;
 use Hoa\Visitor\Visit as Visitor;
 
 use RulerZ\Exception\OperatorNotFoundException;
+use RulerZ\Model;
 
 /**
  * Generic visitor intended to be extended.
@@ -44,6 +45,10 @@ abstract class GenericVisitor implements RuleVisitor
 
         if ($element instanceof AST\Bag\Context) {
             return $this->visitAccess($element, $handle, $eldnah);
+        }
+
+        if ($element instanceof Model\Parameter) {
+            return $this->visitParameter($element, $handle, $eldnah);
         }
 
         throw new \LogicException(sprintf('Element of type "%s" not handled', get_class($element)));

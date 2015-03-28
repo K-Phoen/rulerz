@@ -64,6 +64,9 @@
 %token  comma          ,
 %token  dot           \.
 
+%token  positional_parameter \?
+%token  named_parameter      :[a-z-A-Z0-9_]+
+
 %token  identifier    [^\s\(\)\[\],\.]+
 
 #expression:
@@ -80,9 +83,14 @@ operand:
     ::parenthesis_:: logical_operation() ::_parenthesis::
   | value()
 
+parameter:
+    <positional_parameter>
+  | <named_parameter>
+
 value:
     ::not:: logical_operation() #not
   | <true> | <false> | <null> | <float> | <integer> | <string>
+  | parameter()
   | variable()
   | array_declaration()
   | function_call()

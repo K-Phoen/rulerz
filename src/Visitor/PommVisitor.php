@@ -6,6 +6,7 @@ use Hoa\Ruler\Model as AST;
 use PommProject\Foundation\Where;
 
 use RulerZ\Exception\OperatorNotFoundException;
+use RulerZ\Model;
 
 class PommVisitor extends SqlVisitor
 {
@@ -29,18 +30,11 @@ class PommVisitor extends SqlVisitor
     /**
      * {@inheritDoc}
      */
-    public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
+    public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
     {
-        $name = $element->getId();
+        $handle[] = $this->parameters[$element->getName()];
 
-        // parameter
-        if ($name[0] === ':') {
-            $handle[] = $this->parameters[substr($name, 1)];
-
-            return '$*';
-        }
-
-        return $name;
+        return '$*';
     }
 
     /**

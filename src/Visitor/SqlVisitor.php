@@ -53,6 +53,14 @@ abstract class SqlVisitor extends GenericVisitor
     /**
      * {@inheritDoc}
      */
+    public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
+    {
+        return $element->getId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function visitOperator(AST\Operator $element, &$handle = null, $eldnah = null)
     {
         try {

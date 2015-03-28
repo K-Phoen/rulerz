@@ -5,18 +5,27 @@ namespace RulerZ\Visitor;
 use Hoa\Ruler\Exception as HoaException;
 use Hoa\Ruler\Model as AST;
 use Hoa\Ruler\Visitor\Asserter as HoaArrayVisitor;
+use Hoa\Visitor\Element as VisitorElement;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+
+use RulerZ\Model;
 
 class ArrayVisitor extends HoaArrayVisitor
 {
     /**
-     * Visit a context
-     *
-     * @access  protected
-     * @param   \Hoa\Visitor\Element  $element    Element to visit.
-     * @param   mixed                 &$handle    Handle (reference).
-     * @param   mixed                 $eldnah     Handle (not reference).
-     * @return  mixed
+     * {@inheritDoc}
+     */
+    public function visit(VisitorElement $element, &$handle = null, $eldnah = null)
+    {
+        if ($element instanceof Model\Parameter) {
+            return $this->visitParameter($element, $handle, $eldnah);
+        }
+
+        return parent::visit($element, $handle, $eldnah);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     protected function visitContext(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
@@ -43,5 +52,20 @@ class ArrayVisitor extends HoaArrayVisitor
         }
 
         return $contextPointer;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
+    {
+        $name    = ':'.$element->getName();
+        $context = $this->getContext();
+
+        if (!isset($context[$name])) {
+            throw new \RuntimeException(sprintf('Parameter "%s" not defined', $name)); // @todo this should be a more specific exception
+        }
+
+        return $context[$name];
     }
 }
