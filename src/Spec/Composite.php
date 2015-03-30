@@ -58,7 +58,7 @@ class Composite implements Specification
 
         // error handling in case of overriden parameters
         if ($parametersCount !== count($mergedParameters)) {
-            $overridenParameters = $this->searchOverridenParameters($parametersList, $mergedParameters);
+            $overridenParameters = $this->searchOverridenParameters($parametersList);
             $specificationsTypes = array_map(function(Specification $spec) {
                 return get_class($spec);
             }, $this->specifications);
@@ -88,11 +88,10 @@ class Composite implements Specification
      * Search the parameters that were overriden during the parameters-merge phase.
      *
      * @param array $parametersList
-     * @param array $mergedParameters
      *
      * @return array Names of the overriden parameters.
      */
-    private function searchOverridenParameters(array $parametersList, array $mergedParameters)
+    private function searchOverridenParameters(array $parametersList)
     {
         $parametersUsageCount = [];
 
