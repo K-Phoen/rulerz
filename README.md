@@ -121,7 +121,7 @@ Check out [the documentation](doc/index.md) to discover what RulerZ can do for
 you.
 
 
-Licence
+License
 -------
 
-This library is under the [MIT](LICENSE) licence.
+This library is under the [MIT](LICENSE) license.
