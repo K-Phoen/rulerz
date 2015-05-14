@@ -29,13 +29,6 @@ class HoaInterpreter implements Interpreter, Visitor\Visit
     private $root;
 
     /**
-     * Current node.
-     *
-     * @var \Hoa\Ruler\Visitor\Interpreter object
-     */
-    private $current;
-
-    /**
      * Next positional parameter index.
      *
      * @var int
@@ -93,7 +86,7 @@ class HoaInterpreter implements Interpreter, Visitor\Visit
 
                 return $this->root->_operator(
                     $name,
-                    array($left, $right),
+                    [$left, $right],
                     false
                 );
 
@@ -108,7 +101,7 @@ class HoaInterpreter implements Interpreter, Visitor\Visit
                     switch ($child->getId()) {
                         case '#attribute_access':
                             $name->attribute($_child);
-                          break;
+                            break;
                     }
                 }
 
@@ -118,7 +111,7 @@ class HoaInterpreter implements Interpreter, Visitor\Visit
                 return $element->getChild(0)->accept($this, $handle, false);
 
             case '#array_declaration':
-                $out = array();
+                $out = [];
 
                 foreach ($element->getChildren() as $child) {
                     $out[] = $child->accept($this, $handle, $eldnah);
@@ -131,7 +124,7 @@ class HoaInterpreter implements Interpreter, Visitor\Visit
                 $name     = $children[0]->accept($this, $handle, false);
                 array_shift($children);
 
-                $arguments = array();
+                $arguments = [];
 
                 foreach ($children as $child) {
                     $arguments[] = $child->accept($this, $handle, $eldnah);
@@ -204,12 +197,9 @@ class HoaInterpreter implements Interpreter, Visitor\Visit
                     default:
                         throw new Ruler\Exception\Interpreter('Token %s is unknown.', 0, $token);
                 }
-              break;
 
             default:
                 throw new Ruler\Exception\Interpreter('Element %s is unknown.', 1, $id);
         }
-
-        return;
     }
 }
