@@ -8,20 +8,13 @@ use RulerZ\Model;
 
 class ElasticsearchVisitor extends GenericVisitor
 {
-    /**
-     * List of parameters.
-     *
-     * @var array
-     */
-    private $parameters = [];
+    use Polyfill\Parameters;
 
     /**
      * Constructor.
      */
-    public function __construct(array $parameters = [])
+    public function __construct()
     {
-        $this->parameters = $parameters;
-
         $this->defineBuiltInOperators();
     }
 
@@ -61,22 +54,6 @@ class ElasticsearchVisitor extends GenericVisitor
         }
 
         return implode('.', $flattenedDimensions);
-    }
-
-    /**
-     * Return the value of a parameter.
-     *
-     * @param string $name The parameter's name.
-     *
-     * @return mixed
-     */
-    private function lookupParameter($name)
-    {
-        if (!array_key_exists($name, $this->parameters)) {
-            throw new \RuntimeException(sprintf('Parameter "%s" not defined', $name)); // @todo this should be a more specific exception
-        }
-
-        return $this->parameters[$name];
     }
 
     /**

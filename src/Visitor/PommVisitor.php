@@ -10,29 +10,14 @@ use RulerZ\Model;
 
 class PommVisitor extends SqlVisitor
 {
-    /**
-     * @var array $parameters The parameters used in the query.
-     */
-    private $parameters = [];
-
-    /**
-     * Constructor.
-     *
-     * @param bool $allowStarOperator Whether to allow the star operator or not (ie: implicit support of unknown operators).
-     */
-    public function __construct(array $parameters, $allowStarOperator = true)
-    {
-        parent::__construct($allowStarOperator);
-
-        $this->parameters = $parameters;
-    }
+    use Polyfill\Parameters;
 
     /**
      * {@inheritDoc}
      */
     public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
     {
-        $handle[] = $this->parameters[$element->getName()];
+        $handle[] = $this->lookupParameter($element->getName());
 
         return '$*';
     }
