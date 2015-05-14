@@ -2,38 +2,51 @@
 
 namespace RulerZ\Visitor;
 
-use Hoa\Ruler\Exception as HoaException;
 use Hoa\Ruler\Model as AST;
-use Hoa\Ruler\Visitor\Asserter as HoaArrayVisitor;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
-class ArrayVisitor extends HoaArrayVisitor
+use RulerZ\Model;
+
+class ArrayVisitor extends GenericVisitor
 {
+    use Polyfill\Parameters;
+
     /**
-     * Visit a context
-     *
-     * @access  protected
-     * @param   \Hoa\Visitor\Element  $element    Element to visit.
-     * @param   mixed                 &$handle    Handle (reference).
-     * @param   mixed                 $eldnah     Handle (not reference).
-     * @return  mixed
+     * The context used for the evaluation.
      */
-    protected function visitContext(AST\Bag\Context $element, &$handle = null, $eldnah = null)
+    private $context;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->defineBuiltInOperators();
+    }
+
+    /**
+     * Define the context to be used.
+     *
+     * @param mixed $context The context.
+     */
+    public function setContext($context)
+    {
+        $this->context = $context;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
         $accessor = PropertyAccess::createPropertyAccessor();
-        $context  = $this->getContext();
+        $id       = $element->getId();
 
-        if ($context === null) {
-            throw new HoaException\Asserter('Assert needs a context to work properly.', 0);
+        if (!isset($this->context[$id])) {
+            throw new \RuntimeException('Context reference %s does not exists.', 1, $id);
         }
 
-        $id = $element->getId();
-
-        if (!isset($context[$id])) {
-            throw new HoaException\Asserter('Context reference %s does not exists.', 1, $id);
-        }
-
-        $contextPointer = $context[$id];
+        $contextPointer = $this->context[$id];
 
         foreach ($element->getDimensions() as $dimensionNumber => $dimension) {
             $rawAattribute  = $dimension[AST\Bag\Context::ACCESS_VALUE];
@@ -43,5 +56,33 @@ class ArrayVisitor extends HoaArrayVisitor
         }
 
         return $contextPointer;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
+    {
+        return $this->lookupParameter($element->getName());
+    }
+
+    /**
+     * Define the built-in operators.
+     */
+    private function defineBuiltInOperators()
+    {
+        $this->setOperator('and', function ($a = false, $b = false) { return $a && $b; });
+        $this->setOperator('or',  function ($a = false, $b = false) { return $a || $b; });
+        $this->setOperator('xor', function ($a, $b) { return (bool) ($a ^ $b); });
+        $this->setOperator('not', function ($a )     { return !$a; });
+        $this->setOperator('=',   function ($a, $b) { return $a === $b; });
+        $this->setOperator('is',  $this->getOperator('='));
+        $this->setOperator('!=',  function ($a, $b) { return $a != $b; });
+        $this->setOperator('>',   function ($a, $b) { return $a >  $b; });
+        $this->setOperator('>=',  function ($a, $b) { return $a >= $b; });
+        $this->setOperator('<',   function ($a, $b) { return $a <  $b; });
+        $this->setOperator('<=',  function ($a, $b) { return $a <= $b; });
+        $this->setOperator('in',  function ($a, array $b ) { return in_array($a, $b); });
+        $this->setOperator('sum', function () { return array_sum(func_get_args()); });
     }
 }

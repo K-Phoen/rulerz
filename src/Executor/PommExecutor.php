@@ -57,8 +57,9 @@ class PommExecutor implements ExtendableExecutor
      */
     private function buildWhereClause(Model $rule, array $parameters)
     {
-        $searchBuilder = new PommVisitor($parameters);
+        $searchBuilder = new PommVisitor();
         $searchBuilder->setOperators($this->getOperators());
+        $searchBuilder->setParameters($parameters);
 
         return $searchBuilder->visit($rule);
     }

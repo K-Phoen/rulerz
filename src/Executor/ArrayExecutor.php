@@ -4,7 +4,7 @@ namespace RulerZ\Executor;
 
 use Hoa\Ruler\Context as ArrayContext;
 use Hoa\Ruler\Model;
-use Hoa\Ruler\Exception\Asserter as AsserterException;
+use Hoa\Ruler\Exception\visitor as visitorException;
 
 use RulerZ\Context\ExecutionContext;
 use RulerZ\Context\ObjectContext;
@@ -19,7 +19,7 @@ class ArrayExecutor implements ExtendableExecutor
     /**
      * @var ArrayVisitor
      */
-    private $asserter;
+    private $visitor;
 
     /**
      * Constructs the Array executor.
@@ -28,7 +28,7 @@ class ArrayExecutor implements ExtendableExecutor
      */
     public function __construct(array $operators = [])
     {
-        $this->asserter = new ArrayVisitor();
+        $this->visitor = new ArrayVisitor();
 
         $this->registerOperators($operators);
     }
@@ -38,10 +38,8 @@ class ArrayExecutor implements ExtendableExecutor
      */
     public function filter($target, Model $rule, array $parameters, ExecutionContext $context)
     {
-        $newParameters = $this->prepareParameters($parameters);
-
-        return array_filter($target, function ($row) use ($rule, $newParameters) {
-            return $this->filterItem($row, $rule, $newParameters);
+        return array_filter($target, function ($row) use ($rule, $parameters) {
+            return $this->filterItem($row, $rule, $parameters);
         });
     }
 
@@ -50,9 +48,7 @@ class ArrayExecutor implements ExtendableExecutor
      */
     public function satisfies($target, Model $rule, array $parameters, ExecutionContext $context)
     {
-        $newParameters = $this->prepareParameters($parameters);
-
-        return $this->filterItem($target, $rule, $newParameters) === true;
+        return $this->filterItem($target, $rule, $parameters) === true;
     }
 
     /**
@@ -73,7 +69,7 @@ class ArrayExecutor implements ExtendableExecutor
     public function registerOperators(array $operators)
     {
         foreach ($operators as $name => $callable) {
-            $this->asserter->setOperator($name, $callable);
+            $this->visitor->setOperator($name, $callable);
         }
     }
 
@@ -88,11 +84,12 @@ class ArrayExecutor implements ExtendableExecutor
      */
     private function filterItem($row, Model $rule, array $parameters)
     {
-        $this->asserter->setContext($this->createContext($row, $parameters));
+        $this->visitor->setContext($this->createContext($row));
+        $this->visitor->setParameters($parameters);
 
         try {
-            return $this->asserter->visit($rule);
-        } catch (AsserterException $e) {
+            return $this->visitor->visit($rule);
+        } catch (visitorException $e) {
             if (strpos($e->getMessage(), 'Operator') !== false) {
                 throw new OperatorNotFoundException($e->getArguments()[0], $e->getMessage());
             }
@@ -102,35 +99,14 @@ class ArrayExecutor implements ExtendableExecutor
     }
 
     /**
-     * Create a context to be used by the asserter.
+     * Create a context to be used by the visitor.
      *
-     * @param mixed $row        The row to test.
-     * @param array $parameters The parameters used in the rule.
+     * @param mixed $row The row to test.
      *
      * @return \Hoa\Ruler\Context
      */
-    private function createContext($row, array $parameters)
+    private function createContext($row)
     {
-        return is_array($row)
-            ? new ArrayContext(array_merge($row, $parameters))
-            : new ObjectContext($row, $parameters);
-    }
-
-    /**
-     * Prepare the parameters so that they can be used in the asserter.
-     *
-     * @param array $parameters The parameters used in the rule.
-     *
-     * @return array
-     */
-    private function prepareParameters(array $parameters)
-    {
-        $newParameters = [];
-
-        foreach ($parameters as $name => $value) {
-            $newParameters[':'.$name] = $value;
-        }
-
-        return $newParameters;
+        return is_array($row) ? new ArrayContext($row) : new ObjectContext($row);
     }
 }

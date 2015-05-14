@@ -6,41 +6,20 @@ use Hoa\Ruler\Model as AST;
 use PommProject\Foundation\Where;
 
 use RulerZ\Exception\OperatorNotFoundException;
+use RulerZ\Model;
 
 class PommVisitor extends SqlVisitor
 {
-    /**
-     * @var array $parameters The parameters used in the query.
-     */
-    private $parameters = [];
-
-    /**
-     * Constructor.
-     *
-     * @param bool $allowStarOperator Whether to allow the star operator or not (ie: implicit support of unknown operators).
-     */
-    public function __construct(array $parameters, $allowStarOperator = true)
-    {
-        parent::__construct($allowStarOperator);
-
-        $this->parameters = $parameters;
-    }
+    use Polyfill\Parameters;
 
     /**
      * {@inheritDoc}
      */
-    public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
+    public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
     {
-        $name = $element->getId();
+        $handle[] = $this->lookupParameter($element->getName());
 
-        // parameter
-        if ($name[0] === ':') {
-            $handle[] = $this->parameters[substr($name, 1)];
-
-            return '$*';
-        }
-
-        return $name;
+        return '$*';
     }
 
     /**

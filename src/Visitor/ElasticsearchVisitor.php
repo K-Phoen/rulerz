@@ -4,22 +4,17 @@ namespace RulerZ\Visitor;
 
 use Hoa\Ruler\Model as AST;
 
+use RulerZ\Model;
+
 class ElasticsearchVisitor extends GenericVisitor
 {
-    /**
-     * List of parameters.
-     *
-     * @var array
-     */
-    private $parameters = [];
+    use Polyfill\Parameters;
 
     /**
      * Constructor.
      */
-    public function __construct(array $parameters = [])
+    public function __construct()
     {
-        $this->parameters = $parameters;
-
         $this->defineBuiltInOperators();
     }
 
@@ -28,20 +23,22 @@ class ElasticsearchVisitor extends GenericVisitor
      */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
-        $name = $element->getId();
+        $dimensions = $element->getDimensions();
 
         // nested path
-        $dimensions = $element->getDimensions();
         if (!empty($dimensions)) {
             return $this->flattenAccessPath($element);
         }
 
-        // parameter
-        if ($name[0] === ':') {
-            return $this->lookupParameter(substr($name, 1));
-        }
-
         return $element->getId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
+    {
+        return $this->lookupParameter($element->getName());
     }
 
     /**
@@ -57,22 +54,6 @@ class ElasticsearchVisitor extends GenericVisitor
         }
 
         return implode('.', $flattenedDimensions);
-    }
-
-    /**
-     * Return the value of a parameter.
-     *
-     * @param string $name The parameter's name.
-     *
-     * @return mixed
-     */
-    private function lookupParameter($name)
-    {
-        if (!array_key_exists($name, $this->parameters)) {
-            throw new \RuntimeException(sprintf('Parameter "%s" not defined', $name));
-        }
-
-        return $this->parameters[$name];
     }
 
     /**
