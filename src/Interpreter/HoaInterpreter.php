@@ -5,7 +5,6 @@ namespace RulerZ\Interpreter;
 use Hoa\Compiler;
 use Hoa\File;
 use Hoa\Ruler;
-use Hoa\Ruler\Visitor\Interpreter as RulerInterpreter;
 use Hoa\Visitor;
 
 use RulerZ\Model\Parameter;
