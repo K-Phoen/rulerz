@@ -43,6 +43,7 @@ class HoaInterpreterSpec extends ObjectBehavior
             [ 'name = :user_name' ],
             [ 'name = ?' ],
             [ 'name = ? and group = ?' ],
+            [ 'name = ? and group = :group' ],
             [ 'points > 30 and group = "member"' ],
             [ '(points > 30 and group in ["member", "guest"]) or group = "admin"' ],
             [ 'not points > 30' ],
