@@ -33,7 +33,8 @@ The currently supported datasources are:
  * Doctrine ORM QueryBuilders,
  * [Pomm](http://www.pomm-project.org/) models,
  * Elasticsearch (using the [official client](https://github.com/elasticsearch/elasticsearch-php)
-   or [ruflin/Elastica](https://github.com/ruflin/Elastica)).
+   or [ruflin/Elastica](https://github.com/ruflin/Elastica))
+ * Laravel's [Eloquent ORM](http://laravel.com/docs/5.0/eloquent).
 
 **Killer feature:** when working with Doctrine, Pomm, or Elasticsearch, RulerZ
 is able to convert rules directly in queries and does not need to fetch data
