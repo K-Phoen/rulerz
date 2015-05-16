@@ -2,12 +2,12 @@
 
 namespace RulerZ\Visitor;
 
-use Doctrine\ORM\QueryBuilder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Hoa\Ruler\Model as AST;
 
 use RulerZ\Model;
 
-class DoctrineQueryBuilderVisitor extends SqlVisitor
+class EloquentQueryBuilderVisitor extends SqlVisitor
 {
     /**
      * The QueryBuilder to update.
@@ -32,27 +32,9 @@ class DoctrineQueryBuilderVisitor extends SqlVisitor
     /**
      * {@inheritDoc}
      */
-    public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
-    {
-        return sprintf('%s.%s', $this->getRootAlias(), $element->getId());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
     {
         // make it a placeholder
         return ':'.$element->getName();
-    }
-
-    /**
-     * Returns the root alias used by the query builder;
-     *
-     * @return string
-     */
-    private function getRootAlias()
-    {
-        return $this->qb->getRootAliases()[0];
     }
 }
