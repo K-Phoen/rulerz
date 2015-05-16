@@ -57,7 +57,7 @@ class EloquentExecutor implements ExtendableExecutor
      */
     private function buildWhereClause(QueryBuilder $qb, Model $rule)
     {
-        $searchBuilder = new EloquentQueryBuilderVisitor($qb);
+        $searchBuilder = new EloquentQueryBuilderVisitor();
         $searchBuilder->setOperators($this->getOperators());
 
         return $searchBuilder->visit($rule);
