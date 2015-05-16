@@ -26,6 +26,11 @@ class EloquentExecutorSpec extends ObjectBehavior
         $this->supports($qb, Executor::MODE_FILTER)->shouldReturn(true);
     }
 
+    function it_can_filter_eloquent_builders(EloquentBuilder $qb)
+    {
+        $this->supports($qb, Executor::MODE_FILTER)->shouldReturn(true);
+    }
+
     function it_can_not_filter_other_types()
     {
         foreach ($this->unsupportedTypes() as $type) {
