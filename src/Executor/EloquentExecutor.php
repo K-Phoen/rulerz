@@ -33,8 +33,9 @@ class EloquentExecutor implements ExtendableExecutor
     public function filter($target, Model $rule, array $parameters, ExecutionContext $context)
     {
         $query = !$target instanceof QueryBuilder ? $target->getQuery() : $target;
+        $sql   = $this->buildWhereClause($rule);
 
-        $query->whereRaw($this->buildWhereClause($query, $rule), $parameters);
+        $query->whereRaw($sql, $parameters);
 
         return $query->get();
     }
@@ -50,12 +51,11 @@ class EloquentExecutor implements ExtendableExecutor
     /**
      * Builds the SQL code for the given rule.
      *
-     * @param QueryBuilder $qb   The QueryBuilder to filter.
-     * @param Model        $rule The rule to apply.
+     * @param Model $rule The rule to apply.
      *
      * @return string The SQL code.
      */
-    private function buildWhereClause(QueryBuilder $qb, Model $rule)
+    private function buildWhereClause(Model $rule)
     {
         $searchBuilder = new EloquentQueryBuilderVisitor();
         $searchBuilder->setOperators($this->getOperators());
