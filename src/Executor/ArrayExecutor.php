@@ -2,10 +2,10 @@
 
 namespace RulerZ\Executor;
 
-use Hoa\Ruler\Context as ArrayContext;
 use Hoa\Ruler\Model;
 use Hoa\Ruler\Exception\visitor as visitorException;
 
+use RulerZ\Context\ArrayContext;
 use RulerZ\Context\ExecutionContext;
 use RulerZ\Context\ObjectContext;
 use RulerZ\Exception\OperatorNotFoundException;
