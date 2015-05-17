@@ -17,10 +17,18 @@ class ArrayVisitor extends GenericVisitor
     private $context;
 
     /**
+     *
+     * @var \Symfony\Component\PropertyAccess\PropertyAccessor The new accessor.
+     */
+    private $accessor;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
+        $this->accessor = PropertyAccess::createPropertyAccessor();
+
         $this->defineBuiltInOperators();
     }
 
@@ -39,8 +47,7 @@ class ArrayVisitor extends GenericVisitor
      */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
-        $accessor = PropertyAccess::createPropertyAccessor();
-        $id       = $element->getId();
+        $id = $element->getId();
 
         if (!isset($this->context[$id])) {
             throw new \RuntimeException('Context reference %s does not exists.', 1, $id);
@@ -52,7 +59,7 @@ class ArrayVisitor extends GenericVisitor
             $rawAattribute  = $dimension[AST\Bag\Context::ACCESS_VALUE];
             $attribute      = is_array($contextPointer) ? '['.$rawAattribute.']' : $rawAattribute;
 
-            $contextPointer = $accessor->getValue($contextPointer, $attribute);
+            $contextPointer = $this->accessor->getValue($contextPointer, $attribute);
         }
 
         return $contextPointer;
