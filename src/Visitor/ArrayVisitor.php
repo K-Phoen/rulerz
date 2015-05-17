@@ -47,15 +47,9 @@ class ArrayVisitor extends GenericVisitor
      */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
-        $id = $element->getId();
+        $contextPointer = $this->context[$element->getId()];
 
-        if (!isset($this->context[$id])) {
-            throw new \RuntimeException('Context reference %s does not exists.', 1, $id);
-        }
-
-        $contextPointer = $this->context[$id];
-
-        foreach ($element->getDimensions() as $dimensionNumber => $dimension) {
+        foreach ($element->getDimensions() as $dimension) {
             $rawAattribute  = $dimension[AST\Bag\Context::ACCESS_VALUE];
             $attribute      = is_array($contextPointer) ? '['.$rawAattribute.']' : $rawAattribute;
 
