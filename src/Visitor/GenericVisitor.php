@@ -120,21 +120,9 @@ abstract class GenericVisitor implements RuleVisitor
      */
     public function setOperator($operator, callable $transformer)
     {
-        $this->operators[$operator] = $transformer;
+        $this->operators[$operator] = xcallable($transformer);
 
         return $this;
-    }
-
-    /**
-     * Check if an operator exists.
-     *
-     * @param string $operator Operator.
-     *
-     * @return bool
-     */
-    public function operatorExists($operator)
-    {
-        return array_key_exists($operator, $this->operators) === true;
     }
 
     /**
@@ -146,14 +134,8 @@ abstract class GenericVisitor implements RuleVisitor
      */
     protected function getOperator($operator)
     {
-        if (!$this->operatorExists($operator)) {
+        if (!array_key_exists($operator, $this->operators)) {
             throw new OperatorNotFoundException($operator, sprintf('Operator "%s" does not exist.', $operator));
-        }
-
-        $handle = &$this->operators[$operator];
-
-        if (!$handle instanceof Xcallable) {
-            $handle = xcallable($handle);
         }
 
         return $this->operators[$operator];
