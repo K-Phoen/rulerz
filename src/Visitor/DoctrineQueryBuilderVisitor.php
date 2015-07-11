@@ -119,7 +119,7 @@ class DoctrineQueryBuilderVisitor extends SqlVisitor
     private function analizeSelectedTables()
     {
         $selectedMap = [];
-        $selected    = $this->qb->getDqlPart('from');
+        $selected    = $this->qb->getDQLPart('from');
 
         foreach ($selected as $from) {
             $selectedMap[$from->getAlias()] = $from->getFrom();
@@ -136,7 +136,7 @@ class DoctrineQueryBuilderVisitor extends SqlVisitor
     private function analizeJoinedTables()
     {
         $joinMap = [];
-        $joins   = $this->qb->getDqlPart('join');
+        $joins   = $this->qb->getDQLPart('join');
 
         foreach (array_keys($joins) as $fromTable) {
             foreach ($joins[$fromTable] as $join) {

@@ -61,8 +61,6 @@ class DoctrineQueryBuilderExecutor implements ExtendableExecutor
         $dqlBuilder = new DoctrineQueryBuilderVisitor($qb);
         $dqlBuilder->setOperators($this->getOperators());
 
-        $dql = $dqlBuilder->visit($rule);
-        var_dump($dql);
-        return $dql;
+        return $dqlBuilder->visit($rule);
     }
 }
