@@ -99,8 +99,8 @@ abstract class SqlVisitor extends GenericVisitor
      */
     protected function defineBuiltInOperators()
     {
-        $this->setOperator('and',  function ($a, $b) { return sprintf('%s AND %s', $a, $b); });
-        $this->setOperator('or',   function ($a, $b) { return sprintf('%s OR %s', $a, $b); });
+        $this->setOperator('and',  function ($a, $b) { return sprintf('(%s AND %s)', $a, $b); });
+        $this->setOperator('or',   function ($a, $b) { return sprintf('(%s OR %s)', $a, $b); });
         $this->setOperator('not',  function ($a) {     return sprintf('NOT (%s)', $a); });
         $this->setOperator('=',    function ($a, $b) { return sprintf('%s = %s', $a, $b); });
         $this->setOperator('!=',   function ($a, $b) { return sprintf('%s != %s', $a, $b); });

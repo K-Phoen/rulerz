@@ -56,7 +56,7 @@ class DoctrineQueryBuilderExecutorSpec extends ObjectBehavior
         $qb->getRootAliases()->willReturn(['u']);
         $query->getResult()->willReturn('result');
 
-        $qb->andWhere('u.points > 30 AND 1 = 1')->shouldBeCalled();
+        $qb->andWhere('(u.points > 30 AND 1 = 1)')->shouldBeCalled();
 
         $this->filter($qb, $this->getCustomOperatorRule(), [], $context)->shouldReturn('result');
     }
@@ -67,7 +67,7 @@ class DoctrineQueryBuilderExecutorSpec extends ObjectBehavior
         $qb->getRootAliases()->willReturn(['u']);
         $query->getResult()->willReturn('result');
 
-        $qb->andWhere('u.points > 30 AND always_true()')->shouldBeCalled();
+        $qb->andWhere('(u.points > 30 AND always_true())')->shouldBeCalled();
 
         $this->filter($qb, $this->getCustomOperatorRule(), [], $context)->shouldReturn('result');
     }

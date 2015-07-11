@@ -54,7 +54,7 @@ class EloquentExecutorSpec extends ObjectBehavior
             }
         ]);
 
-        $qb->whereRaw('points > 30 AND 1 = 1', [])->shouldBeCalled();
+        $qb->whereRaw('(points > 30 AND 1 = 1)', [])->shouldBeCalled();
         $qb->get()->willReturn('result');
 
         $this->filter($qb, $this->getCustomOperatorRule(), [], $context)->shouldReturn('result');
@@ -62,7 +62,7 @@ class EloquentExecutorSpec extends ObjectBehavior
 
     function it_implicitly_converts_unknown_operators(QueryBuilder $qb, ExecutionContext $context)
     {
-        $qb->whereRaw('points > 30 AND always_true()', [])->shouldBeCalled();
+        $qb->whereRaw('(points > 30 AND always_true())', [])->shouldBeCalled();
         $qb->get()->willReturn('result');
 
         $this->filter($qb, $this->getCustomOperatorRule(), [], $context)->shouldReturn('result');
