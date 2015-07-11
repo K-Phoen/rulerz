@@ -17,6 +17,20 @@ class DoctrineQueryBuilderVisitor extends SqlVisitor
     private $qb;
 
     /**
+     * Associative list of known aliases (selected or joined tables).
+     *
+     * @var array
+     */
+    private $knownAliases = [];
+
+    /**
+     * Associative list of joined tables and their alias.
+     *
+     * @var array
+     */
+    private $joinMap = [];
+
+    /**
      * Constructor.
      *
      * @param QueryBuilder $qb                The query builder being manipulated.
@@ -26,7 +40,9 @@ class DoctrineQueryBuilderVisitor extends SqlVisitor
     {
         parent::__construct($allowStarOperator);
 
-        $this->qb = $qb;
+        $this->qb           = $qb;
+        $this->joinMap      = $this->analizeJoinedTables();
+        $this->knownAliases = array_flip($qb->getRootAliases()) + array_flip($this->joinMap);
     }
 
     /**
@@ -34,7 +50,46 @@ class DoctrineQueryBuilderVisitor extends SqlVisitor
      */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
-        return sprintf('%s.%s', $this->getRootAlias(), $element->getId());
+        $dimensions = $element->getDimensions();
+
+        // simple column access
+        if (count($dimensions) === 0) {
+            return sprintf('%s.%s', $this->getRootAlias(), $element->getId());
+        }
+
+        // this is the real column that we are trying to access
+        $finalColumn = array_pop($dimensions);
+
+        // and this is a list of tables that need to be joined
+        $tablesToJoin = array_map(function($dimension) {
+            return $dimension[1];
+        }, $dimensions);
+        $tablesToJoin = array_merge([$element->getId()], $tablesToJoin);
+
+        // check if the first dimension is a known alias
+        if (isset($this->knownAliases[$tablesToJoin[0]])) {
+            $joinTo = $tablesToJoin[0];
+            array_pop($tablesToJoin);
+        } else { // if not, it's the root table
+            $joinTo = $this->getRootAlias();
+        }
+
+        // and here is the auto-join magic
+        foreach ($tablesToJoin as $table) {
+            $joinAlias = 'j_' . $table;
+            $join      = sprintf('%s.%s', $joinTo, $table);
+
+            if (!isset($this->joinMap[$join])) {
+                $this->joinMap[$join] = $joinAlias;
+                $this->qb->join(sprintf('%s.%s', $joinTo, $table), $joinAlias);
+            } else {
+                $joinAlias = $this->joinMap[$join];
+            }
+
+            $joinTo = $joinAlias;
+        }
+
+        return sprintf('%s.%s', $joinTo, $finalColumn[1]);
     }
 
     /**
@@ -54,5 +109,24 @@ class DoctrineQueryBuilderVisitor extends SqlVisitor
     private function getRootAlias()
     {
         return $this->qb->getRootAliases()[0];
+    }
+
+    /**
+     * Builds an associative array of already joined tables and their alias.
+     *
+     * @return array
+     */
+    private function analizeJoinedTables()
+    {
+        $joinMap = [];
+        $joins   = $this->qb->getDQLPart('join');
+
+        foreach (array_keys($joins) as $fromTable) {
+            foreach ($joins[$fromTable] as $join) {
+                $joinMap[$join->getJoin()] = $join->getAlias();
+            }
+        }
+
+        return $joinMap;
     }
 }
