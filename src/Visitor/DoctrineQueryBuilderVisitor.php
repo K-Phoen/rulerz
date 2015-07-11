@@ -17,7 +17,7 @@ class DoctrineQueryBuilderVisitor extends SqlVisitor
     private $qb;
 
     /**
-     * List of known aliases (selected or joined tables).
+     * Associative list of known aliases (selected or joined tables).
      *
      * @var array
      */
@@ -42,7 +42,7 @@ class DoctrineQueryBuilderVisitor extends SqlVisitor
 
         $this->qb           = $qb;
         $this->joinMap      = $this->analizeJoinedTables();
-        $this->knownAliases = array_merge($qb->getRootAliases(), array_flip($this->joinMap));
+        $this->knownAliases = array_flip($qb->getRootAliases()) + array_flip($this->joinMap);
     }
 
     /**
