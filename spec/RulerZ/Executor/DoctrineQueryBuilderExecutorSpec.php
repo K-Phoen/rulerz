@@ -37,7 +37,6 @@ class DoctrineQueryBuilderExecutorSpec extends ObjectBehavior
     {
         $qb->getQuery()->willReturn($query);
         $qb->getRootAliases()->willReturn(['u']);
-        $qb->getDQLPart('from')->willReturn([]);
         $qb->getDQLPart('join')->willReturn([]);
         $query->getResult()->willReturn('result');
 
@@ -56,7 +55,6 @@ class DoctrineQueryBuilderExecutorSpec extends ObjectBehavior
 
         $qb->getQuery()->willReturn($query);
         $qb->getRootAliases()->willReturn(['u']);
-        $qb->getDQLPart('from')->willReturn([]);
         $qb->getDQLPart('join')->willReturn([]);
         $query->getResult()->willReturn('result');
 
@@ -69,7 +67,6 @@ class DoctrineQueryBuilderExecutorSpec extends ObjectBehavior
     {
         $qb->getQuery()->willReturn($query);
         $qb->getRootAliases()->willReturn(['u']);
-        $qb->getDQLPart('from')->willReturn([]);
         $qb->getDQLPart('join')->willReturn([]);
         $query->getResult()->willReturn('result');
 

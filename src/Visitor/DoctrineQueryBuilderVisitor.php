@@ -42,7 +42,7 @@ class DoctrineQueryBuilderVisitor extends SqlVisitor
 
         $this->qb           = $qb;
         $this->joinMap      = $this->analizeJoinedTables();
-        $this->knownAliases = array_merge($this->analizeSelectedTables(), array_flip($this->joinMap));
+        $this->knownAliases = array_merge($qb->getRootAliases(), array_flip($this->joinMap));
     }
 
     /**
@@ -109,23 +109,6 @@ class DoctrineQueryBuilderVisitor extends SqlVisitor
     private function getRootAlias()
     {
         return $this->qb->getRootAliases()[0];
-    }
-
-    /**
-     * Builds an associative array of selected tables and their alias.
-     *
-     * @return array
-     */
-    private function analizeSelectedTables()
-    {
-        $selectedMap = [];
-        $selected    = $this->qb->getDQLPart('from');
-
-        foreach ($selected as $from) {
-            $selectedMap[$from->getAlias()] = $from->getFrom();
-        }
-
-        return $selectedMap;
     }
 
     /**
