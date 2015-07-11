@@ -17,6 +17,13 @@ class DoctrineQueryBuilderVisitor extends SqlVisitor
     private $qb;
 
     /**
+     * List of known aliases (selected or joined tables).
+     *
+     * @var array
+     */
+    private $knownAliases = [];
+
+    /**
      * Associative list of joined tables and their alias.
      *
      * @var array
@@ -33,8 +40,9 @@ class DoctrineQueryBuilderVisitor extends SqlVisitor
     {
         parent::__construct($allowStarOperator);
 
-        $this->qb      = $qb;
-        $this->joinMap = $this->analizeJoins();
+        $this->qb           = $qb;
+        $this->joinMap      = $this->analizeJoinedTables();
+        $this->knownAliases = array_merge($this->analizeSelectedTables(), array_flip($this->joinMap));
     }
 
     /**
@@ -58,8 +66,15 @@ class DoctrineQueryBuilderVisitor extends SqlVisitor
         }, $dimensions);
         $tablesToJoin = array_merge([$element->getId()], $tablesToJoin);
 
+        // check if the first dimension is a known alias
+        if (isset($this->knownAliases[$tablesToJoin[0]])) {
+            $joinTo = $tablesToJoin[0];
+            array_pop($tablesToJoin);
+        } else { // if not, it's the root table
+            $joinTo = $this->getRootAlias();
+        }
+
         // and here is the auto-join magic
-        $joinTo = $this->getRootAlias();
         foreach ($tablesToJoin as $table) {
             $joinAlias = 'j_' . $table;
             $join      = sprintf('%s.%s', $joinTo, $table);
@@ -97,17 +112,36 @@ class DoctrineQueryBuilderVisitor extends SqlVisitor
     }
 
     /**
-     * Builds an associative array of already joins tables and their alias.
+     * Builds an associative array of selected tables and their alias.
      *
      * @return array
      */
-    private function analizeJoins()
+    private function analizeSelectedTables()
     {
-        $joinMap  = [];
-        $dqlParts = $this->qb->getDqlParts();
+        $selectedMap = [];
+        $selected    = $this->qb->getDqlPart('from');
 
-        foreach ($dqlParts['join'][$this->getRootAlias()] as $join) {
-            $joinMap[$join->getJoin()] = $join->getAlias();
+        foreach ($selected as $from) {
+            $selectedMap[$from->getAlias()] = $from->getFrom();
+        }
+
+        return $selectedMap;
+    }
+
+    /**
+     * Builds an associative array of already joined tables and their alias.
+     *
+     * @return array
+     */
+    private function analizeJoinedTables()
+    {
+        $joinMap = [];
+        $joins   = $this->qb->getDqlPart('join');
+
+        foreach (array_keys($joins) as $fromTable) {
+            foreach ($joins[$fromTable] as $join) {
+                $joinMap[$join->getJoin()] = $join->getAlias();
+            }
         }
 
         return $joinMap;
