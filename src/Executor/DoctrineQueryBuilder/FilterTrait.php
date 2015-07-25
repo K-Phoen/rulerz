@@ -3,7 +3,6 @@
 namespace RulerZ\Executor\DoctrineQueryBuilder;
 
 use RulerZ\Context\ExecutionContext;
-use RulerZ\Context\ObjectContext;
 
 trait FilterTrait
 {
@@ -14,6 +13,8 @@ trait FilterTrait
      */
     public function filter($target, array $parameters, array $operators, ExecutionContext $context)
     {
+        /** @var \Doctrine\ORM\QueryBuilder $target */
+
         // this will return DQL code
         $dql = $this->execute($target, $operators, $parameters);
 

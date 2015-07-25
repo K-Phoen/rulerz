@@ -19,7 +19,6 @@ trait FilterTrait
         foreach ($target as $row) {
             $targetRow = is_array($row) ? $row : new ObjectContext($row);
 
-            // TODO operators
             if ($this->execute($targetRow, $operators, $parameters)) {
                 $matches[] = $row;
             }

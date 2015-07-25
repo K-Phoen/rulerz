@@ -22,7 +22,8 @@ abstract class GenericSqlVisitor extends GenericVisitor
     /**
      * Constructor.
      *
-     * @param bool $allowStarOperator Whether to allow the star operator or not (ie: implicit support of unknown operators).
+     * @param array<callable> $operators The custom operators to register.
+     * @param bool            $allowStarOperator Whether to allow the star operator or not (ie: implicit support of unknown operators).
      */
     public function __construct(array $operators = [], $allowStarOperator = true)
     {
@@ -86,7 +87,7 @@ abstract class GenericSqlVisitor extends GenericVisitor
     {
         $this->setInlineOperator('and',  function ($a, $b) { return sprintf('(%s AND %s)', $a, $b); });
         $this->setInlineOperator('or',   function ($a, $b) { return sprintf('(%s OR %s)', $a, $b); });
-        $this->setInlineOperator('not',  function ($a) {     return sprintf('NOT (%s)', $a); });
+        $this->setInlineOperator('not',  function ($a)     { return sprintf('NOT (%s)', $a); });
         $this->setInlineOperator('=',    function ($a, $b) { return sprintf('%s = %s', $a, $b); });
         $this->setInlineOperator('!=',   function ($a, $b) { return sprintf('%s != %s', $a, $b); });
         $this->setInlineOperator('>',    function ($a, $b) { return sprintf('%s > %s', $a,  $b); });
