@@ -14,24 +14,16 @@ class Executor
     private $traits = [];
 
     /**
-     * PHP code used to initialize the rule execution.
-     *
-     * @var string
-     */
-    private $initializationCode = '';
-
-    /**
      * Compiled code of the rule.
      *
      * @var string
      */
     private $compiledRule = '';
 
-    public function __construct(array $traits, $initializationCode, $compiledRule)
+    public function __construct(array $traits, $compiledRule)
     {
-        $this->traits             = $traits;
-        $this->initializationCode = $initializationCode;
-        $this->compiledRule       = $compiledRule;
+        $this->traits       = $traits;
+        $this->compiledRule = $compiledRule;
     }
 
     /**
@@ -40,14 +32,6 @@ class Executor
     public function getTraits()
     {
         return $this->traits;
-    }
-
-    /**
-     * @return array
-     */
-    public function getInitializationCode()
-    {
-        return $this->initializationCode;
     }
 
     /**

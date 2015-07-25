@@ -34,8 +34,6 @@ class {$parameters['className']}
 
     protected function execute(\$target, array \$operators, array \$parameters)
     {
-        {$executorModel->getInitializationCode()}
-
         return {$executorModel->getCompiledRule()};
     }
 }

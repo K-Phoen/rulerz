@@ -29,13 +29,6 @@ abstract class GenericVisitor implements CompilationTarget, RuleVisitor
     private $inlineOperators = [];
 
     /**
-     * PHP code used to initialize the rule execution.
-     *
-     * @var string
-     */
-    private $initializationCode = '';
-
-    /**
      * Gets a list of the traits to use in the executor's code.
      *
      * @return array
@@ -68,7 +61,6 @@ abstract class GenericVisitor implements CompilationTarget, RuleVisitor
 
         return new Model\Executor(
             $this->getExecutorTraits(),
-            $this->initializationCode,
             $compiledCode
         );
     }
@@ -265,15 +257,5 @@ abstract class GenericVisitor implements CompilationTarget, RuleVisitor
     public function setInlineOperator($operator, callable $transformer)
     {
         $this->inlineOperators[$operator] = $transformer;
-    }
-
-    /**
-     * Adds PHP code that will be used to initialize the executor.
-     *
-     * @param string $code
-     */
-    protected function addInitializationCode($code)
-    {
-        $this->initializationCode .= $code . PHP_EOL;
     }
 }
