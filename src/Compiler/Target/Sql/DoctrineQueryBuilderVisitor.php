@@ -1,13 +1,13 @@
 <?php
 
-namespace RulerZ\Visitor;
+namespace RulerZ\Compiler\Target\Sql;
 
 use Doctrine\ORM\QueryBuilder;
 use Hoa\Ruler\Model as AST;
 
 use RulerZ\Model;
 
-class DoctrineQueryBuilderVisitor extends SqlVisitor
+class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
 {
     /**
      * The QueryBuilder to update.
@@ -31,15 +31,10 @@ class DoctrineQueryBuilderVisitor extends SqlVisitor
     private $joinMap = [];
 
     /**
-     * Constructor.
-     *
      * @param QueryBuilder $qb                The query builder being manipulated.
-     * @param bool         $allowStarOperator Whether to allow the star operator or not (ie: implicit support of unknown operators).
      */
-    public function __construct(QueryBuilder $qb, $allowStarOperator = true)
+    public function initialize(QueryBuilder $qb)
     {
-        parent::__construct($allowStarOperator);
-
         $this->qb           = $qb;
         $this->joinMap      = $this->analizeJoinedTables();
         $this->knownAliases = array_flip($qb->getRootAliases()) + array_flip($this->joinMap);
@@ -47,6 +42,25 @@ class DoctrineQueryBuilderVisitor extends SqlVisitor
 
     /**
      * {@inheritDoc}
+     */
+    public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
+    {
+        $dql = parent::visitModel($element, $handle, $eldnah);
+
+        $this->addInitializationCode(<<<EOF
+        foreach (\$parameters as \$name => \$value) {
+            \$target->setParameter(\$name, \$value);
+        }
+EOF
+);
+
+        return '$target->andWhere("'.$dql.'")';
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @todo computing joins at compile-time is very error-prone
      */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
@@ -81,7 +95,7 @@ class DoctrineQueryBuilderVisitor extends SqlVisitor
 
             if (!isset($this->joinMap[$join])) {
                 $this->joinMap[$join] = $joinAlias;
-                $this->qb->join(sprintf('%s.%s', $joinTo, $table), $joinAlias);
+                $this->addInitializationCode(sprintf('$target->join(%s, %s);', sprintf('%s.%s', $joinTo, $table), $joinAlias));
             } else {
                 $joinAlias = $this->joinMap[$join];
             }

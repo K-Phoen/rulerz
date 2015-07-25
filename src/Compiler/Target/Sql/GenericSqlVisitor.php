@@ -1,15 +1,16 @@
 <?php
 
-namespace RulerZ\Visitor;
+namespace RulerZ\Compiler\Target\Sql;
 
 use Hoa\Ruler\Model as AST;
 
+use RulerZ\Compiler\Target\GenericVisitor;
 use RulerZ\Exception\OperatorNotFoundException;
 
 /**
  * Base class for sql-related visitors.
  */
-abstract class SqlVisitor extends GenericVisitor
+abstract class GenericSqlVisitor extends GenericVisitor
 {
     /**
      * Allow star operator.
@@ -64,34 +65,18 @@ abstract class SqlVisitor extends GenericVisitor
     public function visitOperator(AST\Operator $element, &$handle = null, $eldnah = null)
     {
         try {
-            $xcallable = $this->getOperator($element->getName());
+            return parent::visitOperator($element, $handle, $eldnah);
         } catch (OperatorNotFoundException $e) {
             if (!$this->allowStarOperator) {
                 throw $e;
             }
-
-            $xcallable = $this->getStarOperator($element);
         }
 
         $arguments = array_map(function ($argument) use (&$handle, $eldnah) {
             return $argument->accept($this, $handle, $eldnah);
         }, $element->getArguments());
 
-        return $xcallable->distributeArguments($arguments);
-    }
-
-    /**
-     * Return a "*" or "catch all" operator.
-     *
-     * @param Visitor\Element $element The node representing the operator.
-     *
-     * @return \Hoa\Core\Consistency\Xcallable
-     */
-    protected function getStarOperator(AST\Operator $element)
-    {
-        return xcallable(function () use ($element) {
-            return sprintf('%s(%s)', $element->getName(), implode(', ', func_get_args()));
-        });
+        return sprintf('%s(%s)', $element->getName(), implode(', ', $arguments));
     }
 
     /**
@@ -99,16 +84,16 @@ abstract class SqlVisitor extends GenericVisitor
      */
     protected function defineBuiltInOperators()
     {
-        $this->setOperator('and',  function ($a, $b) { return sprintf('(%s AND %s)', $a, $b); });
-        $this->setOperator('or',   function ($a, $b) { return sprintf('(%s OR %s)', $a, $b); });
-        $this->setOperator('not',  function ($a) {     return sprintf('NOT (%s)', $a); });
-        $this->setOperator('=',    function ($a, $b) { return sprintf('%s = %s', $a, $b); });
-        $this->setOperator('!=',   function ($a, $b) { return sprintf('%s != %s', $a, $b); });
-        $this->setOperator('>',    function ($a, $b) { return sprintf('%s > %s', $a,  $b); });
-        $this->setOperator('>=',   function ($a, $b) { return sprintf('%s >= %s', $a,  $b); });
-        $this->setOperator('<',    function ($a, $b) { return sprintf('%s < %s', $a,  $b); });
-        $this->setOperator('<=',   function ($a, $b) { return sprintf('%s <= %s', $a,  $b); });
-        $this->setOperator('in',   function ($a, $b) { return sprintf('%s IN %s', $a, $b[0] === '(' ? $b : '('.$b.')'); });
-        $this->setOperator('like', function ($a, $b) { return sprintf('%s LIKE %s', $a, $b); });
+        $this->setInlineOperator('and',  function ($a, $b) { return sprintf('(%s AND %s)', $a, $b); });
+        $this->setInlineOperator('or',   function ($a, $b) { return sprintf('(%s OR %s)', $a, $b); });
+        $this->setInlineOperator('not',  function ($a) {     return sprintf('NOT (%s)', $a); });
+        $this->setInlineOperator('=',    function ($a, $b) { return sprintf('%s = %s', $a, $b); });
+        $this->setInlineOperator('!=',   function ($a, $b) { return sprintf('%s != %s', $a, $b); });
+        $this->setInlineOperator('>',    function ($a, $b) { return sprintf('%s > %s', $a,  $b); });
+        $this->setInlineOperator('>=',   function ($a, $b) { return sprintf('%s >= %s', $a,  $b); });
+        $this->setInlineOperator('<',    function ($a, $b) { return sprintf('%s < %s', $a,  $b); });
+        $this->setInlineOperator('<=',   function ($a, $b) { return sprintf('%s <= %s', $a,  $b); });
+        $this->setInlineOperator('in',   function ($a, $b) { return sprintf('%s IN %s', $a, $b[0] === '(' ? $b : '('.$b.')'); });
+        $this->setInlineOperator('like', function ($a, $b) { return sprintf('%s LIKE %s', $a, $b); });
     }
 }

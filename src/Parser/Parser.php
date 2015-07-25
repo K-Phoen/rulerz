@@ -1,18 +1,18 @@
 <?php
 
-namespace RulerZ\Interpreter;
+namespace RulerZ\Parser;
 
 /**
- * Interpretes a rule.
+ * Buils an AST from a rule.
  */
-interface Interpreter
+interface Parser
 {
     /**
      * Parses the rule into an equivalent AST.
      *
      * @param string $rule The rule represented as a string.
      *
-     * @return \Hoa\Ruler\Model
+     * @return \RulerZ\Model\Rule
      */
-    public function interpret($rule);
+    public function parse($rule);
 }

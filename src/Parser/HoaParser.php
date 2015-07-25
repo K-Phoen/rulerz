@@ -1,30 +1,30 @@
 <?php
 
-namespace RulerZ\Interpreter;
+namespace RulerZ\Parser;
 
 use Hoa\Compiler;
 use Hoa\File;
 use Hoa\Ruler;
 use Hoa\Visitor;
 
-use RulerZ\Model\Parameter;
+use RulerZ\Model;
 
 /**
- * Interpretes a rule.
+ * Parses a rule.
  */
-class HoaInterpreter implements Interpreter, Visitor\Visit
+class HoaParser implements Parser, Visitor\Visit
 {
     /**
-     * Compiler.
+     * Parser.
      *
-     * @var \Hoa\Compiler\Llk\Parser $compiler
+     * @var \Hoa\Compiler\Llk\Parser $parser
      */
-    private $compiler;
+    private $parser;
 
     /**
      * Root.
      *
-     * @var \Hoa\Ruler\Model object
+     * @var \RulerZ\Model\Rule object
      */
     private $root;
 
@@ -35,19 +35,18 @@ class HoaInterpreter implements Interpreter, Visitor\Visit
      */
     private $nextParameterIndex = 0;
 
-    public function __construct()
-    {
-        $this->compiler = Compiler\Llk::load(
-            new File\Read(__DIR__ .'/../Grammar.pp')
-        );
-    }
-
     /**
      * {@inheritDoc}
      */
-    public function interpret($rule)
+    public function parse($rule)
     {
-        return $this->visit($this->compiler->parse($rule));
+        if ($this->parser === null) {
+            $this->parser = Compiler\Llk::load(
+                new File\Read(__DIR__ .'/../Grammar.pp')
+            );
+        }
+
+        return $this->visit($this->parser->parse($rule));
     }
 
     /**
@@ -58,7 +57,7 @@ class HoaInterpreter implements Interpreter, Visitor\Visit
      * @param   mixed                 &$handle    Handle (reference).
      * @param   mixed                 $eldnah     Handle (not reference).
      *
-     * @return  \Hoa\Ruler\Model
+     * @return  \RulerZ\Model\Rule
      *
      * @throw   \Hoa\Ruler\Exception\Interpreter
      */
@@ -69,7 +68,7 @@ class HoaInterpreter implements Interpreter, Visitor\Visit
 
         switch ($id) {
             case '#expression':
-                $this->root             = new Ruler\Model();
+                $this->root             = new Model\Rule();
                 $this->root->expression = $element->getChild(0)->accept(
                     $this,
                     $handle,
@@ -165,12 +164,12 @@ class HoaInterpreter implements Interpreter, Visitor\Visit
 
                     case 'named_parameter':
 
-                        return new Parameter(substr($value, 1));
+                        return new Model\Parameter(substr($value, 1));
 
                     case 'positional_parameter':
                         $index = $this->nextParameterIndex++;
 
-                        return new Parameter($index);
+                        return new Model\Parameter($index);
 
                     case 'true':
                         return true;
