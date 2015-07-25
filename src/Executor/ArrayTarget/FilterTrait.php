@@ -2,7 +2,6 @@
 
 namespace RulerZ\Executor\ArrayTarget;
 
-
 use RulerZ\Context\ExecutionContext;
 use RulerZ\Context\ObjectContext;
 
@@ -15,7 +14,7 @@ trait FilterTrait
      */
     public function filter($target, array $parameters, array $operators, ExecutionContext $context)
     {
-        $matches   = [];
+        $matches = [];
 
         foreach ($target as $row) {
             $targetRow = is_array($row) ? $row : new ObjectContext($row);

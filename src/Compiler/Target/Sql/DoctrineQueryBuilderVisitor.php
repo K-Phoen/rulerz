@@ -31,6 +31,25 @@ class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
     private $joinMap = [];
 
     /**
+     * @inheritDoc
+     */
+    public function supports($target, $mode)
+    {
+        return $target instanceof QueryBuilder;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getExecutorTraits()
+    {
+        return [
+            '\RulerZ\Executor\DoctrineQueryBuilder\FilterTrait',
+            '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',
+        ];
+    }
+
+    /**
      * @param QueryBuilder $qb                The query builder being manipulated.
      */
     public function initialize(QueryBuilder $qb)
@@ -46,13 +65,6 @@ class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
     public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
     {
         $dql = parent::visitModel($element, $handle, $eldnah);
-
-        $this->addInitializationCode(<<<EOF
-        foreach (\$parameters as \$name => \$value) {
-            \$target->setParameter(\$name, \$value);
-        }
-EOF
-);
 
         return '$target->andWhere("'.$dql.'")';
     }

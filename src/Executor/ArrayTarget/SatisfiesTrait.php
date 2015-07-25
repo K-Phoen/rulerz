@@ -2,7 +2,6 @@
 
 namespace RulerZ\Executor\ArrayTarget;
 
-
 use RulerZ\Context\ExecutionContext;
 use RulerZ\Context\ObjectContext;
 
@@ -17,6 +16,6 @@ trait SatisfiesTrait
     {
         $wrappedTarget = is_array($target) ? $target : new ObjectContext($target);
 
-        return $this->execute($wrappedTarget , $operators, $parameters);
+        return $this->execute($wrappedTarget, $operators, $parameters);
     }
 }

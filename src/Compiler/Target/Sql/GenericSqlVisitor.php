@@ -24,11 +24,11 @@ abstract class GenericSqlVisitor extends GenericVisitor
      *
      * @param bool $allowStarOperator Whether to allow the star operator or not (ie: implicit support of unknown operators).
      */
-    public function __construct($allowStarOperator = true)
+    public function __construct(array $operators = [], $allowStarOperator = true)
     {
-        $this->allowStarOperator = (bool) $allowStarOperator;
+        parent::__construct($operators);
 
-        $this->defineBuiltInOperators();
+        $this->allowStarOperator = (bool) $allowStarOperator;
     }
 
     /**
