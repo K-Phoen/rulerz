@@ -34,6 +34,8 @@
         "pomm-project/model-manager": "2.0.*@dev",
         "illuminate/database": "~5.0",
 
+        "phpunit/phpunit": "~4.7",
+
         "coduo/phpspec-data-provider-extension": "~1.0",
         "phpspec/phpspec": "~2.0"
     },
