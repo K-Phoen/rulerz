@@ -27,10 +27,11 @@ class FileCompiler extends AbstractCompiler
     public function compile($rule, Target\CompilationTarget $target)
     {
         $ruleIdentifier = $this->getRuleIdentifier($rule);
-        $fileName       = $this->directory . DIRECTORY_SEPARATOR . 'rulerz_executor_' . $ruleIdentifier;
         $executorFqcn   = '\RulerZ\Compiled\Executor\\Executor_' . $ruleIdentifier;
 
         if (!class_exists($executorFqcn, false)) {
+            $fileName = $this->directory . DIRECTORY_SEPARATOR . 'rulerz_executor_' . $ruleIdentifier;
+
             if (!file_exists($fileName)) {
                 $source = $this->compileToSource($rule, $target, [
                     'className' => 'Executor_' . $ruleIdentifier
