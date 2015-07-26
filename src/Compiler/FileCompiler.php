@@ -35,7 +35,6 @@ class FileCompiler extends AbstractCompiler
                 $source = $this->compileToSource($rule, $target, [
                     'className' => 'Executor_' . $ruleIdentifier
                 ]);
-                echo $source;
                 file_put_contents($fileName, '<?php'."\n".$source);
             }
 
