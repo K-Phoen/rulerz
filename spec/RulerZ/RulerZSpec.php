@@ -2,19 +2,19 @@
 
 namespace spec\RulerZ;
 
-use Hoa\Ruler\Model\Model as AST;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
+use RulerZ\Compiler\Compiler;
+use RulerZ\Compiler\Target\CompilationTarget;
 use RulerZ\Executor\Executor;
-use RulerZ\Interpreter\Interpreter;
 use RulerZ\Spec\Specification;
 
 class RulerZSpec extends ObjectBehavior
 {
-    function let(Interpreter $interpreter)
+    function let(Compiler $compiler, CompilationTarget $compilationTarget)
     {
-        $this->beConstructedWith($interpreter);
+        $this->beConstructedWith($compiler, [$compilationTarget]);
     }
 
     function it_is_initializable()
@@ -22,126 +22,111 @@ class RulerZSpec extends ObjectBehavior
         $this->shouldHaveType('RulerZ\RulerZ');
     }
 
-    function it_accepts_new_executors_during_construction(Interpreter $interpreter, Executor $executor)
+    function it_accepts_new_executors_after_construction(CompilationTarget $anotherCompilationTarget)
     {
-        $this->beConstructedWith($interpreter, [$executor]);
+        $this->registerCompilationTarget($anotherCompilationTarget);
     }
 
-    function it_accepts_new_executors_after_construction(Executor $executor)
+    function it_chooses_the_right_compilation_target_for_a_given_target(Compiler $compiler, CompilationTarget $compilationTargetYes, CompilationTarget $compilationTargetNo, Executor $executor)
     {
-        $this->registerExecutor($executor);
-    }
+        $target    = ['dummy target'];
+        $rule      = 'dummy rule';
+        $operators = ['dummy operator'];
 
-    function it_chooses_the_right_executor_for_a_given_target(Interpreter $interpreter, Executor $executor_a, Executor $executor_b, AST $ast)
-    {
-        $target = $this->getTarget();
-        $rule = $this->getRule();
+        $compiler->compile($rule, $compilationTargetYes)->willReturn($executor);
 
-        $interpreter->interpret($rule)->willReturn($ast);
+        $compilationTargetYes->supports($target, CompilationTarget::MODE_FILTER)->willReturn(true);
+        $compilationTargetYes->getOperators()->willReturn($operators);
 
-        $executor_a->supports($target, Executor::MODE_FILTER)->willReturn(false);
-        $executor_a->filter()->shouldNotBeCalled();
+        $compilationTargetNo->supports($target, CompilationTarget::MODE_FILTER)->willReturn(false);
 
-        $executor_b->supports($target, Executor::MODE_FILTER)->willReturn(true);
-        $executor_b->filter($target, $ast, [], Argument::type('\RulerZ\Context\ExecutionContext'))->shouldBeCalled();
+        $executor->filter($target, [], $operators, Argument::type('\RulerZ\Context\ExecutionContext'))->shouldBeCalled();
 
-        $this->beConstructedWith($interpreter, [$executor_a, $executor_b]);
+        $this->beConstructedWith($compiler, [$compilationTargetNo, $compilationTargetYes]);
 
         $this->filter($target, $rule);
     }
 
-    function it_can_filter_a_target_with_a_rule(Interpreter $interpreter, Executor $executor, AST $ast)
+    function it_can_filter_a_target_with_a_rule(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor)
     {
-        $target = $this->getTarget();
-        $result = $this->getResult();
-        $rule = $this->getRule();
+        $target    = ['dummy target'];
+        $rule      = 'dummy rule';
+        $operators = ['dummy operator'];
+        $result    = 'dummy result';
 
-        $interpreter->interpret($rule)->willReturn($ast);
-        $executor->supports($target, Executor::MODE_FILTER)->willReturn(true);
-        $executor->filter($target, $ast, [], Argument::type('\RulerZ\Context\ExecutionContext'))->willReturn($result);
+        $compiler->compile($rule, $compilationTarget)->willReturn($executor);
 
-        $this->beConstructedWith($interpreter, [$executor]);
+        $compilationTarget->supports($target, CompilationTarget::MODE_FILTER)->willReturn(true);
+        $compilationTarget->getOperators()->willReturn($operators);
+
+        $executor->filter($target, [], $operators, Argument::type('\RulerZ\Context\ExecutionContext'))->willReturn($result);
 
         $this->filter($target, $rule)->shouldReturn($result);
     }
 
-    function it_can_filter_a_target_with_a_specification(Interpreter $interpreter, Executor $executor, AST $ast, Specification $spec)
+    function it_can_filter_a_target_with_a_specification(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor, Specification $spec)
     {
-        $target = $this->getTarget();
-        $result = $this->getResult();
-        $rule   = $this->getRule();
-        $params = [];
+        $target     = ['dummy target'];
+        $rule       = 'dummy rule';
+        $operators  = ['dummy operator'];
+        $result     = 'dummy result';
+        $parameters = ['dummy param'];
 
         $spec->getRule()->willReturn($rule);
-        $spec->getParameters()->willReturn($params);
+        $spec->getParameters()->willReturn($parameters);
 
-        $interpreter->interpret($rule)->willReturn($ast);
-        $executor->supports($target, Executor::MODE_FILTER)->willReturn(true);
-        $executor->filter($target, $ast, $params, Argument::type('\RulerZ\Context\ExecutionContext'))->willReturn($result);
+        $compiler->compile($rule, $compilationTarget)->willReturn($executor);
 
-        $this->beConstructedWith($interpreter, [$executor]);
+        $compilationTarget->supports($target, CompilationTarget::MODE_FILTER)->willReturn(true);
+        $compilationTarget->getOperators()->willReturn($operators);
+
+        $executor->filter($target, $parameters, $operators, Argument::type('\RulerZ\Context\ExecutionContext'))->willReturn($result);
 
         $this->filterSpec($target, $spec)->shouldReturn($result);
     }
 
-    function it_can_check_if_a_target_satisfies_a_rule(Interpreter $interpreter, Executor $executor, AST $ast)
+    function it_can_check_if_a_target_satisfies_a_rule(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor)
     {
-        $target = $this->getTarget();
-        $result = $this->getResult();
-        $rule   = $this->getRule();
+        $target    = ['dummy target'];
+        $rule      = 'dummy rule';
+        $operators = ['dummy operator'];
+        $result    = true;
 
-        $interpreter->interpret($rule)->willReturn($ast);
-        $executor->supports($target, Executor::MODE_SATISFIES)->willReturn(true);
-        $executor->satisfies($target, $ast, [], Argument::type('\RulerZ\Context\ExecutionContext'))->willReturn(true);
+        $compiler->compile($rule, $compilationTarget)->willReturn($executor);
 
-        $this->beConstructedWith($interpreter, [$executor]);
+        $compilationTarget->supports($target, CompilationTarget::MODE_SATISFIES)->willReturn(true);
+        $compilationTarget->getOperators()->willReturn($operators);
 
-        $this->satisfies($target, $rule)->shouldReturn(true);
+        $executor->satisfies($target, [], $operators, Argument::type('\RulerZ\Context\ExecutionContext'))->willReturn($result);
+
+        $this->satisfies($target, $rule)->shouldReturn($result);
     }
 
-    function it_can_check_if_a_target_satisfies_a_specification(Interpreter $interpreter, Executor $executor, AST $ast, Specification $spec)
+    function it_can_check_if_a_target_satisfies_a_specification(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor, Specification $spec)
     {
-        $target = $this->getTarget();
-        $result = $this->getResult();
-        $rule   = $this->getRule();
-        $params = [];
+        $target     = ['dummy target'];
+        $rule       = 'dummy rule';
+        $operators  = ['dummy operator'];
+        $parameters = ['dummy param'];
+        $result    = true;
 
         $spec->getRule()->willReturn($rule);
-        $spec->getParameters()->willReturn($params);
+        $spec->getParameters()->willReturn($parameters);
 
-        $interpreter->interpret($rule)->willReturn($ast);
-        $executor->supports($target, Executor::MODE_SATISFIES)->willReturn(true);
-        $executor->satisfies($target, $ast, $params, Argument::type('\RulerZ\Context\ExecutionContext'))->willReturn(true);
+        $compiler->compile($rule, $compilationTarget)->willReturn($executor);
 
-        $this->beConstructedWith($interpreter, [$executor]);
+        $compilationTarget->supports($target, CompilationTarget::MODE_SATISFIES)->willReturn($result);
+        $compilationTarget->getOperators()->willReturn($operators);
+
+        $executor->satisfies($target, $parameters, $operators, Argument::type('\RulerZ\Context\ExecutionContext'))->willReturn($result);
 
         $this->satisfiesSpec($target, $spec)->shouldReturn(true);
     }
 
-    function it_cant_filter_without_an_executor()
+    function it_cant_filter_without_a_compilation_target()
     {
         $this
             ->shouldThrow('RulerZ\Exception\TargetUnsupportedException')
             ->duringFilter(['some target'], 'points > 30');
-    }
-
-    private function getTarget()
-    {
-        return [
-            ['name' => 'Joe', 'points' => 40],
-            ['name' => 'Moe', 'points' => 20],
-        ];
-    }
-
-    private function getResult()
-    {
-        return [
-            ['name' => 'Joe', 'points' => 40],
-        ];
-    }
-
-    private function getRule()
-    {
-        return 'points > 30';
     }
 }

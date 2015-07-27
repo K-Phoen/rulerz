@@ -1,15 +1,15 @@
 <?php
 
-namespace spec\RulerZ\Interpreter;
+namespace spec\RulerZ\Parser;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class HoaInterpreterSpec extends ObjectBehavior
+class HoaParserSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('RulerZ\Interpreter\HoaInterpreter');
+        $this->shouldHaveType('RulerZ\Parser\HoaParser');
     }
 
     /**
@@ -17,7 +17,7 @@ class HoaInterpreterSpec extends ObjectBehavior
      */
     function it_returns_an_ast_for_a_valid_rule($rule)
     {
-        $this->interpret($rule)->shouldHaveType('Hoa\Ruler\Model');
+        $this->parse($rule)->shouldHaveType('RulerZ\Model\Rule');
     }
 
     /**
@@ -25,7 +25,7 @@ class HoaInterpreterSpec extends ObjectBehavior
      */
     function it_throws_an_exception_for_an_invalid_rule($rule)
     {
-        $this->shouldThrow('Hoa\Compiler\Exception')->duringInterpret($rule);
+        $this->shouldThrow('Hoa\Compiler\Exception')->duringParse($rule);
     }
 
     public function validRules()
