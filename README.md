@@ -101,9 +101,12 @@ For any of our datasource, retrieving the *power guests* is as simple as calling
 the `filter` method:
 
 ```php
-$powerGuests = $rulerz->filter($usersQb, $powerGuestsRule);  // converts the rule in DQL and makes a single query to the DB
-$powerGuests = $rulerz->filter($usersArr, $powerGuestsRule); // filters the array of arrays
-$powerGuests = $rulerz->filter($usersObj, $powerGuestsRule); // filters the array of objects
+// converts the rule in DQL and makes a single query to the DB
+$powerGuests = $rulerz->filter($usersQb, $powerGuestsRule);
+// filters the array of arrays
+$powerGuests = $rulerz->filter($usersArr, $powerGuestsRule);
+// filters the array of objects
+$powerGuests = $rulerz->filter($usersObj, $powerGuestsRule);
 ```
 
 #### 3. (bis) Check if a candidate satisfies a rule
