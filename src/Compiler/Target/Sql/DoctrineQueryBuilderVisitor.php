@@ -10,6 +10,11 @@ use RulerZ\Model;
 class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
 {
     /**
+     * The root alias used by the query builder.
+     */
+    const ROOT_ALIAS_PLACEHOLDER = '@@_ROOT_ALIAS_@@';
+
+    /**
      * @inheritDoc
      */
     public function supports($target, $mode)
@@ -35,7 +40,7 @@ class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
     {
         $dql = parent::visitModel($element, $handle, $eldnah);
 
-        return '"'. $dql .'"';
+        return '"' . $dql . '"';
     }
 
     /**
@@ -43,7 +48,7 @@ class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
      */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
-        return sprintf('%s.%s', $this->getRootAliasPlaceholder(), $element->getId());
+        return sprintf('%s.%s', self::ROOT_ALIAS_PLACEHOLDER, $element->getId());
     }
 
     /**
@@ -52,16 +57,6 @@ class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
     public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
     {
         // make it a placeholder
-        return ':'.$element->getName();
-    }
-
-    /**
-     * Returns the root alias used by the query builder;
-     *
-     * @return string
-     */
-    private function getRootAliasPlaceholder()
-    {
-        return '@@_ROOT_ALIAS_@@';
+        return ':' . $element->getName();
     }
 }
