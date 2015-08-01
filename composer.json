@@ -36,6 +36,7 @@
 
         "phpunit/phpunit": "~4.7",
 
+        "mikey179/vfsStream": "~1.4",
         "coduo/phpspec-data-provider-extension": "~1.0",
         "phpspec/phpspec": "~2.0"
     },
