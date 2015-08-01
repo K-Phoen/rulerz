@@ -12,7 +12,7 @@ trait SatisfiesTrait
     /**
      * {@inheritDoc}
      */
-    public function satisties($target, array $parameters, array $operators, ExecutionContext $context)
+    public function satisfies($target, array $parameters, array $operators, ExecutionContext $context)
     {
         $wrappedTarget = is_array($target) ? $target : new ObjectContext($target);
 

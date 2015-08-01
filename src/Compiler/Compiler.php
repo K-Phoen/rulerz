@@ -7,7 +7,7 @@ use RulerZ\Executor\Executor;
 interface Compiler
 {
     /**
-     * @param string        $rule
+     * @param string                   $rule
      * @param Target\CompilationTarget $compilationTarget
      *
      * @return Executor

@@ -35,7 +35,7 @@ class Executor
     }
 
     /**
-     * @return array
+     * @return string
      */
     public function getCompiledRule()
     {
