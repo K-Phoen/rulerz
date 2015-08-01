@@ -147,8 +147,10 @@ abstract class GenericVisitor implements CompilationTarget, RuleVisitor
             return call_user_func_array($callable, $arguments);
         }
 
+        $inlinedArguments = empty($arguments) ? '' : ', ' . implode(', ', $arguments);
+
         // or defer it.
-        return sprintf('call_user_func($operators["%s"], %s)', $operatorName, implode(', ', $arguments));
+        return sprintf('call_user_func($operators["%s"]%s)', $operatorName, $inlinedArguments);
     }
 
     /**
