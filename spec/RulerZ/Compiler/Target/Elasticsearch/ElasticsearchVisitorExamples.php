@@ -34,6 +34,22 @@ trait ElasticsearchVisitorExamples
         $executorModel->getCompiledRule()->shouldReturn($expectedQuery);
     }
 
+    function it_handles_nested_accesses()
+    {
+        $rule = 'user.stats.points > 30';
+        $expectedQuery = [
+            'bool' => [
+                'must' => [
+                    'range' => ['user.stats.points' => ['gt' => 30]],
+                ]
+            ]
+        ];
+
+        /** @var Executor $executorModel */
+        $executorModel = $this->compile($this->parseRule($rule));
+        $executorModel->getCompiledRule()->shouldReturn($expectedQuery);
+    }
+
     function it_throws_an_exception_when_calling_an_unknown_operator()
     {
         $this
