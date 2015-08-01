@@ -28,7 +28,9 @@ abstract class AbstractCompiler implements Compiler
         return <<<EXECUTOR
 namespace RulerZ\Compiled\Executor;
 
-class {$parameters['className']}
+use RulerZ\Executor\Executor;
+
+class {$parameters['className']} implements Executor
 {
     $flattenedTraits
 
