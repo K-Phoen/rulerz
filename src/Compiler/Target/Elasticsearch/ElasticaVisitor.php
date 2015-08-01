@@ -6,7 +6,7 @@ use Elastica\Search;
 use Elastica\SearchableInterface;
 use FOS\ElasticaBundle\Finder\TransformedFinder;
 
-class ElasticaVisitor implements ExtendableExecutor
+class ElasticaVisitor extends GenericElasticsearchVisitor
 {
     /**
      * {@inheritDoc}

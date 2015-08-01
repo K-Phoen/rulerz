@@ -15,7 +15,12 @@
         "psr-4": { "RulerZ\\": "src/" }
     },
     "autoload-dev": {
-        "psr-4": { "Entity\\": "examples/entities/", "SampleSpecs\\": "examples/specs/", "RulerZ\\Stub\\": "stub/" }
+        "psr-4": {
+            "Entity\\": "examples/entities/",
+            "SampleSpecs\\": "examples/specs/",
+            "RulerZ\\Stub\\": "stub/",
+            "spec\\RulerZ\\": "spec/RulerZ/"
+        }
     },
     "config": {
         "bin-dir": "bin/"

@@ -5,6 +5,7 @@ namespace RulerZ\Compiler\Target\Elasticsearch;
 use Hoa\Ruler\Model as AST;
 
 use RulerZ\Compiler\Target\GenericVisitor;
+use RulerZ\Model;
 
 /**
  * Base class for Elasticsearch-related visitors.
@@ -24,6 +25,14 @@ abstract class GenericElasticsearchVisitor extends GenericVisitor
         }
 
         return $element->getId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
+    {
+        return sprintf('$parameters["%s"]', $element->getName());
     }
 
     /**
@@ -74,7 +83,7 @@ abstract class GenericElasticsearchVisitor extends GenericVisitor
                 ]
             ]);
         });
-        $this->setInlineOperator('in', $this->getOperator('has'));
+        $this->setInlineOperator('in', $this->getInlineOperator('has'));
 
         $this->setInlineOperator('=', function ($a, $b) use ($must) {
             return $must([

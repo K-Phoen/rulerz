@@ -4,7 +4,7 @@ namespace RulerZ\Compiler\Target\Elasticsearch;
 
 use Elasticsearch\Client;
 
-class ElasticsearchVisitor implements ExtendableExecutor
+class ElasticsearchVisitor extends GenericElasticsearchVisitor
 {
     /**
      * {@inheritDoc}
