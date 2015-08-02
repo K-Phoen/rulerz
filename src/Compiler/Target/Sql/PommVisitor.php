@@ -35,7 +35,7 @@ class PommVisitor extends GenericSqlVisitor
      */
     public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
     {
-        $handle[] = sprintf('$parameters[%s"]', $element->getName());
+        $handle[] = sprintf('$parameters["%s"]', $element->getName());
 
         // make it a placeholder
         return '$*';
