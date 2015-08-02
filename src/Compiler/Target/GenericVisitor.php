@@ -191,6 +191,7 @@ abstract class GenericVisitor implements CompilationTarget, RuleVisitor
      */
     public function setOperator($operator, callable $transformer)
     {
+        unset($this->inlineOperators[$operator]);
         $this->operators[$operator] = $transformer;
 
         return $this;
@@ -258,6 +259,7 @@ abstract class GenericVisitor implements CompilationTarget, RuleVisitor
      */
     public function setInlineOperator($operator, callable $transformer)
     {
+        unset($this->operators[$operator]);
         $this->inlineOperators[$operator] = $transformer;
     }
 }
