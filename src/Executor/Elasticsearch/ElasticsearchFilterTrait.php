@@ -4,7 +4,7 @@ namespace RulerZ\Executor\Elasticsearch;
 
 use RulerZ\Context\ExecutionContext;
 
-trait FilterTrait
+trait ElasticsearchFilterTrait
 {
     abstract protected function execute($target, array $operators, array $parameters);
 
