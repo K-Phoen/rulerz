@@ -54,6 +54,10 @@ class PommVisitor extends GenericSqlVisitor
             return $sql;
         }
 
+        if ($this->hasOperator($operator)) {
+            return sprintf('(new \PommProject\Foundation\Where(%s, [%s]))', $sql, implode(', ', $parameters));
+        }
+
         return sprintf('(new \PommProject\Foundation\Where("%s", [%s]))', $sql, implode(', ', $parameters));
     }
 

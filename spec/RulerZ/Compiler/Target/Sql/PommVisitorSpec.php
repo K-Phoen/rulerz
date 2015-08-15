@@ -59,7 +59,7 @@ class PommVisitorSpec extends ObjectBehavior
 
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule));
-        $executorModel->getCompiledRule()->shouldReturn('(new \PommProject\Foundation\Where("points > 30", []))->andWhere((new \PommProject\Foundation\Where("always_true()", [])))');
+        $executorModel->getCompiledRule()->shouldReturn('(new \PommProject\Foundation\Where("points > 30", []))->andWhere((new \PommProject\Foundation\Where(call_user_func($operators["always_true"]), [])))');
     }
 
     function it_supports_custom_inline_operators()

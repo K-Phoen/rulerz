@@ -61,7 +61,7 @@ class DoctrineQueryBuilderVisitorSpec extends ObjectBehavior
         $executorModel->getCompiledRule()->shouldReturn($expectedDql);
     }
 
-    function it_supports_custom_operators()
+    function it_supports_custom_inline_operators()
     {
         $rule        = 'points >= 42 and always_true(42)';
         $expectedDql = sprintf('"(%s.points >= 42 AND inline_always_true(42))"', DoctrineQueryBuilderVisitor::ROOT_ALIAS_PLACEHOLDER);
