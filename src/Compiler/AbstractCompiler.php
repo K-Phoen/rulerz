@@ -42,8 +42,8 @@ class {$parameters['className']} implements Executor
 EXECUTOR;
     }
 
-    protected function getRuleIdentifier($rule)
+    protected function getRuleIdentifier(Target\CompilationTarget $compilationTarget, $rule)
     {
-        return crc32($rule);
+        return crc32(get_class($compilationTarget) . $rule);
     }
 }

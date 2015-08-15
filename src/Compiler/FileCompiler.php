@@ -26,7 +26,7 @@ class FileCompiler extends AbstractCompiler
      */
     public function compile($rule, Target\CompilationTarget $target)
     {
-        $ruleIdentifier = $this->getRuleIdentifier($rule);
+        $ruleIdentifier = $this->getRuleIdentifier($target, $rule);
         $executorFqcn   = '\RulerZ\Compiled\Executor\\Executor_' . $ruleIdentifier;
 
         if (!class_exists($executorFqcn, false)) {
