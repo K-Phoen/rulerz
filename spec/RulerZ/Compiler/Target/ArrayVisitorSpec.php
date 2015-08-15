@@ -41,7 +41,7 @@ class ArrayVisitorSpec extends ObjectBehavior
         $executorModel->shouldHaveType('RulerZ\Model\Executor');
 
         $executorModel->getTraits()->shouldHaveCount(2);
-        $executorModel->getCompiledRule()->shouldContain('1 == 1');
+        $executorModel->getCompiledRule()->shouldReturn('1 == 1');
     }
 
     function it_can_compile_a_simple_rule()
@@ -50,7 +50,7 @@ class ArrayVisitorSpec extends ObjectBehavior
 
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule));
-        $executorModel->getCompiledRule()->shouldContain('$target["score"] == 1');
+        $executorModel->getCompiledRule()->shouldReturn('$target["score"] == 1');
     }
 
     function it_handles_nested_accesses()
@@ -59,7 +59,7 @@ class ArrayVisitorSpec extends ObjectBehavior
 
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule));
-        $executorModel->getCompiledRule()->shouldContain('$target["stats"]["user"]["score"] >= 42');
+        $executorModel->getCompiledRule()->shouldReturn('$target["stats"]["user"]["score"] >= 42');
     }
 
     function it_handles_custom_operators()
@@ -72,7 +72,7 @@ class ArrayVisitorSpec extends ObjectBehavior
 
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule));
-        $executorModel->getCompiledRule()->shouldContain('($target["points"] >= 42 && call_user_func($operators["always_true"]))');
+        $executorModel->getCompiledRule()->shouldReturn('($target["points"] >= 42 && call_user_func($operators["always_true"]))');
     }
 
     function it_handles_custom_operators_with_parameters()
@@ -85,7 +85,7 @@ class ArrayVisitorSpec extends ObjectBehavior
 
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule));
-        $executorModel->getCompiledRule()->shouldContain('($target["points"] >= 42 && call_user_func($operators["always_true"], 42))');
+        $executorModel->getCompiledRule()->shouldReturn('($target["points"] >= 42 && call_user_func($operators["always_true"], 42))');
     }
 
     function it_throws_an_exception_when_calling_an_unknown_operator()
@@ -105,7 +105,7 @@ class ArrayVisitorSpec extends ObjectBehavior
 
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule));
-        $executorModel->getCompiledRule()->shouldContain('($target["points"] >= 42 && inline_always_true(42))');
+        $executorModel->getCompiledRule()->shouldReturn('($target["points"] >= 42 && inline_always_true(42))');
     }
 
     private function unsupportedTypes()
