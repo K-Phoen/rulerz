@@ -4,7 +4,7 @@ use RulerZ\Executor\ArrayExecutor;
 use RulerZ\Executor\DoctrineQueryBuilderExecutor;
 use RulerZ\Interpreter\HoaInterpreter;
 
-$entityManager = require 'bootstrap.php';
+$entityManager = require 'bootstrap_doctrine.php';
 
 $rulerz = new RulerZ\RulerZ(
     new HoaInterpreter(), [

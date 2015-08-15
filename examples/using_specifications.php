@@ -1,23 +1,13 @@
 <?php
 
-use Entity\User;
-use RulerZ\Executor\ArrayExecutor;
-use RulerZ\Executor\DoctrineQueryBuilderExecutor;
-use RulerZ\Interpreter\HoaInterpreter;
+use Entity\Player;
 
-$entityManager = require 'bootstrap.php';
-
-$rulerz = new RulerZ\RulerZ(
-    new HoaInterpreter(), [
-        new DoctrineQueryBuilderExecutor(),
-        new ArrayExecutor(),
-    ]
-);
+list($entityManager, $rulerz) = require 'bootstrap_doctrine.php';
 
 // 1. Write a specification
-$spec = new RulerZ\Spec\AndX([ // guests having at least 30 points
-    new SampleSpecs\GuestUsers(),
-    new SampleSpecs\MinScore(30),
+$spec = new \RulerZ\Spec\AndX([ // female players having at least 3000 points
+    new SampleSpecs\FemalePlayer(),
+    new SampleSpecs\MinScore(3000),
 ]);
 
 // 2. Define a few targets to filter
@@ -25,21 +15,21 @@ $spec = new RulerZ\Spec\AndX([ // guests having at least 30 points
 // a QueryBuilder
 $usersQb = $entityManager
     ->createQueryBuilder()
-    ->select('u')
-    ->from('Entity\User', 'u');
+    ->select('p')
+    ->from('Entity\Player', 'p');
 
 // or an array of arrays
 $usersArr = [
-    ['name' => 'Joe', 'group' => 'guest', 'points' => 40],
-    ['name' => 'Moe', 'group' => 'guest', 'points' => 20],
-    ['name' => 'Al',  'group' => 'guest', 'points' => 40],
+    ['pseudo' => 'Joe',   'fullname' => 'Joe la frite',             'gender' => 'M', 'points' => 2500],
+    ['pseudo' => 'Moe',   'fullname' => 'Moe, from the bar!',       'gender' => 'M', 'points' => 1230],
+    ['pseudo' => 'Alice', 'fullname' => 'Alice, from... you know.', 'gender' => 'F', 'points' => 9001],
 ];
 
 // or an array of objects
 $usersObj = [
-    new User('Joe', 'guest', 40),
-    new User('Moe', 'guest', 20),
-    new User('Al',  'guest', 40),
+    new Player('Joe',   'Joe la frite',             'M', 40, 2500),
+    new Player('Moe',   'Moe, from the bar!',       'M', 55, 1230),
+    new Player('Alice', 'Alice, from... you know.', 'F', 27, 9001),
 ];
 
 // 3. Filter the targets

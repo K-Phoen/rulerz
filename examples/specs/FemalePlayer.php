@@ -4,17 +4,15 @@ namespace SampleSpecs;
 
 use RulerZ\Spec\Specification;
 
-class GuestUsers implements Specification
+class FemalePlayer implements Specification
 {
     public function getRule()
     {
-        return 'group = :guest_group';
+        return 'gender = "F"';
     }
 
     public function getParameters()
     {
-        return [
-            'guest_group' => 'guest',
-        ];
+        return [];
     }
 }
