@@ -59,7 +59,7 @@ class HoaParser implements Parser, Visitor\Visit
      *
      * @return  \RulerZ\Model\Rule
      *
-     * @throw   \Hoa\Ruler\Exception\Interpreter
+     * @throws  \Hoa\Ruler\Exception\Interpreter
      */
     public function visit(Visitor\Element $element, &$handle = null, $eldnah = null)
     {

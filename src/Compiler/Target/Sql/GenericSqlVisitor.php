@@ -37,7 +37,7 @@ abstract class GenericSqlVisitor extends GenericVisitor
      */
     public function visitScalar(AST\Bag\Scalar $element, &$handle = null, $eldnah = null)
     {
-        $value = $element->getValue();
+        $value = parent::visitScalar($element, $handle, $eldnah);
 
         return is_numeric($value) ? $value : sprintf("'%s'", $value);
     }

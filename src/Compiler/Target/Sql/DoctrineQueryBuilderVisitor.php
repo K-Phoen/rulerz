@@ -48,7 +48,7 @@ class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
      */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
-        return sprintf('%s.%s', self::ROOT_ALIAS_PLACEHOLDER, $element->getId());
+        return sprintf('%s.%s', self::ROOT_ALIAS_PLACEHOLDER, parent::visitAccess($element, $handle, $eldnah));
     }
 
     /**
