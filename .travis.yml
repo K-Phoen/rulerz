@@ -21,4 +21,4 @@ install:
     - composer install --prefer-source
 
 script:
-    - bin/phpspec run
+    - make tests
