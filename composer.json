@@ -48,6 +48,7 @@
         "phpspec/phpspec": "~2.0"
     },
     "suggest": {
+        "kphoen/rulerz-spec-builder": "If you want a specification builder",
         "doctrine/orm": "To execute rules as Doctrine queries",
         "elasticsearch/elasticsearch": "To execute rules as Elasticsearch queries",
         "pomm-project/model-manager": "To execute rules as Pomm queries"
