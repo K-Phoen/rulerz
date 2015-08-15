@@ -46,7 +46,15 @@ class ArrayVisitor extends GenericVisitor
      */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
-        return sprintf('$target["%s"]', $element->getId());
+        $flattenedDimensions = [
+            sprintf('["%s"]', $element->getId())
+        ];
+
+        foreach ($element->getDimensions() as $dimension) {
+            $flattenedDimensions[] = sprintf('["%s"]', $dimension[AST\Bag\Context::ACCESS_VALUE]);
+        }
+
+        return '$target' . implode('', $flattenedDimensions);
     }
 
     /**
