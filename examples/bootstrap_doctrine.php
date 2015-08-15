@@ -26,7 +26,7 @@ $rulerz = new \RulerZ\RulerZ(
     $compiler, [
         new \RulerZ\Compiler\Target\Sql\DoctrineQueryBuilderVisitor(),
         new \RulerZ\Compiler\Target\ArrayVisitor([
-            'len' => 'strlen'
+            'length' => 'strlen'
         ]),
     ]
 );
