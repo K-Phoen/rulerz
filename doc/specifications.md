@@ -14,55 +14,45 @@ each one of them in a class and call them Specifications.
 
 ## Context
 
-Let's say that we want to retrieve the customers or the guests having at least
-30 points.
+Let's say that we want to retrieve he female players having at least 30 points.
 The rule describing these constraints would look like this:
 
 ```php
-$rule = 'group in :groups and points > :min_points';
+$rule  = 'gender = :gender and points > :min_points';
 ```
 
-Where `:groups` and `:min_points` are parameters that we'll need to define as
-an array:.
+Where `:gender` and `:min_points` are parameters that we'll need to define as
+an array:
 
 ```php
 $parameters = [
     'min_points' => 30,
-    'groups'     => ['customer', 'guest'],
+    'gender'     => 'F',
 ];
 ```
 
 ## Writing specifications
 
-In the rule written above, It's easy to see that in fact, we're expressing two
-constraints: we want to filter users by group AND by score/points.
+In the rule written above, it's easy to see that in fact we're expressing two
+constraints: we want to filter players by gender AND by points.
 
 So let's see how we would write the specifications for these constraints.
 
-In the first one, we'll keep users belonging to the groups we want:
+In the first one, we'll keep only female players:
 
 ```php
 use RulerZ\Spec\Specification;
 
-class UserGroups implements Specification
+class IsFemale implements Specification
 {
-    private $groups;
-
-    public function __construct(array $groups)
-    {
-        $this->groups = $groups;
-    }
-
     public function getRule()
     {
-        return 'group IN :groups';
+        return 'gender = "F"';
     }
 
     public function getParameters()
     {
-        return [
-            'groups' => $this->groups,
-        ];
+        return [];
     }
 }
 ```
@@ -80,7 +70,7 @@ The constraint on the points can be expressed in the same way:
 ```php
 use RulerZ\Spec\Specification;
 
-class UserMinScore implements Specification
+class PlayerMinScore implements Specification
 {
     private $min_score;
 
@@ -123,9 +113,9 @@ Our previous specifications can be combined using these classes:
 ```php
 use RulerZ\Spec;
 
-$interestingUsersSpec = Spec\AndX([
-    new UserMinScore(30),
-    new UserGroups(['customer', 'guest']),
+$interestingPlayersSpec = Spec\AndX([
+    new PlayerMinScore(30),
+    new IsFemale(),
 ]);
 ```
 
@@ -135,10 +125,10 @@ RulerZ offers a few shortcuts to work with specification objects:
 
 ```php
 // filtering a target using a specification
-$rulerz->filterSpec($target, $interestingUsersSpec);
+$rulerz->filterSpec($target, $interestingPlayersSpec);
 
 // checkinf if a target satisfies a specification
-var_dump($rulerz->satisfiesSpec($target, $interestingUsersSpec));
+var_dump($rulerz->satisfiesSpec($target, $interestingPlayersSpec));
 ```
 
 ## That was it!

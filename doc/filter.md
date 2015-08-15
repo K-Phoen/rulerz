@@ -15,29 +15,28 @@ In the following examples, we'll define rules to filter this collection:
 
 ```php
 $users = [
-    ['name' => 'Joe', 'group'    => 'guest', 'points' => 40],
-    ['name' => 'Moe', 'customer' => 'guest', 'points' => 20],
-    ['name' => 'Al',  'group'    => 'admin', 'points' => 60],
+    ['pseudo' => 'Joe',   'gender' => 'M', 'points' => 40],
+    ['pseudo' => 'Moe',   'gender' => 'M', 'points' => 20],
+    ['pseudo' => 'Alice', 'gender' => 'F', 'points' => 60],
 ];
 ```
 
 ## Filter your target
 
-Let's say that we want to retrieve the customers or the guests having at least
-30 points.
+Let's say that we want to retrieve the female players having at least 30 points.
 The rule describing these constraints would look like this:
 
 ```php
-$rule  = 'group in :groups and points > :min_points';
+$rule  = 'gender = :gender and points > :min_points';
 ```
 
-Where `:groups` and `:min_points` are parameters that we'll need to define as
-an array:.
+Where `:gender` and `:min_points` are parameters that we'll need to define as
+an array:
 
 ```php
 $parameters = [
     'min_points' => 30,
-    'groups'     => ['customer', 'guest'],
+    'gender'     => 'F',
 ];
 ```
 
@@ -45,19 +44,19 @@ Once the rule is written and the parameters are defined, only the easiest part
 remains: filtering the target.
 
 ```php
-var_dump($rulerz->filter($users, $rule, $parameters)); // the parameters can be omitted if empty
+var_dump($rulerz->filter($players, $rule, $parameters)); // the parameters can be omitted if empty
 
 // will return:
 /*
 array(1) {
   [0]=>
   array(3) {
-    ["name"]=>
-    string(3) "Joe"
-    ["group"]=>
-    string(5) "guest"
+    ["pseudo"]=>
+    string(5) "Alice"
+    ["gender"]=>
+    string(1) "F"
     ["points"]=>
-    int(40)
+    int(60)
   }
 }
 */

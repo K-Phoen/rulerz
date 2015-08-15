@@ -21,26 +21,22 @@ documentation](http://laravel.com/docs/5.0/eloquent).
 Once Eloquent is installed and configured we can the RulerZ engine:
 
 ```php
-use RulerZ\Executor\EloquentExecutor;
-use RulerZ\Interpreter\HoaInterpreter;
-use RulerZ\RulerZ;
-
 $rulerz = new RulerZ(
     new HoaInterpreter(), [
-        new EloquentExecutor(), // this line is Eloquent-specific
-        // other executors...
+        new \RulerZ\Compiler\Target\Sql\EloquentVisitor(), // this line is Eloquent-specific
+        // other compilation targets...
     ]
 );
 ```
 
-The only Eloquent-related configuration is the `EloquentExecutor` being added to the
-list of the known executors.
+The only Eloquent-related configuration is the `EloquentVisitor` being added to the
+list of the known compilation targets.
 
 ## Filter your target
 
 Now that both Eloquent and RulerZ are ready, you can use them to retrieve data.
 
-The `EloquentExecutor` instance that we previously injected into the RulerZ engine
+The `EloquentVisitor` instance that we previously injected into the RulerZ engine
 knows how to use both `Illuminate\Database\Query\Builder` and `Illuminate\Database\Eloquent\Builder`
 instances, so the first step is to create a query builder:
 
@@ -49,14 +45,14 @@ $queryBuilder = User::query(); // where "User" is an Eloquent model
 ```
 
 And as usual, we call RulerZ with our target and our rule.
-RulerZ will find the right executor for the given target and use it to filter
+RulerZ will build the right executor for the given target and use it to filter
 the data, or in our case to retrieve data from a database.
 
 ```php
-$rule  = 'group in :groups and points > :points';
+$rule  = 'gender = :gender and points > :points';
 $parameters = [
     'points' => 30,
-    'groups' => ['customer', 'guest'],
+    'gender' => 'M',
 ];
 
 var_dump($rulerz->filter($queryBuilder, $rule, $parameters));

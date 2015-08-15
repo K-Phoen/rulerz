@@ -25,27 +25,23 @@ or use a bundle/module/whatever the framework you're using promotes.
 Once ruflin/elastica is installed and configured we can the RulerZ engine:
 
 ```php
-use RulerZ\Executor\ElasticaExecutor;
-use RulerZ\Interpreter\HoaInterpreter;
-use RulerZ\RulerZ;
-
 $rulerz = new RulerZ(
-    new HoaInterpreter(), [
-        new ElasticaExecutor(), // this line is Elastica-specific
-        // other executors...
+    $compiler, [
+        new \RulerZ\Compiler\Target\Elasticsearch\ElasticaVisitor(), // this line is Elastica-specific
+        // other compilation targets...
     ]
 );
 ```
 
-The only Elastica-related configuration is the `ElasticaExecutor` being added
-to the list of the known executors.
+The only Elastica-related configuration is the `ElasticaVisitor` being added
+to the list of the known compilation targets.
 
 ## Filter your target
 
 Now that both ruflin/Elastica and RulerZ are ready, you can use them to retrieve
 data.
 
-The `ElasticaExecutor` instance that we previously injected into the RulerZ
+The `ElasticaVisitor` instance that we previously injected into the RulerZ
 engine knows how to use the following objects:
 
 * `Elastica\Search`;
@@ -63,14 +59,14 @@ $search = new Elastica\Search($client);
 
 And as usual, we call RulerZ with our target (the `Search` object) and our
 rule.
-RulerZ will find the right executor for the given target and use it to filter
+RulerZ will build the right executor for the given target and use it to filter
 the data, or in our case to retrieve data from Elasticsearch.
 
 ```php
-$rule  = 'group in :groups and points > :points';
+$rule  = 'gender = :gender and points > :points';
 $parameters = [
     'points' => 30,
-    'groups' => ['customer', 'guest'],
+    'gender' => 'M',
 ];
 
 var_dump($rulerz->filter($search, $rule, $parameters));

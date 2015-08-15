@@ -8,34 +8,42 @@ This guide will show you how to instantiate the engine and how to write rules.
 In the following examples, we'll define rules to work with this collection:
 
 ```php
-$users = [
-    ['name' => 'Joe', 'group'    => 'guest', 'points' => 40],
-    ['name' => 'Moe', 'customer' => 'guest', 'points' => 20],
-    ['name' => 'Al',  'group'    => 'admin', 'points' => 60],
+$players = [
+    ['pseudo' => 'Joe',   'fullname' => 'Joe la frite',             'gender' => 'M', 'points' => 2500],
+    ['pseudo' => 'Moe',   'fullname' => 'Moe, from the bar!',       'gender' => 'M', 'points' => 1230],
+    ['pseudo' => 'Alice', 'fullname' => 'Alice, from... you know.', 'gender' => 'F', 'points' => 9001],
 ];
 ```
 
 ## Step 1: Instanciate the RulerZ engine
 
-In order to work, the `RulerZ` engine needs an interpreter and at least one
-executor.
-The interpreter will parse your rule while the executors will be in charge of
-using the parsed rules (to filter target or to check if a target satisfies the
+In order to work, the `RulerZ` engine needs a compiler and at least one
+compilation target.
+The compiler is responsible for the construction of an executor, in charge of
+handling the rule (to filter target or to check if a target satisfies the
 rule for instance).
 An executor handles a specific type of target (an array, a QueryBuilder, ...),
-that's why you can have several executors registered into the same RulerZ engine.
+that's why you can have several compilation targets registered in the same
+RulerZ engine.
 
 Enough said, here is the code:
 
 ```php
+use RulerZ\Compiler\FileCompiler;
+use RulerZ\Parser\HoaParser;
+use RulerZ\Compiler\Target;
 use RulerZ\RulerZ;
-use RulerZ\Executor;
-use RulerZ\Interpreter\HoaInterpreter;
 
+// compiler
+$compiler = new FileCompiler(new HoaParser());
+
+// RulerZ engine
 $rulerz = new RulerZ(
-    new HoaInterpreter(), [
-        new Executor\ArrayExecutor(),
-        new Executor\DoctrineQueryBuilderExecutor(),
+    $compiler, [
+        new Target\Sql\DoctrineQueryBuilderVisitor(),
+        new Target\ArrayVisitor([
+            'length' => 'strlen'
+        ]),
     ]
 );
 ```
@@ -69,8 +77,8 @@ syntax shown in the next example to write your rule:
 $rule  = 'group in :groups and points > :min_points and length(name) > 3';
 ```
 **N.B**: while the Doctrine ORM executor supports all function available in the
-DQL language, the other executors require that you define the functions you want
-to use. See the "[Custom operators](custom_operators.md)" section.
+DQL language, the other compilation targets require that you define the functions
+you want to use. See the "[Custom operators](custom_operators.md)" section.
 
 ## That was it!
 
