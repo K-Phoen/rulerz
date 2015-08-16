@@ -3,11 +3,6 @@
 use Webmozart\Expression\Expr;
 use Webmozart\Expression\Logic\Disjunction;
 
-use RulerZ\RulerZ;
-use RulerZ\Executor;
-use RulerZ\Parser\HoaParser;
-use RulerZ\Parser\CachedParser;
-
 list($entityManager, $rulerz) = require './examples/bootstrap_doctrine.php';
 
 const REPETITIONS = 100000;
@@ -25,7 +20,7 @@ $bench = new Hoa\Bench\Bench();
 
 
 $rule = '(group = "guest" and points > 42) or (group = "admin" and points > 250)';
-var_dump(array_column($rulerz->filter($dataset, $rule), 'name'));
+$rulerz_results = array_column($rulerz->filter($dataset, $rule), 'name');
 
 $bench->{'kphoen/rulerz'}->start();
 
@@ -42,14 +37,12 @@ $expr = new Disjunction([
     Expr::equals('admin', 'group')->andGreaterThan(250, 'points')
 ]);
 
-$results = [];
+$expression_results = [];
 foreach ($dataset as $row) {
     if ($expr->evaluate($row)) {
-        $results[] = $row;
+        $expression_results[] = $row['name'];
     }
 }
-
-var_dump(array_column($results, 'name'));
 
 $bench->{'webmozart/expression'}->start();
 foreach (range(0, REPETITIONS) as $i) {
@@ -61,5 +54,12 @@ foreach (range(0, REPETITIONS) as $i) {
     }
 }
 $bench->{'webmozart/expression'}->stop();
+
+if (!empty(array_diff($rulerz_results, $expression_results))) {
+    echo 'Incoherency between rulerz and expression results.' . PHP_EOL;
+    echo 'rulerz: ' . var_export($rulerz_results) . PHP_EOL;
+    echo 'expression: ' . var_export($expression_results) . PHP_EOL;
+    exit(1);
+}
 
 echo $bench;
