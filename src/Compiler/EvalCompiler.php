@@ -13,7 +13,6 @@ class EvalCompiler extends AbstractCompiler
             $source = $this->compileToSource($rule, $target, [
                 'className' => 'Executor_' . $ruleIdentifier
             ]);
-            echo $source;
             eval($source);
         }
 
