@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\RulerZ\Executor\Doctrine;
+namespace spec\RulerZ\Executor\DoctrineQueryBuilder;
 
 use Doctrine\ORM\AbstractQuery as Query;
 use Doctrine\ORM\QueryBuilder;
