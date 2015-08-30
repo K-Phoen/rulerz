@@ -22,46 +22,41 @@ bundle/module/whatever the framework you're using promotes.
 Once Pomm is installed and configured we can the RulerZ engine:
 
 ```php
-use RulerZ\Executor\PommExecutor;
-use RulerZ\Interpreter\HoaInterpreter;
-use RulerZ\RulerZ;
-
 $rulerz = new RulerZ(
-    new HoaInterpreter(), [
-        new PommExecutor(), // this line is Pomm-specific
-        // other executors...
+    $compiler, [
+        new \RulerZ\Compiler\Target\Sql\PommVisitor(), // this line is Pomm-specific
+        // other compilation targets...
     ]
 );
 ```
 
-The only Pomm-related configuration is the `PommExecutor` being added to the
-list of the known executors.
+The only Pomm-related configuration is the `PommVisitor` being added to the
+list of the known compilation targets.
 
 ## Filter your target
 
 Now that both Pomm and RulerZ are ready, you can use them to retrieve data.
 
-The `PommExecutor` instance that we previously injected into the RulerZ engine
+The `PommVisitor` instance that we previously injected into the RulerZ engine
 only knows how to use `PommProject\ModelManager\Model\Model` so the first step
 is to access the model to query:
 
 ```php
-$usersModel = $pomm['my_db']->getModel('\MyDb\PublicSchema\UserModel');
+$playerModel = $pomm['my_db']->getModel('\MyDb\PublicSchema\PlayerModel');
 ```
 
-And as usual, we call RulerZ with our target (the `Model` object) and our
-rule.
-RulerZ will find the right executor for the given target and use it to filter
+And as usual, we call RulerZ with our target (the `Model` object) and our rule.
+RulerZ will build the right executor for the given target and use it to filter
 the data, or in our case to retrieve data from a database.
 
 ```php
-$rule  = 'group in :groups and points > :points';
+$rule  = 'gender = :gender and points > :points';
 $parameters = [
     'points' => 30,
-    'groups' => ['customer', 'guest'],
+    'gender' => 'M',
 ];
 
-var_dump($rulerz->filter($usersModel, $rule, $parameters));
+var_dump($rulerz->filter($playerModel, $rule, $parameters));
 ```
 
 ## That was it!

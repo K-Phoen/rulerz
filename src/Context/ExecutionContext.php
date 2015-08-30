@@ -29,7 +29,7 @@ class ExecutionContext implements \ArrayAccess
     public function offsetGet($key)
     {
         if (!array_key_exists($key, $this->data)) {
-            throw new \RuntimeException(sprintf('Identifier %s does not exist in the context.', $key));
+            throw new \RuntimeException(sprintf('Identifier "%s" does not exist in the context.', $key));
         }
 
         return $this->data[$key];

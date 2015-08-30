@@ -13,9 +13,12 @@ matrix:
     allow_failures:
         - php: 7.0
 
-before_script:
+before_install:
     - phpenv config-rm xdebug.ini || true
+    - composer self-update
+
+install:
     - composer install --prefer-source
 
 script:
-    - bin/phpspec run
+    - make tests

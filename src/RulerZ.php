@@ -2,53 +2,47 @@
 
 namespace RulerZ;
 
-use Hoa\Ruler\Ruler;
-
+use RulerZ\Compiler\Compiler;
+use RulerZ\Compiler\Target\CompilationTarget;
 use RulerZ\Context\ExecutionContext;
 use RulerZ\Exception\TargetUnsupportedException;
-use RulerZ\Executor\Executor;
-use RulerZ\Interpreter\Interpreter;
 use RulerZ\Spec\Specification;
 
 class RulerZ
 {
     /**
-     * @var Interpreter $interpreter
+     * @var array<CompilationTarget> $compilationTargets
      */
-    private $interpreter;
-
-    /**
-     * @var array $executors
-     */
-    private $executors = [];
+    private $compilationTargets = [];
 
     /**
      * Constructor.
      *
-     * @param array $executors A list of executors to register immediatly.
+     * @param Compiler $compiler           The compiler.
+     * @param array    $compilationTargets A list of target compilers, each one handles a specific target (an array, a DoctrineQueryBuilder, ...)
      */
-    public function __construct(Interpreter $interpreter, array $executors = [])
+    public function __construct(Compiler $compiler, array $compilationTargets = [])
     {
-        $this->interpreter = $interpreter;
+        $this->compiler = $compiler;
 
-        foreach ($executors as $executor) {
-            $this->registerExecutor($executor);
+        foreach ($compilationTargets as $targetCompiler) {
+            $this->registerCompilationTarget($targetCompiler);
         }
     }
 
     /**
-     * Registers a new executor.
+     * Registers a new target compiler.
      *
-     * @param Executor $executor The executor to register.
+     * @param CompilationTarget $compilationTarget The target compiler to register.
      */
-    public function registerExecutor(Executor $executor)
+    public function registerCompilationTarget(CompilationTarget $compilationTarget)
     {
-        $this->executors[] = $executor;
+        $this->compilationTargets[] = $compilationTarget;
     }
 
     /**
      * Filters a target using the given rule and parameters.
-     * The executor to use is determined at runtime using the registered ones.
+     * The target compiler to use is determined at runtime using the registered ones.
      *
      * @param mixed  $target           The target to filter.
      * @param string $rule             The rule to apply.
@@ -59,15 +53,15 @@ class RulerZ
      */
     public function filter($target, $rule, array $parameters = [], array $executionContext = [])
     {
-        $executor = $this->findExecutor($target, Executor::MODE_FILTER);
-        $ast      = $this->interpret($rule);
+        $targetCompiler = $this->findTargetCompiler($target, CompilationTarget::MODE_FILTER);
+        $executor       = $this->compiler->compile($rule, $targetCompiler);
 
-        return $executor->filter($target, $ast, $parameters, new ExecutionContext($executionContext));
+        return $executor->filter($target, $parameters, $targetCompiler->getOperators(), new ExecutionContext($executionContext));
     }
 
     /**
      * Filters a target using the given specification.
-     * The executor to use is determined at runtime using the registered ones.
+     * The targetCompiler to use is determined at runtime using the registered ones.
      *
      * @param mixed         $target           The target to filter.
      * @param Specification $spec             The specification to apply.
@@ -82,7 +76,7 @@ class RulerZ
 
     /**
      * Tells if a target satisfies the given rule and parameters.
-     * The executor to use is determined at runtime using the registered ones.
+     * The target compiler to use is determined at runtime using the registered ones.
      *
      * @param mixed  $target           The target.
      * @param string $rule             The rule to test.
@@ -93,18 +87,19 @@ class RulerZ
      */
     public function satisfies($target, $rule, array $parameters = [], array $executionContext = [])
     {
-        $executor = $this->findExecutor($target, Executor::MODE_SATISFIES);
-        $ast      = $this->interpret($rule);
+        $targetCompiler = $this->findTargetCompiler($target, CompilationTarget::MODE_SATISFIES);
+        $executor       = $this->compiler->compile($rule, $targetCompiler);
 
-        return $executor->satisfies($target, $ast, $parameters, new ExecutionContext($executionContext));
+        return $executor->satisfies($target, $parameters, $targetCompiler->getOperators(), new ExecutionContext($executionContext));
     }
 
     /**
      * Tells if a target satisfies the given specification.
-     * The executor to use is determined at runtime using the registered ones.
+     * The target compiler to use is determined at runtime using the registered ones.
      *
-     * @param mixed         $target The target.
-     * @param Specification $spec   The specification to use.
+     * @param mixed         $target           The target.
+     * @param Specification $spec             The specification to use.
+     * @param array         $executionContext The execution context.
      *
      * @return boolean
      */
@@ -114,35 +109,24 @@ class RulerZ
     }
 
     /**
-     * Finds an executor supporting the given target.
+     * Finds a target compiler supporting the given target.
      *
      * @param mixed  $target The target to filter.
      * @param string $mode   The execution mode (MODE_FILTER or MODE_SATISFIES).
      *
      * @throws TargetUnsupportedException
      *
-     * @return Executor
+     * @return CompilationTarget
      */
-    private function findExecutor($target, $mode)
+    private function findTargetCompiler($target, $mode)
     {
-        foreach ($this->executors as $executor) {
-            if ($executor->supports($target, $mode)) {
-                return $executor;
+        /** @var CompilationTarget $targetCompiler */
+        foreach ($this->compilationTargets as $targetCompiler) {
+            if ($targetCompiler->supports($target, $mode)) {
+                return $targetCompiler;
             }
         }
 
         throw new TargetUnsupportedException('The given target is not supported.');
-    }
-
-    /**
-     * Parses the rule into an equivalent AST.
-     *
-     * @param string $rule The rule represented as a string.
-     *
-     * @return \Hoa\Ruler\Model
-     */
-    private function interpret($rule)
-    {
-        return $this->interpreter->interpret($rule);
     }
 }

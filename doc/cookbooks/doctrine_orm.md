@@ -23,49 +23,45 @@ or use a bundle/module/whatever the framework you're using promotes.
 Once Doctrine is installed and configured we can the RulerZ engine:
 
 ```php
-use RulerZ\Executor\DoctrineQueryBuilderExecutor;
-use RulerZ\Interpreter\HoaInterpreter;
-use RulerZ\RulerZ;
-
 $rulerz = new RulerZ(
-    new HoaInterpreter(), [
-        new DoctrineQueryBuilderExecutor(), // this line is Doctrine-specific
-        // other executors...
+    $compiler, [
+        new \RulerZ\Compiler\Target\Sql\DoctrineQueryBuilderVisitor(), // this line is Doctrine-specific
+        // other compilation targets...
     ]
 );
 ```
 
-The only Doctrine-related configuration is the `DoctrineQueryBuilderExecutor`
-being added to the list of the known executors.
+The only Doctrine-related configuration is the `DoctrineQueryBuilderVisitor`
+being added to the list of the known compilation targets.
 
 ## Filter your target
 
 Now that both Doctrine and RulerZ are ready, you can use them to retrieve data.
 
-The `DoctrineQueryBuilderExecutor` instance that we previously injected into the
+The `DoctrineQueryBuilderVisitor` instance that we previously injected into the
 RulerZ engine only knows how to use `QueryBuilder`s so the first step is to
 create one:
 
 ```php
-$usersQueryBuilder = $entityManager
+$playersQueryBuilder = $entityManager
     ->createQueryBuilder()
-    ->select('u')
-    ->from('Entity\User', 'u');
+    ->select('p')
+    ->from('Entity\Player', 'p');
 ```
 
 And as usual, we call RulerZ with our target (the `QueryBuilder` object) and our
 rule.
-RulerZ will find the right executor for the given target and use it to filter
+RulerZ will build the right executor for the given target and use it to filter
 the data, or in our case to retrieve data from a database.
 
 ```php
-$rule  = 'group in :groups and points > :points';
+$rule  = 'gender = :gender and points > :points';
 $parameters = [
     'points' => 30,
-    'groups' => ['customer', 'guest'],
+    'gender' => 'M',
 ];
 
-var_dump($rulerz->filter($usersQueryBuilder, $rule, $parameters));
+var_dump($rulerz->filter($playersQueryBuilder, $rule, $parameters));
 ```
 
 ## That was it!

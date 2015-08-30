@@ -62,11 +62,11 @@ simple rule and several datasources.
 
 #### 1. Write a rule
 
-The rule hereafter describes a "*power guest*" (basically, a user having more
-than 42 points and whose group is *guest*).
+The rule hereafter describes a "*high ranked female player*" (basically, a female
+player having more than 9000 points).
 
 ```php
-$powerGuestsRule = 'group = "guest" and points > 42';
+$highRankFemalesRule = 'gender = "F" and points > 9000';
 ```
 
 #### 2. Define a datasource
@@ -75,38 +75,38 @@ We have the following datasources:
 
 ```php
 // a Doctrine QueryBuilder
-$usersQb = $entityManager
+$playersQb = $entityManager
     ->createQueryBuilder()
-    ->select('u')
-    ->from('Entity\User', 'u');
+    ->select('p')
+    ->from('Entity\Player', 'p');
 
 // or an array of arrays
-$usersArr = [
-    ['name' => 'Joe', 'group' => 'guest', 'points' => 50],
-    ['name' => 'Moe', 'group' => 'guest', 'points' => 25],
-    ['name' => 'Al',  'group' => 'guest', 'points' => 50],
+$playersArr = [
+    ['pseudo' => 'Joe',   'gender' => 'M', 'points' => 2500],
+    ['pseudo' => 'Moe',   'gender' => 'M', 'points' => 1230],
+    ['pseudo' => 'Alice', 'gender' => 'F', 'points' => 9001],
 ];
 
 // or an array of objects
-$usersObj = [
-    new User('Joe', 'guest', 50),
-    new User('Moe', 'guest', 25),
-    new User('Al',  'guest', 50),
+$playersObj = [
+    new Player('Joe',   'M', 40, 2500),
+    new Player('Moe',   'M', 55, 1230),
+    new Player('Alice', 'F', 27, 9001),
 ];
 ```
 
 #### 3. Use a rule to query a datasource
 
-For any of our datasource, retrieving the *power guests* is as simple as calling
-the `filter` method:
+For any of our datasource, retrieving the results is as simple as calling the
+`filter` method:
 
 ```php
 // converts the rule in DQL and makes a single query to the DB
-$powerGuests = $rulerz->filter($usersQb, $powerGuestsRule);
+$highRankFemales = $rulerz->filter($usersQb, $highRankFemalesRule);
 // filters the array of arrays
-$powerGuests = $rulerz->filter($usersArr, $powerGuestsRule);
+$highRankFemales = $rulerz->filter($usersArr, $highRankFemalesRule);
 // filters the array of objects
-$powerGuests = $rulerz->filter($usersObj, $powerGuestsRule);
+$highRankFemales = $rulerz->filter($usersObj, $highRankFemalesRule);
 ```
 
 #### 3. (bis) Check if a candidate satisfies a rule
@@ -115,7 +115,7 @@ Given a candidate, checking if it satisfies a rule boils down to calling the
 `satisfies` method:
 
 ```php
-$isPowerGuest = $rulerz->satisfies($usersObj[0], $powerGuestsRule);
+$isHighRankFemale = $rulerz->satisfies($playersObj[0], $highRankFemalesRule);
 ```
 
 Going further

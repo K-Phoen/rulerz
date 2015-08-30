@@ -18,7 +18,6 @@ composer require 'kphoen/rulerz'
 
 ## Going further
 
- * [Caching rules](caching_rules.md)
  * [Defining custom operators](custom_operators.md)
 
 ## Cookbooks

@@ -1,5 +1,5 @@
 Defining custom operators
-========================
+=========================
 
 Most of the executors support custom operators (hint: if they implement
 `ExtendableExecutor`, they do).

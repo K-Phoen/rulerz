@@ -11,11 +11,22 @@
             "email": "contact@kevingomez.fr"
         }
     ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
     "autoload": {
         "psr-4": { "RulerZ\\": "src/" }
     },
     "autoload-dev": {
-        "psr-4": { "Entity\\": "examples/entities/", "SampleSpecs\\": "examples/specs/", "RulerZ\\Stub\\": "stub/" }
+        "psr-4": {
+            "Entity\\": "examples/entities/",
+            "SampleSpecs\\": "examples/specs/",
+            "MyDb\\": "pomm/MyDb",
+            "RulerZ\\Stub\\": "stub/",
+            "spec\\RulerZ\\": "spec/RulerZ/"
+        }
     },
     "config": {
         "bin-dir": "bin/"
@@ -27,18 +38,22 @@
     },
     "require-dev": {
         "doctrine/orm": "~2.4",
-        "doctrine/cache": "~1.0",
         "elasticsearch/elasticsearch": "~1.0",
         "ruflin/elastica": "~1.0",
-        "pomm-project/foundation": "@dev",
-        "pomm-project/model-manager": "2.0.*@dev",
+        "pomm-project/foundation": "~2.0@dev",
+        "pomm-project/model-manager": "~2.0.@dev",
+        "pomm-project/cli": "~2.0@dev",
         "illuminate/database": "~5.0",
 
+        "mikey179/vfsStream": "~1.4",
         "coduo/phpspec-data-provider-extension": "~1.0",
-        "phpspec/phpspec": "~2.0"
+        "phpspec/phpspec": "~2.0",
+
+        "hoa/bench": "~2.0",
+        "webmozart/expression": "~1.0@beta"
     },
     "suggest": {
-        "doctrine/cache": "To cache rules.",
+        "kphoen/rulerz-spec-builder": "If you want a specification builder",
         "doctrine/orm": "To execute rules as Doctrine queries",
         "elasticsearch/elasticsearch": "To execute rules as Elasticsearch queries",
         "pomm-project/model-manager": "To execute rules as Pomm queries"

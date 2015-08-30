@@ -25,27 +25,23 @@ or use a bundle/module/whatever the framework you're using promotes.
 Once elastic/elasticsearch-php is installed and configured we can the RulerZ engine:
 
 ```php
-use RulerZ\Executor\ElasticsearchExecutor;
-use RulerZ\Interpreter\HoaInterpreter;
-use RulerZ\RulerZ;
-
 $rulerz = new RulerZ(
-    new HoaInterpreter(), [
-        new ElasticsearchExecutor(), // this line is Elasticsearch-specific
-        // other executors...
+    $compiler, [
+        new \RulerZ\Compiler\Target\Elasticsearch\ElasticsearchVisitor(), // this line is Elasticsearch-specific
+        // other compilation targets...
     ]
 );
 ```
 
-The only Elasticsearch-related configuration is the `ElasticsearchExecutor` being added
-to the list of the known executors.
+The only Elasticsearch-related configuration is the `ElasticsearchVisitor` being added
+to the list of the known compilation targets.
 
 ## Filter your target
 
 Now that both elastic/elasticsearch-php and RulerZ are ready, you can use them
 to retrieve data.
 
-The `ElasticsearchExecutor` instance that we previously injected into the RulerZ
+The `ElasticsearchVisitor` instance that we previously injected into the RulerZ
 engine only knows how to use `Elasticsearch\Client` objects so the first step is
 creating one:
 
@@ -55,25 +51,25 @@ $client = new Elasticsearch\Client();
 
 And as usual, we call RulerZ with our target (the `Search` object) and our
 rule.
-RulerZ will find the right executor for the given target and use it to filter
+RulerZ will build the right executor for the given target and use it to filter
 the data, or in our case to retrieve data from Elasticsearch.
 
 ```php
-$rule  = 'group in :groups and points > :points';
+$rule  = 'gender = :gender and points > :points';
 $parameters = [
     'points' => 30,
-    'groups' => ['customer', 'guest'],
+    'gender' => 'M',
 ];
 $executionContext = [
     'index' => 'index_name',
     'type'  => 'type_name',
 ];
 
-var_dump($rulerz->filter($search, $rule, $parameters, $executionContext));
+var_dump($rulerz->filter($client, $rule, $parameters, $executionContext));
 ```
 
 **N.B**: you'll notice an unusual variable named `$executionContext`. It
-contains a few parameters needed by the `ElasticsearchExecutor` in order to make
+contains a few parameters needed by the `ElasticsearchVisitor` in order to make
 the request and are mandatory.
 
 ## That was it!

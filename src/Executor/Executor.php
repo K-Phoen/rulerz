@@ -2,8 +2,6 @@
 
 namespace RulerZ\Executor;
 
-use Hoa\Ruler\Model;
-
 use RulerZ\Context\ExecutionContext;
 
 /**
@@ -11,38 +9,27 @@ use RulerZ\Context\ExecutionContext;
  */
 interface Executor
 {
-    const MODE_FILTER    = 'filter';
-    const MODE_SATISFIES = 'satisfies';
-
     /**
      * Filters a target using the given rule and parameters.
      *
-     * @param mixed $target     The target to filter.
-     * @param Model $rule       The rule to apply.
-     * @param array $parameters The parameters used in the rule.
+     * @param mixed            $target     The target.
+     * @param array            $parameters The parameters used in the rule.
+     * @param array<Xcallable> $operators  The available operators.
+     * @param ExecutionContext $context    The execution context.
      *
      * @return mixed The filtered target.
      */
-    public function filter($target, Model $rule, array $parameters, ExecutionContext $context);
+    public function filter($target, array $parameters, array $operators, ExecutionContext $context);
 
     /**
      * Tells if a target satisfies the given rule and parameters.
      *
-     * @param mixed $target     The target.
-     * @param Model $rule       The rule to test.
-     * @param array $parameters The parameters used in the rule.
+     * @param mixed            $target     The target.
+     * @param array            $parameters The parameters used in the rule.
+     * @param array<Xcallable> $operators  The available operators.
+     * @param ExecutionContext $context    The execution context.
      *
      * @return boolean
      */
-    public function satisfies($target, Model $rule, array $parameters, ExecutionContext $context);
-
-    /**
-     * Indicates whether the given object can be filtered by the executor.
-     *
-     * @param mixed  $target The target to test.
-     * @param string $mode   The execution mode (MODE_FILTER or MODE_SATISFIES).
-     *
-     * @return boolean
-     */
-    public function supports($target, $mode);
+    public function satisfies($target, array $parameters, array $operators, ExecutionContext $context);
 }

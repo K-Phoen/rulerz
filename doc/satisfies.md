@@ -12,34 +12,34 @@ Here is a summary of what you will have to do:
 
 ## Context
 
-In the following examples, we'll try to check if the following "user" satisfies
+In the following examples, we'll try to check if the following "player" satisfies
 a rule:
 
 ```php
-$user = [
-    'name'   => 'Joe',
-    'group'  => 'guest',
+$player = [
+    'pseudo' => 'Joe',
+    'gender' => 'M',
     'points' => 40,
 ];
 ```
 
 ## Check if the target satisfies the rule
 
-Let's say that we want to check if the given user is a guest or a customer and
-has at least 30 points (don't ask why).
+Let's say that we want to check if the given player is a male and has at least
+30 points (don't ask why).
 The rule describing these constraints would look like this:
 
 ```php
-$rule  = 'group in :groups and points > :min_points';
+$rule  = 'gender = :gender and points > :min_points';
 ```
 
-Where `:groups` and `:min_points` are parameters that we'll need to define as
-an array:.
+Where `:gender` and `:min_points` are parameters that we'll need to define as
+an array:
 
 ```php
 $parameters = [
     'min_points' => 30,
-    'groups'     => ['customer', 'guest'],
+    'gender'     => 'M',
 ];
 ```
 
@@ -47,7 +47,7 @@ Once the rule is written and the parameters are defined, only the easiest part
 remains:
 
 ```php
-var_dump($rulerz->satisfies($user, $rule, $parameters)); // the parameters can be omitted if empty
+var_dump($rulerz->satisfies($player, $rule, $parameters)); // the parameters can be omitted if empty
 
 // will return:
 /*
