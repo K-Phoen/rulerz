@@ -43,6 +43,7 @@ class FileCompilerSpec extends ObjectBehavior
 
         // and the executor model has PHP code representing the rule
         $executorModel->getCompiledRule()->willReturn('true');
+        $executorModel->getCompiledData()->willReturn([]);
         $executorModel->getTraits()->willReturn([
             '\RulerZ\Stub\Executor\FilterTraitStub',
             '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',

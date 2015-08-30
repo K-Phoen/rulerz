@@ -6,6 +6,7 @@ list($entityManager, $rulerz) = require 'bootstrap_doctrine.php';
 
 // 1. Write a rule.
 $rule  = 'gender = :gender and points > :points';
+$rule  = 'gender = :gender and group.role.name = "ROLE_ADMIN"';
 
 // 2. Define a few targets to filter
 
@@ -31,16 +32,19 @@ $playersObj = [
 
 // 3. Enjoy!
 $parameters = [
-    'points' => 3000,
+//    'points' => 3000,
     'gender' => 'F',
 ];
 
-var_dump($rulerz->filter($playersQb, $rule, $parameters));
-var_dump($rulerz->filter($playersArr, $rule, $parameters));
-var_dump($rulerz->filter($playersObj, $rule, $parameters));
+$players = $rulerz->filter($playersQb, $rule, $parameters);
+var_dump(array_map(function($player) {
+    return $player->pseudo;
+}, $players));
+//var_dump($rulerz->filter($playersArr, $rule, $parameters));
+//var_dump($rulerz->filter($playersObj, $rule, $parameters));
 
 
 // check if a target satisfies a rule
-var_dump($rulerz->satisfies($playersArr[0], $rule, $parameters));
-var_dump($rulerz->satisfies($playersObj[2], $rule, $parameters));
-var_dump($rulerz->satisfies($playersQb, $rule, $parameters));
+//var_dump($rulerz->satisfies($playersQb, $rule, $parameters));
+//var_dump($rulerz->satisfies($playersArr[0], $rule, $parameters));
+//var_dump($rulerz->satisfies($playersObj[2], $rule, $parameters));

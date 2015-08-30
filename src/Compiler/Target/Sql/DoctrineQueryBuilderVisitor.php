@@ -15,6 +15,11 @@ class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
     const ROOT_ALIAS_PLACEHOLDER = '@@_ROOT_ALIAS_@@';
 
     /**
+     * @var array
+     */
+    private $detectedJoins = [];
+
+    /**
      * @inheritDoc
      */
     public function supports($target, $mode)
@@ -29,7 +34,18 @@ class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
     {
         return [
             '\RulerZ\Executor\DoctrineQueryBuilder\FilterTrait',
+            '\RulerZ\Executor\DoctrineQueryBuilder\AutoJoinTrait',
             '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getCompilationData()
+    {
+        return [
+            'detectedJoins' => $this->detectedJoins,
         ];
     }
 
@@ -48,7 +64,25 @@ class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
      */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
-        return sprintf('%s.%s', self::ROOT_ALIAS_PLACEHOLDER, parent::visitAccess($element, $handle, $eldnah));
+        $dimensions = $element->getDimensions();
+
+        // simple column access
+        if (count($dimensions) === 0) {
+            return sprintf('%s.%s', self::ROOT_ALIAS_PLACEHOLDER, parent::visitAccess($element, $handle, $eldnah));
+        }
+
+        // this is the real column that we are trying to access
+        $finalColumn = array_pop($dimensions)[1];
+
+        // and this is a list of tables that need to be joined
+        $tablesToJoin = array_map(function($dimension) {
+            return $dimension[1];
+        }, $dimensions);
+        $tablesToJoin = array_merge([$element->getId()], $tablesToJoin);
+
+        $this->detectedJoins[] = $tablesToJoin;
+
+        return sprintf('" . $this->getJoinAlias($target, "%s") . ".%s', end($tablesToJoin), $finalColumn);
     }
 
     /**

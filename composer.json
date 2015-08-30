@@ -23,6 +23,7 @@
         "psr-4": {
             "Entity\\": "examples/entities/",
             "SampleSpecs\\": "examples/specs/",
+            "MyDb\\": "pomm/MyDb",
             "RulerZ\\Stub\\": "stub/",
             "spec\\RulerZ\\": "spec/RulerZ/"
         }
@@ -39,8 +40,9 @@
         "doctrine/orm": "~2.4",
         "elasticsearch/elasticsearch": "~1.0",
         "ruflin/elastica": "~1.0",
-        "pomm-project/foundation": "@dev",
-        "pomm-project/model-manager": "2.0.*@dev",
+        "pomm-project/foundation": "~2.0@dev",
+        "pomm-project/model-manager": "~2.0.@dev",
+        "pomm-project/cli": "~2.0@dev",
         "illuminate/database": "~5.0",
 
         "mikey179/vfsStream": "~1.4",

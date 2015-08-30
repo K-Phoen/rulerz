@@ -25,6 +25,11 @@ abstract class AbstractCompiler implements Compiler
             return "\t" . 'use ' . $trait . ';';
         }, $executorModel->getTraits()));
 
+        $extraCode = '';
+        foreach ($executorModel->getCompiledData() as $key => $value) {
+            $extraCode .= sprintf('private $%s = %s;' . PHP_EOL, $key, var_export($value, true));
+        }
+
         return <<<EXECUTOR
 namespace RulerZ\Compiled\Executor;
 
@@ -33,6 +38,8 @@ use RulerZ\Executor\Executor;
 class {$parameters['className']} implements Executor
 {
     $flattenedTraits
+
+    $extraCode
 
     protected function execute(\$target, array \$operators, array \$parameters)
     {

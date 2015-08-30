@@ -37,7 +37,7 @@ class DoctrineQueryBuilderVisitorSpec extends ObjectBehavior
         $executorModel = $this->compile($this->parseRule($rule));
         $executorModel->shouldHaveType('RulerZ\Model\Executor');
 
-        $executorModel->getTraits()->shouldHaveCount(2);
+        $executorModel->getTraits()->shouldHaveCount(3);
         $executorModel->getCompiledRule()->shouldReturn('"1 = 1"');
     }
 
