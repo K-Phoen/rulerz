@@ -63,6 +63,7 @@ class HoaParser implements Parser, Visitor\Visit
      */
     public function visit(Visitor\Element $element, &$handle = null, $eldnah = null)
     {
+        /** @var \Hoa\Compiler\Llk\TreeNode $element */
         $id       = $element->getId();
         $variable = false !== $eldnah;
 
