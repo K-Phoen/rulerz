@@ -65,7 +65,7 @@ $executionContext = [
     'type'  => 'type_name',
 ];
 
-var_dump($rulerz->filter($search, $rule, $parameters, $executionContext));
+var_dump($rulerz->filter($client, $rule, $parameters, $executionContext));
 ```
 
 **N.B**: you'll notice an unusual variable named `$executionContext`. It
