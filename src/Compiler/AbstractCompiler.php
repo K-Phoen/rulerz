@@ -51,6 +51,6 @@ EXECUTOR;
 
     protected function getRuleIdentifier(Target\CompilationTarget $compilationTarget, $rule)
     {
-        return crc32(get_class($compilationTarget) . $rule);
+        return hash('crc32b', get_class($compilationTarget) . $rule);
     }
 }
