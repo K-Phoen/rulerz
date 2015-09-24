@@ -105,8 +105,7 @@ Fortunately, RulerZ comes with a set of general purpose specifications such as:
   of several specifications ;
 * `RulerZ\Spec\OrX([$spec, $otherSpec, ...])` which represents the **disjunction**
   of several specifications ;
-* `RulerZ\Spec\Not([$spec, $otherSpec, ...])` which represents the **negation**
-  of a specification.
+* `RulerZ\Spec\Not($spec)` which represents the **negation** of a specification.
 
 Our previous specifications can be combined using these classes:
 
@@ -118,6 +117,23 @@ $interestingPlayersSpec = Spec\AndX([
     new IsFemale(),
 ]);
 ```
+
+Alternatively, writing specifications that extend the
+`RulerZ\Spec\AbstractSpecification` provides a clearer way of composing them :
+
+```php
+$interestingPlayersSpec = (new PlayerMinScore(30))->andX(new IsFemale());
+```
+
+This will only work if you use `RulerZ\Spec\AbstractSpecification` as base class
+for your specifications. This abstract implementation contains the following
+shortcuts:
+
+* `andX(Specification $spec)` to create a conjunction with the current
+  specification and `$spec` ;
+* `orX(Specification $spec)` to create a disjunction with the current
+  specification and `$spec` ;
+* `not()` to negate the current specification.
 
 ## Using specifications
 

@@ -5,10 +5,7 @@ use Entity\Player;
 list($entityManager, $rulerz) = require 'bootstrap_doctrine.php';
 
 // 1. Write a specification
-$spec = new \RulerZ\Spec\AndX([ // female players having at least 3000 points
-    new SampleSpecs\FemalePlayer(),
-    new SampleSpecs\MinScore(3000),
-]);
+$spec = (new SampleSpecs\FemalePlayer())->andX(new SampleSpecs\MinScore(3000)); // female players having at least 3000 points
 
 // 2. Define a few targets to filter
 

@@ -2,9 +2,9 @@
 
 namespace SampleSpecs;
 
-use RulerZ\Spec\Specification;
+use RulerZ\Spec\AbstractSpecification;
 
-class FemalePlayer implements Specification
+class FemalePlayer extends AbstractSpecification
 {
     public function getRule()
     {

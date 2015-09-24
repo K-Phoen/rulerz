@@ -2,9 +2,9 @@
 
 namespace SampleSpecs;
 
-use RulerZ\Spec\Specification;
+use RulerZ\Spec\AbstractSpecification;
 
-class MinScore implements Specification
+class MinScore extends AbstractSpecification
 {
     private $min_score;
 
