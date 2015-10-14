@@ -6,12 +6,15 @@ use Hoa\Ruler\Model as AST;
 
 use RulerZ\Compiler\Target\GenericVisitor;
 use RulerZ\Model;
+use RulerZ\Compiler\Target\Polyfill;
 
 /**
  * Base class for Elasticsearch-related visitors.
  */
 abstract class GenericElasticsearchVisitor extends GenericVisitor
 {
+    use Polyfill\AccessPath;
+
     /**
      * @inheritDoc
      */
@@ -132,20 +135,5 @@ abstract class GenericElasticsearchVisitor extends GenericVisitor
         $this->setInlineOperator('<=', function ($a, $b) use ($range) {
             return $range($a, $b, 'lte');
         });
-    }
-
-    /**
-     * @param AST\Bag\Context $element Element to visit.
-     *
-     * @return string
-     */
-    private function flattenAccessPath(AST\Bag\Context $element)
-    {
-        $flattenedDimensions = [$element->getId()];
-        foreach ($element->getDimensions() as $dimension) {
-            $flattenedDimensions[] = $dimension[1];
-        }
-
-        return implode('.', $flattenedDimensions);
     }
 }

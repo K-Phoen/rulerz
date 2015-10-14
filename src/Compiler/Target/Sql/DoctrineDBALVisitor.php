@@ -6,9 +6,12 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Hoa\Ruler\Model as AST;
 
 use RulerZ\Model;
+use RulerZ\Compiler\Target\Polyfill;
 
 class DoctrineDBALVisitor extends GenericSqlVisitor
 {
+    use Polyfill\AccessPath;
+
     /**
      * @inheritDoc
      */
@@ -45,5 +48,13 @@ class DoctrineDBALVisitor extends GenericSqlVisitor
     {
         // make it a placeholder
         return ':' . $element->getName();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
+    {
+        return $this->flattenAccessPath($element);
     }
 }
