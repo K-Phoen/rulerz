@@ -36,67 +36,91 @@ abstract class GenericElasticsearchVisitor extends GenericVisitor
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function visitScalar(AST\Bag\Scalar $element, &$handle = null, $eldnah = null)
+    {
+        $value = parent::visitScalar($element, $handle, $eldnah);
+
+        return is_numeric($value) ? $value : sprintf("'%s'", $value);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function visitArray(AST\Bag\RulerArray $element, &$handle = null, $eldnah = null)
+    {
+        $array = parent::visitArray($element, $handle, $eldnah);
+
+        return sprintf('(%s)', implode(', ', $array));
+    }
+
+    /**
      * @inheritDoc
      */
     protected function defineBuiltInOperators()
     {
         // start with a few helpers
         $must = function($query) {
-            return [
+            return "[
                 'bool' => ['must' => $query]
-            ];
+            ]";
         };
         $mustNot = function($query) {
-            return [
+            return "[
                 'bool' => ['must_not' => $query]
-            ];
+            ]";
         };
         $range = function($field, $value, $operator) use ($must) {
-            return $must([
+            return $must("[
                 'range' => [
-                    $field => [$operator => $value],
+                    '$field' => ['$operator' => $value],
                 ]
-            ]);
+            ]");
         };
 
         // Here are the operators!
         $this->setInlineOperator('and', function ($a, $b) use ($must) {
-            return $must([$a, $b]);
+            return $must("[$a, $b]");
         });
         $this->setInlineOperator('or', function ($a, $b) use ($must) {
-            return [
+            return "[
                 'bool' => ['should' => [$a, $b], 'minimum_should_match' => 1]
-            ];
+            ]";
         });
 
         $this->setInlineOperator('like', function ($a, $b) use ($must) {
-            return $must([
+            $value = is_array($b) ? implode(' ', $b) : $b;
+
+            return $must("[
                 'match' => [
-                    $a => is_array($b) ? implode(' ', $b) : $b,
+                    '$a' => '$value',
                 ]
-            ]);
+            ]");
         });
         $this->setInlineOperator('has', function ($a, $b) use ($must) {
-            return $must([
+            $value = is_array($b) ? $b : "'[$b]'";
+
+            return $must("[
                 'terms' => [
-                    $a => is_array($b) ? $b : [$b],
+                    '$a' => $value,
                 ]
-            ]);
+            ]");
         });
         $this->setInlineOperator('in', $this->getInlineOperator('has'));
 
         $this->setInlineOperator('=', function ($a, $b) use ($must) {
-            return $must([
+            return $must("[
                 'term' => [
-                    $a => $b,
+                    '$a' => $b,
                 ]
-            ]);
+            ]");
         });
 
         $this->setInlineOperator('not', $mustNot);
 
         $this->setInlineOperator('match_all', function() {
-            return ['match_all' => []];
+            return "['match_all' => []]";
         });
 
         $this->setInlineOperator('>', function ($a, $b) use ($range) {
@@ -116,11 +140,13 @@ abstract class GenericElasticsearchVisitor extends GenericVisitor
         });
 
         $this->setInlineOperator('!=', function ($a, $b) use ($mustNot) {
-            return $mustNot([
+            $value = is_array($b) ? $b : "'[$b]'";
+
+            return $mustNot("[
                 'terms' => [
-                    $a => is_array($b) ? $b : [$b],
+                    '$a' => $value,
                 ]
-            ]);
+            ]");
         });
 
         $this->setInlineOperator('in_envelope', function ($a, $b) use ($must) {
