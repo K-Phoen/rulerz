@@ -9,3 +9,6 @@ default:
         doctrine_orm:
             paths:    [ %paths.base%/features/common, %paths.base%/features/doctrine_orm ]
             contexts: [ DoctrineOrmContext ]
+        elasticsearch:
+            paths:    [ %paths.base%/features/common, %paths.base%/features/elasticsearch ]
+            contexts: [ ElasticsearchContext ]

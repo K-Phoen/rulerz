@@ -2,6 +2,9 @@ language: php
 
 sudo: false
 
+services:
+  - elasticsearch
+
 php:
     - 5.4
     - 5.5
@@ -20,6 +23,9 @@ before_install:
 install:
     - composer install --prefer-source
 
+before_script:
+  - sleep 10 # wait for elasticsearch to start and be available
+
 script:
-    - make database
+    - make databases
     - make tests

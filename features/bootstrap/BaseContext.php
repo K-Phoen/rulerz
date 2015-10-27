@@ -22,12 +22,22 @@ abstract class BaseContext implements Context
     protected $parameters = [];
 
     /**
+     * @var array
+     */
+    protected $executionContext = [];
+
+    /**
      * @var mixed
      */
     protected $results;
 
     abstract protected function getTarget();
     abstract protected function getDefaultDataset();
+
+    protected function getDefaultExecutionContext()
+    {
+        return [];
+    }
 
     /**
      * @Given RulerZ is configured
@@ -50,6 +60,14 @@ abstract class BaseContext implements Context
     }
 
     /**
+     * @When I use the default execution context
+     */
+    public function iUseTheDefaultExecutionContext()
+    {
+        $this->executionContext = $this->getDefaultExecutionContext();
+    }
+
+    /**
      * @When I use the default dataset
      */
     public function iUseTheDefaultDataset()
@@ -62,9 +80,10 @@ abstract class BaseContext implements Context
      */
     public function iFilterTheDatasetWithTheRule(PyStringNode $rule)
     {
-        $this->results = $this->rulerz->filter($this->dataset, (string) $rule, $this->parameters);
+        $this->results = $this->rulerz->filter($this->dataset, (string) $rule, $this->parameters, $this->executionContext);
 
-        $this->parameters = [];
+        $this->parameters       = [];
+        $this->executionContext = [];
     }
 
     /**

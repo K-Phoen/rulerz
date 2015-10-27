@@ -6,5 +6,10 @@ behat:
 phpspec:
 	php ./bin/phpspec run -vvv
 
-database:
+databases: sqlite elasticsearch
+
+sqlite:
 	sqlite3 ./examples/rulerz.db < ./examples/database.sql
+
+elasticsearch:
+	php ./examples/load_elasticsearch_fixtures.php

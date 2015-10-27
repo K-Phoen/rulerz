@@ -17,10 +17,14 @@ trait ElasticsearchFilterTrait
         $searchQuery = $this->execute($target, $operators, $parameters);
 
         /** @var \Elasticsearch\Client $target */
-        return $target->search([
+        $results = $target->search([
             'index' => $context['index'],
             'type'  => $context['type'],
             'body'  => ['query' => $searchQuery],
         ]);
+
+        return array_map(function($result) {
+            return $result['_source'];
+        }, $results['hits']['hits']);
     }
 }
