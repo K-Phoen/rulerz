@@ -21,4 +21,5 @@ install:
     - composer install --prefer-source
 
 script:
+    - make database
     - make tests
