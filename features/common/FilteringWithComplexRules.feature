@@ -1,8 +1,8 @@
-Feature: RulerZ can filter an array with all kind of rules
+Feature: RulerZ can filter a target with all kind of rules
 
     Scenario: It works a simple equality
         Given RulerZ is configured
-        And I use the array of arrays dataset
+        And I use the default dataset
         When I filter the dataset with the rule:
             """
             gender = "F"
@@ -15,7 +15,7 @@ Feature: RulerZ can filter an array with all kind of rules
 
     Scenario: It works a parameter
         Given RulerZ is configured
-        And I use the array of arrays dataset
+        And I use the default dataset
         And I define the parameters:
             | gender | M |
         When I filter the dataset with the rule:
@@ -30,7 +30,7 @@ Feature: RulerZ can filter an array with all kind of rules
 
     Scenario: Conjunctions can be used
         Given RulerZ is configured
-        And I use the array of arrays dataset
+        And I use the default dataset
         When I filter the dataset with the rule:
             """
             gender = "F" and points > 9000
@@ -41,7 +41,7 @@ Feature: RulerZ can filter an array with all kind of rules
 
     Scenario: Disjunctions can be used
         Given RulerZ is configured
-        And I use the array of arrays dataset
+        And I use the default dataset
         When I filter the dataset with the rule:
             """
             gender = "F" or points > 9000
@@ -55,7 +55,7 @@ Feature: RulerZ can filter an array with all kind of rules
 
     Scenario: Negations can be used
         Given RulerZ is configured
-        And I use the array of arrays dataset
+        And I use the default dataset
         And I define the parameters:
             | gender | M |
         When I filter the dataset with the rule:
@@ -70,7 +70,7 @@ Feature: RulerZ can filter an array with all kind of rules
 
     Scenario: Custom operators can be used
         Given RulerZ is configured
-        And I use the array of arrays dataset
+        And I use the default dataset
         When I filter the dataset with the rule:
             """
             length(pseudo) = 3

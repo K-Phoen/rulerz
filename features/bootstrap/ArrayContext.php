@@ -6,53 +6,23 @@ use Behat\Gherkin\Node\TableNode;
 
 use Entity\Player;
 
-class ArrayContext implements Context
+class ArrayContext extends BaseContext
 {
-    private $rulerz;
-    private $dataset;
-    private $parameters = [];
-    private $results;
-
-    /**
-     * @Given RulerZ is configured
-     */
-    public function rulerzIsConfigured()
+    protected function getTarget()
     {
-        // compiler
-        $compiler = new \RulerZ\Compiler\EvalCompiler(new \RulerZ\Parser\HoaParser());
-
-        // RulerZ engine
-        $this->rulerz = new \RulerZ\RulerZ(
-            $compiler, [
-                new \RulerZ\Compiler\Target\ArrayVisitor([
-                    'length' => 'strlen'
-                ]),
-            ]
-        );
+        return new \RulerZ\Compiler\Target\ArrayVisitor([
+            'length' => 'strlen'
+        ]);
     }
-
-    /**
-     * @When I define the parameters:
-     */
-    public function iDefineTheParameters(TableNode $parameters)
+    protected function getDefaultDataset()
     {
-        $this->parameters = $parameters->getRowsHash();
-    }
-
-    /**
-     * @When I filter the dataset with the rule:
-     */
-    public function iFilterTheDatasetWithTheRule(PyStringNode $rule)
-    {
-        $this->results = $this->rulerz->filter($this->dataset, (string) $rule, $this->parameters);
-
-        $this->parameters = [];
+        return $this->getArrayOfArraysDataset();
     }
 
     /**
      * @When I use the array of arrays dataset
      */
-    public function iFilterTheArrayOfArraysDatasetWithTheRule()
+    public function iUseTheArrayOfArraysDataset()
     {
         $this->dataset = $this->getArrayOfObjectsDataset();
     }
@@ -60,31 +30,9 @@ class ArrayContext implements Context
     /**
      * @When I use the array of objects dataset
      */
-    public function iFilterTheArrayOfObjectsDatasetWithTheRule()
+    public function iUseTheArrayOfObjectsDataset()
     {
         $this->dataset = $this->getArrayOfObjectsDataset();
-    }
-
-    /**
-     * @Then I should have the following results:
-     */
-    public function iShouldHaveTheFollowingResults(TableNode $table)
-    {
-        if (count($table->getHash()) !== count($this->results)) {
-            throw new \RuntimeException(sprintf("Expected %d results, got %d. Expected:\n%s\nGot:\n%s", count($table->getHash()), count($this->results), $table, var_export($this->results, true)));
-        }
-
-        foreach ($table as $row) {
-            foreach ($this->results as $result) {
-                $objectResult = is_array($result) ? (object) $result : $result;
-
-                if ($objectResult->pseudo === $row['pseudo']) {
-                    return;
-                }
-            }
-
-            throw new \RuntimeException(sprintf('Player "%s" not found in the results.', $row['pseudo']));
-        }
     }
 
     private function getArrayOfArraysDataset()

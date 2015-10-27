@@ -4,5 +4,8 @@ default:
 
     suites:
         array:
-            paths:    [ %paths.base%/features/array ]
+            paths:    [ %paths.base%/features/common, %paths.base%/features/array ]
             contexts: [ ArrayContext ]
+        doctrine_orm:
+            paths:    [ %paths.base%/features/common, %paths.base%/features/doctrine_orm ]
+            contexts: [ DoctrineOrmContext ]
