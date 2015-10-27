@@ -1,0 +1,8 @@
+default:
+    formatters:
+        progress: true
+
+    suites:
+        array:
+            paths:    [ %paths.base%/features/array ]
+            contexts: [ ArrayContext ]

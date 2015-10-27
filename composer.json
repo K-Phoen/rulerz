@@ -49,6 +49,8 @@
         "coduo/phpspec-data-provider-extension": "~1.0",
         "phpspec/phpspec": "~2.0",
 
+        "behat/behat": "~3.0",
+
         "hoa/bench": "~2.0",
         "webmozart/expression": "~1.0@beta"
     },
