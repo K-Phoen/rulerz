@@ -3,7 +3,6 @@
 require __DIR__.'/../vendor/autoload.php';
 
 $client = new Elasticsearch\Client([
-    //'hosts' => ['172.18.42.1']
     'hosts' => ['localhost']
 ]);
 

@@ -14,7 +14,7 @@ class ElasticsearchContext extends BaseContext
     public function __construct()
     {
         $this->client = new Elasticsearch\Client([
-            'hosts' => ['172.18.42.1']
+            'hosts' => ['localhost'], // meh.
         ]);
     }
 
