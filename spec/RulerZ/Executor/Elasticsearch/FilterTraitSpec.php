@@ -17,7 +17,20 @@ class FilterTraitSpec extends ObjectBehavior
 
     function it_calls_search_on_the_target(Client $target)
     {
-        $results = ['result'];
+        $documents = [
+            'first document',
+            'other document',
+        ];
+        $result = [
+            '_shards' => [],
+            'hits' => [
+                'total' => 1,
+                'hits'  => [
+                    ['_source' => 'first document'],
+                    ['_source' => 'other document' ],
+                ],
+            ]
+        ];
         $esQuery = ['array with the ES query'];
 
         ElasticsearchExecutorStub::$executeReturn = $esQuery;
@@ -25,12 +38,12 @@ class FilterTraitSpec extends ObjectBehavior
             'index' => 'es_index',
             'type'  => 'es_type',
             'body'  => ['query' => $esQuery],
-        ])->willReturn($results);
+        ])->willReturn($result);
 
         $this->filter($target, $parameters = [], $operators = [], new ExecutionContext([
             'index' => 'es_index',
             'type'  => 'es_type',
-        ]))->shouldReturn($results);
+        ]))->shouldReturn($documents);
     }
 
     function it_throws_an_exception_when_the_execution_context_is_incomplete(Client $target)

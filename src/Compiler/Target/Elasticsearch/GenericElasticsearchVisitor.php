@@ -63,8 +63,8 @@ abstract class GenericElasticsearchVisitor extends GenericVisitor
         // start with a few helpers
         $must = function($query) {
             return "[
-                'bool' => ['must' => $query]
-            ]";
+    'bool' => ['must' => $query]
+]";
         };
         $mustNot = function($query) {
             return "[
