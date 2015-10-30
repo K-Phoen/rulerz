@@ -15,13 +15,13 @@ class DoctrineOrmContext extends BaseContext
      */
     protected function initialize()
     {
-        $paths     = [__DIR__.'/../../examples/entities']; // meh.
+        $paths     = [__DIR__.'/../../../examples/entities']; // meh.
         $isDevMode = true;
 
         // the connection configuration
         $dbParams = array(
             'driver' => 'pdo_sqlite',
-            'path'   => __DIR__.'/../../examples/rulerz.db', // meh.
+            'path'   => __DIR__.'/../../../examples/rulerz.db', // meh.
         );
 
         $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);

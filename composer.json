@@ -24,8 +24,8 @@
             "Entity\\": "examples/entities/",
             "SampleSpecs\\": "examples/specs/",
             "MyDb\\": "pomm/MyDb",
-            "RulerZ\\Stub\\": "stub/",
-            "spec\\RulerZ\\": "spec/RulerZ/"
+            "RulerZ\\Stub\\": "tests/stub/",
+            "spec\\RulerZ\\": "tests/spec/RulerZ/"
         }
     },
     "config": {

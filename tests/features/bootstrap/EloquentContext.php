@@ -16,7 +16,7 @@ class EloquentContext extends BaseContext
 
         $capsule->addConnection([
             'driver'    => 'sqlite',
-            'database'  => __DIR__.'/../../examples/rulerz.db', // meh.
+            'database'  => __DIR__.'/../../../examples/rulerz.db', // meh.
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
         ]);
