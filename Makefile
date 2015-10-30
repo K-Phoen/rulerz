@@ -12,4 +12,4 @@ sqlite:
 	sqlite3 ./examples/rulerz.db < ./examples/database.sql
 
 elasticsearch:
-	./scripts/elasticsearch/create_mapping.sh && php ./examples/load_elasticsearch_fixtures.php
+	./scripts/elasticsearch/create_mapping.sh && php ./scripts/elasticsearch/load_fixtures.php

@@ -1,11 +1,11 @@
 <?php
 
 /** @var \Doctrine\ORM\EntityManagerInterface $entityManager */
-list($entityManager, $_) = require 'bootstrap_doctrine.php';
+list($entityManager, $_) = require __DIR__ . '/../../examples/bootstrap_doctrine.php';
 
 /** @var \Elasticsearch\Client $client  */
 /** @var \RulerZ\RulerZ $rulerz  */
-list($client, $rulerz) = require 'bootstrap_elasticsearch.php';
+list($client, $rulerz) = require __DIR__ . '/../../examples/bootstrap_elasticsearch.php';
 
 $players = $entityManager
     ->createQueryBuilder()
