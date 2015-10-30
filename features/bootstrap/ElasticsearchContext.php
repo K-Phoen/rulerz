@@ -18,7 +18,7 @@ class ElasticsearchContext extends BaseContext
         ]);
     }
 
-    protected function getTarget()
+    protected function getCompilationTarget()
     {
         return new \RulerZ\Compiler\Target\Elasticsearch\ElasticsearchVisitor();
     }

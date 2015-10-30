@@ -31,7 +31,7 @@ abstract class BaseContext implements Context
      */
     protected $results;
 
-    abstract protected function getTarget();
+    abstract protected function getCompilationTarget();
     abstract protected function getDefaultDataset();
 
     protected function getDefaultExecutionContext()
@@ -48,7 +48,7 @@ abstract class BaseContext implements Context
         $compiler = new \RulerZ\Compiler\EvalCompiler(new \RulerZ\Parser\HoaParser());
 
         // RulerZ engine
-        $this->rulerz = new \RulerZ\RulerZ($compiler, [$this->getTarget()]);
+        $this->rulerz = new \RulerZ\RulerZ($compiler, [$this->getCompilationTarget()]);
     }
 
     /**

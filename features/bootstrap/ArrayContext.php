@@ -8,7 +8,7 @@ use Entity\Player;
 
 class ArrayContext extends BaseContext
 {
-    protected function getTarget()
+    protected function getCompilationTarget()
     {
         return new \RulerZ\Compiler\Target\ArrayVisitor([
             'length' => 'strlen'

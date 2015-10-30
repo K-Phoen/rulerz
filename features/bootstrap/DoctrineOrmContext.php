@@ -31,7 +31,7 @@ class DoctrineOrmContext extends BaseContext
         $this->entityManager = EntityManager::create($dbParams, $config);
     }
 
-    protected function getTarget()
+    protected function getCompilationTarget()
     {
         return new \RulerZ\Compiler\Target\Sql\DoctrineQueryBuilderVisitor();
     }
