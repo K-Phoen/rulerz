@@ -3,7 +3,7 @@
 use Entity\Doctrine\Player;
 use RulerZ\Spec\Expr;
 
-list($entityManager, $rulerz) = require 'bootstrap_doctrine.php';
+list($entityManager, $rulerz) = require __DIR__ . '/bootstrap/bootstrap_doctrine.php';
 
 // 1. Write a specification
 $spec = Expr::andX(

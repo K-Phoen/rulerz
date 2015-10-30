@@ -6,7 +6,7 @@ use RulerZ\Parser\HoaParser;
 // Using a database of the French regions and towns
 // http://pgfoundry.org/frs/?group_id=1000150&release_id=584
 
-$pomm = require __DIR__ . '/bootstrap_pomm.php';
+$pomm = require __DIR__ . '/bootstrap/bootstrap_pomm.php';
 
 // compiler
 $compiler = new \RulerZ\Compiler\EvalCompiler(new HoaParser());

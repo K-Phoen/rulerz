@@ -1,6 +1,6 @@
 <?php
 
-list($client, $rulerz) = require 'bootstrap_elasticsearch.php';
+list($client, $rulerz) = require __DIR__ . '/bootstrap/bootstrap_elasticsearch.php';
 
 // 1. Write a rule.
 $rule  = 'gender = "f" and points > :points';

@@ -3,7 +3,7 @@
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
 $paths = [__DIR__.'/entities'];
 $isDevMode = true;
@@ -11,7 +11,7 @@ $isDevMode = true;
 // the connection configuration
 $dbParams = array(
     'driver' => 'pdo_sqlite',
-    'path'   => __DIR__.'/rulerz.db',
+    'path'   => __DIR__.'/../rulerz.db',
 );
 
 $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);

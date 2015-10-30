@@ -2,7 +2,7 @@
 
 use Entity\Doctrine\Player;
 
-list($entityManager, $rulerz) = require 'bootstrap_doctrine.php';
+list($entityManager, $rulerz) = require __DIR__ . '/bootstrap/bootstrap_doctrine.php';
 
 // 1. Write a rule.
 $rule  = 'gender = :gender and points > :points';

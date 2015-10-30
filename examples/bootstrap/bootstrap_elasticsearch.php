@@ -1,9 +1,14 @@
 <?php
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
+
+$dotenv = new Dotenv\Dotenv(__DIR__ . '/../../');
+$dotenv->load();
 
 $client = new Elasticsearch\Client([
-    'hosts' => ['localhost']
+    'hosts' => [
+        sprintf('%s:%d', $_ENV['ELASTICSEARCH_HOST'], $_ENV['ELASTICSEARCH_PORT'])
+    ],
 ]);
 
 // compiler
