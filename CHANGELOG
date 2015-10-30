@@ -1,0 +1,41 @@
+
+VERSION 0  FIXED ELASTICSEARCH-RELATED TARGETS
+==============================================
+
+   Version 0.13 - Fixed elasticsearch-related targets
+      31/10/2015 00:47  0.13.1  initial release
+         4472010 Add release config
+         b5cc9e6 Fix Array IN operator
+         b215ccc Dump the original rule in the compiled code comments
+         c245573 Fix elasticsearch IN operator
+         b1f1711 Force colors for phpspec and behat outputs
+         4132cae Merge branch 'behat'
+         a396548 Remove useless phpunit config file
+         3c4a920 Moved all the tests-related files in a tests directory
+         57a9099 Add targets in the makefile to start/stop an elasticsearch container
+         2a53986 Add the Makefile in the gitattributes
+         f604c5f Moved the bootstrap scripts in a separate directory
+         8dbf4b6 Moved doctrine sample entities in their own namespace
+         4042bc4 Add tests for Eloquent ORM
+         079ff28 Fix sqlite target in the makefile
+         c81b30c Moved the elasticsearch fixtures loading script
+         76ae357 The tests should read the connection information in the environment
+         153a71a Add a few comments
+         2cac7bb Rename getTarget to getCompilationTarget
+         9612d47 Add an elastica context
+         403be43 Make elasticsearch tests green
+         df98b8a Add Vagrantfile in the .gitattributes
+         ec6cd13 Merge pull request #16 from wizacha/vagrant
+         b005e67 Add Vagrant configuration
+         be4a3c3 Consider that there is an elasticsearch instance on localhost for the tests
+         3711f70 Update elasticsearch tests
+         7b5c42f Add missing files
+         f1f37f6 Add a few tests for elasticsearch
+         ca46a15 Decompose the test target in two sub-targets
+         499ccb1 Write one insert statement per line in database.sql
+         ad4d28e Make travis build the database
+         b22ea61 Update the makefile to launch behat tests
+         294026f Add tests for doctrine ORM
+         3ea7446 Add behat tests to really test the array target
+         f5f8607 Exclude coduo/phpspec-data-provider-extension 1.0.2
+         fa6681d Fix the Elasticsearch-related targets
