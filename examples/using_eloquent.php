@@ -3,6 +3,8 @@
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Eloquent\Model;
 
+use Entity\Eloquent\Player;
+
 error_reporting(E_ALL);
 
 require './vendor/autoload.php';
@@ -19,19 +21,7 @@ $capsule->addConnection([
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
-//$capsule->schema()->create('player', function($table) {
-//    $table->string('pseudo');
-//    $table->string('name');
-//    $table->integer('points');
-//    $table->timestamps();
-//});
-
-class Player extends Model
-{
-}
-
 $users = Player::all();
-var_dump(count($users));
 
 
 // compiler

@@ -28,7 +28,7 @@ class EloquentVisitor extends GenericSqlVisitor
             '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',
         ];
     }
-    
+
     /**
      * {@inheritDoc}
      */

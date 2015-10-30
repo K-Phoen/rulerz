@@ -10,6 +10,9 @@ class DoctrineOrmContext extends BaseContext
      */
     private $entityManager;
 
+    /**
+     * {@inheritDoc}
+     */
     protected function initialize()
     {
         $paths     = [__DIR__.'/../../examples/entities']; // meh.
