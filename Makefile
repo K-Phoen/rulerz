@@ -1,10 +1,10 @@
 tests: phpspec behat
 
 behat:
-	php ./bin/behat -vvv
+	php ./bin/behat --colors -vvv
 
 phpspec:
-	php ./bin/phpspec run -vvv
+	php ./bin/phpspec run --ansi  -vvv
 
 databases: sqlite elasticsearch
 
