@@ -70,7 +70,7 @@ class ArrayVisitor extends GenericVisitor
      */
     public function visitArray(AST\Bag\RulerArray $element, &$handle = null, $eldnah = null)
     {
-        return var_export(parent::visitArray($element, $handle, $eldnah), true);
+        return sprintf('array(%s)', implode(', ', parent::visitArray($element, $handle, $eldnah)));
     }
 
     /**
