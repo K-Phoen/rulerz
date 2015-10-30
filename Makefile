@@ -13,3 +13,9 @@ sqlite:
 
 elasticsearch:
 	./scripts/elasticsearch/create_mapping.sh && php ./scripts/elasticsearch/load_fixtures.php
+
+elasticsearch_start:
+	docker run -d -p 9200:9200 --name es-rulerz elasticsearch:1.7
+
+elasticsearch_stop:
+	docker rm -f es-rulerz
