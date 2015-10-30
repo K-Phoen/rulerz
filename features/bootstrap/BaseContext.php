@@ -45,6 +45,22 @@ abstract class BaseContext implements Context
      */
     abstract protected function getDefaultDataset();
 
+    public function __construct()
+    {
+        $dotenv = new Dotenv\Dotenv(__DIR__ . '/../../');
+        $dotenv->load();
+
+        $this->initialize();
+    }
+
+    /**
+     * Will be called right after the construction of the context, useful to
+     * initialize stuff before the tests are launched.
+     */
+    protected function initialize()
+    {
+    }
+
     /**
      * Create a default execution context that will be given to RulerZ when
      * filtering a dataset.

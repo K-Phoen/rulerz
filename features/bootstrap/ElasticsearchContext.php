@@ -8,10 +8,15 @@ class ElasticsearchContext extends BaseContext
      */
     private $client;
 
-    public function __construct()
+    /**
+     * {@inheritDoc}
+     */
+    protected function initialize()
     {
         $this->client = new Elasticsearch\Client([
-            'hosts' => ['localhost'], // meh.
+            'hosts' => [
+                sprintf('%s:%d', $_ENV['ELASTICSEARCH_HOST'], $_ENV['ELASTICSEARCH_PORT'])
+            ],
         ]);
     }
 

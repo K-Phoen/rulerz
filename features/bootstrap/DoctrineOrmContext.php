@@ -10,7 +10,7 @@ class DoctrineOrmContext extends BaseContext
      */
     private $entityManager;
 
-    public function __construct()
+    protected function initialize()
     {
         $paths     = [__DIR__.'/../../examples/entities']; // meh.
         $isDevMode = true;

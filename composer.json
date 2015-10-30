@@ -37,6 +37,8 @@
         "symfony/property-access": "~2.3"
     },
     "require-dev": {
+        "vlucas/phpdotenv": "~2.1",
+
         "doctrine/orm": "~2.4",
         "elasticsearch/elasticsearch": "~1.0",
         "ruflin/elastica": "~1.0",

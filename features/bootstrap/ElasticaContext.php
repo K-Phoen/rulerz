@@ -7,10 +7,14 @@ class ElasticaContext extends BaseContext
      */
     private $client;
 
-    public function __construct()
+    /**
+     * {@inheritDoc}
+     */
+    protected function initialize()
     {
         $this->client = new \Elastica\Client([
-            'host' => 'localhost', // meh.
+            'host' => $_ENV['ELASTICSEARCH_HOST'],
+            'port' => $_ENV['ELASTICSEARCH_PORT'],
         ]);
     }
 
