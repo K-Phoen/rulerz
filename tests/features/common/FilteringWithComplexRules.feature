@@ -16,6 +16,16 @@ Feature: RulerZ can filter a target with all kind of rules
             | Margaret |
             | Alice    |
 
+    Scenario: It works a simple equality
+        When I filter the dataset with the rule:
+            """
+            pseudo IN ["Ada", "Bob"]
+            """
+        Then I should have the following results:
+            | pseudo |
+            | Ada    |
+            | Bob    |
+
     Scenario: It works a parameter
         When I define the parameters:
             | gender | M |
