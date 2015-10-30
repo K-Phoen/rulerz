@@ -1,6 +1,10 @@
 <?php
 
+/** @var \Doctrine\ORM\EntityManagerInterface $entityManager */
 list($entityManager, $_) = require 'bootstrap_doctrine.php';
+
+/** @var \Elasticsearch\Client $client  */
+/** @var \RulerZ\RulerZ $rulerz  */
 list($client, $rulerz) = require 'bootstrap_elasticsearch.php';
 
 $players = $entityManager

@@ -4,10 +4,10 @@ default:
 
     suites:
         array:
-            paths:    [ %paths.base%/features/common, %paths.base%/features/array ]
+            paths:    [ %paths.base%/features/common, %paths.base%/features/operators, %paths.base%/features/array ]
             contexts: [ ArrayContext ]
         doctrine_orm:
-            paths:    [ %paths.base%/features/common, %paths.base%/features/doctrine_orm ]
+            paths:    [ %paths.base%/features/common, %paths.base%/features/operators, %paths.base%/features/doctrine_orm ]
             contexts: [ DoctrineOrmContext ]
         elasticsearch:
             paths:    [ %paths.base%/features/common, %paths.base%/features/elasticsearch ]

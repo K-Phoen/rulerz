@@ -62,14 +62,3 @@ Feature: RulerZ can filter a target with all kind of rules
             | Ada      |
             | Margaret |
             | Alice    |
-
-    Scenario: Custom operators can be used
-        When I filter the dataset with the rule:
-            """
-            length(pseudo) = 3
-            """
-        Then I should have the following results:
-            | pseudo |
-            | Ada    |
-            | Joe    |
-            | Bob    |
