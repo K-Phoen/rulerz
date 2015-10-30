@@ -41,6 +41,7 @@ class {$parameters['className']} implements Executor
 
     $extraCode
 
+    // $rule
     protected function execute(\$target, array \$operators, array \$parameters)
     {
         return {$executorModel->getCompiledRule()};
