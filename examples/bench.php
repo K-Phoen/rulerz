@@ -3,9 +3,9 @@
 use Webmozart\Expression\Expr;
 use Webmozart\Expression\Logic\Disjunction;
 
-list($entityManager, $rulerz) = require './examples/bootstrap_doctrine.php';
+list($entityManager, $rulerz) = require __DIR__ . '/bootstrap/bootstrap_doctrine.php';
 
-const REPETITIONS = 100000;
+const REPETITIONS = 10000;
 
 $dataset = [
     ['name' => 'Joe', 'group' => 'guest', 'points' => 50],

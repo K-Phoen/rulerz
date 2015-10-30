@@ -1,3 +1,7 @@
+suites:
+    default:
+        spec_path: %paths.config%/tests
+
 formatter.name: dot
 extensions:
   - Coduo\PhpSpec\DataProvider\DataProviderExtension

@@ -3,6 +3,7 @@
 /.travis.yml    export-ignore
 /phpspec.yml    export-ignore
 /Vagrantfile    export-ignore
+/Makefile       export-ignore
 /README.md      export-ignore
 /doc            export-ignore
 /spec           export-ignore

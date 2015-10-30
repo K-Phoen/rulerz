@@ -1,9 +1,9 @@
 <?php
 
-use Entity\Player;
+use Entity\Doctrine\Player;
 use RulerZ\Spec\Expr;
 
-list($entityManager, $rulerz) = require 'bootstrap_doctrine.php';
+list($entityManager, $rulerz) = require __DIR__ . '/bootstrap/bootstrap_doctrine.php';
 
 // 1. Write a specification
 $spec = Expr::andX(
@@ -17,7 +17,7 @@ $spec = Expr::andX(
 $playersQb = $entityManager
     ->createQueryBuilder()
     ->select('p')
-    ->from('Entity\Player', 'p');
+    ->from('Entity\Doctrine\Player', 'p');
 
 // or an array of arrays
 $playersArr = [
