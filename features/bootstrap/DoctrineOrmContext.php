@@ -1,12 +1,7 @@
 <?php
 
-use Behat\Behat\Context\Context;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
-
-use Entity\Player;
 
 class DoctrineOrmContext extends BaseContext
 {
@@ -17,13 +12,13 @@ class DoctrineOrmContext extends BaseContext
 
     public function __construct()
     {
-        $paths = [__DIR__.'/../../examples/entities'];
+        $paths     = [__DIR__.'/../../examples/entities']; // meh.
         $isDevMode = true;
 
         // the connection configuration
         $dbParams = array(
             'driver' => 'pdo_sqlite',
-            'path'   => __DIR__.'/../../examples/rulerz.db',
+            'path'   => __DIR__.'/../../examples/rulerz.db', // meh.
         );
 
         $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
@@ -31,11 +26,17 @@ class DoctrineOrmContext extends BaseContext
         $this->entityManager = EntityManager::create($dbParams, $config);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function getCompilationTarget()
     {
         return new \RulerZ\Compiler\Target\Sql\DoctrineQueryBuilderVisitor();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function getDefaultDataset()
     {
         return $this->entityManager

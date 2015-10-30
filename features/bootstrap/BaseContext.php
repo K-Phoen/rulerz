@@ -31,9 +31,26 @@ abstract class BaseContext implements Context
      */
     protected $results;
 
+    /**
+     * Returns the compilation target to be tested.
+     *
+     * @return \RulerZ\Compiler\Target\CompilationTarget
+     */
     abstract protected function getCompilationTarget();
+
+    /**
+     * Returns the default dataset to be filtered.
+     *
+     * @return mixed
+     */
     abstract protected function getDefaultDataset();
 
+    /**
+     * Create a default execution context that will be given to RulerZ when
+     * filtering a dataset.
+     *
+     * @return mixed
+     */
     protected function getDefaultExecutionContext()
     {
         return [];

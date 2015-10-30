@@ -1,19 +1,22 @@
 <?php
 
-use Behat\Behat\Context\Context;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
-
 use Entity\Player;
 
 class ArrayContext extends BaseContext
 {
+    /**
+     * {@inheritDoc}
+     */
     protected function getCompilationTarget()
     {
         return new \RulerZ\Compiler\Target\ArrayVisitor([
             'length' => 'strlen'
         ]);
     }
+
+    /**
+     * {@inheritDoc}
+     */
     protected function getDefaultDataset()
     {
         return $this->getArrayOfArraysDataset();

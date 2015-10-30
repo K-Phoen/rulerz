@@ -1,9 +1,5 @@
 <?php
 
-use Behat\Behat\Context\Context;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
-
 class ElasticaContext extends BaseContext
 {
     /**
@@ -18,11 +14,17 @@ class ElasticaContext extends BaseContext
         ]);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function getCompilationTarget()
     {
         return new \RulerZ\Compiler\Target\Elasticsearch\ElasticaVisitor();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function getDefaultDataset()
     {
         $search = new \Elastica\Search($this->client);
