@@ -12,3 +12,6 @@ default:
         elasticsearch:
             paths:    [ %paths.base%/features/common, %paths.base%/features/elasticsearch ]
             contexts: [ ElasticsearchContext ]
+        elastica:
+            paths:    [ %paths.base%/features/common ]
+            contexts: [ ElasticaContext ]

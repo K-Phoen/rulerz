@@ -35,12 +35,4 @@ class ElasticsearchContext extends BaseContext
             'type'  => 'player'
         ];
     }
-
-    /**
-     * @When I use the query builder dataset
-     */
-    public function iUseTheQueryBuilderDataset()
-    {
-        $this->dataset = $this->getDefaultDataset();
-    }
 }
