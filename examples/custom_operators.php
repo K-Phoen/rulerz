@@ -1,6 +1,6 @@
 <?php
 
-use Entity\Player;
+use Entity\Doctrine\Player;
 
 list($entityManager, $rulerz) = require 'bootstrap_doctrine.php';
 
@@ -13,7 +13,7 @@ $rule  = 'points > :points and length(pseudo) > 4';
 $playersQb = $entityManager
     ->createQueryBuilder()
     ->select('p')
-    ->from('Entity\Player', 'p');
+    ->from('Entity\Doctrine\Player', 'p');
 
 // or an array of arrays
 $playersArr = [

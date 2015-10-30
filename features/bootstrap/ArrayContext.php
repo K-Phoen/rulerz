@@ -1,6 +1,6 @@
 <?php
 
-use Entity\Player;
+use Entity\Doctrine\Player;
 
 class ArrayContext extends BaseContext
 {

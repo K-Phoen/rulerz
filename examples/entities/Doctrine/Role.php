@@ -1,14 +1,14 @@
 <?php
 
-namespace Entity;
+namespace Entity\Doctrine;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Entity
- * @Table(name="groups")
+ * @Table(name="roles")
  */
-class Group
+class Role
 {
     /**
      * @Id
@@ -23,18 +23,14 @@ class Group
     public $name;
 
     /**
-     * @OneToMany(targetEntity="Player", mappedBy="group")
+     * @OneToMany(targetEntity="Group", mappedBy="role")
      */
-    public $players;
-
-    /**
-     * @ManyToOne(targetEntity="Entity\Role", inversedBy="groups")
-     * @JoinColumn(name="role_id", referencedColumnName="id")
-     */
-    public $role;
+    public $groups;
 
     public function __construct($name)
     {
         $this->name = $name;
+
+        $this->groups = new ArrayCollection();
     }
 }

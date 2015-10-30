@@ -1,6 +1,6 @@
 <?php
 
-namespace Entity;
+namespace Entity\Doctrine;
 
 /**
  * @Entity
@@ -35,7 +35,7 @@ class Player
     public $points;
 
     /**
-     * @ManyToOne(targetEntity="Entity\Group", inversedBy="players")
+     * @ManyToOne(targetEntity="Group", inversedBy="players")
      * @JoinColumn(name="group_id", referencedColumnName="id")
      */
     public $group;

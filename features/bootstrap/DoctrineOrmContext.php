@@ -45,7 +45,7 @@ class DoctrineOrmContext extends BaseContext
         return $this->entityManager
             ->createQueryBuilder()
             ->select('p')
-            ->from('Entity\Player', 'p');
+            ->from('Entity\Doctrine\Player', 'p');
     }
 
     /**

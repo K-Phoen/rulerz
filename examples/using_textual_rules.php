@@ -1,6 +1,6 @@
 <?php
 
-use Entity\Player;
+use Entity\Doctrine\Player;
 
 list($entityManager, $rulerz) = require 'bootstrap_doctrine.php';
 
@@ -14,7 +14,7 @@ $rule  = 'gender = :gender and group.role.name = "ROLE_ADMIN"';
 $playersQb = $entityManager
     ->createQueryBuilder()
     ->select('p')
-    ->from('Entity\Player', 'p');
+    ->from('Entity\Doctrine\Player', 'p');
 
 // or an array of arrays
 $playersArr = [

@@ -23,7 +23,6 @@ $capsule->bootEloquent();
 
 $users = Player::all();
 
-
 // compiler
 $compiler = new \RulerZ\Compiler\EvalCompiler(new \RulerZ\Parser\HoaParser());
 
