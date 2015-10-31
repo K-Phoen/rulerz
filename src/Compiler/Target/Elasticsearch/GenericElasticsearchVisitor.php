@@ -38,16 +38,6 @@ abstract class GenericElasticsearchVisitor extends GenericVisitor
     /**
      * {@inheritDoc}
      */
-    public function visitScalar(AST\Bag\Scalar $element, &$handle = null, $eldnah = null)
-    {
-        $value = parent::visitScalar($element, $handle, $eldnah);
-
-        return is_numeric($value) ? $value : sprintf("'%s'", $value);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function visitArray(AST\Bag\RulerArray $element, &$handle = null, $eldnah = null)
     {
         $array = parent::visitArray($element, $handle, $eldnah);

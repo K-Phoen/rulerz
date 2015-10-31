@@ -83,3 +83,16 @@ Feature: RulerZ can filter a target with all kind of rules
             | Ada      |
             | Margaret |
             | Alice    |
+
+    Scenario: Parenthesis can be used
+        When I filter the dataset with the rule:
+            """
+            (gender = "F" or points > 9000) or (gender = "M" and points < 200)
+            """
+        Then I should have the following results:
+            | pseudo   | points |
+            | Ada      | 10000  |
+            | Margaret | 5000   |
+            | Alice    | 175    |
+            | Bob      | 9001   |
+            | Kévin    | 100    |

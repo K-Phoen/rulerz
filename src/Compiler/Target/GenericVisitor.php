@@ -123,7 +123,7 @@ abstract class GenericVisitor implements CompilationTarget, RuleVisitor
      */
     public function visitScalar(AST\Bag\Scalar $element, &$handle = null, $eldnah = null)
     {
-        return $element->getValue();
+        return var_export($element->getValue(), true);
     }
 
     /**

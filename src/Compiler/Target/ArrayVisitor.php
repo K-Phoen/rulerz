@@ -36,14 +36,6 @@ class ArrayVisitor extends GenericVisitor
     /**
      * {@inheritDoc}
      */
-    public function visitScalar(AST\Bag\Scalar $element, &$handle = null, $eldnah = null)
-    {
-        return var_export(parent::visitScalar($element, $handle, $eldnah), true);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
         $flattenedDimensions = [
