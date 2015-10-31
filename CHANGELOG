@@ -2,6 +2,21 @@
 VERSION 0  FIXED ELASTICSEARCH-RELATED TARGETS
 ==============================================
 
+   Version 0.14 - Add support for Doctrine DBAL
+      31/10/2015 21:54  0.14.0  initial release
+         2885707 Merge branch 'doctrine-dbal'
+         2c0bdff Add support for Doctrine DBAL
+         3c4fb92 Stuff
+         5f011b0 Start to work on integrating doctrine DBAL
+         0d2a2ea Clean some code
+         de2df18 Remove in_enveloppe and match_all operators for elasticsearch
+         d895640 Fix != operator for elasticsearch
+         2125b67 Update the contributing guide to mention elasticsearch
+         17c2d0e Moved the vagrant bootstrap script
+         5de354b Removed useless dependencies
+         22fc330 Added a few missing files in the .gitatributes
+         c121452 First draft of the contributing guide
+
    Version 0.13 - Fixed elasticsearch-related targets
       31/10/2015 00:47  0.13.1  initial release
          4472010 Add release config
