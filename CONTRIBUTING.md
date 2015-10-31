@@ -34,4 +34,11 @@ Thank you!
 Ensure that the required vendors are installed by running `composer install`.
 The test suite requires the `php5-sqlite` extension to be installed.
 
-Run the tests with the `make tests` command.
+Run the tests with the `make databases && make tests` command.
+
+**N.B:** some of the tests need a running Elasticsearch server. If you don't
+have one, you can use the `make elasticsearch_start` command to start one using
+a docker image. Once you don't need it anymore, you can stop it using `make
+elasticsearch_stop`.
+If you want to use your own Elasticsearch instance, update the host and port to
+use by editing the `.env` file.
