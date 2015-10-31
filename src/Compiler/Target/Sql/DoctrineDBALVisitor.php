@@ -2,20 +2,22 @@
 
 namespace RulerZ\Compiler\Target\Sql;
 
+use Doctrine\DBAL\Query\QueryBuilder;
 use Hoa\Ruler\Model as AST;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Illuminate\Database\Query\Builder as QueryBuilder;
 
 use RulerZ\Model;
+use RulerZ\Compiler\Target\Polyfill;
 
-class EloquentVisitor extends GenericSqlVisitor
+class DoctrineDBALVisitor extends GenericSqlVisitor
 {
+    use Polyfill\AccessPath;
+
     /**
      * @inheritDoc
      */
     public function supports($target, $mode)
     {
-        return $target instanceof QueryBuilder || $target instanceof EloquentBuilder;
+        return $target instanceof QueryBuilder;
     }
 
     /**
@@ -24,7 +26,7 @@ class EloquentVisitor extends GenericSqlVisitor
     protected function getExecutorTraits()
     {
         return [
-            '\RulerZ\Executor\Eloquent\FilterTrait',
+            '\RulerZ\Executor\DoctrineDBAL\FilterTrait',
             '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',
         ];
     }
@@ -45,6 +47,14 @@ class EloquentVisitor extends GenericSqlVisitor
     public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
     {
         // make it a placeholder
-        return ':'.$element->getName();
+        return ':' . $element->getName();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
+    {
+        return $this->flattenAccessPath($element);
     }
 }
