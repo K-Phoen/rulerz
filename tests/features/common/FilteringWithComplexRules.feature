@@ -16,6 +16,17 @@ Feature: RulerZ can filter a target with all kind of rules
             | Margaret |
             | Alice    |
 
+    Scenario: It works a simple inequality
+        When I filter the dataset with the rule:
+            """
+            gender != "F"
+            """
+        Then I should have the following results:
+            | pseudo |
+            | Joe    |
+            | Bob    |
+            | Kévin  |
+
     Scenario: It works a simple equality
         When I filter the dataset with the rule:
             """

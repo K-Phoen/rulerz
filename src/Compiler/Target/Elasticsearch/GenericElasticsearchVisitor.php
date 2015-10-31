@@ -117,6 +117,14 @@ abstract class GenericElasticsearchVisitor extends GenericVisitor
             ]");
         });
 
+        $this->setInlineOperator('!=', function ($a, $b) use ($mustNot) {
+            return $mustNot("[
+                'term' => [
+                    '$a' => $b,
+                ]
+            ]");
+        });
+
         $this->setInlineOperator('not', $mustNot);
 
         $this->setInlineOperator('match_all', function() {
@@ -137,16 +145,6 @@ abstract class GenericElasticsearchVisitor extends GenericVisitor
 
         $this->setInlineOperator('<=', function ($a, $b) use ($range) {
             return $range($a, $b, 'lte');
-        });
-
-        $this->setInlineOperator('!=', function ($a, $b) use ($mustNot) {
-            $value = is_array($b) ? $b : "'[$b]'";
-
-            return $mustNot("[
-                'terms' => [
-                    '$a' => $value,
-                ]
-            ]");
         });
 
         $this->setInlineOperator('in_envelope', function ($a, $b) use ($must) {
