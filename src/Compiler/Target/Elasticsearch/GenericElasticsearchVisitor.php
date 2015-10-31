@@ -127,10 +127,6 @@ abstract class GenericElasticsearchVisitor extends GenericVisitor
 
         $this->setInlineOperator('not', $mustNot);
 
-        $this->setInlineOperator('match_all', function() {
-            return "['match_all' => []]";
-        });
-
         $this->setInlineOperator('>', function ($a, $b) use ($range) {
             return $range($a, $b, 'gt');
         });
@@ -145,19 +141,6 @@ abstract class GenericElasticsearchVisitor extends GenericVisitor
 
         $this->setInlineOperator('<=', function ($a, $b) use ($range) {
             return $range($a, $b, 'lte');
-        });
-
-        $this->setInlineOperator('in_envelope', function ($a, $b) use ($must) {
-            return $must([
-                'geo_shape' => [
-                    $a => [
-                        'shape' => [
-                            'type'        => 'envelope',
-                            'coordinates' => $b,
-                        ]
-                    ]
-                ]
-            ]);
         });
     }
 
