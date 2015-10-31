@@ -36,9 +36,9 @@ class DoctrineDBALVisitor extends GenericSqlVisitor
      */
     public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
     {
-        $dql = parent::visitModel($element, $handle, $eldnah);
+        $sql = parent::visitModel($element, $handle, $eldnah);
 
-        return '"' . $dql . '"';
+        return '"' . $sql . '"';
     }
 
     /**
