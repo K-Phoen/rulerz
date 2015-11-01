@@ -3,6 +3,7 @@
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use Behat\Testwork\Hook\Scope\BeforeSuiteScope;
 
 abstract class BaseContext implements Context
 {
@@ -52,6 +53,14 @@ abstract class BaseContext implements Context
 
         $this->initialize();
     }
+
+    /**
+     * @BeforeSuite
+     */
+     public static function prepare(BeforeSuiteScope $scope)
+     {
+         echo $scope->getSuite()->getName();
+     }
 
     /**
      * Will be called right after the construction of the context, useful to
