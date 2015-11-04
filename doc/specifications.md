@@ -143,7 +143,7 @@ RulerZ offers a few shortcuts to work with specification objects:
 // filtering a target using a specification
 $rulerz->filterSpec($target, $interestingPlayersSpec);
 
-// checkinf if a target satisfies a specification
+// checking if a target satisfies a specification
 var_dump($rulerz->satisfiesSpec($target, $interestingPlayersSpec));
 ```
 
