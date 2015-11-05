@@ -49,7 +49,7 @@ class RulerZ
      * @param array  $parameters       The parameters used in the rule.
      * @param array  $executionContext The execution context.
      *
-     * @return mixed The filtered target.
+     * @return \RulerZ\Result\FilterResult The filtered target.
      */
     public function filter($target, $rule, array $parameters = [], array $executionContext = [])
     {
