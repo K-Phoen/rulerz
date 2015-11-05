@@ -3,6 +3,7 @@
 namespace RulerZ\Executor\DoctrineDBAL;
 
 use RulerZ\Context\ExecutionContext;
+use RulerZ\Result\FilterResult;
 
 trait FilterTrait
 {
@@ -26,20 +27,7 @@ trait FilterTrait
             $target->setParameter($name, $value);
         }
 
-        // and we return the final results
-        return $this->returnResult($target, $context);
-    }
-
-    private function returnResult($target, ExecutionContext $context)
-    {
-        if (empty($context['doctrine_return']) || $context['doctrine_return'] === 'RESULTS') {
-            return $target->execute()->fetchAll();
-        }
-
-        if (!empty($context['doctrine_return']) && $context['doctrine_return'] === 'DOCTRINE_QUERY_BUILDER') {
-            return $target;
-        }
-
-        throw new \RuntimeException('not implemented');
+        // and return the results
+        return FilterResult::fromArray($target->execute()->fetchAll());
     }
 }

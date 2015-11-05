@@ -3,6 +3,7 @@
 namespace RulerZ\Executor\Elasticsearch;
 
 use RulerZ\Context\ExecutionContext;
+use RulerZ\Result\FilterResult;
 
 trait ElasticsearchFilterTrait
 {
@@ -23,8 +24,12 @@ trait ElasticsearchFilterTrait
             'body'  => ['query' => $searchQuery],
         ]);
 
-        return array_map(function($result) {
+        if (empty($results['hits'])) {
+            return FilterResult::fromArray([]);
+        }
+
+        return FilterResult::fromArray(array_map(function($result) {
             return $result['_source'];
-        }, $results['hits']['hits']);
+        }, $results['hits']['hits']));
     }
 }

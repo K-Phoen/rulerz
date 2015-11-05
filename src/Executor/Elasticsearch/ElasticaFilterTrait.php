@@ -6,6 +6,7 @@ use Elastica\Search;
 use Elastica\SearchableInterface;
 
 use RulerZ\Context\ExecutionContext;
+use RulerZ\Result\FilterResult;
 
 trait ElasticaFilterTrait
 {
@@ -23,6 +24,6 @@ trait ElasticaFilterTrait
             return $target->search(['query' => $searchQuery]);
         }
 
-        return $target->find(['query' => $searchQuery]);
+        return FilterResult::fromTraversable($target->find(['query' => $searchQuery]));
     }
 }

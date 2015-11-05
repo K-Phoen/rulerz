@@ -3,6 +3,7 @@
 namespace RulerZ\Executor\DoctrineQueryBuilder;
 
 use RulerZ\Context\ExecutionContext;
+use RulerZ\Result\FilterResult;
 
 trait FilterTrait
 {
@@ -29,7 +30,21 @@ trait FilterTrait
             $target->setParameter($name, $value);
         }
 
-        // and we return the final results
-        return $target->getQuery()->getResult();
+        // execute the query
+        $result = $target->getQuery()->getResult();
+
+        // and return the appropriate result type
+        return $this->buildFilterResult($result);
+    }
+
+    private function buildFilterResult($result)
+    {
+        if ($result instanceof \Traversable) {
+            return FilterResult::fromTraversable($result);
+        } else if (is_array($result)) {
+            return FilterResult::fromArray($result);
+        }
+
+        throw new \RuntimeException(sprintf('Unhandled result type: "%s"', get_class($result)));
     }
 }

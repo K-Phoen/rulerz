@@ -5,6 +5,7 @@ namespace RulerZ\Executor\Eloquent;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 use RulerZ\Context\ExecutionContext;
+use RulerZ\Result\FilterResult;
 
 trait FilterTrait
 {
@@ -20,6 +21,6 @@ trait FilterTrait
 
         $query->whereRaw($sql, $parameters);
 
-        return $query->get();
+        return FilterResult::fromArray($query->get());
     }
 }
