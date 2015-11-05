@@ -21,7 +21,7 @@ trait ElasticaFilterTrait
         $searchQuery = $this->execute($target, $operators, $parameters);
 
         if ($target instanceof SearchableInterface || $target instanceof Search) {
-            return $target->search(['query' => $searchQuery]);
+            return FilterResult::fromTraversable($target->search(['query' => $searchQuery]));
         }
 
         return FilterResult::fromTraversable($target->find(['query' => $searchQuery]));

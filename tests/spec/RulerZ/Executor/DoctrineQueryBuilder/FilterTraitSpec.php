@@ -8,9 +8,12 @@ use PhpSpec\ObjectBehavior;
 
 use RulerZ\Context\ExecutionContext;
 use RulerZ\Stub\Executor\DoctrineExecutorStub;
+use spec\RulerZ\FilterResultMatcherTrait;
 
 class FilterTraitSpec extends ObjectBehavior
 {
+    use FilterResultMatcherTrait;
+
     function let()
     {
         $this->beAnInstanceOf('RulerZ\Stub\Executor\DoctrineExecutorStub');
@@ -31,6 +34,6 @@ class FilterTraitSpec extends ObjectBehavior
         $target->setParameter('foo', 'bar')->shouldBeCalled();
         $target->andWhere($modifiedDql)->shouldBeCalled();
 
-        $this->filter($target, $parameters = ['foo' => 'bar'], $operators = [], new ExecutionContext())->shouldReturn($results);
+        $this->filter($target, $parameters = ['foo' => 'bar'], $operators = [], new ExecutionContext())->shouldReturnResults($results);
     }
 }
