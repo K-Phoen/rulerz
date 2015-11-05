@@ -133,12 +133,14 @@ abstract class BaseContext implements Context
      */
     public function iShouldHaveTheFollowingResults(TableNode $table)
     {
-        if (count($table->getHash()) !== count($this->results)) {
-            throw new \RuntimeException(sprintf("Expected %d results, got %d. Expected:\n%s\nGot:\n%s", count($table->getHash()), count($this->results), $table, var_export($this->results, true)));
+        $results = iterator_to_array($this->results);
+
+        if (count($table->getHash()) !== count($results)) {
+            throw new \RuntimeException(sprintf("Expected %d results, got %d. Expected:\n%s\nGot:\n%s", count($table->getHash()), count($results), $table, var_export($results, true)));
         }
 
         foreach ($table as $row) {
-            foreach ($this->results as $result) {
+            foreach ($results as $result) {
                 $objectResult = is_array($result) ? (object) $result : $result;
 
                 if ($objectResult->pseudo === $row['pseudo']) {
