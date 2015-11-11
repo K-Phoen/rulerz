@@ -50,7 +50,7 @@ class PommVisitor extends GenericSqlVisitor
         $operator   = $element->getName();
         $sql        = parent::visitOperator($element, $parameters, $eldnah);
 
-        if (in_array($operator, ['and', 'or'])) {
+        if (in_array($operator, ['and', 'or', 'not'])) {
             return $sql;
         }
 
@@ -74,6 +74,9 @@ class PommVisitor extends GenericSqlVisitor
         });
         $this->setInlineOperator('or', function ($a, $b) {
             return sprintf('%s->orWhere(%s)', $a, $b);
+        });
+        $this->setInlineOperator('not', function ($a) {
+            return sprintf('(new \PommProject\Foundation\Where("NOT(".%s->getElement() .")", %s->getValues()))', $a, $a);
         });
     }
 }

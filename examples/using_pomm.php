@@ -1,31 +1,10 @@
 <?php
 
-use RulerZ\RulerZ;
-use RulerZ\Parser\HoaParser;
+list($pomm, $rulerz) = require __DIR__ . '/bootstrap/bootstrap_pomm.php';
 
-// Using a database of the French regions and towns
-// http://pgfoundry.org/frs/?group_id=1000150&release_id=584
+$players = $pomm['test_rulerz']->getModel('\Entity\Pomm\TestRulerz\PublicSchema\PlayersModel');
+$rule = 'points > 300';
 
-$pomm = require __DIR__ . '/bootstrap/bootstrap_pomm.php';
-
-// compiler
-$compiler = new \RulerZ\Compiler\EvalCompiler(new HoaParser());
-
-// compiled RulerZ
-$rulerz = new RulerZ(
-    $compiler, [
-        new \RulerZ\Compiler\Target\Sql\PommVisitor(),
-    ]
-);
-
-$cities = $pomm['my_db']->getModel('\MyDb\PublicSchema\TownsModel');
-
-$rule = 'name = :name';
-var_dump($rule, $rulerz->filter($cities, $rule, [
-    'name' => 'Gerzat'
-])->get(0));
-
-$rule = 'name = :name OR name = "Clermont-Ferrand"';
-var_dump($rule, $rulerz->filter($cities, $rule, [
-    'name' => 'Gerzat'
-])->get(0));
+foreach ($rulerz->filter($players, $rule) as $player) {
+    var_dump($player->getPseudo());
+}

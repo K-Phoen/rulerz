@@ -1,11 +1,25 @@
 <?php
 
-use \PommProject\Foundation\Pomm;
+use PommProject\Foundation\Pomm;
 
-$loader = require __DIR__.'/../../vendor/autoload.php';
-$loader->add(null, __DIR__);
+use RulerZ\RulerZ;
+use RulerZ\Parser\HoaParser;
 
-return new Pomm(['my_db' => [
-    'dsn'                   => 'pgsql://postgres:root@172.17.0.5:5432/postgres',
+require __DIR__.'/bootstrap_general.php';
+
+$pomm = new Pomm(['test_rulerz' => [
+    'dsn'                   => sprintf('pgsql://%s:%s@%s:%d/%s', $_ENV['POSTGRES_USER'], $_ENV['POSTGRES_PASSWD'], $_ENV['POSTGRES_HOST'], $_ENV['POSTGRES_PORT'], $_ENV['POSTGRES_DB']),
     'class:session_builder' => '\PommProject\ModelManager\SessionBuilder'
 ]]);
+
+// compiler
+$compiler = new \RulerZ\Compiler\EvalCompiler(new HoaParser());
+
+// compiled RulerZ
+$rulerz = new RulerZ(
+    $compiler, [
+        new \RulerZ\Compiler\Target\Sql\PommVisitor(),
+    ]
+);
+
+return [$pomm, $rulerz];
