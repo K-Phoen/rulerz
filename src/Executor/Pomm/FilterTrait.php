@@ -3,6 +3,7 @@
 namespace RulerZ\Executor\Pomm;
 
 use RulerZ\Context\ExecutionContext;
+use RulerZ\Result\FilterResult;
 
 trait FilterTrait
 {
@@ -24,7 +25,8 @@ trait FilterTrait
         /** @var \PommProject\Foundation\Where $whereClause */
         $whereClause = $this->applyFilter($target, $parameters, $operators, $context);
         $method      = !empty($context['method']) ? $context['method'] : 'findWhere';
+        $result      = call_user_func([$target, $method], $whereClause);
 
-        return call_user_func([$target, $method], $whereClause);
+        return is_array($result) ? FilterResult::fromArray($result) : FilterResult::fromTraversable($result);
     }
 }
