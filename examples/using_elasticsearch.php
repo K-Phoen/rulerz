@@ -3,7 +3,7 @@
 list($client, $rulerz) = require __DIR__ . '/bootstrap/bootstrap_elasticsearch.php';
 
 // 1. Write a rule.
-$rule  = 'gender = "f" and points > :points';
+$rule  = 'gender = :gender';
 
 // 2. Define the execution context
 $context = [
@@ -13,8 +13,7 @@ $context = [
 
 // 3. Enjoy!
 $parameters = [
-    'points' => 3000,
-    'gender' => 'f',
+    'gender' => 'F',
 ];
 
 $players = $rulerz->filter($client, $rule, $parameters, $context);
