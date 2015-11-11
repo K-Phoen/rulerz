@@ -2,8 +2,12 @@ language: php
 
 sudo: false
 
+addons:
+    postgresql: "9.4"
+
 services:
-  - elasticsearch
+    - elasticsearch
+    - postgresql
 
 php:
     - 5.4
