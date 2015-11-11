@@ -3,7 +3,7 @@
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
-require __DIR__.'/../../vendor/autoload.php';
+require __DIR__.'/bootstrap_general.php';
 
 $paths = [__DIR__.'/entities'];
 $isDevMode = true;

@@ -2,8 +2,7 @@
 
 use \PommProject\Foundation\Pomm;
 
-$loader = require __DIR__.'/../../vendor/autoload.php';
-$loader->add(null, __DIR__);
+require __DIR__.'/bootstrap_general.php';
 
 return new Pomm(['my_db' => [
     'dsn'                   => 'pgsql://postgres:root@172.17.0.5:5432/postgres',
