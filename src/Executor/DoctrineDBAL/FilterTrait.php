@@ -12,7 +12,7 @@ trait FilterTrait
     /**
      * {@inheritDoc}
      */
-    public function filter($target, array $parameters, array $operators, ExecutionContext $context)
+    public function applyFilter($target, array $parameters, array $operators, ExecutionContext $context)
     {
         /** @var \Doctrine\DBAL\Query\QueryBuilder $target */
 
@@ -26,6 +26,18 @@ trait FilterTrait
         foreach ($parameters as $name => $value) {
             $target->setParameter($name, $value);
         }
+
+        return $target;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function filter($target, array $parameters, array $operators, ExecutionContext $context)
+    {
+        /** @var \Doctrine\DBAL\Query\QueryBuilder $target */
+
+        $this->applyFilter($target, $parameters, $operators, $context);
 
         // and return the results
         return FilterResult::fromArray($target->execute()->fetchAll());

@@ -12,7 +12,7 @@ trait FilterTrait
     /**
      * {@inheritDoc}
      */
-    public function filter($target, array $parameters, array $operators, ExecutionContext $context)
+    public function applyFilter($target, array $parameters, array $operators, ExecutionContext $context)
     {
         /** @var \Doctrine\ORM\QueryBuilder $target */
 
@@ -30,15 +30,22 @@ trait FilterTrait
             $target->setParameter($name, $value);
         }
 
+        return $target;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function filter($target, array $parameters, array $operators, ExecutionContext $context)
+    {
+        /** @var \Doctrine\ORM\QueryBuilder $target */
+
+        $this->applyFilter($target, $parameters, $operators, $context);
+
         // execute the query
         $result = $target->getQuery()->getResult();
 
         // and return the appropriate result type
-        return $this->buildFilterResult($result);
-    }
-
-    private function buildFilterResult($result)
-    {
         if ($result instanceof \Traversable) {
             return FilterResult::fromTraversable($result);
         } else if (is_array($result)) {

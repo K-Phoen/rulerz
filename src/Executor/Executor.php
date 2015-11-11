@@ -10,6 +10,18 @@ use RulerZ\Context\ExecutionContext;
 interface Executor
 {
     /**
+     * Apply the filters on a target using the given rule and parameters.
+     *
+     * @param mixed            $target     The target.
+     * @param array            $parameters The parameters used in the rule.
+     * @param array<Xcallable> $operators  The available operators.
+     * @param ExecutionContext $context    The execution context.
+     *
+     * @return mixed
+     */
+    public function applyFilter($target, array $parameters, array $operators, ExecutionContext $context);
+
+    /**
      * Filters a target using the given rule and parameters.
      *
      * @param mixed            $target     The target.

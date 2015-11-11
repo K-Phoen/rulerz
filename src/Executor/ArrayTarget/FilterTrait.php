@@ -13,6 +13,14 @@ trait FilterTrait
     /**
      * {@inheritDoc}
      */
+    public function applyFilter($target, array $parameters, array $operators, ExecutionContext $context)
+    {
+        throw new \LogicException('Not supported.');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function filter($target, array $parameters, array $operators, ExecutionContext $context)
     {
         return FilterResult::fromGenerator(function() use ($target, $parameters, $operators) {

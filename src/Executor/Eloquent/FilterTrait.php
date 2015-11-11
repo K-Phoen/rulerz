@@ -12,14 +12,24 @@ trait FilterTrait
     abstract protected function execute($target, array $operators, array $parameters);
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
-    public function filter($target, array $parameters, array $operators, ExecutionContext $context)
+    public function applyFilter($target, array $parameters, array $operators, ExecutionContext $context)
     {
         $query = !$target instanceof QueryBuilder ? $target->getQuery() : $target;
         $sql   = $this->execute($target, $operators, $parameters);
 
         $query->whereRaw($sql, $parameters);
+
+        return $query;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function filter($target, array $parameters, array $operators, ExecutionContext $context)
+    {
+        $query = $this->applyFilter($target, $parameters, $operators, $context);
 
         return FilterResult::fromArray($query->get());
     }
