@@ -24,3 +24,6 @@ default:
         eloquent:
             paths:    [ %paths.base%/tests/features/common, %paths.base%/features/operators ]
             contexts: [ EloquentContext ]
+        pomm:
+            paths:    [ %paths.base%/tests/features/common, %paths.base%/features/operators ]
+            contexts: [ PommContext ]
