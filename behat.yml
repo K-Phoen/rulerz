@@ -28,5 +28,5 @@ default:
             paths:    [ %paths.base%/tests/features/common ]
             contexts: [ PommContext ]
         solr:
-            paths:    [ %paths.base%/tests/features/common ]
+            paths:    [ %paths.base%/tests/features/common, %paths.base%/tests/features/solr ]
             contexts: [ SolariumContext ]

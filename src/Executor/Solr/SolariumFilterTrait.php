@@ -17,7 +17,6 @@ trait SolariumFilterTrait
 
         /** @var string $searchQuery */
         $searchQuery = $this->execute($target, $operators, $parameters);
-        var_dump($searchQuery);
 
         $query = $target->createSelect();
         $query->createFilterQuery('rulerz')->setQuery($searchQuery);

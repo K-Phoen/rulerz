@@ -29,7 +29,12 @@ class SolariumContext extends BaseContext
      */
     protected function getCompilationTarget()
     {
-        return new \RulerZ\Compiler\Target\Solr\SolariumVisitor();
+        $visitor = new \RulerZ\Compiler\Target\Solr\SolariumVisitor();
+        $visitor->setInlineOperator('boost', function($expression, $factor) {
+            return sprintf('%s^%d', $expression, $factor);
+        });
+
+        return $visitor;
     }
 
     /**
