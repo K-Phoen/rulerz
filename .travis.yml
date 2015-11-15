@@ -25,7 +25,8 @@ install:
     - composer install --prefer-source
 
 before_script:
-  - sleep 10 # wait for elasticsearch to start and be available
+    - sleep 10 # wait for elasticsearch to start and be available
+    - curl -sSL https://raw.githubusercontent.com/moliware/travis-solr/master/travis-solr.sh | SOLR_VERSION=4.10.4 SOLR_CONFS="./scripts/solr/config/conf/schema.xml ./scripts/solr/config/conf/solrconfig.xml" bash
 
 script:
     - make databases
