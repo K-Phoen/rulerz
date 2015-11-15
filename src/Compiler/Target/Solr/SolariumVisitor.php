@@ -34,7 +34,9 @@ class SolariumVisitor extends GenericVisitor
      */
     public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
     {
-        return var_export(parent::visitModel($element, $handle, $eldnah), true);
+        $searchQuery = parent::visitModel($element, $handle, $eldnah);
+
+        return "'" . $searchQuery . "'";
     }
 
     /**
@@ -60,8 +62,10 @@ class SolariumVisitor extends GenericVisitor
      */
     public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
     {
-        // make it a placeholder
-        return '$*'; // TODO
+        // FIXME the parameters handling is REALLY hacky
+        $parameterName = $element->getName();
+
+        return "'. \$parameters['$parameterName'] .'";
     }
 
     /**
@@ -73,12 +77,11 @@ class SolariumVisitor extends GenericVisitor
         $this->setInlineOperator('or',   function ($a, $b) { return sprintf('(%s OR %s)', $a, $b); });
         $this->setInlineOperator('not',  function ($a)     { return sprintf('-(%s)', $a); });
         $this->setInlineOperator('=',    function ($a, $b) { return sprintf('%s:%s', $a, $b); });
-        $this->setInlineOperator('!=',   function ($a, $b) { return sprintf('%s != %s', $a, $b); });
-        $this->setInlineOperator('>',    function ($a, $b) { return sprintf('%s > %s', $a,  $b); });
-        $this->setInlineOperator('>=',   function ($a, $b) { return sprintf('%s >= %s', $a,  $b); });
-        $this->setInlineOperator('<',    function ($a, $b) { return sprintf('%s < %s', $a,  $b); });
-        $this->setInlineOperator('<=',   function ($a, $b) { return sprintf('%s <= %s', $a,  $b); });
-        $this->setInlineOperator('in',   function ($a, $b) { return sprintf('%s IN %s', $a, $b[0] === '(' ? $b : '('.$b.')'); });
-        $this->setInlineOperator('like', function ($a, $b) { return sprintf('%s LIKE %s', $a, $b); });
+        $this->setInlineOperator('!=',   function ($a, $b) { return sprintf('-%s:%s', $a, $b); });
+        $this->setInlineOperator('>',    function ($a, $b) { return sprintf('%s:{%s TO *]', $a,  $b); });
+        $this->setInlineOperator('>=',   function ($a, $b) { return sprintf('%s:[%s TO *]', $a,  $b); });
+        $this->setInlineOperator('<',    function ($a, $b) { return sprintf('%s:[* TO %s}', $a,  $b); });
+        $this->setInlineOperator('<=',   function ($a, $b) { return sprintf('%s:[* TO %s]', $a,  $b); });
+        $this->setInlineOperator('in',   function ($a, $b) { return sprintf('%s:(%s)', $a, implode(' OR ', $b)); });
     }
 }
