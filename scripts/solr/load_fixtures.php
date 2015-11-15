@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ALL);
+
 /** @var \Doctrine\ORM\EntityManagerInterface $entityManager */
 list($entityManager, $_) = require __DIR__ . '/../../examples/bootstrap/bootstrap_doctrine.php';
 
@@ -12,14 +14,14 @@ $players = $entityManager
     ->from('Entity\Doctrine\Player', 'p')
     ->getQuery()->execute();
 
-foreach ($players as $player) {
+foreach ($players as $i => $player) {
     // get an update query instance
     $update = $client->createUpdate();
 
     // create a new document for the data
     $doc = $update->createDocument();
 
-    $doc->id       = uniqid();
+    $doc->id       = $i + 1;
     $doc->pseudo   = $player->pseudo;
     $doc->fullname = $player->fullname;
     $doc->age      = (int) $player->age;

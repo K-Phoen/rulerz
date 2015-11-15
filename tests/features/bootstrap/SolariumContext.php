@@ -37,6 +37,6 @@ class SolariumContext extends BaseContext
      */
     protected function getDefaultDataset()
     {
-        return $this->client->createSelect();
+        return $this->client;
     }
 }

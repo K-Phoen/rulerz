@@ -20,7 +20,7 @@ $compiler = new \RulerZ\Compiler\EvalCompiler(new \RulerZ\Parser\HoaParser());
 // RulerZ engine
 $rulerz = new \RulerZ\RulerZ(
     $compiler, [
-        //new \RulerZ\Compiler\Target\Solr\SolariumVisitor(),
+        new \RulerZ\Compiler\Target\Solr\SolariumVisitor(),
     ]
 );
 
