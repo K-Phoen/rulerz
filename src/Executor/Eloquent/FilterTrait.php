@@ -5,7 +5,7 @@ namespace RulerZ\Executor\Eloquent;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 use RulerZ\Context\ExecutionContext;
-use RulerZ\Result\FilterResult;
+use RulerZ\Result\IteratorTools;
 
 trait FilterTrait
 {
@@ -31,6 +31,6 @@ trait FilterTrait
     {
         $query = $this->applyFilter($target, $parameters, $operators, $context);
 
-        return FilterResult::fromArray($query->get());
+        return IteratorTools::fromArray($query->get());
     }
 }

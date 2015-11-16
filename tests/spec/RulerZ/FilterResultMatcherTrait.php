@@ -3,7 +3,6 @@
 namespace spec\RulerZ;
 
 use PhpSpec\Exception\Example\FailureException;
-use RulerZ\Result\FilterResult;
 
 trait FilterResultMatcherTrait
 {
@@ -11,8 +10,8 @@ trait FilterResultMatcherTrait
     {
         return [
             'returnResults' => function ($subject, $expectedResults) {
-                if (!$subject instanceof FilterResult) {
-                    throw new FailureException('The method did not return a FilterResult object');
+                if (!$subject instanceof \Traversable) {
+                    throw new FailureException('The method did not return a \Traversable object');
                 }
 
                 $receivedResults = iterator_to_array($subject);

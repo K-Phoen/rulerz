@@ -3,7 +3,7 @@
 namespace RulerZ\Executor\Pomm;
 
 use RulerZ\Context\ExecutionContext;
-use RulerZ\Result\FilterResult;
+use RulerZ\Result\IteratorTools;
 
 trait FilterTrait
 {
@@ -27,6 +27,6 @@ trait FilterTrait
         $method      = !empty($context['method']) ? $context['method'] : 'findWhere';
         $result      = call_user_func([$target, $method], $whereClause);
 
-        return is_array($result) ? FilterResult::fromArray($result) : FilterResult::fromTraversable($result);
+        return is_array($result) ? IteratorTools::fromArray($result) : $result;
     }
 }

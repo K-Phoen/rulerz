@@ -3,7 +3,7 @@
 namespace RulerZ\Executor\DoctrineDBAL;
 
 use RulerZ\Context\ExecutionContext;
-use RulerZ\Result\FilterResult;
+use RulerZ\Result\IteratorTools;
 
 trait FilterTrait
 {
@@ -40,6 +40,6 @@ trait FilterTrait
         $this->applyFilter($target, $parameters, $operators, $context);
 
         // and return the results
-        return FilterResult::fromArray($target->execute()->fetchAll());
+        return IteratorTools::fromArray($target->execute()->fetchAll());
     }
 }

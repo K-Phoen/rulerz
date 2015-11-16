@@ -4,7 +4,7 @@ namespace RulerZ\Executor\ArrayTarget;
 
 use RulerZ\Context\ExecutionContext;
 use RulerZ\Context\ObjectContext;
-use RulerZ\Result\FilterResult;
+use RulerZ\Result\IteratorTools;
 
 trait FilterTrait
 {
@@ -23,7 +23,7 @@ trait FilterTrait
      */
     public function filter($target, array $parameters, array $operators, ExecutionContext $context)
     {
-        return FilterResult::fromGenerator(function() use ($target, $parameters, $operators) {
+        return IteratorTools::fromGenerator(function() use ($target, $parameters, $operators) {
             foreach ($target as $row) {
                 $targetRow = is_array($row) ? $row : new ObjectContext($row);
 

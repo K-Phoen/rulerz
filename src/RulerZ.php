@@ -68,7 +68,7 @@ class RulerZ
      * @param array  $parameters       The parameters used in the rule.
      * @param array  $executionContext The execution context.
      *
-     * @return \RulerZ\Result\FilterResult The filtered target.
+     * @return \Traversable The filtered target.
      */
     public function filter($target, $rule, array $parameters = [], array $executionContext = [])
     {

@@ -3,7 +3,7 @@
 namespace RulerZ\Executor\DoctrineQueryBuilder;
 
 use RulerZ\Context\ExecutionContext;
-use RulerZ\Result\FilterResult;
+use RulerZ\Result\IteratorTools;
 
 trait FilterTrait
 {
@@ -47,9 +47,9 @@ trait FilterTrait
 
         // and return the appropriate result type
         if ($result instanceof \Traversable) {
-            return FilterResult::fromTraversable($result);
+            return $result;
         } else if (is_array($result)) {
-            return FilterResult::fromArray($result);
+            return IteratorTools::fromArray($result);
         }
 
         throw new \RuntimeException(sprintf('Unhandled result type: "%s"', get_class($result)));

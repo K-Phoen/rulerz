@@ -29,7 +29,7 @@ interface Executor
      * @param array<Xcallable> $operators  The available operators.
      * @param ExecutionContext $context    The execution context.
      *
-     * @return \RulerZ\Result\FilterResult
+     * @return \IteratorAggregate
      */
     public function filter($target, array $parameters, array $operators, ExecutionContext $context);
 
