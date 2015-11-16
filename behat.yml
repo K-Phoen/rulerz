@@ -7,13 +7,13 @@ default:
 
     suites:
         array:
-            paths:    [ %paths.base%/tests/features/common, %paths.base%/features/operators, %paths.base%/features/array ]
+            paths:    [ %paths.base%/tests/features/common, %paths.base%/features/operators, %paths.base%/tests/features/array ]
             contexts: [ ArrayContext ]
         doctrine_dbal:
             paths:    [ %paths.base%/tests/features/common ]
             contexts: [ DoctrineDBALContext ]
         doctrine_orm:
-            paths:    [ %paths.base%/tests/features/common, %paths.base%/features/operators ]
+            paths:    [ %paths.base%/tests/features/common, %paths.base%/tests/features/operators ]
             contexts: [ DoctrineOrmContext ]
         elasticsearch:
             paths:    [ %paths.base%/tests/features/common ]
@@ -22,8 +22,8 @@ default:
             paths:    [ %paths.base%/tests/features/common ]
             contexts: [ ElasticaContext ]
         eloquent:
-            paths:    [ %paths.base%/tests/features/common, %paths.base%/features/operators ]
+            paths:    [ %paths.base%/tests/features/common, %paths.base%/tests/features/operators ]
             contexts: [ EloquentContext ]
         pomm:
-            paths:    [ %paths.base%/tests/features/common, %paths.base%/features/operators ]
+            paths:    [ %paths.base%/tests/features/common ]
             contexts: [ PommContext ]
