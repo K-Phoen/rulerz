@@ -129,4 +129,41 @@ class RulerZSpec extends ObjectBehavior
             ->shouldThrow('RulerZ\Exception\TargetUnsupportedException')
             ->duringFilter(['some target'], 'points > 30');
     }
+
+    function it_can_apply_a_filter_on_a_target_with_a_rule(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor)
+    {
+        $target    = ['dummy target'];
+        $rule      = 'dummy rule';
+        $operators = ['dummy operator'];
+        $result    = 'updated target';
+
+        $compiler->compile($rule, $compilationTarget)->willReturn($executor);
+
+        $compilationTarget->supports($target, CompilationTarget::MODE_APPLY_FILTER)->willReturn(true);
+        $compilationTarget->getOperators()->willReturn($operators);
+
+        $executor->applyFilter($target, [], $operators, Argument::type('\RulerZ\Context\ExecutionContext'))->willReturn($result);
+
+        $this->applyFilter($target, $rule)->shouldReturn($result);
+    }
+
+    function it_can_apply_a_filter_on_a_target_with_a_specification(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor, Specification $spec)
+    {
+        $target    = ['dummy target'];
+        $rule      = 'dummy rule';
+        $operators = ['dummy operator'];
+        $result    = 'updated target';
+
+        $spec->getRule()->willReturn($rule);
+        $spec->getParameters()->willReturn([]);
+
+        $compiler->compile($rule, $compilationTarget)->willReturn($executor);
+
+        $compilationTarget->supports($target, CompilationTarget::MODE_APPLY_FILTER)->willReturn(true);
+        $compilationTarget->getOperators()->willReturn($operators);
+
+        $executor->applyFilter($target, [], $operators, Argument::type('\RulerZ\Context\ExecutionContext'))->willReturn($result);
+
+        $this->applyFilterSpec($target, $spec)->shouldReturn($result);
+    }
 }

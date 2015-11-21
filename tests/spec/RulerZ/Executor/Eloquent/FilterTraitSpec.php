@@ -19,6 +19,18 @@ class FilterTraitSpec extends ObjectBehavior
         $this->beAnInstanceOf('RulerZ\Stub\Executor\EloquentExecutorStub');
     }
 
+    function it_can_apply_a_filter_on_a_target(QueryBuilder $queryBuilder)
+    {
+        $parameters = [];
+        $sql        = 'sql query';
+
+        EloquentExecutorStub::$executeReturn = $sql;
+        $queryBuilder->whereRaw($sql, $parameters)->shouldBeCalled();
+        $queryBuilder->get()->shouldNotBeCalled();
+
+        $this->applyFilter($queryBuilder, $parameters, $operators = [], new ExecutionContext())->shouldReturn($queryBuilder);
+    }
+
     function it_handles_query_builders(QueryBuilder $queryBuilder)
     {
         $results    = ['result'];

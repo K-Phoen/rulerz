@@ -19,6 +19,16 @@ class FilterTraitSpec extends ObjectBehavior
         $this->beAnInstanceOf('RulerZ\Stub\Executor\PommExecutorStub');
     }
 
+    function it_can_apply_a_filter_on_a_target(ModelStub $modelStub)
+    {
+        $whereClause = new Where();
+
+        PommExecutorStub::$executeReturn = $whereClause;
+        $modelStub->findWhere($whereClause)->shouldNotBeCalled();
+
+        $this->applyFilter($modelStub, $parameters = [], $operators = [], new ExecutionContext())->shouldReturn($whereClause);
+    }
+
     function it_call_findWhere_on_the_target(ModelStub $modelStub, Where $whereClause)
     {
         $results = ['result'];

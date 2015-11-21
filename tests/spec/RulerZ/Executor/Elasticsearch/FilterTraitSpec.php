@@ -18,6 +18,17 @@ class FilterTraitSpec extends ObjectBehavior
         $this->beAnInstanceOf('RulerZ\Stub\Executor\ElasticsearchExecutorStub');
     }
 
+    function it_can_apply_a_filter_on_a_target(Client $target)
+    {
+        $results = new \ArrayIterator(['result']);
+        $esQuery = ['array with the ES query'];
+
+        ElasticsearchExecutorStub::$executeReturn = $esQuery;
+        $target->search()->shouldNotBeCalled();
+
+        $this->applyFilter($target, $parameters = [], $operators = [], new ExecutionContext())->shouldReturn($esQuery);
+    }
+
     function it_calls_search_on_the_target(Client $target)
     {
         $documents = [

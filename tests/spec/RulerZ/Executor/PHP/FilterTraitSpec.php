@@ -16,6 +16,15 @@ class FilterTraitSpec extends ObjectBehavior
         $this->beAnInstanceOf('RulerZ\Stub\Executor\ArrayExecutorStub');
     }
 
+    function it_can_NOT_apply_a_filter_on_a_target()
+    {
+        $target = [ ['some' => 'item'], ['another' => 'item'] ];
+
+        $this
+            ->shouldThrow('LogicException')
+            ->duringApplyFilter($target, $parameters = [], $operators = [], new ExecutionContext());
+    }
+
     function it_filters_the_target_using_execute()
     {
         $target = [ ['some' => 'item'], ['another' => 'item'] ];
