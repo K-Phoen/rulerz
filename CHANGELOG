@@ -2,6 +2,26 @@
 VERSION 0  FIXED ELASTICSEARCH-RELATED TARGETS
 ==============================================
 
+   Version 0.15 - Harmonized results handling
+      21/11/2015 14:47  0.15.0  initial release
+         bc3a59b Merge pull request #21 from K-Phoen/harmonized-results
+         3c13b9e Add a few tests for the applyFilter methods
+         7a88ab4 Tests should pass on PHP 7
+         fd60f6d Use phpspec >=2.4@dev
+         263668b Add a quick documentation for the applyFilter method
+         48c4e02 Remove the FilterResult class
+         ad06c17 Fix behat configuration
+         e9ff715 Fix Pomm tests
+         8fc7fb2 Add missing constant
+         0c4c992 Add a way to apply a filter on a target without actually executing it
+         cef3c8b Update phpspec tests
+         d3fbe1b Update all the executors (except Pomm) to return a FilterResult
+         a22762e Behat tests should also consider that the results are instances of FilterResult
+         54d5ee5 RulerZ now needs PHP >= 5.5
+         1d2a283 Make the Array executor return a FilterResult
+         b5670b8 Update RulerZ\RulerZ::filter() and RulerZ\Executor::filter() signatures to show that they return a specific type of result
+         c7fa5ca Introduce the FilterResult class to represent the results of any Executor
+
    Version 0.14 - Add support for Doctrine DBAL
       31/10/2015 21:54  0.14.0  initial release
          2885707 Merge branch 'doctrine-dbal'
