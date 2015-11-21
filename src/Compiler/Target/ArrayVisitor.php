@@ -13,6 +13,10 @@ class ArrayVisitor extends GenericVisitor
      */
     public function supports($target, $mode)
     {
+        if ($mode === self::MODE_APPLY_FILTER) {
+            return false;
+        }
+
         // we can filter a collection
         if ($mode === self::MODE_FILTER) {
             return is_array($target) || $target instanceof \Traversable;

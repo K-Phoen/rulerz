@@ -3,6 +3,7 @@
 namespace RulerZ\Executor\DoctrineQueryBuilder;
 
 use RulerZ\Context\ExecutionContext;
+use RulerZ\Result\IteratorTools;
 
 trait FilterTrait
 {
@@ -11,7 +12,7 @@ trait FilterTrait
     /**
      * {@inheritDoc}
      */
-    public function filter($target, array $parameters, array $operators, ExecutionContext $context)
+    public function applyFilter($target, array $parameters, array $operators, ExecutionContext $context)
     {
         /** @var \Doctrine\ORM\QueryBuilder $target */
 
@@ -29,7 +30,28 @@ trait FilterTrait
             $target->setParameter($name, $value);
         }
 
-        // and we return the final results
-        return $target->getQuery()->getResult();
+        return $target;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function filter($target, array $parameters, array $operators, ExecutionContext $context)
+    {
+        /** @var \Doctrine\ORM\QueryBuilder $target */
+
+        $this->applyFilter($target, $parameters, $operators, $context);
+
+        // execute the query
+        $result = $target->getQuery()->getResult();
+
+        // and return the appropriate result type
+        if ($result instanceof \Traversable) {
+            return $result;
+        } else if (is_array($result)) {
+            return IteratorTools::fromArray($result);
+        }
+
+        throw new \RuntimeException(sprintf('Unhandled result type: "%s"', get_class($result)));
     }
 }

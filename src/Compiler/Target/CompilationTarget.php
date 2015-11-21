@@ -9,8 +9,9 @@ use RulerZ\Model\Rule;
  */
 interface CompilationTarget
 {
-    const MODE_FILTER    = 'filter';
-    const MODE_SATISFIES = 'satisfies';
+    const MODE_FILTER       = 'filter';
+    const MODE_APPLY_FILTER = 'apply_filter';
+    const MODE_SATISFIES    = 'satisfies';
 
     /**
      * Compiles the given rule.

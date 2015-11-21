@@ -3,10 +3,19 @@
 namespace RulerZ\Executor\Elasticsearch;
 
 use RulerZ\Context\ExecutionContext;
+use RulerZ\Result\IteratorTools;
 
 trait ElasticsearchFilterTrait
 {
     abstract protected function execute($target, array $operators, array $parameters);
+
+    /**
+     * {@inheritDoc}
+     */
+    public function applyFilter($target, array $parameters, array $operators, ExecutionContext $context)
+    {
+        return $this->execute($target, $operators, $parameters);
+    }
 
     /**
      * {@inheritDoc}
@@ -23,8 +32,12 @@ trait ElasticsearchFilterTrait
             'body'  => ['query' => $searchQuery],
         ]);
 
-        return array_map(function($result) {
+        if (empty($results['hits'])) {
+            return IteratorTools::fromArray([]);
+        }
+
+        return IteratorTools::fromArray(array_map(function($result) {
             return $result['_source'];
-        }, $results['hits']['hits']);
+        }, $results['hits']['hits']));
     }
 }

@@ -19,6 +19,7 @@ composer require 'kphoen/rulerz'
 ## Going further
 
  * [Defining custom operators](custom_operators.md)
+ * [Using RulerZ to build filters](build_filters.md)
 
 ## Cookbooks
 

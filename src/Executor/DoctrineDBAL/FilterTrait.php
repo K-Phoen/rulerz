@@ -3,6 +3,7 @@
 namespace RulerZ\Executor\DoctrineDBAL;
 
 use RulerZ\Context\ExecutionContext;
+use RulerZ\Result\IteratorTools;
 
 trait FilterTrait
 {
@@ -11,7 +12,7 @@ trait FilterTrait
     /**
      * {@inheritDoc}
      */
-    public function filter($target, array $parameters, array $operators, ExecutionContext $context)
+    public function applyFilter($target, array $parameters, array $operators, ExecutionContext $context)
     {
         /** @var \Doctrine\DBAL\Query\QueryBuilder $target */
 
@@ -26,20 +27,19 @@ trait FilterTrait
             $target->setParameter($name, $value);
         }
 
-        // and we return the final results
-        return $this->returnResult($target, $context);
+        return $target;
     }
 
-    private function returnResult($target, ExecutionContext $context)
+    /**
+     * {@inheritDoc}
+     */
+    public function filter($target, array $parameters, array $operators, ExecutionContext $context)
     {
-        if (empty($context['doctrine_return']) || $context['doctrine_return'] === 'RESULTS') {
-            return $target->execute()->fetchAll();
-        }
+        /** @var \Doctrine\DBAL\Query\QueryBuilder $target */
 
-        if (!empty($context['doctrine_return']) && $context['doctrine_return'] === 'DOCTRINE_QUERY_BUILDER') {
-            return $target;
-        }
+        $this->applyFilter($target, $parameters, $operators, $context);
 
-        throw new \RuntimeException('not implemented');
+        // and return the results
+        return IteratorTools::fromArray($target->execute()->fetchAll());
     }
 }

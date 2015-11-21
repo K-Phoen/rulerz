@@ -41,6 +41,25 @@ class RulerZ
     }
 
     /**
+     * Apply the filters on the target using the given rule and parameters.
+     * The target compiler to use is determined at runtime using the registered ones.
+     *
+     * @param mixed  $target           The target to filter.
+     * @param string $rule             The rule to apply.
+     * @param array  $parameters       The parameters used in the rule.
+     * @param array  $executionContext The execution context.
+     *
+     * @return mixed
+     */
+    public function applyFilter($target, $rule, array $parameters = [], array $executionContext = [])
+    {
+        $targetCompiler = $this->findTargetCompiler($target, CompilationTarget::MODE_APPLY_FILTER);
+        $executor       = $this->compiler->compile($rule, $targetCompiler);
+
+        return $executor->applyFilter($target, $parameters, $targetCompiler->getOperators(), new ExecutionContext($executionContext));
+    }
+
+    /**
      * Filters a target using the given rule and parameters.
      * The target compiler to use is determined at runtime using the registered ones.
      *
@@ -49,7 +68,7 @@ class RulerZ
      * @param array  $parameters       The parameters used in the rule.
      * @param array  $executionContext The execution context.
      *
-     * @return mixed The filtered target.
+     * @return \Traversable The filtered target.
      */
     public function filter($target, $rule, array $parameters = [], array $executionContext = [])
     {
@@ -72,6 +91,19 @@ class RulerZ
     public function filterSpec($target, Specification $spec, array $executionContext = [])
     {
         return $this->filter($target, $spec->getRule(), $spec->getParameters(), $executionContext);
+    }
+
+    /**
+     * Apply the filters on a target using the given specification.
+     * The targetCompiler to use is determined at runtime using the registered ones.
+     *
+     * @param mixed         $target           The target to filter.
+     * @param Specification $spec             The specification to apply.
+     * @param array         $executionContext The execution context.
+     */
+    public function applyFilterSpec($target, Specification $spec, array $executionContext = [])
+    {
+        return $this->applyFilter($target, $spec->getRule(), $spec->getParameters(), $executionContext);
     }
 
     /**

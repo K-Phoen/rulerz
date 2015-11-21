@@ -32,7 +32,7 @@
         "bin-dir": "bin/"
     },
     "require": {
-        "php": ">=5.4",
+        "php": ">=5.5",
         "hoa/ruler": "~1.0",
         "symfony/property-access": "~2.3"
     },

@@ -14,6 +14,14 @@ trait ElasticaFilterTrait
     /**
      * {@inheritDoc}
      */
+    public function applyFilter($target, array $parameters, array $operators, ExecutionContext $context)
+    {
+        return $this->execute($target, $operators, $parameters);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function filter($target, array $parameters, array $operators, ExecutionContext $context)
     {
         /** @var array $searchQuery */

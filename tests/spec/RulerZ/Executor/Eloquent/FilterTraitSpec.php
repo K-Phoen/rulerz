@@ -8,12 +8,27 @@ use PhpSpec\ObjectBehavior;
 
 use RulerZ\Context\ExecutionContext;
 use RulerZ\Stub\Executor\EloquentExecutorStub;
+use spec\RulerZ\FilterResultMatcherTrait;
 
 class FilterTraitSpec extends ObjectBehavior
 {
+    use FilterResultMatcherTrait;
+
     function let()
     {
         $this->beAnInstanceOf('RulerZ\Stub\Executor\EloquentExecutorStub');
+    }
+
+    function it_can_apply_a_filter_on_a_target(QueryBuilder $queryBuilder)
+    {
+        $parameters = [];
+        $sql        = 'sql query';
+
+        EloquentExecutorStub::$executeReturn = $sql;
+        $queryBuilder->whereRaw($sql, $parameters)->shouldBeCalled();
+        $queryBuilder->get()->shouldNotBeCalled();
+
+        $this->applyFilter($queryBuilder, $parameters, $operators = [], new ExecutionContext())->shouldReturn($queryBuilder);
     }
 
     function it_handles_query_builders(QueryBuilder $queryBuilder)
@@ -26,7 +41,7 @@ class FilterTraitSpec extends ObjectBehavior
         $queryBuilder->whereRaw($sql, $parameters)->shouldBeCalled();
         $queryBuilder->get()->willReturn($results);
 
-        $this->filter($queryBuilder, $parameters, $operators = [], new ExecutionContext())->shouldReturn($results);
+        $this->filter($queryBuilder, $parameters, $operators = [], new ExecutionContext())->shouldReturnResults($results);
     }
 
     function it_handles_eloquent_builders(EloquentBuilder $eloquentBuilder, QueryBuilder $builder)
@@ -40,6 +55,6 @@ class FilterTraitSpec extends ObjectBehavior
         $builder->whereRaw($sql, $parameters)->shouldBeCalled();
         $builder->get()->willReturn($results);
 
-        $this->filter($eloquentBuilder, $parameters, $operators = [], new ExecutionContext())->shouldReturn($results);
+        $this->filter($eloquentBuilder, $parameters, $operators = [], new ExecutionContext())->shouldReturnResults($results);
     }
 }

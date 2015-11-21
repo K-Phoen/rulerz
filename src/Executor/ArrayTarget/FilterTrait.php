@@ -4,6 +4,7 @@ namespace RulerZ\Executor\ArrayTarget;
 
 use RulerZ\Context\ExecutionContext;
 use RulerZ\Context\ObjectContext;
+use RulerZ\Result\IteratorTools;
 
 trait FilterTrait
 {
@@ -12,18 +13,24 @@ trait FilterTrait
     /**
      * {@inheritDoc}
      */
+    public function applyFilter($target, array $parameters, array $operators, ExecutionContext $context)
+    {
+        throw new \LogicException('Not supported.');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function filter($target, array $parameters, array $operators, ExecutionContext $context)
     {
-        $matches = [];
+        return IteratorTools::fromGenerator(function() use ($target, $parameters, $operators) {
+            foreach ($target as $row) {
+                $targetRow = is_array($row) ? $row : new ObjectContext($row);
 
-        foreach ($target as $row) {
-            $targetRow = is_array($row) ? $row : new ObjectContext($row);
-
-            if ($this->execute($targetRow, $operators, $parameters)) {
-                $matches[] = $row;
+                if ($this->execute($targetRow, $operators, $parameters)) {
+                    yield $row;
+                }
             }
-        }
-
-        return $matches;
+        });
     }
 }
