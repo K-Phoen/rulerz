@@ -2,7 +2,7 @@ Using Elasticsearch and elastic/elasticsearch-php
 =================================================
 
 [elastic/elasticsearch-php](https://github.com/elastic/elasticsearch-php) is one
-of the targets supported by RulerZ. It allows tne engine to query an Elasticsearch
+of the targets supported by RulerZ. It allows the engine to query an Elasticsearch
 server.
 
 This cookbook will show you how to retrieve objects using the official client
