@@ -102,11 +102,11 @@ For any of our datasource, retrieving the results is as simple as calling the
 
 ```php
 // converts the rule in DQL and makes a single query to the DB
-$highRankFemales = $rulerz->filter($usersQb, $highRankFemalesRule);
+$highRankFemales = $rulerz->filter($playersQb, $highRankFemalesRule);
 // filters the array of arrays
-$highRankFemales = $rulerz->filter($usersArr, $highRankFemalesRule);
+$highRankFemales = $rulerz->filter($playersArr, $highRankFemalesRule);
 // filters the array of objects
-$highRankFemales = $rulerz->filter($usersObj, $highRankFemalesRule);
+$highRankFemales = $rulerz->filter($playersObj, $highRankFemalesRule);
 ```
 
 #### 3. (bis) Check if a candidate satisfies a rule
