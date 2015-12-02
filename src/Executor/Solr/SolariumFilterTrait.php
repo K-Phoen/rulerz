@@ -11,7 +11,7 @@ trait SolariumFilterTrait
     /**
      * {@inheritDoc}
      */
-    public function filter($target, array $parameters, array $operators, ExecutionContext $context)
+    public function applyFilter($target, array $parameters, array $operators, ExecutionContext $context)
     {
         /** @var \Solarium\Client $target */
 
@@ -20,6 +20,16 @@ trait SolariumFilterTrait
 
         $query = $target->createSelect();
         $query->createFilterQuery('rulerz')->setQuery($searchQuery);
+
+        return $query;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function filter($target, array $parameters, array $operators, ExecutionContext $context)
+    {
+        $query = $this->applyFilter($target, $parameters, $operators, $context);
 
         return $target->select($query)->getIterator();
     }
