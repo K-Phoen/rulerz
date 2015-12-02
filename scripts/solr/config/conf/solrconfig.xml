@@ -908,13 +908,6 @@
   Distributed Stream processing.
   -->
 
-  <requestHandler name="/stream" class="solr.StreamHandler">
-    <lst name="invariants">
-      <str name="wt">json</str>
-      <str name="distrib">false</str>
-    </lst>
-  </requestHandler>
-
 
 
   <!-- Field Analysis Request Handler
@@ -1354,10 +1347,6 @@
     <processor class="solr.LogUpdateProcessorFactory"/>
     <processor class="solr.DistributedUpdateProcessorFactory"/>
     <processor class="solr.RemoveBlankFieldUpdateProcessorFactory"/>
-    <processor class="solr.FieldNameMutatingUpdateProcessorFactory">
-      <str name="pattern">[^\w-\.]</str>
-      <str name="replacement">_</str>
-    </processor>
     <processor class="solr.ParseBooleanFieldUpdateProcessorFactory"/>
     <processor class="solr.ParseLongFieldUpdateProcessorFactory"/>
     <processor class="solr.ParseDoubleFieldUpdateProcessorFactory"/>
