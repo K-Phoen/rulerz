@@ -2,7 +2,7 @@ Using Elasticsearch and ruflin/Elastica
 =======================================
 
 [ruflin/Elastica](https://github.com/ruflin/Elastica) is one of the
-targets supported by RulerZ. It allows tne engine to query an Elasticsearch
+targets supported by RulerZ. It allows the engine to query an Elasticsearch
 server.
 
 This cookbook will show you how to retrieve objects using ruflin/Elastica and
