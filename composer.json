@@ -46,6 +46,7 @@
         "pomm-project/model-manager": "~2.0.@dev",
         "pomm-project/cli": "~2.0@dev",
         "illuminate/database": "~5.0",
+        "solarium/solarium": "~3.0",
 
         "mikey179/vfsStream": "~1.4",
         "coduo/phpspec-data-provider-extension": "~1.0,!=1.0.2",
@@ -57,6 +58,7 @@
         "kphoen/rulerz-spec-builder": "If you want a specification builder",
         "doctrine/orm": "To execute rules as Doctrine queries",
         "elasticsearch/elasticsearch": "To execute rules as Elasticsearch queries",
-        "pomm-project/model-manager": "To execute rules as Pomm queries"
+        "pomm-project/model-manager": "To execute rules as Pomm queries",
+        "solarium/solarium": "To execute rules as Solr queries"
     }
 }

@@ -28,3 +28,4 @@ composer require 'kphoen/rulerz'
  * [Using Elasticsearch and ruflin/Elastica](cookbooks/ruflin_elastica.md)
  * [Using Elasticsearch and elastic/elasticsearch-php](cookbooks/elastic_elasticsearch_php.md)
  * [Using Eloquent ORM](cookbooks/eloquent_orm.md)
+ * [Using Solr and Solarium](cookbooks/solarium.md)
