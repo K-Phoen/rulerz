@@ -2,6 +2,26 @@
 VERSION 0  FIXED ELASTICSEARCH-RELATED TARGETS
 ==============================================
 
+   Version 0.16 - Solr support
+      03/12/2015 18:31  0.16.0  initial release
+         3b42129 Merge pull request #23 from K-Phoen/solr
+         c23ba0a Add a cookbook showing how to configure the Solarium target
+         7454890 Update SolariumFilterTrait
+         d8bc505 Fix travis tests
+         842063c Clean a bit the solr schema.xml
+         a45da3a Define solr core name for travis tests
+         cf2b461 Commit the right things
+         41c5075 Install solr on travis-ci
+         50802e5 Add a test case for inline operators in solr
+         95d76f9 First working implementation of the solarium visitor
+         90a1c53 Start to really implement the solarium visitor
+         ff421ee Create a Solarium behat context
+         b291f83 Start to work on solr support through solarium
+         21023f9 Merge pull request #25 from yvoyer/fix/readme
+         9edf24c Fix variable typo in readme
+         3328bef Merge pull request #24 from mikaelrandy/patch-1
+         748ef30 Fix a little typo
+
    Version 0.15 - Harmonized results handling
       21/11/2015 14:47  0.15.0  initial release
          bc3a59b Merge pull request #21 from K-Phoen/harmonized-results
