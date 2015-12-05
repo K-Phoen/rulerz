@@ -3,6 +3,8 @@ VERSION 0  FIXED ELASTICSEARCH-RELATED TARGETS
 ==============================================
 
    Version 0.16 - Solr support
+      05/12/2015 19:18  0.16.1  Array parameters for Doctrine DBAL target
+         bba0f92 Handle arrays as parameters in the DBAL executor
       03/12/2015 18:31  0.16.0  initial release
          3b42129 Merge pull request #23 from K-Phoen/solr
          c23ba0a Add a cookbook showing how to configure the Solarium target
