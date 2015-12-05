@@ -2,6 +2,7 @@
 
 namespace RulerZ\Executor\DoctrineDBAL;
 
+use Doctrine\DBAL\Connection;
 use RulerZ\Context\ExecutionContext;
 use RulerZ\Result\IteratorTools;
 
@@ -24,7 +25,7 @@ trait FilterTrait
 
         // now we define the parameters
         foreach ($parameters as $name => $value) {
-            $target->setParameter($name, $value);
+            $target->setParameter($name, $value, is_array($value) ? Connection::PARAM_STR_ARRAY : null);
         }
 
         return $target;
