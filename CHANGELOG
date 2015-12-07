@@ -3,6 +3,9 @@ VERSION 0  FIXED ELASTICSEARCH-RELATED TARGETS
 ==============================================
 
    Version 0.16 - Solr support
+      07/12/2015 23:24  0.16.2  Fixes rules composition
+         7674111 Make sure composite rules are correctly aggregated
+         445b373 Give the AbstractSpecification an empty getParameters() method
       05/12/2015 19:18  0.16.1  Array parameters for Doctrine DBAL target
          bba0f92 Handle arrays as parameters in the DBAL executor
       03/12/2015 18:31  0.16.0  initial release
