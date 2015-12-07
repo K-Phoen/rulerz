@@ -37,7 +37,7 @@ class Composite implements Specification
     public function getRule()
     {
         return implode(sprintf(' %s ', $this->operator), array_map(function (Specification $specification) {
-            return $specification->getRule();
+            return sprintf('(%s)', $specification->getRule());
         }, $this->specifications));
     }
 

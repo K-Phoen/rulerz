@@ -30,7 +30,17 @@ class AndXSpec extends ObjectBehavior
 
         $this->beConstructedWith([$spec, $otherSpec]);
 
-        $this->getRule()->shouldReturn('foo AND bar');
+        $this->getRule()->shouldReturn('(foo) AND (bar)');
+    }
+
+    function it_builds_the_rule_by_correctly_aggregating_the_specifications(Specification $spec, Specification $otherSpec)
+    {
+        $spec->getRule()->willReturn('foo OR baz');
+        $otherSpec->getRule()->willReturn('bar');
+
+        $this->beConstructedWith([$spec, $otherSpec]);
+
+        $this->getRule()->shouldReturn('(foo OR baz) AND (bar)');
     }
 
     function it_builds_the_parameters_by_aggregating_the_specifications(Specification $spec, Specification $otherSpec)
