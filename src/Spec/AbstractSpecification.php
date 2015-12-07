@@ -40,4 +40,12 @@ abstract class AbstractSpecification implements Specification
     {
         return new Not($this);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getParameters()
+    {
+        return [];
+    }
 }
