@@ -2,19 +2,19 @@ From rules to specifications
 ============================
 
 Until now, we expressed our rules with a dedicated DSL, in a textual format.
-While being very easy to write and understand, this representation as some
+While being very easy to write and understand, this representation has some
 issues. For instance, we can not easily compose rules.
 
 To solve this, RulerZ introduces a slightly modified version of the
 [Specification pattern](http://en.wikipedia.org/wiki/Specification_pattern).
 
 The idea is quite simple: instead of having a string representing a business
-rule (which can be complex), we'll split this rule into independant parts, put
+rule (which can be complex), we'll split this rule into independent parts, put
 each one of them in a class and call them Specifications.
 
 ## Context
 
-Let's say that we want to retrieve he female players having at least 30 points.
+Let's say that we want to retrieve the female players having at least 30 points.
 The rule describing these constraints would look like this:
 
 ```php
