@@ -65,7 +65,7 @@ class AutoJoin
 
             if (count($embeddable_dimensions) === 1) {
                 // the embeddable is not inside an association, so we use the root alias prefix
-                return $this->queryBuilder->getRootAlias() . '.' . $table;
+                return $this->queryBuilder->getRootAliases()[0] . '.' . $table;
             }
             else {
                 // remove the embeddable's property
