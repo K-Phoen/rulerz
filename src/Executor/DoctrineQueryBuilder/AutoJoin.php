@@ -80,7 +80,6 @@ class AutoJoin
 
     private function getEmbeddableAlias($table)
     {
-        $embeddable_alias = '';
         $embeddable_dimensions = explode('.', $table);
 
         if (count($embeddable_dimensions) === 1) {
