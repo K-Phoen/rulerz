@@ -58,7 +58,6 @@ class AutoJoin
 
             $this->autoJoin($this->queryBuilder);
         }
-
         // the table is identified as an embeddable
         if (array_search($table, $this->embeddables) !== false) {
             return $this->getEmbeddableAlias($table);
@@ -140,6 +139,13 @@ class AutoJoin
 
             foreach ($classMetaData->embeddedClasses as $embeddedClassKey => $embeddedClass) {
                 $embeddables[] = $embeddedClassKey;
+            }
+
+            // Since this is a root entity embeddable, there is no need to join.
+            foreach ($this->expectedJoinChains as $tablesToJoinKey => $tablesToJoin) {
+                if (in_array(implode('.', $tablesToJoin), $embeddables)) {
+                    unset($this->expectedJoinChains[$tablesToJoinKey]);
+                }
             }
 
             $traversedAssociationsEmbeddables = $this->traverseAssociationsForEmbeddables($entityManager, $classMetaData->getAssociationMappings());
