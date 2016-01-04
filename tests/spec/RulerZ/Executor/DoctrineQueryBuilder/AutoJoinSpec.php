@@ -19,6 +19,9 @@ class AutoJoinSpec extends ObjectBehavior
 
     function it_joins_needed_tables(QueryBuilder $target)
     {
+        $target->getEntityManager()->shouldBeCalled();
+        $target->getRootEntities()->willReturn([]);
+
         $target->getRootAliases()->willReturn(['root_alias']);
         $target->getDQLPart('join')->willReturn([]);
 
@@ -29,6 +32,9 @@ class AutoJoinSpec extends ObjectBehavior
 
     function it_uses_joined_tables(QueryBuilder $target, Join $join)
     {
+        $target->getEntityManager()->shouldBeCalled();
+        $target->getRootEntities()->willReturn([]);
+        
         $target->getRootAliases()->willReturn(['root_alias']);
         $target->getDQLPart('join')->willReturn([
             'root_alias' => [$join]
