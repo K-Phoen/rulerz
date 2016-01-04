@@ -6,7 +6,7 @@ language.
 
 Here is a summary of what you will have to do:
 
- * [instanciate the RulerZ engine](writing_rules.md#step-1-instanciate-the-rulerz-engine) ;
+ * [instantiate the RulerZ engine](writing_rules.md#step-1-instanciate-the-rulerz-engine) ;
  * [write a rule](writing_rules.md#step-2-write-a-rule) ;
  * [check if the target satisfies the rule](#check-if-the-target-satisfies-the-rule).
 
