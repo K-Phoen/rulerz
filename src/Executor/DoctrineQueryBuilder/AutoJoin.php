@@ -61,23 +61,7 @@ class AutoJoin
 
         // the table is identified as an embeddable
         if (array_search($table, $this->embeddables) !== false) {
-            $embeddable_dimensions = explode('.', $table);
-
-            if (count($embeddable_dimensions) === 1) {
-                // the embeddable is not inside an association, so we use the root alias prefix
-                return $this->queryBuilder->getRootAliases()[0] . '.' . $table;
-            }
-            else {
-                // remove the embeddable's property
-                array_pop($embeddable_dimensions);
-                $table_alias = implode('.', $embeddable_dimensions);
-
-                if (isset($this->knownAliases[$table_alias])) {
-                    return $table;
-                } else {
-                    return self::ALIAS_PREFIX . $table;
-                }
-            }
+            return $this->getEmbeddableAlias($table);
         }
 
         // the table name is a known alias (already join for instance) so we
@@ -92,6 +76,33 @@ class AutoJoin
         }
 
         throw new \RuntimeException(sprintf('Could not automatically join table "%s"', $table));
+    }
+
+    private function getEmbeddableAlias($table)
+    {
+        $embeddable_alias = '';
+        $embeddable_dimensions = explode('.', $table);
+
+        if (count($embeddable_dimensions) === 1) {
+            // the embeddable is not inside an association, so we use the root alias prefix
+            $embeddable_alias = $this->queryBuilder->getRootAliases()[0] . '.' . $table;
+        }
+        else {
+            // remove the embeddable's property
+            array_pop($embeddable_dimensions);
+            $table_alias = implode('.', $embeddable_dimensions);
+
+            if (isset($this->knownAliases[$table_alias])) {
+                // the table name is a known alias (already join for instance) so we
+                // don't need to do anything.
+                $embeddable_alias = $table;
+            } else {
+                // otherwise the table should have automatically been joined, so we use our table prefix
+                $embeddable_alias = self::ALIAS_PREFIX . $table;
+            }
+        }
+
+        return $embeddable_alias;
     }
 
     private function traverseAssociationsForEmbeddables(EntityManager $entityManager, array $associations, $fieldNamePrefix = false)
