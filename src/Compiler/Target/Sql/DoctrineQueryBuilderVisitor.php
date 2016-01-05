@@ -82,7 +82,7 @@ class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
 
         $this->detectedJoins[] = $tablesToJoin;
 
-        return sprintf('" . $this->getJoinAlias($target, "%s") . ".%s', implode('.', $tablesToJoin), $finalColumn);
+        return sprintf('" . $this->getJoinAlias($target, "%s", "%s") . ".%s', end($tablesToJoin), implode('.', $tablesToJoin), $finalColumn);
     }
 
     /**

@@ -29,7 +29,7 @@ class AutoJoinSpec extends ObjectBehavior
         $target->getRootAliases()->willReturn(['root_alias']);
         $target->getDQLPart('join')->willReturn([]);
 
-        $this->getJoinAlias('embeddable')->shouldReturn('root_alias.embeddable');  
+        $this->getJoinAlias('embeddable', 'embeddable')->shouldReturn('root_alias.embeddable');  
     }
 
      function it_joins_association_embeddable_needed_tables(QueryBuilder $target, EntityManager $entityManager, ClassMetadataInfo $rootClassMetadataInfo, ClassMetadataInfo $associationClassMetadataInfo)
@@ -59,7 +59,7 @@ class AutoJoinSpec extends ObjectBehavior
 
         $target->join('root_alias.association', 'rulerz_association')->shouldBeCalled();
 
-        $this->getJoinAlias('association.embeddable')->shouldReturn('rulerz_association.embeddable');
+        $this->getJoinAlias('embeddable', 'association.embeddable')->shouldReturn('rulerz_association.embeddable');
     }
 
     function it_uses_association_embeddable_joined_tables(QueryBuilder $target, EntityManager $entityManager, ClassMetadataInfo $rootClassMetadataInfo, ClassMetadataInfo $associationClassMetadataInfo, Join $join)
@@ -94,7 +94,7 @@ class AutoJoinSpec extends ObjectBehavior
 
         $target->join('root_alias.association', 'rulerz_association')->shouldNotBeCalled();
 
-        $this->getJoinAlias('association.embeddable')->shouldReturn('association.embeddable');
+        $this->getJoinAlias('embeddable', 'association.embeddable')->shouldReturn('association.embeddable');
     }
 
     function it_joins_needed_tables(QueryBuilder $target)
