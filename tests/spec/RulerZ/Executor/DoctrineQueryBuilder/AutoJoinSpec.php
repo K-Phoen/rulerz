@@ -97,7 +97,7 @@ class AutoJoinSpec extends ObjectBehavior
         $this->getJoinAlias('association.embeddable')->shouldReturn('association.embeddable');
     }
 
-    function it_uses_root_embeddable(QueryBuilder $target)
+    function it_joins_needed_tables(QueryBuilder $target)
     {
         $this->beConstructedWith($target, [
             ['group']
