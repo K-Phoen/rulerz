@@ -45,8 +45,7 @@ class AutoJoinSpec extends ObjectBehavior
         $rootClassMetadataInfo->getAssociationMappings()->willReturn([
             [
                 'targetEntity' => 'AssociationEntity',
-                'fieldName' => 'association',
-                'isOwningSide' => false
+                'fieldName' => 'association'
             ]
         ]);
 
@@ -75,8 +74,7 @@ class AutoJoinSpec extends ObjectBehavior
         $rootClassMetadataInfo->getAssociationMappings()->willReturn([
             [
                 'targetEntity' => 'AssociationEntity',
-                'fieldName' => 'association',
-                'isOwningSide' => false
+                'fieldName' => 'association'
             ]
         ]);
 
@@ -95,6 +93,44 @@ class AutoJoinSpec extends ObjectBehavior
         $target->join('root_alias.association', 'rulerz_association')->shouldNotBeCalled();
 
         $this->getJoinAlias('embeddable', 'association.embeddable')->shouldReturn('association.embeddable');
+    }
+
+     function it_joins_association_of_association_embeddable_needed_tables(QueryBuilder $target, EntityManager $entityManager, ClassMetadataInfo $rootClassMetadataInfo, ClassMetadataInfo $parentAssociationClassMetadataInfo, ClassMetadataInfo $associationClassMetadataInfo)
+    {
+        $this->beConstructedWith($target, [
+            ['parent_association', 'association', 'embeddable']
+        ]);
+
+        $target->getEntityManager()->willReturn($entityManager);
+        $target->getRootEntities()->willReturn(['RootEntity']);
+
+        $entityManager->getClassMetadata('RootEntity')->willReturn($rootClassMetadataInfo);
+        $rootClassMetadataInfo->getAssociationMappings()->willReturn([
+            [
+                'targetEntity' => 'ParentAssociationEntity',
+                'fieldName' => 'parent_association'
+            ]
+        ]);
+
+        $entityManager->getClassMetadata('ParentAssociationEntity')->willReturn($parentAssociationClassMetadataInfo);
+        $parentAssociationClassMetadataInfo->getAssociationMappings()->willReturn([
+            [
+                'targetEntity' => 'AssociationEntity',
+                'fieldName' => 'association'
+            ]
+        ]);
+
+        $entityManager->getClassMetadata('AssociationEntity')->willReturn($associationClassMetadataInfo);
+        $associationClassMetadataInfo->embeddedClasses = ['embeddable' => 'AssociationEntityEmbeddable'];
+        $associationClassMetadataInfo->getAssociationMappings()->willReturn([]);
+
+        $target->getRootAliases()->willReturn(['root_alias']);
+        $target->getDQLPart('join')->willReturn([]);
+
+        $target->join('root_alias.parent_association', 'rulerz_parent_association')->shouldBeCalled();
+        $target->join('rulerz_parent_association.association', 'rulerz_association')->shouldBeCalled();
+
+        $this->getJoinAlias('embeddable', 'parent_association.association.embeddable')->shouldReturn('rulerz_association.embeddable');
     }
 
     function it_joins_needed_tables(QueryBuilder $target)

@@ -17,6 +17,13 @@ class AutoJoin
     private $embeddables = null;
 
     /**
+     * List of entities that have been analyzed by the embeddable traverser
+     *
+     * @var array
+     */
+    private $analyzedTargetEntities = [];
+
+    /**
      * Associative list of known aliases (selected or joined tables).
      *
      * @var array
@@ -116,6 +123,7 @@ class AutoJoin
 
         foreach ($associations as $association) {
             $classMetaData = $entityManager->getClassMetadata($association['targetEntity']);
+            $this->analyzedTargetEntities[] = $association['targetEntity'];
 
             foreach ($classMetaData->embeddedClasses as $embeddedClassKey => $embeddedClass) {
                 $associationsEmbeddables[] = implode('.', array_filter(array($fieldNamePrefix, $association['fieldName'], $embeddedClassKey)));
@@ -123,7 +131,7 @@ class AutoJoin
 
             $associationMappings = $classMetaData->getAssociationMappings();
             $associationMappings = array_filter($associationMappings, function($associationMapping) {
-                return $associationMapping['isOwningSide'] === true;
+                return !in_array($associationMapping['targetEntity'], $this->analyzedTargetEntities);
             });
 
             if (count($associationMappings) !== 0) {
