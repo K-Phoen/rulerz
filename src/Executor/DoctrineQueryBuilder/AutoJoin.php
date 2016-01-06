@@ -89,21 +89,25 @@ class AutoJoin
         if ($embeddable_table === null)
         {
             // the embeddable is not inside an association, so we use the root alias prefix.
-            $embeddable_table = $this->queryBuilder->getRootAliases()[0];
+            $alias = $this->queryBuilder->getRootAliases()[0];
         }
         elseif (array_key_exists($embeddable_table, $this->knownAliases))
         {
             // the table name is a known alias (already join for instance) so we
             // don't need to do anything.
-            $embeddable_table = $embeddable_table;
+            $alias = $embeddable_table;
         }
         elseif (array_key_exists(self::ALIAS_PREFIX . $embeddable_table, $this->knownAliases))
         {
             // otherwise the table should have automatically been joined, so we use our table prefix.
-            $embeddable_table = self::ALIAS_PREFIX . $embeddable_table;
+            $alias = self::ALIAS_PREFIX . $embeddable_table;
         }
 
-        return $embeddable_table . '.' . $embeddable_name;
+        if (!isset($alias)) {
+            throw new \RuntimeException(sprintf('Could find embeddable "%s"', $full_property_path));
+        }
+
+        return $alias . '.' . $embeddable_name;
     }
 
     private function traverseAssociationsForEmbeddables(EntityManager $entityManager, array $associations, $fieldNamePrefix = false)
