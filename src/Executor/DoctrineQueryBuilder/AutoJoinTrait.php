@@ -11,12 +11,12 @@ trait AutoJoinTrait
      */
     private $autoJoin;
 
-    private function getJoinAlias(QueryBuilder $queryBuilder, $table, $full_property_path)
+    private function getJoinAlias(QueryBuilder $queryBuilder, $table, $fullPropertyPath)
     {
         if ($this->autoJoin === null) {
             $this->autoJoin = new AutoJoin($queryBuilder, $this->detectedJoins);
         }
 
-        return $this->autoJoin->getJoinAlias($table, $full_property_path);
+        return $this->autoJoin->getJoinAlias($table, $fullPropertyPath);
     }
 }
