@@ -67,8 +67,7 @@ class AutoJoin
         }
 
         // the table is identified as an embeddable
-        if (in_array($fullPropertyPath, $this->embeddables))
-        {
+        if (in_array($fullPropertyPath, $this->embeddables)) {
             return $this->getEmbeddableAlias($fullPropertyPath);
         }
 
@@ -93,19 +92,14 @@ class AutoJoin
         $embeddableName = array_pop($embeddableDimensions);
         $embeddableTable = array_pop($embeddableDimensions);
 
-        if ($embeddableTable === null)
-        {
+        if ($embeddableTable === null) {
             // the embeddable is not inside an association, so we use the root alias prefix.
             $alias = $this->queryBuilder->getRootAliases()[0];
-        }
-        elseif (array_key_exists($embeddableTable, $this->knownAliases))
-        {
+        } elseif (array_key_exists($embeddableTable, $this->knownAliases)) {
             // the table name is a known alias (already join for instance) so we
             // don't need to do anything.
             $alias = $embeddableTable;
-        }
-        elseif (array_key_exists(self::ALIAS_PREFIX . $embeddableTable, $this->knownAliases))
-        {
+        } elseif (array_key_exists(self::ALIAS_PREFIX . $embeddableTable, $this->knownAliases)) {
             // otherwise the table should have automatically been joined, so we use our table prefix.
             $alias = self::ALIAS_PREFIX . $embeddableTable;
         }
@@ -130,7 +124,7 @@ class AutoJoin
             }
 
             $associationMappings = $classMetaData->getAssociationMappings();
-            $associationMappings = array_filter($associationMappings, function($associationMapping) {
+            $associationMappings = array_filter($associationMappings, function ($associationMapping) {
                 return !in_array($associationMapping['targetEntity'], $this->analyzedTargetEntities);
             });
 
