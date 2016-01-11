@@ -34,7 +34,7 @@
     "require": {
         "php": ">=5.5",
         "hoa/ruler": "~1.0",
-        "symfony/property-access": "~2.3"
+        "symfony/property-access": "~2.3|~3.0"
     },
     "require-dev": {
         "vlucas/phpdotenv": "~2.1",
