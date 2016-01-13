@@ -2,6 +2,11 @@
 VERSION 0  FIXED ELASTICSEARCH-RELATED TARGETS
 ==============================================
 
+   Version 0.17 - Use hoa/ruler ~2.0
+      13/01/2016 17:55  0.17.0  initial release
+         7a1884b Merge pull request #30 from Hywan/composer_hoa
+         b73fc3f Use the latest hoa/ruler version.
+
    Version 0.16 - Solr support
       11/01/2016 13:41  0.16.3  Symfony ~3.0 compatibility
          6026240 Merge pull request #29 from j0k3r/patch-1
