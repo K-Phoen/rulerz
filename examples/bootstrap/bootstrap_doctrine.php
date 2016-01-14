@@ -5,7 +5,7 @@ use Doctrine\ORM\EntityManager;
 
 require __DIR__.'/bootstrap_general.php';
 
-$paths = [__DIR__.'/entities'];
+$paths = [__DIR__.'/../entities'];
 $isDevMode = true;
 
 // the connection configuration
