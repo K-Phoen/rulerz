@@ -40,6 +40,11 @@ class Player
      */
     public $group;
 
+    /**
+     * @Embedded(class = "Address")
+     */
+    public $address;
+
     public function __construct($pseudo, $fullname, $gender, $age, $points)
     {
         $this->pseudo   = $pseudo;
