@@ -13,7 +13,7 @@ default:
             paths:    [ %paths.base%/tests/features/common ]
             contexts: [ DoctrineDBALContext ]
         doctrine_orm:
-            paths:    [ %paths.base%/tests/features/common, %paths.base%/tests/features/operators ]
+            paths:    [ %paths.base%/tests/features/common, %paths.base%/tests/features/operators, %paths.base%/tests/features/doctrine_orm  ]
             contexts: [ DoctrineOrmContext ]
         elasticsearch:
             paths:    [ %paths.base%/tests/features/common ]

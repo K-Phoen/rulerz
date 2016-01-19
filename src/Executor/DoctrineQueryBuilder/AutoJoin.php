@@ -113,14 +113,14 @@ class AutoJoin
 
     private function traverseAssociationsForEmbeddables(EntityManager $entityManager, array $associations, $fieldNamePrefix = false)
     {
-        $associationsEmbeddables = array();
+        $associationsEmbeddables = [];
 
         foreach ($associations as $association) {
             $classMetaData = $entityManager->getClassMetadata($association['targetEntity']);
             $this->analyzedTargetEntities[] = $association['targetEntity'];
 
             foreach ($classMetaData->embeddedClasses as $embeddedClassKey => $embeddedClass) {
-                $associationsEmbeddables[] = implode('.', array_filter(array($fieldNamePrefix, $association['fieldName'], $embeddedClassKey)));
+                $associationsEmbeddables[] = implode('.', array_filter([$fieldNamePrefix, $association['fieldName'], $embeddedClassKey]));
             }
 
             $associationMappings = $classMetaData->getAssociationMappings();
@@ -139,7 +139,7 @@ class AutoJoin
 
     private function analizeEmbeddables(QueryBuilder $queryBuilder)
     {
-        $embeddables = array();
+        $embeddables = [];
         $entityManager = $queryBuilder->getEntityManager();
         $rootEntities = $queryBuilder->getRootEntities();
 
