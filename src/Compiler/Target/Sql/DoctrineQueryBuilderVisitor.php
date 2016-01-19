@@ -4,7 +4,6 @@ namespace RulerZ\Compiler\Target\Sql;
 
 use Doctrine\ORM\QueryBuilder;
 use Hoa\Ruler\Model as AST;
-
 use RulerZ\Model;
 
 class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
@@ -75,14 +74,14 @@ class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
         $finalColumn = array_pop($dimensions)[1];
 
         // and this is a list of tables that need to be joined
-        $tablesToJoin = array_map(function($dimension) {
+        $tablesToJoin = array_map(function ($dimension) {
             return $dimension[1];
         }, $dimensions);
         $tablesToJoin = array_merge([$element->getId()], $tablesToJoin);
 
         $this->detectedJoins[] = $tablesToJoin;
 
-        return sprintf('" . $this->getJoinAlias($target, "%s") . ".%s', end($tablesToJoin), $finalColumn);
+        return sprintf('" . $this->getJoinAlias($target, "%s", "%s") . ".%s', end($tablesToJoin), implode('.', $tablesToJoin), $finalColumn);
     }
 
     /**
