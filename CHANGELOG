@@ -2,6 +2,27 @@
 VERSION 0  FIXED ELASTICSEARCH-RELATED TARGETS
 ==============================================
 
+   Version 0.18 - Embeddable support for Doctrine ORM
+      19/01/2016 23:13  0.18.0  initial release
+         2217380 Merge branch 'doctrine-embeddables'
+         6633130 Use short array syntax
+         2cdca1b Fix doctrine examples
+         7e2a071 Add a quick behat test for doctrine embeddables
+         d1fdccc Merge pull request #28 from bobdercole/doctrine-embeddables
+         72ae6bd Modify Doctrine query builder visitor and auto join executor for PSR-1 and PSR-2 compliance.
+         d43ee7c Modify auto join variable names from snake case to camel case.
+         6c254ad - Remove dependency on isOwningSide property when traversing Doctrine associations for embeddables. - Add specification test for joining association of association embeddable.
+         12f3050 Add exception to Doctrine auto join if an embeddable is not found.
+         4752041 Fix association of association join for embeddables.
+         9b24fc3 Rolled back auto join specification rename.
+         f5dd40d Add specifications for Doctrine embeddable associations.
+         5757d52 Add auto join specification for root entity embeddable.
+         d36a167 Fix existing auto join specification tests.
+         a4a255b Remove unused code.
+         33ff1cd Move embeddable alias functionality out of getJoinAlias().
+         bf3ce3f Replace deprecated Doctrine method getRootAlias().
+         7f2189a Add Doctrine embeddable support.
+
    Version 0.17 - Use hoa/ruler ~2.0
       13/01/2016 17:55  0.17.0  initial release
          7a1884b Merge pull request #30 from Hywan/composer_hoa
