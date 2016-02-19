@@ -2,6 +2,7 @@
 
 namespace RulerZ\Compiler\Target;
 
+use RulerZ\Compiler\Context;
 use RulerZ\Model\Rule;
 
 /**
@@ -17,25 +18,28 @@ interface CompilationTarget
      * Compiles the given rule.
      *
      * @param Rule $rule The rule.
+     * @param \RulerZ\Compiler\Context $compilationContext The compilation context.
      *
      * @return \RulerZ\Model\Executor
      */
-    public function compile(Rule $rule);
+    public function compile(Rule $rule, Context $compilationContext);
 
     /**
      * Indicates whether the given target is supported or not.
      *
      * @param mixed  $target The target to test.
-     * @param string $mode   The execution mode (MODE_FILTER or MODE_SATISFIES).
+     * @param string $mode The execution mode (MODE_FILTER or MODE_SATISFIES).
      *
      * @return boolean
      */
     public function supports($target, $mode);
 
     /**
-     * Get the operators list.
+     * Create a compilation context from a sample target.
      *
-     * @return array<Xcallable>
+     * @param mixed $target The target.
+     *
+     * @return \RulerZ\Compiler\Context
      */
-    public function getOperators();
+    public function createCompilationContext($target);
 }

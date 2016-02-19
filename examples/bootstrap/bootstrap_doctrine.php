@@ -24,10 +24,10 @@ $compiler = new \RulerZ\Compiler\EvalCompiler(new \RulerZ\Parser\HoaParser());
 // RulerZ engine
 $rulerz = new \RulerZ\RulerZ(
     $compiler, [
-        new \RulerZ\Compiler\Target\Sql\DoctrineQueryBuilderVisitor(),
-        new \RulerZ\Compiler\Target\ArrayVisitor([
-            'length' => 'strlen'
-        ]),
+        new \RulerZ\Compiler\Target\Sql\DoctrineQueryBuilder(),
+        //new \RulerZ\Compiler\Target\ArrayVisitor([
+        //    'length' => 'strlen'
+        //]),
     ]
 );
 

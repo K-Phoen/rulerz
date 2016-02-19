@@ -2,49 +2,38 @@
 
 namespace RulerZ\Compiler\Target\Sql;
 
-use Doctrine\ORM\QueryBuilder;
 use Hoa\Ruler\Model as AST;
+use RulerZ\Compiler\Context;
+use RulerZ\Exception;
 use RulerZ\Model;
 
 class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
 {
     /**
-     * The root alias used by the query builder.
+     * @var Context
      */
-    const ROOT_ALIAS_PLACEHOLDER = '@@_ROOT_ALIAS_@@';
+    private $context;
 
     /**
-     * @var array
+     * @var DoctrineAutoJoin
      */
-    private $detectedJoins = [];
+    private $autoJoin;
 
-    /**
-     * @inheritDoc
-     */
-    public function supports($target, $mode)
+    public function __construct(Context $context, array $operators = [], array $inlineOperators = [], $allowStarOperator = true)
     {
-        return $target instanceof QueryBuilder;
+        parent::__construct($operators, $inlineOperators, $allowStarOperator);
+
+        $this->context = $context;
+        $this->autoJoin = new DoctrineAutoJoin($context['em'], $context['root_entities'], $context['root_aliases'], $context['joins']);
     }
 
     /**
      * @inheritDoc
      */
-    protected function getExecutorTraits()
+    public function getCompilationData()
     {
         return [
-            '\RulerZ\Executor\DoctrineQueryBuilder\FilterTrait',
-            '\RulerZ\Executor\DoctrineQueryBuilder\AutoJoinTrait',
-            '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',
-        ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function getCompilationData()
-    {
-        return [
-            'detectedJoins' => $this->detectedJoins,
+            'detectedJoins' => $this->autoJoin->getDetectedJoins(),
         ];
     }
 
@@ -63,25 +52,12 @@ class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
      */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
-        $dimensions = $element->getDimensions();
-
-        // simple column access
-        if (count($dimensions) === 0) {
-            return sprintf('%s.%s', self::ROOT_ALIAS_PLACEHOLDER, parent::visitAccess($element, $handle, $eldnah));
+        // simple attribute access
+        if (count($element->getDimensions()) === 0) {
+            return sprintf('%s.%s', $this->getRootAlias(), $element->getId());
         }
 
-        // this is the real column that we are trying to access
-        $finalColumn = array_pop($dimensions)[1];
-
-        // and this is a list of tables that need to be joined
-        $tablesToJoin = array_map(function ($dimension) {
-            return $dimension[1];
-        }, $dimensions);
-        $tablesToJoin = array_merge([$element->getId()], $tablesToJoin);
-
-        $this->detectedJoins[] = $tablesToJoin;
-
-        return sprintf('" . $this->getJoinAlias($target, "%s", "%s") . ".%s', end($tablesToJoin), implode('.', $tablesToJoin), $finalColumn);
+        return $this->autoJoin->buildAccessPath($element);
     }
 
     /**
@@ -91,5 +67,10 @@ class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
     {
         // make it a placeholder
         return ':' . $element->getName();
+    }
+
+    private function getRootAlias()
+    {
+        return $this->context['root_aliases'][0];
     }
 }

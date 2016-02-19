@@ -16,10 +16,10 @@ abstract class AbstractCompiler implements Compiler
         $this->parser = $parser;
     }
 
-    protected function compileToSource($rule, Target\CompilationTarget $compilationTarget, array $parameters)
+    protected function compileToSource($rule, Target\CompilationTarget $compilationTarget, Context $context, array $parameters)
     {
         $ast           = $this->parser->parse($rule);
-        $executorModel = $compilationTarget->compile($ast);
+        $executorModel = $compilationTarget->compile($ast, $context);
 
         $flattenedTraits = implode(PHP_EOL, array_map(function($trait) {
             return "\t" . 'use ' . $trait . ';';

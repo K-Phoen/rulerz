@@ -22,12 +22,13 @@ abstract class GenericSqlVisitor extends GenericVisitor
     /**
      * Constructor.
      *
-     * @param array<callable> $operators The custom operators to register.
-     * @param bool            $allowStarOperator Whether to allow the star operator or not (ie: implicit support of unknown operators).
+     * @param array<callable> $operators A list of additional operators to register.
+     * @param array<callable> $inlineOperators A list of additional inline operators to register.
+     * @param bool $allowStarOperator Whether to allow the star operator or not (ie: implicit support of unknown operators).
      */
-    public function __construct(array $operators = [], $allowStarOperator = true)
+    public function __construct(array $operators = [], array $inlineOperators = [], $allowStarOperator = true)
     {
-        parent::__construct($operators);
+        parent::__construct($operators, $inlineOperators);
 
         $this->allowStarOperator = (bool) $allowStarOperator;
     }

@@ -54,7 +54,8 @@ class RulerZ
     public function applyFilter($target, $rule, array $parameters = [], array $executionContext = [])
     {
         $targetCompiler = $this->findTargetCompiler($target, CompilationTarget::MODE_APPLY_FILTER);
-        $executor       = $this->compiler->compile($rule, $targetCompiler);
+        $compilationContext = $targetCompiler->createCompilationContext($target);
+        $executor = $this->compiler->compile($rule, $targetCompiler, $compilationContext);
 
         return $executor->applyFilter($target, $parameters, $targetCompiler->getOperators(), new ExecutionContext($executionContext));
     }
@@ -73,7 +74,8 @@ class RulerZ
     public function filter($target, $rule, array $parameters = [], array $executionContext = [])
     {
         $targetCompiler = $this->findTargetCompiler($target, CompilationTarget::MODE_FILTER);
-        $executor       = $this->compiler->compile($rule, $targetCompiler);
+        $compilationContext = $targetCompiler->createCompilationContext($target);
+        $executor = $this->compiler->compile($rule, $targetCompiler, $compilationContext);
 
         return $executor->filter($target, $parameters, $targetCompiler->getOperators(), new ExecutionContext($executionContext));
     }
@@ -120,7 +122,8 @@ class RulerZ
     public function satisfies($target, $rule, array $parameters = [], array $executionContext = [])
     {
         $targetCompiler = $this->findTargetCompiler($target, CompilationTarget::MODE_SATISFIES);
-        $executor       = $this->compiler->compile($rule, $targetCompiler);
+        $compilationContext = $targetCompiler->createCompilationContext($target);
+        $executor = $this->compiler->compile($rule, $targetCompiler, $compilationContext);
 
         return $executor->satisfies($target, $parameters, $targetCompiler->getOperators(), new ExecutionContext($executionContext));
     }

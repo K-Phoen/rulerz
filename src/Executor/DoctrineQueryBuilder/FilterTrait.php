@@ -16,11 +16,12 @@ trait FilterTrait
     {
         /** @var \Doctrine\ORM\QueryBuilder $target */
 
+        foreach ($this->detectedJoins as $join) {
+            $target->join(sprintf('%s.%s', $join['root'], $join['column']), $join['as']);
+        }
+
         // this will return DQL code
         $dql = $this->execute($target, $operators, $parameters);
-
-        // the root alias can not be determined at compile-time so placeholders are left in the DQL
-        $dql = str_replace('@@_ROOT_ALIAS_@@', $target->getRootAliases()[0], $dql);
 
         // so we apply it to the query builder
         $target->andWhere($dql);

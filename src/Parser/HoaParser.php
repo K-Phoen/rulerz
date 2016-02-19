@@ -144,15 +144,12 @@ class HoaParser implements Parser, Visitor\Visit
                 $left     = $children[0]->accept($this, $handle, $eldnah);
                 $right    = $children[1]->accept($this, $handle, $eldnah);
 
-                return $this->root->operation(
-                    $name,
-                    array($left, $right)
-                );
+                return $this->root->operation($name, [$left, $right]);
 
             case '#not':
                 return $this->root->operation(
                     'not',
-                    array($element->getChild(0)->accept($this, $handle, $eldnah))
+                    [$element->getChild(0)->accept($this, $handle, $eldnah)]
                 );
 
             case 'token':

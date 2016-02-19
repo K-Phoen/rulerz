@@ -24,7 +24,7 @@ class FileCompiler extends AbstractCompiler
     /**
      * @inheritdoc
      */
-    public function compile($rule, Target\CompilationTarget $target)
+    public function compile($rule, Target\CompilationTarget $target, Context $context)
     {
         $ruleIdentifier = $this->getRuleIdentifier($target, $rule);
         $executorFqcn   = '\RulerZ\Compiled\Executor\\Executor_' . $ruleIdentifier;
@@ -33,7 +33,7 @@ class FileCompiler extends AbstractCompiler
             $fileName = $this->directory . DIRECTORY_SEPARATOR . 'rulerz_executor_' . $ruleIdentifier;
 
             if (!file_exists($fileName)) {
-                $source = $this->compileToSource($rule, $target, [
+                $source = $this->compileToSource($rule, $target, $context, [
                     'className' => 'Executor_' . $ruleIdentifier
                 ]);
                 file_put_contents($fileName, '<?php'."\n".$source);

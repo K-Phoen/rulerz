@@ -34,7 +34,7 @@ class DoctrineOrmContext extends BaseContext
      */
     protected function getCompilationTarget()
     {
-        return new \RulerZ\Compiler\Target\Sql\DoctrineQueryBuilderVisitor();
+        return new \RulerZ\Compiler\Target\Sql\DoctrineQueryBuilder();
     }
 
     /**
