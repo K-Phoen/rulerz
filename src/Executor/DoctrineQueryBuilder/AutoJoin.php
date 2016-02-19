@@ -119,7 +119,8 @@ class AutoJoin
             $classMetaData = $entityManager->getClassMetadata($association['targetEntity']);
             $this->analyzedTargetEntities[] = $association['targetEntity'];
 
-            foreach ($classMetaData->embeddedClasses as $embeddedClassKey => $embeddedClass) {
+            $embeddedClasses = isset($classMetaData->embeddedClasses) ? $classMetaData->embeddedClasses : [];
+            foreach ($embeddedClasses as $embeddedClassKey => $embeddedClass) {
                 $associationsEmbeddables[] = implode('.', array_filter([$fieldNamePrefix, $association['fieldName'], $embeddedClassKey]));
             }
 
@@ -145,8 +146,9 @@ class AutoJoin
 
         foreach ($rootEntities as $rootEntity) {
             $classMetaData = $entityManager->getClassMetadata($rootEntity);
+            $embeddedClasses = isset($classMetaData->embeddedClasses) ? $classMetaData->embeddedClasses : [];
 
-            foreach ($classMetaData->embeddedClasses as $embeddedClassKey => $embeddedClass) {
+            foreach ($embeddedClasses as $embeddedClassKey => $embeddedClass) {
                 $embeddables[] = $embeddedClassKey;
             }
 
