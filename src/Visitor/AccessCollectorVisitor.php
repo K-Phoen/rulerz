@@ -14,6 +14,16 @@ class AccessCollectorVisitor extends Visitor
     /**
      * {@inheritDoc}
      */
+    public function getCompilationData()
+    {
+        return [
+            'accesses' => $this->accesses,
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
         $this->accesses[] = $element;

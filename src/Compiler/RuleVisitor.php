@@ -67,7 +67,7 @@ interface RuleVisitor extends Visitor
      * @param mixed        &$handle Handle (reference).
      * @param mixed        $eldnah  Handle (not reference).
      *
-     * @return \Hoa\Core\Consistency\Xcallable
+     * @return \Hoa\Consistency\Xcallable
      */
     public function visitOperator(AST\Operator $element, &$handle = null, $eldnah = null);
 

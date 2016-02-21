@@ -1,17 +1,27 @@
 <?php
 
-namespace RulerZ\Compiler\Target\Sql;
+namespace RulerZ\Compiler\Visitor\Sql;
 
 use Hoa\Ruler\Model as AST;
 
-use RulerZ\Compiler\Target\GenericVisitor;
+use RulerZ\Compiler\Context;
+use RulerZ\Compiler\Target\Polyfill;
+use RulerZ\Compiler\Visitor\GenericVisitor;
 use RulerZ\Exception\OperatorNotFoundException;
+use RulerZ\Model;
 
 /**
  * Base class for sql-related visitors.
  */
-abstract class GenericSqlVisitor extends GenericVisitor
+class GenericSqlVisitor extends GenericVisitor
 {
+    use Polyfill\AccessPath;
+
+    /**
+     * @var Context
+     */
+    protected $context;
+
     /**
      * Allow star operator.
      *
@@ -20,17 +30,44 @@ abstract class GenericSqlVisitor extends GenericVisitor
     protected $allowStarOperator = true;
 
     /**
-     * Constructor.
-     *
+     * @param Context $context The compilation context.
      * @param array<callable> $operators A list of additional operators to register.
      * @param array<callable> $inlineOperators A list of additional inline operators to register.
      * @param bool $allowStarOperator Whether to allow the star operator or not (ie: implicit support of unknown operators).
      */
-    public function __construct(array $operators = [], array $inlineOperators = [], $allowStarOperator = true)
+    public function __construct(Context $context, array $operators = [], array $inlineOperators = [], $allowStarOperator = true)
     {
         parent::__construct($operators, $inlineOperators);
 
+        $this->context = $context;
         $this->allowStarOperator = (bool) $allowStarOperator;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
+    {
+        $sql = parent::visitModel($element, $handle, $eldnah);
+
+        return '"' . $sql . '"';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
+    {
+        // make it a placeholder
+        return ':' . $element->getName();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
+    {
+        return $this->flattenAccessPath($element);
     }
 
     /**
@@ -41,14 +78,6 @@ abstract class GenericSqlVisitor extends GenericVisitor
         $array = parent::visitArray($element, $handle, $eldnah);
 
         return sprintf('(%s)', implode(', ', $array));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
-    {
-        return $element->getId();
     }
 
     /**

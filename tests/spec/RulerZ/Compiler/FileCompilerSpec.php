@@ -6,6 +6,7 @@ use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use PhpSpec\ObjectBehavior;
 
+use RulerZ\Compiler\Context as CompilationContext;
 use RulerZ\Compiler\Target\CompilationTarget;
 use RulerZ\Model\Executor;
 use RulerZ\Model\Rule;
@@ -34,12 +35,13 @@ class FileCompilerSpec extends ObjectBehavior
     function it_can_compile_a_rule_to_an_executor(Parser $parser, Rule $ruleModel, CompilationTarget $compilationTarget, Executor $executorModel)
     {
         $rule = 'points > 42';
+        $compilationContext = new CompilationContext();
 
         // the parser returns an AST
         $parser->parse($rule)->willReturn($ruleModel);
 
         // the compilation target uses the AST to build an executor model
-        $compilationTarget->compile($ruleModel)->willReturn($executorModel);
+        $compilationTarget->compile($ruleModel, $compilationContext)->willReturn($executorModel);
 
         // and the executor model has PHP code representing the rule
         $executorModel->getCompiledRule()->willReturn('true');
@@ -50,11 +52,11 @@ class FileCompilerSpec extends ObjectBehavior
         ]);
 
         // the compiler returns an instance of the compiled Executor
-        $executor = $this->compile($rule, $compilationTarget);
+        $executor = $this->compile($rule, $compilationTarget, $compilationContext);
         $executor->shouldHaveType('RulerZ\Executor\Executor');
 
         // and calling the compiler again does not fail
-        $executor = $this->compile($rule, $compilationTarget);
+        $executor = $this->compile($rule, $compilationTarget, $compilationContext);
         $executor->shouldHaveType('RulerZ\Executor\Executor');
     }
 }

@@ -47,4 +47,12 @@ abstract class AbstractCompilationTarget implements CompilationTarget
             $visitor->getCompilationData()
         );
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function createCompilationContext($target)
+    {
+        return new Context();
+    }
 }

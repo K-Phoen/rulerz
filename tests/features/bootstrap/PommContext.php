@@ -22,7 +22,7 @@ class PommContext extends BaseContext
      */
     protected function getCompilationTarget()
     {
-        return new \RulerZ\Compiler\Target\Sql\PommVisitor();
+        return new \RulerZ\Compiler\Target\Sql\Pomm();
     }
 
     /**

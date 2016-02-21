@@ -1,6 +1,6 @@
 <?php
 
-namespace RulerZ\Compiler\Target\Sql;
+namespace RulerZ\Compiler\Visitor\Sql;
 
 use Hoa\Ruler\Model as AST;
 use RulerZ\Compiler\Context;
@@ -10,18 +10,13 @@ use RulerZ\Model;
 class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
 {
     /**
-     * @var Context
-     */
-    private $context;
-
-    /**
      * @var DoctrineAutoJoin
      */
     private $autoJoin;
 
     public function __construct(Context $context, array $operators = [], array $inlineOperators = [], $allowStarOperator = true)
     {
-        parent::__construct($operators, $inlineOperators, $allowStarOperator);
+        parent::__construct($context, $operators, $inlineOperators, $allowStarOperator);
 
         $this->context = $context;
         $this->autoJoin = new DoctrineAutoJoin($context['em'], $context['root_entities'], $context['root_aliases'], $context['joins']);
@@ -35,16 +30,6 @@ class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
         return [
             'detectedJoins' => $this->autoJoin->getDetectedJoins(),
         ];
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
-    {
-        $dql = parent::visitModel($element, $handle, $eldnah);
-
-        return '"' . $dql . '"';
     }
 
     /**

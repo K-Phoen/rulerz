@@ -6,6 +6,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 use RulerZ\Compiler\Compiler;
+use RulerZ\Compiler\Context as CompilationContext;
 use RulerZ\Compiler\Target\CompilationTarget;
 use RulerZ\Executor\Executor;
 use RulerZ\Spec\Specification;
@@ -32,9 +33,11 @@ class RulerZSpec extends ObjectBehavior
         $target    = ['dummy target'];
         $rule      = 'dummy rule';
         $operators = ['dummy operator'];
+        $compilationContext = new CompilationContext();
 
-        $compiler->compile($rule, $compilationTargetYes)->willReturn($executor);
+        $compiler->compile($rule, $compilationTargetYes, $compilationContext)->willReturn($executor);
 
+        $compilationTargetYes->createCompilationContext($target)->willReturn($compilationContext);
         $compilationTargetYes->supports($target, CompilationTarget::MODE_FILTER)->willReturn(true);
         $compilationTargetYes->getOperators()->willReturn($operators);
 
@@ -53,9 +56,11 @@ class RulerZSpec extends ObjectBehavior
         $rule      = 'dummy rule';
         $operators = ['dummy operator'];
         $result    = 'dummy result';
+        $compilationContext = new CompilationContext();
 
-        $compiler->compile($rule, $compilationTarget)->willReturn($executor);
+        $compiler->compile($rule, $compilationTarget, $compilationContext)->willReturn($executor);
 
+        $compilationTarget->createCompilationContext($target)->willReturn($compilationContext);
         $compilationTarget->supports($target, CompilationTarget::MODE_FILTER)->willReturn(true);
         $compilationTarget->getOperators()->willReturn($operators);
 
@@ -71,12 +76,14 @@ class RulerZSpec extends ObjectBehavior
         $operators  = ['dummy operator'];
         $result     = 'dummy result';
         $parameters = ['dummy param'];
+        $compilationContext = new CompilationContext();
 
         $spec->getRule()->willReturn($rule);
         $spec->getParameters()->willReturn($parameters);
 
-        $compiler->compile($rule, $compilationTarget)->willReturn($executor);
+        $compiler->compile($rule, $compilationTarget, $compilationContext)->willReturn($executor);
 
+        $compilationTarget->createCompilationContext($target)->willReturn($compilationContext);
         $compilationTarget->supports($target, CompilationTarget::MODE_FILTER)->willReturn(true);
         $compilationTarget->getOperators()->willReturn($operators);
 
@@ -91,9 +98,11 @@ class RulerZSpec extends ObjectBehavior
         $rule      = 'dummy rule';
         $operators = ['dummy operator'];
         $result    = true;
+        $compilationContext = new CompilationContext();
 
-        $compiler->compile($rule, $compilationTarget)->willReturn($executor);
+        $compiler->compile($rule, $compilationTarget, $compilationContext)->willReturn($executor);
 
+        $compilationTarget->createCompilationContext($target)->willReturn($compilationContext);
         $compilationTarget->supports($target, CompilationTarget::MODE_SATISFIES)->willReturn(true);
         $compilationTarget->getOperators()->willReturn($operators);
 
@@ -109,12 +118,14 @@ class RulerZSpec extends ObjectBehavior
         $operators  = ['dummy operator'];
         $parameters = ['dummy param'];
         $result    = true;
+        $compilationContext = new CompilationContext();
 
         $spec->getRule()->willReturn($rule);
         $spec->getParameters()->willReturn($parameters);
 
-        $compiler->compile($rule, $compilationTarget)->willReturn($executor);
+        $compiler->compile($rule, $compilationTarget, $compilationContext)->willReturn($executor);
 
+        $compilationTarget->createCompilationContext($target)->willReturn($compilationContext);
         $compilationTarget->supports($target, CompilationTarget::MODE_SATISFIES)->willReturn($result);
         $compilationTarget->getOperators()->willReturn($operators);
 
@@ -136,9 +147,11 @@ class RulerZSpec extends ObjectBehavior
         $rule      = 'dummy rule';
         $operators = ['dummy operator'];
         $result    = 'updated target';
+        $compilationContext = new CompilationContext();
 
-        $compiler->compile($rule, $compilationTarget)->willReturn($executor);
+        $compiler->compile($rule, $compilationTarget, $compilationContext)->willReturn($executor);
 
+        $compilationTarget->createCompilationContext($target)->willReturn($compilationContext);
         $compilationTarget->supports($target, CompilationTarget::MODE_APPLY_FILTER)->willReturn(true);
         $compilationTarget->getOperators()->willReturn($operators);
 
@@ -153,12 +166,14 @@ class RulerZSpec extends ObjectBehavior
         $rule      = 'dummy rule';
         $operators = ['dummy operator'];
         $result    = 'updated target';
+        $compilationContext = new CompilationContext();
 
         $spec->getRule()->willReturn($rule);
         $spec->getParameters()->willReturn([]);
 
-        $compiler->compile($rule, $compilationTarget)->willReturn($executor);
+        $compiler->compile($rule, $compilationTarget, $compilationContext)->willReturn($executor);
 
+        $compilationTarget->createCompilationContext($target)->willReturn($compilationContext);
         $compilationTarget->supports($target, CompilationTarget::MODE_APPLY_FILTER)->willReturn(true);
         $compilationTarget->getOperators()->willReturn($operators);
 

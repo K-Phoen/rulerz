@@ -16,6 +16,7 @@ trait FilterTrait
      */
     public function applyFilter($target, array $parameters, array $operators, ExecutionContext $context)
     {
+        /** @var QueryBuilder $query */
         $query = !$target instanceof QueryBuilder ? $target->getQuery() : $target;
         $sql   = $this->execute($target, $operators, $parameters);
 

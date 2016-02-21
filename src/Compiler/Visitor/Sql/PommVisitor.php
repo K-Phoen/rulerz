@@ -1,33 +1,19 @@
 <?php
 
-namespace RulerZ\Compiler\Target\Sql;
+namespace RulerZ\Compiler\Visitor\Sql;
 
 use Hoa\Ruler\Model as AST;
-use PommProject\ModelManager\Model\Model as PommModel;
 
 use RulerZ\Model;
 
 class PommVisitor extends GenericSqlVisitor
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
-    public function supports($target, $mode)
+    public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
     {
-        // we make the assumption that pomm models use at least the
-        // \PommProject\ModelManager\Model\ModelTrait\ReadQueries trait
-        return $target instanceof PommModel;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function getExecutorTraits()
-    {
-        return [
-            '\RulerZ\Executor\Pomm\FilterTrait',
-            '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',
-        ];
+        return $element->getExpression()->accept($this, $handle, $eldnah);
     }
 
     /**
@@ -50,7 +36,7 @@ class PommVisitor extends GenericSqlVisitor
         $operator   = $element->getName();
         $sql        = parent::visitOperator($element, $parameters, $eldnah);
 
-        if (in_array($operator, ['and', 'or', 'not'])) {
+        if (in_array($operator, ['and', 'or', 'not'], true)) {
             return $sql;
         }
 

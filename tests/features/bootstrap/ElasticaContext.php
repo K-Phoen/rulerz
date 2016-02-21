@@ -23,7 +23,7 @@ class ElasticaContext extends BaseContext
      */
     protected function getCompilationTarget()
     {
-        return new \RulerZ\Compiler\Target\Elasticsearch\ElasticaVisitor();
+        return new \RulerZ\Compiler\Target\Elasticsearch\Elastica();
     }
 
     /**

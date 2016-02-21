@@ -1,6 +1,6 @@
 <?php
 
-namespace RulerZ\Compiler\Target;
+namespace RulerZ\Compiler\Visitor;
 
 use Hoa\Ruler\Model as AST;
 use Hoa\Visitor\Element as VisitorElement;

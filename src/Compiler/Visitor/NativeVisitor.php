@@ -1,42 +1,13 @@
 <?php
 
-namespace RulerZ\Compiler\Target;
+namespace RulerZ\Compiler\Visitor;
 
 use Hoa\Ruler\Model as AST;
 
 use RulerZ\Model;
 
-class ArrayVisitor extends GenericVisitor
+class NativeVisitor extends GenericVisitor
 {
-    /**
-     * @inheritDoc
-     */
-    public function supports($target, $mode)
-    {
-        if ($mode === self::MODE_APPLY_FILTER) {
-            return false;
-        }
-
-        // we can filter a collection
-        if ($mode === self::MODE_FILTER) {
-            return is_array($target) || $target instanceof \Traversable;
-        }
-
-        // and we know how to handle arrays and objects
-        return is_array($target) || is_object($target);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function getExecutorTraits()
-    {
-        return [
-            '\RulerZ\Executor\ArrayTarget\FilterTrait',
-            '\RulerZ\Executor\ArrayTarget\SatisfiesTrait',
-        ];
-    }
-
     /**
      * {@inheritDoc}
      */

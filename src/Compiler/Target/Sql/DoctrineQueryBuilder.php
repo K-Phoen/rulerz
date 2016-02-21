@@ -3,22 +3,12 @@
 namespace RulerZ\Compiler\Target\Sql;
 
 use Doctrine\ORM\QueryBuilder;
-use Hoa\Ruler\Model as AST;
+
 use RulerZ\Compiler\Context;
-use RulerZ\Compiler\Target\AbstractCompilationTarget;
-use RulerZ\Model;
+use RulerZ\Compiler\Visitor\Sql\DoctrineQueryBuilderVisitor;
 
-class DoctrineQueryBuilder extends AbstractCompilationTarget
+class DoctrineQueryBuilder extends AbstractSqlTarget
 {
-    private $allowStarOperator = true;
-
-    public function __construct(array $operators = [], array $inlineOperators = [], $allowStarOperator = true)
-    {
-        parent::__construct($operators, $inlineOperators);
-
-        $this->allowStarOperator = $allowStarOperator;
-    }
-
     /**
      * @inheritDoc
      */

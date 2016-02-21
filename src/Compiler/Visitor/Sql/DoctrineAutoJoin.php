@@ -1,6 +1,6 @@
 <?php
 
-namespace RulerZ\Compiler\Target\Sql;
+namespace RulerZ\Compiler\Visitor\Sql;
 
 use Doctrine\ORM\EntityManagerInterface as EntityManager;
 use Hoa\Ruler\Model as AST;

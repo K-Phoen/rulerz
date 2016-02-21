@@ -179,10 +179,10 @@ class HoaParser implements Parser, Visitor\Visit
                         return null;
 
                     case 'float':
-                        return floatval($value);
+                        return (float) $value;
 
                     case 'integer':
-                        return intval($value);
+                        return (int) $value;
 
                     case 'string':
                         return str_replace(

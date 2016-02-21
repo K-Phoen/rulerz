@@ -1,17 +1,17 @@
 <?php
 
-namespace RulerZ\Compiler\Target\Elasticsearch;
+namespace RulerZ\Compiler\Visitor\Elasticsearch;
 
 use Hoa\Ruler\Model as AST;
 
-use RulerZ\Compiler\Target\GenericVisitor;
-use RulerZ\Model;
 use RulerZ\Compiler\Target\Polyfill;
+use RulerZ\Compiler\Visitor\GenericVisitor;
+use RulerZ\Model;
 
 /**
  * Base class for Elasticsearch-related visitors.
  */
-abstract class GenericElasticsearchVisitor extends GenericVisitor
+class GenericElasticsearchVisitor extends GenericVisitor
 {
     use Polyfill\AccessPath;
 
