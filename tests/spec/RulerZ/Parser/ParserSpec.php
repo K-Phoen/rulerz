@@ -5,11 +5,11 @@ namespace spec\RulerZ\Parser;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class HoaParserSpec extends ObjectBehavior
+class ParserSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('RulerZ\Parser\HoaParser');
+        $this->shouldHaveType('RulerZ\Parser\Parser');
     }
 
     /**

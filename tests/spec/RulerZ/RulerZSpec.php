@@ -7,7 +7,7 @@ use Prophecy\Argument;
 
 use RulerZ\Compiler\Compiler;
 use RulerZ\Compiler\Context as CompilationContext;
-use RulerZ\Compiler\Target\CompilationTarget;
+use RulerZ\Compiler\CompilationTarget;
 use RulerZ\Executor\Executor;
 use RulerZ\Spec\Specification;
 
