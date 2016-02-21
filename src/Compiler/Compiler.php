@@ -17,6 +17,11 @@ class Compiler
      */
     private $evaluator;
 
+    public static function create($cacheDirectory = null)
+    {
+        return new static(new FileEvaluator($cacheDirectory));
+    }
+
     public function __construct(Evaluator $evaluator)
     {
         $this->parser = new Parser();

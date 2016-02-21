@@ -30,12 +30,11 @@ Enough said, here is the code:
 
 ```php
 use RulerZ\Compiler\Compiler;
-use RulerZ\Compiler\FileEvaluator;
 use RulerZ\Compiler\Target;
 use RulerZ\RulerZ;
 
 // compiler
-$compiler = new Compiler(new FileEvaluator());
+$compiler = new Compiler::create();
 
 // RulerZ engine
 $rulerz = new RulerZ(
