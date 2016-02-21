@@ -11,15 +11,12 @@ use RulerZ\Spec\Specification;
 class RulerZ
 {
     /**
-     * @var array<CompilationTarget> $compilationTargets
+     * @var array<CompilationTarget>
      */
     private $compilationTargets = [];
 
     /**
-     * Constructor.
-     *
-     * @param Compiler $compiler           The compiler.
-     * @param array    $compilationTargets A list of target compilers, each one handles a specific target (an array, a DoctrineQueryBuilder, ...)
+     * @param array $compilationTargets A list of target compilers, each one handles a specific target (an array, a DoctrineQueryBuilder, ...)
      */
     public function __construct(Compiler $compiler, array $compilationTargets = [])
     {
