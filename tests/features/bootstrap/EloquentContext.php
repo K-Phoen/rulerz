@@ -30,7 +30,7 @@ class EloquentContext extends BaseContext
      */
     protected function getCompilationTarget()
     {
-        return new \RulerZ\Compiler\Target\Sql\Eloquent();
+        return new \RulerZ\Target\Eloquent\Eloquent();
     }
 
     /**

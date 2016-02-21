@@ -1,8 +1,6 @@
 <?php
 
-namespace RulerZ\Compiler\Target\Sql;
-
-use RulerZ\Compiler\Target\AbstractCompilationTarget;
+namespace RulerZ\Target;
 
 abstract class AbstractSqlTarget extends AbstractCompilationTarget
 {

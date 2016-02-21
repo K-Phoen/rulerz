@@ -1,20 +1,22 @@
 <?php
 
-namespace RulerZ\Compiler\Target\Sql;
+namespace RulerZ\Target\Eloquent;
 
-use Doctrine\DBAL\Query\QueryBuilder;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 use RulerZ\Compiler\Context;
-use RulerZ\Compiler\Visitor\Sql\GenericSqlVisitor;
+use RulerZ\Target\AbstractSqlTarget;
+use RulerZ\Target\GenericSqlVisitor;
 
-class DoctrineDBAL extends AbstractSqlTarget
+class Eloquent extends AbstractSqlTarget
 {
     /**
      * @inheritDoc
      */
     public function supports($target, $mode)
     {
-        return $target instanceof QueryBuilder;
+        return $target instanceof QueryBuilder || $target instanceof EloquentBuilder;
     }
 
     /**
@@ -31,7 +33,7 @@ class DoctrineDBAL extends AbstractSqlTarget
     protected function getExecutorTraits()
     {
         return [
-            '\RulerZ\Executor\DoctrineDBAL\FilterTrait',
+            '\RulerZ\Executor\Eloquent\FilterTrait',
             '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',
         ];
     }

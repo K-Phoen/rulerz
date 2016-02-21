@@ -1,23 +1,21 @@
 <?php
 
-namespace RulerZ\Compiler\Target\Elasticsearch;
+namespace RulerZ\Target\Elasticsearch;
 
-use Elastica\Search;
-use Elastica\SearchableInterface;
-use FOS\ElasticaBundle\Finder\TransformedFinder;
+use Elasticsearch\Client;
 
 use RulerZ\Compiler\Context;
-use RulerZ\Compiler\Target\AbstractCompilationTarget;
-use RulerZ\Compiler\Visitor\Elasticsearch\GenericElasticsearchVisitor;
+use RulerZ\Target\AbstractCompilationTarget;
+use RulerZ\Target\GenericElasticsearchVisitor;
 
-class Elastica extends AbstractCompilationTarget
+class Elasticsearch extends AbstractCompilationTarget
 {
     /**
      * {@inheritDoc}
      */
     public function supports($target, $mode)
     {
-        return $target instanceof SearchableInterface || $target instanceof TransformedFinder || $target instanceof Search;
+        return $target instanceof Client;
     }
 
     /**
@@ -34,7 +32,7 @@ class Elastica extends AbstractCompilationTarget
     protected function getExecutorTraits()
     {
         return [
-            '\RulerZ\Executor\Elasticsearch\ElasticaFilterTrait',
+            '\RulerZ\Executor\Elasticsearch\ElasticsearchFilterTrait',
             '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',
         ];
     }

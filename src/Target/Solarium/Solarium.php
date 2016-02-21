@@ -1,12 +1,11 @@
 <?php
 
-namespace RulerZ\Compiler\Target\Solr;
+namespace RulerZ\Target\Solarium;
 
+use RulerZ\Target\AbstractCompilationTarget;
 use Solarium\Client as SolariumClient;
 
 use RulerZ\Compiler\Context;
-use RulerZ\Compiler\Visitor\Solr\SolariumVisitor;
-use RulerZ\Compiler\Target\AbstractCompilationTarget;
 
 class Solarium extends AbstractCompilationTarget
 {

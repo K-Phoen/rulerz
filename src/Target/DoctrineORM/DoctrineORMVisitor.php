@@ -1,13 +1,15 @@
 <?php
 
-namespace RulerZ\Compiler\Visitor\Sql;
+namespace RulerZ\Target\DoctrineORM;
 
 use Hoa\Ruler\Model as AST;
+
 use RulerZ\Compiler\Context;
 use RulerZ\Exception;
 use RulerZ\Model;
+use RulerZ\Target\GenericSqlVisitor;
 
-class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
+class DoctrineORMVisitor extends GenericSqlVisitor
 {
     /**
      * @var DoctrineAutoJoin

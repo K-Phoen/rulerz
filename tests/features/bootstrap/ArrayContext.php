@@ -9,7 +9,7 @@ class ArrayContext extends BaseContext
      */
     protected function getCompilationTarget()
     {
-        return new \RulerZ\Compiler\Target\Native([
+        return new \RulerZ\Target\Native\Native([
             'length' => 'strlen'
         ]);
     }

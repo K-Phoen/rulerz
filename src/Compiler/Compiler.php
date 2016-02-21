@@ -31,7 +31,7 @@ class Compiler
     /**
      * @return Executor
      */
-    public function compile($rule, Target\CompilationTarget $target, Context $context)
+    public function compile($rule, CompilationTarget $target, Context $context)
     {
         $context['rule_identifier'] = $this->getRuleIdentifier($target, $rule);
         $context['executor_classname'] = 'Executor_' . $context['rule_identifier'];
@@ -48,7 +48,7 @@ class Compiler
         return new $context['executor_fqcn']();
     }
 
-    protected function compileToSource($rule, Target\CompilationTarget $compilationTarget, Context $context)
+    protected function compileToSource($rule, CompilationTarget $compilationTarget, Context $context)
     {
         $ast = $this->parser->parse($rule);
         $executorModel = $compilationTarget->compile($ast, $context);
@@ -82,7 +82,7 @@ class {$context['executor_classname']} implements Executor
 EXECUTOR;
     }
 
-    protected function getRuleIdentifier(Target\CompilationTarget $compilationTarget, $rule)
+    protected function getRuleIdentifier(CompilationTarget $compilationTarget, $rule)
     {
         return hash('crc32b', get_class($compilationTarget) . $rule);
     }

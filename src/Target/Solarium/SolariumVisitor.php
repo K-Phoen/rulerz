@@ -1,11 +1,11 @@
 <?php
 
-namespace RulerZ\Compiler\Visitor\Solr;
+namespace RulerZ\Target\Solarium;
 
 use Hoa\Ruler\Model as AST;
 
-use RulerZ\Compiler\Visitor\GenericVisitor;
 use RulerZ\Model;
+use RulerZ\Target\GenericVisitor;
 
 class SolariumVisitor extends GenericVisitor
 {

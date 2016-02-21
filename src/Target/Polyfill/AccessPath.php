@@ -1,6 +1,6 @@
 <?php
 
-namespace RulerZ\Compiler\Target\Polyfill;
+namespace RulerZ\Target\Polyfill;
 
 use Hoa\Ruler\Model as AST;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace RulerZ\Compiler\Target\Sql;
+namespace RulerZ\Target\Pomm;
 
 use PommProject\ModelManager\Model\Model as PommModel;
 
 use RulerZ\Compiler\Context;
-use RulerZ\Compiler\Visitor\Sql\PommVisitor;
+use RulerZ\Target\AbstractSqlTarget;
 
 class Pomm extends AbstractSqlTarget
 {

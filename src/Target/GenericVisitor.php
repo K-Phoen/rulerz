@@ -1,12 +1,11 @@
 <?php
 
-namespace RulerZ\Compiler\Visitor;
+namespace RulerZ\Target;
 
 use Hoa\Ruler\Model as AST;
 use Hoa\Visitor\Element as VisitorElement;
 
 use RulerZ\Compiler\RuleVisitor;
-use RulerZ\Compiler\Target\Polyfill;
 use RulerZ\Exception\OperatorNotFoundException;
 use RulerZ\Model;
 

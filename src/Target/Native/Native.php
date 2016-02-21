@@ -1,9 +1,9 @@
 <?php
 
-namespace RulerZ\Compiler\Target;
+namespace RulerZ\Target\Native;
 
 use RulerZ\Compiler\Context;
-use RulerZ\Compiler\Visitor\NativeVisitor;
+use RulerZ\Target\AbstractCompilationTarget;
 
 class Native extends AbstractCompilationTarget
 {

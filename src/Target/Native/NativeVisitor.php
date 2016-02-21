@@ -1,10 +1,11 @@
 <?php
 
-namespace RulerZ\Compiler\Visitor;
+namespace RulerZ\Target\Native;
 
 use Hoa\Ruler\Model as AST;
 
 use RulerZ\Model;
+use RulerZ\Target\GenericVisitor;
 
 class NativeVisitor extends GenericVisitor
 {

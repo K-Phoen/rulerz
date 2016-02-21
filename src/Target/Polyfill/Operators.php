@@ -1,6 +1,6 @@
 <?php
 
-namespace RulerZ\Compiler\Target\Polyfill;
+namespace RulerZ\Target\Polyfill;
 
 use RulerZ\Exception\OperatorNotFoundException;
 
@@ -65,6 +65,8 @@ trait Operators
      *
      * @param string $operator Operator.
      *
+     * @throws OperatorNotFoundException
+     *
      * @return callable
      */
     protected function getOperator($operator)
@@ -90,6 +92,8 @@ trait Operators
      * Gets an inline-able operator.
      *
      * @param string $operator Operator.
+     *
+     * @throws OperatorNotFoundException
      *
      * @return callable
      */

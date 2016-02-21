@@ -3,7 +3,7 @@
 namespace RulerZ;
 
 use RulerZ\Compiler\Compiler;
-use RulerZ\Compiler\Target\CompilationTarget;
+use RulerZ\Compiler\CompilationTarget;
 use RulerZ\Context\ExecutionContext;
 use RulerZ\Exception\TargetUnsupportedException;
 use RulerZ\Spec\Specification;

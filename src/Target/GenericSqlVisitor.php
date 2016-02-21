@@ -1,12 +1,10 @@
 <?php
 
-namespace RulerZ\Compiler\Visitor\Sql;
+namespace RulerZ\Target;
 
 use Hoa\Ruler\Model as AST;
 
 use RulerZ\Compiler\Context;
-use RulerZ\Compiler\Target\Polyfill;
-use RulerZ\Compiler\Visitor\GenericVisitor;
 use RulerZ\Exception\OperatorNotFoundException;
 use RulerZ\Model;
 

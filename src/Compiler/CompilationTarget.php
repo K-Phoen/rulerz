@@ -1,13 +1,9 @@
 <?php
 
-namespace RulerZ\Compiler\Target;
+namespace RulerZ\Compiler;
 
-use RulerZ\Compiler\Context;
 use RulerZ\Model\Rule;
 
-/**
- * Represents a compilation target.
- */
 interface CompilationTarget
 {
     const MODE_FILTER       = 'filter';
@@ -18,7 +14,7 @@ interface CompilationTarget
      * Compiles the given rule.
      *
      * @param Rule $rule The rule.
-     * @param \RulerZ\Compiler\Context $compilationContext The compilation context.
+     * @param Context $compilationContext The compilation context.
      *
      * @return \RulerZ\Model\Executor
      */
@@ -39,7 +35,7 @@ interface CompilationTarget
      *
      * @param mixed $target The target.
      *
-     * @return \RulerZ\Compiler\Context
+     * @return Context
      */
     public function createCompilationContext($target);
 }

@@ -27,7 +27,7 @@ class DoctrineDBALContext extends BaseContext
      */
     protected function getCompilationTarget()
     {
-        return new \RulerZ\Compiler\Target\Sql\DoctrineDBAL();
+        return new \RulerZ\Target\DoctrineDBAL\DoctrineDBAL();
     }
 
     /**

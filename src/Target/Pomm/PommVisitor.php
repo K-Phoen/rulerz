@@ -1,10 +1,11 @@
 <?php
 
-namespace RulerZ\Compiler\Visitor\Sql;
+namespace RulerZ\Target\Pomm;
 
 use Hoa\Ruler\Model as AST;
 
 use RulerZ\Model;
+use RulerZ\Target\GenericSqlVisitor;
 
 class PommVisitor extends GenericSqlVisitor
 {

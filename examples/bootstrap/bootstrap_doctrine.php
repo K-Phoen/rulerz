@@ -24,7 +24,7 @@ $compiler = new \RulerZ\Compiler\Compiler(new \RulerZ\Compiler\EvalEvaluator());
 // RulerZ engine
 $rulerz = new \RulerZ\RulerZ(
     $compiler, [
-        new \RulerZ\Compiler\Target\Sql\DoctrineQueryBuilder(),
+        new \RulerZ\Target\DoctrineORM\DoctrineORM(),
         //new \RulerZ\Compiler\Target\ArrayVisitor([
         //    'length' => 'strlen'
         //]),

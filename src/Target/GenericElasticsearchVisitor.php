@@ -1,11 +1,9 @@
 <?php
 
-namespace RulerZ\Compiler\Visitor\Elasticsearch;
+namespace RulerZ\Target;
 
 use Hoa\Ruler\Model as AST;
 
-use RulerZ\Compiler\Target\Polyfill;
-use RulerZ\Compiler\Visitor\GenericVisitor;
 use RulerZ\Model;
 
 /**

@@ -1,8 +1,9 @@
 <?php
 
-namespace RulerZ\Compiler\Target;
+namespace RulerZ\Target;
 
 use RulerZ\Compiler\Context;
+use RulerZ\Compiler\CompilationTarget;
 use RulerZ\Model;
 
 /**

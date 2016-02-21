@@ -1,13 +1,13 @@
 <?php
 
-namespace RulerZ\Compiler\Target\Sql;
+namespace RulerZ\Target\DoctrineORM;
 
 use Doctrine\ORM\QueryBuilder;
 
 use RulerZ\Compiler\Context;
-use RulerZ\Compiler\Visitor\Sql\DoctrineQueryBuilderVisitor;
+use RulerZ\Target\AbstractSqlTarget;
 
-class DoctrineQueryBuilder extends AbstractSqlTarget
+class DoctrineORM extends AbstractSqlTarget
 {
     /**
      * @inheritDoc
@@ -37,7 +37,7 @@ class DoctrineQueryBuilder extends AbstractSqlTarget
      */
     protected function createVisitor(Context $context)
     {
-        return new DoctrineQueryBuilderVisitor($context, $this->getOperators(), $this->getInlineOperators(), $this->allowStarOperator);
+        return new DoctrineORMVisitor($context, $this->getOperators(), $this->getInlineOperators(), $this->allowStarOperator);
     }
 
     /**
