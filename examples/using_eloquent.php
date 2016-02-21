@@ -1,13 +1,12 @@
 <?php
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Database\Eloquent\Model;
 
 use Entity\Eloquent\Player;
 
 error_reporting(E_ALL);
 
-require './vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 $capsule = new Capsule();
 
@@ -24,12 +23,12 @@ $capsule->bootEloquent();
 $users = Player::all();
 
 // compiler
-$compiler = new \RulerZ\Compiler\EvalCompiler(new \RulerZ\Parser\HoaParser());
+$compiler = new \RulerZ\Compiler\Compiler(new \RulerZ\Compiler\EvalEvaluator());
 
 // RulerZ engine
 $rulerz = new \RulerZ\RulerZ(
     $compiler, [
-        new \RulerZ\Compiler\Target\Sql\EloquentVisitor(),
+        new \RulerZ\Compiler\Target\Sql\Eloquent(),
     ]
 );
 $qb = Player::query();

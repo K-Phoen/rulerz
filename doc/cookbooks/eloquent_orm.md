@@ -23,21 +23,21 @@ Once Eloquent is installed and configured we can the RulerZ engine:
 ```php
 $rulerz = new RulerZ(
     new HoaInterpreter(), [
-        new \RulerZ\Compiler\Target\Sql\EloquentVisitor(), // this line is Eloquent-specific
+        new \RulerZ\Compiler\Target\Sql\Eloquent(), // this line is Eloquent-specific
         // other compilation targets...
     ]
 );
 ```
 
-The only Eloquent-related configuration is the `EloquentVisitor` being added to the
+The only Eloquent-related configuration is the `Eloquent` target being added to the
 list of the known compilation targets.
 
 ## Filter your target
 
 Now that both Eloquent and RulerZ are ready, you can use them to retrieve data.
 
-The `EloquentVisitor` instance that we previously injected into the RulerZ engine
-knows how to use both `Illuminate\Database\Query\Builder` and `Illuminate\Database\Eloquent\Builder`
+The `Eloquent` instance that we previously injected into the RulerZ engine knows
+how to use both `Illuminate\Database\Query\Builder` and `Illuminate\Database\Eloquent\Builder`
 instances, so the first step is to create a query builder:
 
 ```php

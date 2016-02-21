@@ -3,7 +3,6 @@
 use PommProject\Foundation\Pomm;
 
 use RulerZ\RulerZ;
-use RulerZ\Parser\HoaParser;
 
 require __DIR__.'/bootstrap_general.php';
 
@@ -13,12 +12,12 @@ $pomm = new Pomm(['test_rulerz' => [
 ]]);
 
 // compiler
-$compiler = new \RulerZ\Compiler\EvalCompiler(new HoaParser());
+$compiler = new \RulerZ\Compiler\Compiler(new \RulerZ\Compiler\EvalEvaluator());
 
 // compiled RulerZ
 $rulerz = new RulerZ(
     $compiler, [
-        new \RulerZ\Compiler\Target\Sql\PommVisitor(),
+        new \RulerZ\Compiler\Target\Sql\Pomm(),
     ]
 );
 

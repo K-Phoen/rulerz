@@ -15,7 +15,7 @@ $client = new Solarium\Client([
 ]);
 
 // compiler
-$compiler = new \RulerZ\Compiler\EvalCompiler(new \RulerZ\Parser\HoaParser());
+$compiler = new \RulerZ\Compiler\Compiler(new \RulerZ\Compiler\EvalEvaluator());
 
 // RulerZ engine
 $rulerz = new \RulerZ\RulerZ(
