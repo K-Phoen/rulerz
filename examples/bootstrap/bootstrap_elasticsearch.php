@@ -9,12 +9,12 @@ $client = new Elasticsearch\Client([
 ]);
 
 // compiler
-$compiler = new \RulerZ\Compiler\Compiler(new \RulerZ\Compiler\EvalEvaluator());
+$compiler = \RulerZ\Compiler\Compiler::create();
 
 // RulerZ engine
 $rulerz = new \RulerZ\RulerZ(
     $compiler, [
-        new \RulerZ\Compiler\Target\Elasticsearch\Elasticsearch(),
+        new \RulerZ\Target\Elasticsearch\Elasticsearch(),
     ]
 );
 
