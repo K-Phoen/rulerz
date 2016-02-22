@@ -47,21 +47,4 @@ class SolariumVisitor extends GenericVisitor
 
         return "'. \$parameters['$parameterName'] .'";
     }
-
-    /**
-     * Define the built-in operators.
-     */
-    protected function defineBuiltInOperators()
-    {
-        $this->setInlineOperator('and',  function ($a, $b) { return sprintf('(%s AND %s)', $a, $b); });
-        $this->setInlineOperator('or',   function ($a, $b) { return sprintf('(%s OR %s)', $a, $b); });
-        $this->setInlineOperator('not',  function ($a)     { return sprintf('-(%s)', $a); });
-        $this->setInlineOperator('=',    function ($a, $b) { return sprintf('%s:%s', $a, $b); });
-        $this->setInlineOperator('!=',   function ($a, $b) { return sprintf('-%s:%s', $a, $b); });
-        $this->setInlineOperator('>',    function ($a, $b) { return sprintf('%s:{%s TO *]', $a,  $b); });
-        $this->setInlineOperator('>=',   function ($a, $b) { return sprintf('%s:[%s TO *]', $a,  $b); });
-        $this->setInlineOperator('<',    function ($a, $b) { return sprintf('%s:[* TO %s}', $a,  $b); });
-        $this->setInlineOperator('<=',   function ($a, $b) { return sprintf('%s:[* TO %s]', $a,  $b); });
-        $this->setInlineOperator('in',   function ($a, $b) { return sprintf('%s:(%s)', $a, implode(' OR ', $b)); });
-    }
 }

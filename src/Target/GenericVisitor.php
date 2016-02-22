@@ -8,18 +8,17 @@ use Hoa\Visitor\Element as VisitorElement;
 use RulerZ\Compiler\RuleVisitor;
 use RulerZ\Exception\OperatorNotFoundException;
 use RulerZ\Model;
+use RulerZ\Target\Operators\Definitions as OperatorsDefinitions;
 
 /**
  * Generic visitor intended to be extended.
  */
 abstract class GenericVisitor implements RuleVisitor
 {
-    use Polyfill\Operators;
-
     /**
-     * Define the built-in operators.
+     * @var OperatorsDefinitions
      */
-    abstract protected function defineBuiltInOperators();
+    protected $operators;
 
     /**
      * @inheritdoc
@@ -31,16 +30,9 @@ abstract class GenericVisitor implements RuleVisitor
         return [];
     }
 
-    /**
-     * @param array<callable> $operators List of custom operators to register.
-     * @param array<callable> $inlineOperators List of custom inline operators to register.
-     */
-    public function __construct(array $operators = [], array $inlineOperators = [])
+    public function __construct(OperatorsDefinitions $operators)
     {
-        $this->defineBuiltInOperators();
-
-        $this->setOperators($operators);
-        $this->setInlineOperators($inlineOperators);
+        $this->operators = $operators;
     }
 
     /**
@@ -109,7 +101,7 @@ abstract class GenericVisitor implements RuleVisitor
         $operatorName = $element->getName();
 
         // the operator does not exist at all, throw an error before doing anything else.
-        if (!$this->hasInlineOperator($operatorName) && !$this->hasOperator($operatorName)) {
+        if (!$this->operators->hasInlineOperator($operatorName) && !$this->operators->hasOperator($operatorName)) {
             throw new OperatorNotFoundException($operatorName, sprintf('Operator "%s" does not exist.', $operatorName));
         }
 
@@ -119,8 +111,8 @@ abstract class GenericVisitor implements RuleVisitor
         }, $element->getArguments());
 
         // and either inline the operator call
-        if ($this->hasInlineOperator($operatorName)) {
-            $callable = $this->getInlineOperator($operatorName);
+        if ($this->operators->hasInlineOperator($operatorName)) {
+            $callable = $this->operators->getInlineOperator($operatorName);
 
             return call_user_func_array($callable, $arguments);
         }

@@ -8,6 +8,7 @@ use RulerZ\Compiler\Context;
 use RulerZ\Exception;
 use RulerZ\Model;
 use RulerZ\Target\GenericSqlVisitor;
+use RulerZ\Target\Operators\Definitions as OperatorsDefinitions;
 
 class DoctrineORMVisitor extends GenericSqlVisitor
 {
@@ -16,11 +17,10 @@ class DoctrineORMVisitor extends GenericSqlVisitor
      */
     private $autoJoin;
 
-    public function __construct(Context $context, array $operators = [], array $inlineOperators = [], $allowStarOperator = true)
+    public function __construct(Context $context, OperatorsDefinitions $operators, $allowStarOperator = true)
     {
-        parent::__construct($context, $operators, $inlineOperators, $allowStarOperator);
+        parent::__construct($context, $operators, $allowStarOperator);
 
-        $this->context = $context;
         $this->autoJoin = new DoctrineAutoJoin($context['em'], $context['root_entities'], $context['root_aliases'], $context['joins']);
     }
 

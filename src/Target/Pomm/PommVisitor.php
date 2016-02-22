@@ -41,29 +41,10 @@ class PommVisitor extends GenericSqlVisitor
             return $sql;
         }
 
-        if ($this->hasOperator($operator)) {
+        if ($this->operators->hasOperator($operator)) {
             return sprintf('(new \PommProject\Foundation\Where(%s, [%s]))', $sql, implode(', ', $parameters));
         }
 
         return sprintf('(new \PommProject\Foundation\Where("%s", [%s]))', $sql, implode(', ', $parameters));
-    }
-
-    /**
-     * Define the built-in operators.
-     */
-    protected function defineBuiltInOperators()
-    {
-        parent::defineBuiltInOperators();
-
-        // just override these two
-        $this->setInlineOperator('and', function ($a, $b) {
-            return sprintf('%s->andWhere(%s)', $a, $b);
-        });
-        $this->setInlineOperator('or', function ($a, $b) {
-            return sprintf('%s->orWhere(%s)', $a, $b);
-        });
-        $this->setInlineOperator('not', function ($a) {
-            return sprintf('(new \PommProject\Foundation\Where("NOT(".%s->getElement() .")", %s->getValues()))', $a, $a);
-        });
     }
 }

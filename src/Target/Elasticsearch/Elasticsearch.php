@@ -7,6 +7,7 @@ use Elasticsearch\Client;
 use RulerZ\Compiler\Context;
 use RulerZ\Target\AbstractCompilationTarget;
 use RulerZ\Target\GenericElasticsearchVisitor;
+use RulerZ\Target\Operators\GenericElasticsearchDefinitions;
 
 class Elasticsearch extends AbstractCompilationTarget
 {
@@ -23,7 +24,7 @@ class Elasticsearch extends AbstractCompilationTarget
      */
     protected function createVisitor(Context $context)
     {
-        return new GenericElasticsearchVisitor($this->getOperators(), $this->getInlineOperators());
+        return new GenericElasticsearchVisitor($this->getOperators());
     }
 
     /**
@@ -35,5 +36,13 @@ class Elasticsearch extends AbstractCompilationTarget
             '\RulerZ\Executor\Elasticsearch\ElasticsearchFilterTrait',
             '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getOperators()
+    {
+        return GenericElasticsearchDefinitions::create(parent::getOperators());
     }
 }

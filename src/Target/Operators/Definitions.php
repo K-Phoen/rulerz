@@ -1,10 +1,10 @@
 <?php
 
-namespace RulerZ\Target\Polyfill;
+namespace RulerZ\Target\Operators;
 
 use RulerZ\Exception\OperatorNotFoundException;
 
-trait Operators
+class Definitions
 {
     /**
      * List of operators.
@@ -20,10 +20,24 @@ trait Operators
      */
     private $inlineOperators = [];
 
+    public function __construct(array $operators = [], array $inlineOperators = [])
+    {
+        $this->defineOperators($operators);
+        $this->defineInlineOperators($inlineOperators);
+    }
+
+    public function mergeWith(Definitions $other)
+    {
+        return new static(
+            array_merge($this->operators, $other->operators),
+            array_merge($this->inlineOperators, $other->inlineOperators)
+        );
+    }
+
     /**
      * Tells if an operator exists.
      *
-     * @param string $operator Operator.
+     * @param string $operator The operator's name.
      *
      * @return bool
      */
@@ -33,28 +47,24 @@ trait Operators
     }
 
     /**
-     * Add operators.
+     * Define operators.
      *
-     * @param array $operators A list of operators to add.
-     *
-     * @return self
+     * @param array<callable> $operators A list of operators to add, each one being a collable.
      */
-    public function setOperators(array $operators)
+    public function defineOperators(array $operators)
     {
         foreach ($operators as $name => $callable) {
-            $this->setOperator($name, $callable);
+            $this->defineOperator($name, $callable);
         }
     }
 
     /**
-     * Set an operator.
+     * Define an operator.
      *
-     * @param string   $operator    Operator.
+     * @param string   $operator    The operator's name.
      * @param callable $transformer Callable.
-     *
-     * @return self
      */
-    public function setOperator($operator, callable $transformer)
+    public function defineOperator($operator, callable $transformer)
     {
         unset($this->inlineOperators[$operator]);
         $this->operators[$operator] = $transformer;
@@ -63,7 +73,7 @@ trait Operators
     /**
      * Get an operator.
      *
-     * @param string $operator Operator.
+     * @param string $operator The operator's name.
      *
      * @throws OperatorNotFoundException
      *
@@ -91,7 +101,7 @@ trait Operators
     /**
      * Gets an inline-able operator.
      *
-     * @param string $operator Operator.
+     * @param string $operator The operator's name.
      *
      * @throws OperatorNotFoundException
      *
@@ -109,7 +119,7 @@ trait Operators
     /**
      * Tells if an inline-able operator exists.
      *
-     * @param string $operator Operator.
+     * @param string $operator The operator's name.
      *
      * @return bool
      */
@@ -123,20 +133,20 @@ trait Operators
      *
      * @param array<callable> $operators A list of inline operators to add.
      */
-    public function setInlineOperators(array $operators)
+    public function defineInlineOperators(array $operators)
     {
         foreach ($operators as $name => $callable) {
-            $this->setInlineOperator($name, $callable);
+            $this->defineInlineOperator($name, $callable);
         }
     }
 
     /**
      * Set an inline-able operator.
      *
-     * @param string   $operator    Operator.
+     * @param string   $operator    The operator's name.
      * @param callable $transformer Callable.
      */
-    public function setInlineOperator($operator, callable $transformer)
+    public function defineInlineOperator($operator, callable $transformer)
     {
         unset($this->operators[$operator]);
         $this->inlineOperators[$operator] = $transformer;

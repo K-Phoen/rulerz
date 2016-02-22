@@ -87,7 +87,7 @@ abstract class BaseContext implements Context
     public function rulerzIsConfigured()
     {
         // compiler
-        $compiler = \RulerZ\Compiler\Compiler::create();
+        $compiler = new \RulerZ\Compiler\Compiler(new \RulerZ\Compiler\EvalEvaluator());
 
         // RulerZ engine
         $this->rulerz = new \RulerZ\RulerZ($compiler, [$this->getCompilationTarget()]);

@@ -30,7 +30,7 @@ class SolariumContext extends BaseContext
     protected function getCompilationTarget()
     {
         $visitor = new \RulerZ\Target\Solarium\Solarium();
-        $visitor->setInlineOperator('boost', function($expression, $factor) {
+        $visitor->defineInlineOperator('boost', function($expression, $factor) {
             return sprintf('%s^%d', $expression, $factor);
         });
 

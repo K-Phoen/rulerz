@@ -30,7 +30,7 @@ class Native extends AbstractCompilationTarget
      */
     protected function createVisitor(Context $context)
     {
-        return new NativeVisitor($this->getOperators(), $this->getInlineOperators());
+        return new NativeVisitor($this->getOperators());
     }
 
     /**
@@ -42,5 +42,13 @@ class Native extends AbstractCompilationTarget
             '\RulerZ\Executor\ArrayTarget\FilterTrait',
             '\RulerZ\Executor\ArrayTarget\SatisfiesTrait',
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getOperators()
+    {
+        return NativeOperators::create(parent::getOperators());
     }
 }

@@ -5,13 +5,17 @@ namespace RulerZ\Target;
 use RulerZ\Compiler\Context;
 use RulerZ\Compiler\CompilationTarget;
 use RulerZ\Model;
+use RulerZ\Target\Operators\Definitions as OperatorsDefinitions;
 
 /**
  * Generic visitor intended to be extended.
  */
 abstract class AbstractCompilationTarget implements CompilationTarget
 {
-    use Polyfill\Operators;
+    /**
+     * @var OperatorsDefinitions
+     */
+    private $customOperators;
 
     /**
      * Create a rule visitor for a given compilation context.
@@ -30,8 +34,7 @@ abstract class AbstractCompilationTarget implements CompilationTarget
      */
     public function __construct(array $operators = [], array $inlineOperators = [])
     {
-        $this->setOperators($operators);
-        $this->setOperators($inlineOperators);
+        $this->customOperators = new OperatorsDefinitions($operators, $inlineOperators);
     }
 
     /**
@@ -55,5 +58,29 @@ abstract class AbstractCompilationTarget implements CompilationTarget
     public function createCompilationContext($target)
     {
         return new Context();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function defineOperator($name, callable $transformer)
+    {
+        $this->customOperators->defineOperator($name, $transformer);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function defineInlineOperator($name, callable $transformer)
+    {
+        $this->customOperators->defineInlineOperator($name, $transformer);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getOperators()
+    {
+        return $this->customOperators;
     }
 }

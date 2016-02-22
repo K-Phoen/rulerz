@@ -10,8 +10,6 @@ class ExecutionContext implements \ArrayAccess
     private $data = [];
 
     /**
-     * Constructor.
-     *
      * @param array $data The context data.
      */
     public function __construct(array $data = [])

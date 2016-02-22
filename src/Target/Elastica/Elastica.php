@@ -9,6 +9,7 @@ use FOS\ElasticaBundle\Finder\TransformedFinder;
 use RulerZ\Compiler\Context;
 use RulerZ\Target\AbstractCompilationTarget;
 use RulerZ\Target\GenericElasticsearchVisitor;
+use RulerZ\Target\Operators\GenericElasticsearchDefinitions;
 
 class Elastica extends AbstractCompilationTarget
 {
@@ -25,7 +26,7 @@ class Elastica extends AbstractCompilationTarget
      */
     protected function createVisitor(Context $context)
     {
-        return new GenericElasticsearchVisitor($this->getOperators(), $this->getInlineOperators());
+        return new GenericElasticsearchVisitor($this->getOperators());
     }
 
     /**
@@ -37,5 +38,13 @@ class Elastica extends AbstractCompilationTarget
             '\RulerZ\Executor\Elasticsearch\ElasticaFilterTrait',
             '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getOperators()
+    {
+        return GenericElasticsearchDefinitions::create(parent::getOperators());
     }
 }

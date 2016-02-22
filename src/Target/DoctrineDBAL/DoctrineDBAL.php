@@ -4,9 +4,7 @@ namespace RulerZ\Target\DoctrineDBAL;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 
-use RulerZ\Compiler\Context;
 use RulerZ\Target\AbstractSqlTarget;
-use RulerZ\Target\GenericSqlVisitor;
 
 class DoctrineDBAL extends AbstractSqlTarget
 {
@@ -17,15 +15,6 @@ class DoctrineDBAL extends AbstractSqlTarget
     {
         return $target instanceof QueryBuilder;
     }
-
-    /**
-     * @inheritDoc
-     */
-    protected function createVisitor(Context $context)
-    {
-        return new GenericSqlVisitor($context, $this->getOperators(), $this->getInlineOperators(), $this->allowStarOperator);
-    }
-
     /**
      * @inheritDoc
      */

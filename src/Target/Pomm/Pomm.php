@@ -24,7 +24,7 @@ class Pomm extends AbstractSqlTarget
      */
     protected function createVisitor(Context $context)
     {
-        return new PommVisitor($context, $this->getOperators(), $this->getInlineOperators(), $this->allowStarOperator);
+        return new PommVisitor($context, $this->getOperators(), $this->allowStarOperator);
     }
 
     /**
@@ -36,5 +36,13 @@ class Pomm extends AbstractSqlTarget
             '\RulerZ\Executor\Pomm\FilterTrait',
             '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getOperators()
+    {
+        return PommOperators::create(parent::getOperators());
     }
 }

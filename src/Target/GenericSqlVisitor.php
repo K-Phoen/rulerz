@@ -7,6 +7,7 @@ use Hoa\Ruler\Model as AST;
 use RulerZ\Compiler\Context;
 use RulerZ\Exception\OperatorNotFoundException;
 use RulerZ\Model;
+use RulerZ\Target\Operators\Definitions as OperatorsDefinitions;
 
 /**
  * Base class for sql-related visitors.
@@ -28,14 +29,11 @@ class GenericSqlVisitor extends GenericVisitor
     protected $allowStarOperator = true;
 
     /**
-     * @param Context $context The compilation context.
-     * @param array<callable> $operators A list of additional operators to register.
-     * @param array<callable> $inlineOperators A list of additional inline operators to register.
      * @param bool $allowStarOperator Whether to allow the star operator or not (ie: implicit support of unknown operators).
      */
-    public function __construct(Context $context, array $operators = [], array $inlineOperators = [], $allowStarOperator = true)
+    public function __construct(Context $context, OperatorsDefinitions $operators, $allowStarOperator = true)
     {
-        parent::__construct($operators, $inlineOperators);
+        parent::__construct($operators);
 
         $this->context = $context;
         $this->allowStarOperator = (bool) $allowStarOperator;
@@ -96,23 +94,5 @@ class GenericSqlVisitor extends GenericVisitor
         }, $element->getArguments());
 
         return sprintf('%s(%s)', $element->getName(), implode(', ', $arguments));
-    }
-
-    /**
-     * Define the built-in operators.
-     */
-    protected function defineBuiltInOperators()
-    {
-        $this->setInlineOperator('and',  function ($a, $b) { return sprintf('(%s AND %s)', $a, $b); });
-        $this->setInlineOperator('or',   function ($a, $b) { return sprintf('(%s OR %s)', $a, $b); });
-        $this->setInlineOperator('not',  function ($a)     { return sprintf('NOT (%s)', $a); });
-        $this->setInlineOperator('=',    function ($a, $b) { return sprintf('%s = %s', $a, $b); });
-        $this->setInlineOperator('!=',   function ($a, $b) { return sprintf('%s != %s', $a, $b); });
-        $this->setInlineOperator('>',    function ($a, $b) { return sprintf('%s > %s', $a,  $b); });
-        $this->setInlineOperator('>=',   function ($a, $b) { return sprintf('%s >= %s', $a,  $b); });
-        $this->setInlineOperator('<',    function ($a, $b) { return sprintf('%s < %s', $a,  $b); });
-        $this->setInlineOperator('<=',   function ($a, $b) { return sprintf('%s <= %s', $a,  $b); });
-        $this->setInlineOperator('in',   function ($a, $b) { return sprintf('%s IN %s', $a, $b[0] === '(' ? $b : '('.$b.')'); });
-        $this->setInlineOperator('like', function ($a, $b) { return sprintf('%s LIKE %s', $a, $b); });
     }
 }

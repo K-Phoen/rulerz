@@ -38,4 +38,12 @@ interface CompilationTarget
      * @return Context
      */
     public function createCompilationContext($target);
+
+    public function defineOperator($name, callable $transformer);
+    public function defineInlineOperator($name, callable $transformer);
+
+    /**
+     * @return \RulerZ\Target\Operators\Definitions
+     */
+    public function getOperators();
 }

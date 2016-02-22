@@ -37,7 +37,7 @@ class DoctrineORM extends AbstractSqlTarget
      */
     protected function createVisitor(Context $context)
     {
-        return new DoctrineORMVisitor($context, $this->getOperators(), $this->getInlineOperators(), $this->allowStarOperator);
+        return new DoctrineORMVisitor($context, $this->getOperators(), $this->allowStarOperator);
     }
 
     /**
