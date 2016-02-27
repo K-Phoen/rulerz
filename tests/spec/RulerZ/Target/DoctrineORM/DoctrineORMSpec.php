@@ -1,16 +1,16 @@
 <?php
 
-namespace spec\RulerZ\Compiler\Target\Sql;
+namespace spec\RulerZ\Target\DoctrineORM;
 
 use Doctrine\ORM\QueryBuilder;
 use PhpSpec\ObjectBehavior;
 
-use RulerZ\Compiler\Target\CompilationTarget;
-use RulerZ\Compiler\Target\Sql\DoctrineQueryBuilderVisitor;
+use RulerZ\Compiler\CompilationTarget;
+use RulerZ\Compiler\Context;
 use RulerZ\Model\Executor;
-use RulerZ\Parser\HoaParser;
+use RulerZ\Parser\Parser;
 
-class DoctrineQueryBuilderVisitorSpec extends ObjectBehavior
+class DoctrineORMSpec extends ObjectBehavior
 {
     function it_supports_satisfies_mode(QueryBuilder $qb)
     {
@@ -34,7 +34,7 @@ class DoctrineQueryBuilderVisitorSpec extends ObjectBehavior
         $rule = '1 = 1';
 
         /** @var Executor $executorModel */
-        $executorModel = $this->compile($this->parseRule($rule));
+        $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->shouldHaveType('RulerZ\Model\Executor');
 
         $executorModel->getTraits()->shouldHaveCount(3);
@@ -44,34 +44,34 @@ class DoctrineQueryBuilderVisitorSpec extends ObjectBehavior
     function it_prefixes_column_accesses_with_an_alias_placeholder()
     {
         $rule         = 'points >= 1';
-        $expectedRule = sprintf('"%s.points >= 1"', DoctrineQueryBuilderVisitor::ROOT_ALIAS_PLACEHOLDER);
+        $expectedRule = '"%s.points >= 1"';
 
         /** @var Executor $executorModel */
-        $executorModel = $this->compile($this->parseRule($rule));
+        $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->getCompiledRule()->shouldReturn($expectedRule);
     }
 
     function it_implicitly_converts_unknown_operators()
     {
         $rule        = 'points >= 42 and always_true(42)';
-        $expectedDql = sprintf('"(%s.points >= 42 AND always_true(42))"', DoctrineQueryBuilderVisitor::ROOT_ALIAS_PLACEHOLDER);
+        $expectedDql = '"(%s.points >= 42 AND always_true(42))"';
 
         /** @var Executor $executorModel */
-        $executorModel = $this->compile($this->parseRule($rule));
+        $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->getCompiledRule()->shouldReturn($expectedDql);
     }
 
     function it_supports_custom_inline_operators()
     {
         $rule        = 'points >= 42 and always_true(42)';
-        $expectedDql = sprintf('"(%s.points >= 42 AND inline_always_true(42))"', DoctrineQueryBuilderVisitor::ROOT_ALIAS_PLACEHOLDER);
+        $expectedDql = '"(%s.points >= 42 AND inline_always_true(42))"';
 
-        $this->setInlineOperator('always_true', function($value) {
+        $this->defineInlineOperator('always_true', function($value) {
             return 'inline_always_true(' . $value . ')';
         });
 
         /** @var Executor $executorModel */
-        $executorModel = $this->compile($this->parseRule($rule));
+        $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->getCompiledRule()->shouldReturn($expectedDql);
     }
 
@@ -86,6 +86,6 @@ class DoctrineQueryBuilderVisitorSpec extends ObjectBehavior
 
     private function parseRule($rule)
     {
-        return (new HoaParser())->parse($rule);
+        return (new Parser())->parse($rule);
     }
 }

@@ -1,35 +1,31 @@
 <?php
 
-namespace spec\RulerZ\Executor\DoctrineQueryBuilder;
+namespace spec\RulerZ\Target\DoctrineORM;
 
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface as EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\Query\Expr\Join;
 use PhpSpec\ObjectBehavior;
 
-use RulerZ\Executor\DoctrineQueryBuilder\AutoJoin;
+use RulerZ\Target\DoctrineORM\AutoJoin;
 
-class AutoJoinSpec extends ObjectBehavior
+class DoctrineAutoJoinSpec extends ObjectBehavior
 {
-    function it_returns_root_entity_embeddable(QueryBuilder $target, EntityManager $entityManager, ClassMetadataInfo $classMetadataInfo)
+    function it_returns_root_entity_embeddable(EntityManager $em, ClassMetadataInfo $classMetadataInfo)
     {
-        $this->beConstructedWith($target, [
-            ['embeddable']
-        ]);
+        $this->beConstructedWith(
+            $em,
+            ['RootEntity'],
+            ['root_alias'],
+            []
+        );
 
-        $target->getEntityManager()->willReturn($entityManager);
-        $target->getRootEntities()->willReturn(['RootEntity']);
-
-        $entityManager->getClassMetadata('RootEntity')->willReturn($classMetadataInfo);
+        $em->getClassMetadata('RootEntity')->willReturn($classMetadataInfo);
         $classMetadataInfo->embeddedClasses = ['embeddable' => 'RootEntityEmbeddable'];
-
         $classMetadataInfo->getAssociationMappings()->willReturn([]);
 
-        $target->getRootAliases()->willReturn(['root_alias']);
-        $target->getDQLPart('join')->willReturn([]);
-
-        $this->getJoinAlias('embeddable', 'embeddable')->shouldReturn('root_alias.embeddable');  
+        $this->buildAccessPath('embeddable', 'embeddable')->shouldReturn('root_alias.embeddable');
     }
 
      function it_joins_association_embeddable_needed_tables(QueryBuilder $target, EntityManager $entityManager, ClassMetadataInfo $rootClassMetadataInfo, ClassMetadataInfo $associationClassMetadataInfo)

@@ -1,15 +1,19 @@
 <?php
 
-namespace spec\RulerZ\Compiler\Target\Sql;
+namespace spec\RulerZ\Target\Pomm;
 
 use PhpSpec\ObjectBehavior;
 
-use RulerZ\Compiler\Target\CompilationTarget;
+use RulerZ\Compiler\CompilationTarget;
+use RulerZ\Compiler\Context;
 use RulerZ\Model\Executor;
-use RulerZ\Parser\HoaParser;
+use RulerZ\Parser\Parser;
 use RulerZ\Stub\ModelStub;
 
-class PommVisitorSpec extends ObjectBehavior
+/**
+ * TODO: refactor. It currently tests both the Pomm and PommVisitor classes.
+ */
+class PommSpec extends ObjectBehavior
 {
     function it_supports_satisfies_mode()
     {
@@ -33,7 +37,7 @@ class PommVisitorSpec extends ObjectBehavior
         $rule = '1 = 1';
 
         /** @var Executor $executorModel */
-        $executorModel = $this->compile($this->parseRule($rule));
+        $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->shouldHaveType('RulerZ\Model\Executor');
 
         $executorModel->getTraits()->shouldHaveCount(2);
@@ -45,7 +49,7 @@ class PommVisitorSpec extends ObjectBehavior
         $rule = 'points > :nb_points and group IN [:admin_group, :super_admin_group]';
 
         /** @var Executor $executorModel */
-        $executorModel = $this->compile($this->parseRule($rule));
+        $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->getCompiledRule()->shouldReturn('(new \PommProject\Foundation\Where("points > $*", [$parameters["nb_points"]]))->andWhere((new \PommProject\Foundation\Where("group IN ($*, $*)", [$parameters["admin_group"], $parameters["super_admin_group"]])))');
     }
 
@@ -53,12 +57,12 @@ class PommVisitorSpec extends ObjectBehavior
     {
         $rule = 'points > 30 and always_true()';
 
-        $this->setOperator('always_true', function() {
+        $this->defineOperator('always_true', function() {
             throw new \LogicException('should not be called');
         });
 
         /** @var Executor $executorModel */
-        $executorModel = $this->compile($this->parseRule($rule));
+        $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->getCompiledRule()->shouldReturn('(new \PommProject\Foundation\Where("points > 30", []))->andWhere((new \PommProject\Foundation\Where(call_user_func($operators["always_true"]), [])))');
     }
 
@@ -66,12 +70,12 @@ class PommVisitorSpec extends ObjectBehavior
     {
         $rule = 'points > 30 and always_true()';
 
-        $this->setInlineOperator('always_true', function() {
+        $this->defineInlineOperator('always_true', function() {
             return '1 = 1';
         });
 
         /** @var Executor $executorModel */
-        $executorModel = $this->compile($this->parseRule($rule));
+        $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->getCompiledRule()->shouldReturn('(new \PommProject\Foundation\Where("points > 30", []))->andWhere((new \PommProject\Foundation\Where("1 = 1", [])))');
     }
 
@@ -80,7 +84,7 @@ class PommVisitorSpec extends ObjectBehavior
         $rule = 'points > 30 and always_true()';
 
         /** @var Executor $executorModel */
-        $executorModel = $this->compile($this->parseRule($rule));
+        $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->getCompiledRule()->shouldReturn('(new \PommProject\Foundation\Where("points > 30", []))->andWhere((new \PommProject\Foundation\Where("always_true()", [])))');
     }
 
@@ -96,6 +100,6 @@ class PommVisitorSpec extends ObjectBehavior
 
     private function parseRule($rule)
     {
-        return (new HoaParser())->parse($rule);
+        return (new Parser())->parse($rule);
     }
 }

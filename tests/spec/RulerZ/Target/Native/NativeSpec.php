@@ -1,14 +1,18 @@
 <?php
 
-namespace spec\RulerZ\Compiler\Target;
+namespace spec\RulerZ\Target\Native;
 
 use PhpSpec\ObjectBehavior;
 
-use RulerZ\Compiler\Target\CompilationTarget;
+use RulerZ\Compiler\CompilationTarget;
+use RulerZ\Compiler\Context;
 use RulerZ\Model\Executor;
-use RulerZ\Parser\HoaParser;
+use RulerZ\Parser\Parser;
 
-class ArrayVisitorSpec extends ObjectBehavior
+/**
+ * TODO: refactor. It currently tests both the Native and NativeVisitor classes.
+ */
+class NativeSpec extends ObjectBehavior
 {
     function it_supports_satisfies_mode()
     {
@@ -37,7 +41,7 @@ class ArrayVisitorSpec extends ObjectBehavior
         $rule = '1 = 1';
 
         /** @var Executor $executorModel */
-        $executorModel = $this->compile($this->parseRule($rule));
+        $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->shouldHaveType('RulerZ\Model\Executor');
 
         $executorModel->getTraits()->shouldHaveCount(2);
@@ -49,7 +53,7 @@ class ArrayVisitorSpec extends ObjectBehavior
         $rule = 'score = 1';
 
         /** @var Executor $executorModel */
-        $executorModel = $this->compile($this->parseRule($rule));
+        $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->getCompiledRule()->shouldReturn('$target["score"] == 1');
     }
 
@@ -58,7 +62,7 @@ class ArrayVisitorSpec extends ObjectBehavior
         $rule = 'stats.user.score >= 42';
 
         /** @var Executor $executorModel */
-        $executorModel = $this->compile($this->parseRule($rule));
+        $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->getCompiledRule()->shouldReturn('$target["stats"]["user"]["score"] >= 42');
     }
 
@@ -66,12 +70,12 @@ class ArrayVisitorSpec extends ObjectBehavior
     {
         $rule = 'points >= 42 and always_true()';
 
-        $this->setOperator('always_true', function() {
+        $this->defineOperator('always_true', function() {
             throw new \LogicException('should never be called');
         });
 
         /** @var Executor $executorModel */
-        $executorModel = $this->compile($this->parseRule($rule));
+        $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->getCompiledRule()->shouldReturn('($target["points"] >= 42 && call_user_func($operators["always_true"]))');
     }
 
@@ -79,12 +83,12 @@ class ArrayVisitorSpec extends ObjectBehavior
     {
         $rule = 'points >= 42 and always_true(42)';
 
-        $this->setOperator('always_true', function() {
+        $this->defineOperator('always_true', function() {
             throw new \LogicException('should never be called');
         });
 
         /** @var Executor $executorModel */
-        $executorModel = $this->compile($this->parseRule($rule));
+        $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->getCompiledRule()->shouldReturn('($target["points"] >= 42 && call_user_func($operators["always_true"], 42))');
     }
 
@@ -92,19 +96,19 @@ class ArrayVisitorSpec extends ObjectBehavior
     {
         $this
             ->shouldThrow('RulerZ\Exception\OperatorNotFoundException')
-            ->duringCompile($this->parseRule('operator_that_does_not_exist() = 42'));
+            ->duringCompile($this->parseRule('operator_that_does_not_exist() = 42'), new Context());
     }
 
     function it_handles_custom_inline_operators()
     {
         $rule = 'points >= 42 and always_true(42)';
 
-        $this->setInlineOperator('always_true', function($value) {
+        $this->defineInlineOperator('always_true', function($value) {
             return 'inline_always_true(' . $value . ')';
         });
 
         /** @var Executor $executorModel */
-        $executorModel = $this->compile($this->parseRule($rule));
+        $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->getCompiledRule()->shouldReturn('($target["points"] >= 42 && inline_always_true(42))');
     }
 
@@ -119,7 +123,7 @@ class ArrayVisitorSpec extends ObjectBehavior
 
     private function parseRule($rule)
     {
-        return (new HoaParser())->parse($rule);
+        return (new Parser())->parse($rule);
     }
 
     public function getMatchers()
