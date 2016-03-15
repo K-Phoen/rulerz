@@ -19,6 +19,17 @@ class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
     private $detectedJoins = [];
 
     /**
+     * {@inheritdoc}
+     */
+    public function compile(Model\Rule $rule)
+    {
+        $executor = parent::compile($rule);
+        $this->reset();
+
+        return $executor;
+    }
+
+    /**
      * @inheritDoc
      */
     public function supports($target, $mode)
@@ -91,5 +102,10 @@ class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
     {
         // make it a placeholder
         return ':' . $element->getName();
+    }
+
+    protected function reset()
+    {
+        $this->detectedJoins = [];
     }
 }
