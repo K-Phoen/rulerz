@@ -103,7 +103,7 @@ class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
         // make it a placeholder
         return ':' . $element->getName();
     }
-    
+
     protected function reset()
     {
         $this->detectedJoins = [];
