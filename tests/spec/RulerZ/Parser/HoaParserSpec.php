@@ -32,6 +32,10 @@ class HoaParserSpec extends ObjectBehavior
     {
         return [
             [ 'points > 30' ],
+            [ 'some_point ∈ some_figure' ],
+            [ 'some_point ∈ :some_figure' ],
+            [ 'some_point ∈ ["some", "list", "of", "points"]' ],
+            [ 'group(user) ∈ :allowed_groups' ],
             [ 'locked = false' ],
             [ 'admin = true' ],
             [ 'deleted_at = null' ],
