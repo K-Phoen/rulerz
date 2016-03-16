@@ -3,8 +3,7 @@
 namespace RulerZ\Model;
 
 use Hoa\Ruler\Model as HoaModel;
-use RulerZ\Visitor\AccessCollectorVisitor;
-use RulerZ\Visitor\OperatorCollectorVisitor;
+use RulerZ\Visitor;
 
 class Rule extends HoaModel\Model
 {
@@ -15,7 +14,7 @@ class Rule extends HoaModel\Model
      */
     public function getAccesses()
     {
-        $visitor = new AccessCollectorVisitor();
+        $visitor = new Visitor\AccessCollectorVisitor();
 
         return $visitor->visit($this);
     }
@@ -27,7 +26,19 @@ class Rule extends HoaModel\Model
      */
     public function getOperators()
     {
-        $visitor = new OperatorCollectorVisitor();
+        $visitor = new Visitor\OperatorCollectorVisitor();
+
+        return $visitor->visit($this);
+    }
+
+    /**
+     * Returns a list of used parameters.
+     *
+     * @return \Hoa\Ruler\Model\Parameter[]
+     */
+    public function getParameters()
+    {
+        $visitor = new Visitor\ParameterCollectorVisitor();
 
         return $visitor->visit($this);
     }
