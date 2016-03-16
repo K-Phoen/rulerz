@@ -2,6 +2,10 @@
 VERSION 0  FIXED ELASTICSEARCH-RELATED TARGETS
 ==============================================
 
+   Version 0.19 - Add a way to retrieve the parameters used in a rule
+      16/03/2016 14:14  0.19.0  initial release
+         d8197d9 Add a way to retrieve the paramters from a rule model
+
    Version 0.18 - Embeddable support for Doctrine ORM
       19/02/2016 22:44  0.18.1  Make the DoctrineQueryBuilder target compatible with Doctrine <2.5
          56b37f3 Make the DoctrineQueryBuilder target compatible with Doctrine <2.5
