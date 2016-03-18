@@ -3,6 +3,9 @@ VERSION 0  FIXED ELASTICSEARCH-RELATED TARGETS
 ==============================================
 
    Version 0.19 - Add a way to retrieve the parameters used in a rule
+      18/03/2016 08:34  0.19.1  Compilation issue with DoctrineORM target
+         4dafc3d Reset the detected joins when visiting a new model
+         d38046c Add a few test cases with UTF-8 operators
       16/03/2016 14:14  0.19.0  initial release
          d8197d9 Add a way to retrieve the paramters from a rule model
 
