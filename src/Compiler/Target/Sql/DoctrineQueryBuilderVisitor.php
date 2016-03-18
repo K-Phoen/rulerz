@@ -53,6 +53,8 @@ class DoctrineQueryBuilderVisitor extends GenericSqlVisitor
      */
     public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
     {
+        $this->detectedJoins = [];
+
         $dql = parent::visitModel($element, $handle, $eldnah);
 
         return '"' . $dql . '"';
