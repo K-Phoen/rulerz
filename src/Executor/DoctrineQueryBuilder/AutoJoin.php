@@ -77,6 +77,11 @@ class AutoJoin
             return $table;
         }
 
+        // the table name is a known alias that was assigned an obscure alias in the query builder
+        if (in_array($fullPropertyPath, $this->knownAliases, true)) {
+            return array_search($fullPropertyPath, $this->knownAliases, true);
+        }
+
         // otherwise the table should have automatically been joined, so we use our table prefix
         if (isset($this->knownAliases[self::ALIAS_PREFIX.$table])) {
             return self::ALIAS_PREFIX . $table;
@@ -99,6 +104,9 @@ class AutoJoin
             // the table name is a known alias (already join for instance) so we
             // don't need to do anything.
             $alias = $embeddableTable;
+        } elseif (in_array($embeddableTable, $this->knownAliases, true)) {
+            // the table name is a known alias that was assigned an obscure alias in the query builder
+            $alias = array_search($embeddableTable, $this->knownAliases, true);
         } elseif (array_key_exists(self::ALIAS_PREFIX . $embeddableTable, $this->knownAliases)) {
             // otherwise the table should have automatically been joined, so we use our table prefix.
             $alias = self::ALIAS_PREFIX . $embeddableTable;
