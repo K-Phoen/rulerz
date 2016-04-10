@@ -2,6 +2,7 @@
 
 namespace spec\RulerZ\Target\Solarium;
 
+use PhpSpec\Exception\Example\SkippingException;
 use Solarium\Client as SolariumClient;
 
 use RulerZ\Compiler\CompilationTarget;
@@ -47,6 +48,8 @@ class SolariumSpec extends BaseTargetBehavior
 
     function it_supports_custom_operators()
     {
+        throw new SkippingException('Not yet implemented.');
+
         $rule = 'points > 30 and always_true()';
 
         $this->defineOperator('always_true', function() {
