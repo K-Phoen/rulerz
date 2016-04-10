@@ -3,6 +3,7 @@
 namespace spec\RulerZ\Target\DoctrineORM;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 
 use Doctrine\ORM\Tools\Setup;
@@ -80,6 +81,15 @@ class DoctrineORMSpec extends BaseTargetBehavior
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule), $context);
         $executorModel->getCompiledRule()->shouldReturn($expectedRule);
+        $executorModel->getCompiledData()->shouldReturn([
+            'detectedJoins' => [
+                [
+                    'root' => 'player',
+                    'column' => 'group',
+                    'as' => '_1_group',
+                ]
+            ],
+        ]);
     }
 
     function it_uses_the_metadata_to_detect_invalid_attribute_access()
@@ -145,6 +155,43 @@ class DoctrineORMSpec extends BaseTargetBehavior
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule), $context);
         $executorModel->getCompiledRule()->shouldReturn($expectedDql);
+    }
+
+    function it_reuses_joined_tables()
+    {
+        $context = new Context([
+            'em' => $this->em,
+            'root_entities' => [Player::class],
+            'root_aliases' => ['player'],
+            'joins' => [
+                'player' => [
+                    new Join(Join::INNER_JOIN, 'player.group', 'joined_group_alias')
+                ]
+            ],
+        ]);
+        $rule = 'joined_group_alias.name = \'FOO\'';
+        $expectedDql = '"joined_group_alias.name = \'FOO\'"';
+
+        /** @var Executor $executorModel */
+        $executorModel = $this->compile($this->parseRule($rule), $context);
+        $executorModel->getCompiledRule()->shouldReturn($expectedDql);
+        $executorModel->getCompiledData()->shouldReturn([
+            'detectedJoins' => [],
+        ]);
+    }
+
+    function it_allows_embedded_classes_to_be_used()
+    {
+        $context = $this->createContext();
+        $rule = 'address.country = \'France\'';
+        $expectedDql = '"player.address.country = \'France\'"';
+
+        /** @var Executor $executorModel */
+        $executorModel = $this->compile($this->parseRule($rule), $context);
+        $executorModel->getCompiledRule()->shouldReturn($expectedDql);
+        $executorModel->getCompiledData()->shouldReturn([
+            'detectedJoins' => [],
+        ]);
     }
 
     private function createContext()
