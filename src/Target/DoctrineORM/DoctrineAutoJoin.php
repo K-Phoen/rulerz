@@ -42,10 +42,10 @@ class DoctrineAutoJoin
         $this->knownEntities = array_combine($rootEntities, $rootAliases);
         $this->aliasMap = array_flip($this->knownEntities);
 
-        foreach ($existingJoins as $fromAlias => $joins) {
+        foreach ($existingJoins as $joins) {
             /** @var \Doctrine\ORM\Query\Expr\Join $join */
             foreach ($joins as $join) {
-                list(, $attribute) = explode('.', $join->getJoin());
+                list($fromAlias, $attribute) = explode('.', $join->getJoin());
                 $relation = $this->getRelation($attribute, $this->aliasMap[$fromAlias]);
 
                 $this->knownEntities[$relation['targetEntity']] = $join->getAlias();
