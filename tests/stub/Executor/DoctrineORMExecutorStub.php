@@ -2,9 +2,9 @@
 
 namespace RulerZ\Stub\Executor;
 
-use RulerZ\Executor\DoctrineQueryBuilder\FilterTrait;
+use RulerZ\Executor\DoctrineORM\FilterTrait;
 
-class DoctrineExecutorStub
+class DoctrineORMExecutorStub
 {
     public static $executeReturn;
     public $detectedJoins = [];

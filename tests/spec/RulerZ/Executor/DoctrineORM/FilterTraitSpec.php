@@ -1,13 +1,13 @@
 <?php
 
-namespace spec\RulerZ\Executor\DoctrineQueryBuilder;
+namespace spec\RulerZ\Executor\DoctrineORM;
 
 use Doctrine\ORM\AbstractQuery as Query;
 use Doctrine\ORM\QueryBuilder;
 use PhpSpec\ObjectBehavior;
 
 use RulerZ\Context\ExecutionContext;
-use RulerZ\Stub\Executor\DoctrineExecutorStub;
+use RulerZ\Stub\Executor\DoctrineORMExecutorStub;
 use spec\RulerZ\FilterResultMatcherTrait;
 
 class FilterTraitSpec extends ObjectBehavior
@@ -16,14 +16,14 @@ class FilterTraitSpec extends ObjectBehavior
 
     function let()
     {
-        $this->beAnInstanceOf('RulerZ\Stub\Executor\DoctrineExecutorStub');
+        $this->beAnInstanceOf('RulerZ\Stub\Executor\DoctrineORMExecutorStub');
     }
 
     function it_can_apply_a_filter_on_a_target(QueryBuilder $target)
     {
         $dql = 'some_dql';
 
-        DoctrineExecutorStub::$executeReturn = $dql;
+        DoctrineORMExecutorStub::$executeReturn = $dql;
 
         $target->setParameter('foo', 'bar')->shouldBeCalled();
         $target->andWhere($dql)->shouldBeCalled();
@@ -42,7 +42,7 @@ class FilterTraitSpec extends ObjectBehavior
         ];
         $dql = 'some_dql';
 
-        DoctrineExecutorStub::$executeReturn = $dql;
+        DoctrineORMExecutorStub::$executeReturn = $dql;
 
         $target->join('root_alias.join_column', 'join_alias')->shouldBeCalled();
         $target->setParameter('foo', 'bar')->shouldBeCalled();
@@ -63,7 +63,7 @@ class FilterTraitSpec extends ObjectBehavior
         $dql = 'some_dql';
         $results = ['result'];
 
-        DoctrineExecutorStub::$executeReturn = $dql;
+        DoctrineORMExecutorStub::$executeReturn = $dql;
 
         $target->join('root_alias.join_column', 'join_alias')->shouldBeCalled();
         $target->setParameter('foo', 'bar')->shouldBeCalled();

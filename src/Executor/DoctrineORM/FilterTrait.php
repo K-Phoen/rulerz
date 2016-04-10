@@ -1,6 +1,6 @@
 <?php
 
-namespace RulerZ\Executor\DoctrineQueryBuilder;
+namespace RulerZ\Executor\DoctrineORM;
 
 use RulerZ\Context\ExecutionContext;
 use RulerZ\Result\IteratorTools;

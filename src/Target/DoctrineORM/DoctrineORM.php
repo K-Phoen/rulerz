@@ -46,7 +46,7 @@ class DoctrineORM extends AbstractSqlTarget
     protected function getExecutorTraits()
     {
         return [
-            '\RulerZ\Executor\DoctrineQueryBuilder\FilterTrait',
+            '\RulerZ\Executor\DoctrineORM\FilterTrait',
             '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',
         ];
     }
