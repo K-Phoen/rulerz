@@ -2,17 +2,15 @@
 
 namespace spec\RulerZ\Target\Native;
 
-use PhpSpec\ObjectBehavior;
-
 use RulerZ\Compiler\CompilationTarget;
 use RulerZ\Compiler\Context;
 use RulerZ\Model\Executor;
-use RulerZ\Parser\Parser;
+use spec\RulerZ\Target\BaseTargetBehavior;
 
 /**
  * TODO: refactor. It currently tests both the Native and NativeVisitor classes.
  */
-class NativeSpec extends ObjectBehavior
+class NativeSpec extends BaseTargetBehavior
 {
     function it_supports_satisfies_mode()
     {
@@ -22,13 +20,6 @@ class NativeSpec extends ObjectBehavior
     function it_supports_filtering_arrays()
     {
         $this->supports([], CompilationTarget::MODE_FILTER)->shouldReturn(true);
-    }
-
-    function it_does_not_support_filtering_other_types()
-    {
-        foreach ($this->unsupportedTypes() as $type) {
-            $this->supports($type, CompilationTarget::MODE_FILTER)->shouldReturn(false);
-        }
     }
 
     function it_supports_satisfaction_tests_for_arrays()
@@ -112,18 +103,13 @@ class NativeSpec extends ObjectBehavior
         $executorModel->getCompiledRule()->shouldReturn('($target["points"] >= 42 && inline_always_true(42))');
     }
 
-    private function unsupportedTypes()
+    public function unsupportedTypes()
     {
         return [
             'string',
             42,
             new \stdClass,
         ];
-    }
-
-    private function parseRule($rule)
-    {
-        return (new Parser())->parse($rule);
     }
 
     public function getMatchers()

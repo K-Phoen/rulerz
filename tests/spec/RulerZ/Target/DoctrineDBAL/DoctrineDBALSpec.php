@@ -3,17 +3,16 @@
 namespace spec\RulerZ\Target\DoctrineDBAL;
 
 use Doctrine\DBAL\Query\QueryBuilder;
-use PhpSpec\ObjectBehavior;
 
 use RulerZ\Compiler\CompilationTarget;
 use RulerZ\Compiler\Context;
 use RulerZ\Model\Executor;
-use RulerZ\Parser\Parser;
+use spec\RulerZ\Target\BaseTargetBehavior;
 
 /**
  * TODO: refactor. It currently tests both the DoctrineDBAL and GenericSQLisitor classes.
  */
-class DoctrineDBALSpec extends ObjectBehavior
+class DoctrineDBALSpec extends BaseTargetBehavior
 {
     function it_supports_satisfies_mode_with_dbal_query_builders(QueryBuilder $builder)
     {
@@ -23,13 +22,6 @@ class DoctrineDBALSpec extends ObjectBehavior
     function it_supports_filter_mode_with_dbal_query_builders(QueryBuilder $builder)
     {
         $this->supports($builder, CompilationTarget::MODE_FILTER)->shouldReturn(true);
-    }
-
-    function it_can_not_filter_other_types()
-    {
-        foreach ($this->unsupportedTypes() as $type) {
-            $this->supports($type, CompilationTarget::MODE_FILTER)->shouldReturn(false);
-        }
     }
 
     function it_can_returns_an_executor_model()
@@ -57,7 +49,7 @@ class DoctrineDBALSpec extends ObjectBehavior
     {
         $rule = 'points > 30 and always_true()';
 
-        $this->defineOperator('always_true', function() {
+        $this->defineOperator('always_true', function () {
             throw new \LogicException('should not be called');
         });
 
@@ -70,7 +62,7 @@ class DoctrineDBALSpec extends ObjectBehavior
     {
         $rule = 'points > 30 and always_true()';
 
-        $this->defineInlineOperator('always_true', function() {
+        $this->defineInlineOperator('always_true', function () {
             return '1 = 1';
         });
 
@@ -86,20 +78,5 @@ class DoctrineDBALSpec extends ObjectBehavior
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->getCompiledRule()->shouldReturn('"(points > 30 AND always_true())"');
-    }
-
-    private function unsupportedTypes()
-    {
-        return [
-            'string',
-            42,
-            new \stdClass,
-            [],
-        ];
-    }
-
-    private function parseRule($rule)
-    {
-        return (new Parser())->parse($rule);
     }
 }

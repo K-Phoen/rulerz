@@ -2,18 +2,17 @@
 
 namespace spec\RulerZ\Target\Solarium;
 
-use PhpSpec\ObjectBehavior;
 use Solarium\Client as SolariumClient;
 
 use RulerZ\Compiler\CompilationTarget;
 use RulerZ\Compiler\Context;
 use RulerZ\Model\Executor;
-use RulerZ\Parser\Parser;
+use spec\RulerZ\Target\BaseTargetBehavior;
 
 /**
  * TODO: refactor. It currently tests both the Solarium and Solariumisitor classes.
  */
-class SolariumSpec extends ObjectBehavior
+class SolariumSpec extends BaseTargetBehavior
 {
     function it_supports_satisfies_mode_with_a_solarium_client(SolariumClient $client)
     {
@@ -23,13 +22,6 @@ class SolariumSpec extends ObjectBehavior
     function it_supports_filter_mode_with_a_solarium_client(SolariumClient $client)
     {
         $this->supports($client, CompilationTarget::MODE_FILTER)->shouldReturn(true);
-    }
-
-    function it_can_not_filter_other_types()
-    {
-        foreach ($this->unsupportedTypes() as $type) {
-            $this->supports($type, CompilationTarget::MODE_FILTER)->shouldReturn(false);
-        }
     }
 
     function it_can_return_an_executor_model()
@@ -77,20 +69,5 @@ class SolariumSpec extends ObjectBehavior
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->getCompiledRule()->shouldReturn("'(points:{30 TO *] AND 1 = 1)'");
-    }
-
-    private function unsupportedTypes()
-    {
-        return [
-            'string',
-            42,
-            new \stdClass,
-            [],
-        ];
-    }
-
-    private function parseRule($rule)
-    {
-        return (new Parser())->parse($rule);
     }
 }

@@ -3,14 +3,13 @@
 namespace spec\RulerZ\Target\DoctrineORM;
 
 use Doctrine\ORM\QueryBuilder;
-use PhpSpec\ObjectBehavior;
 
 use RulerZ\Compiler\CompilationTarget;
 use RulerZ\Compiler\Context;
 use RulerZ\Model\Executor;
-use RulerZ\Parser\Parser;
+use spec\RulerZ\Target\BaseTargetBehavior;
 
-class DoctrineORMSpec extends ObjectBehavior
+class DoctrineORMSpec extends BaseTargetBehavior
 {
     function it_supports_satisfies_mode(QueryBuilder $qb)
     {
@@ -20,13 +19,6 @@ class DoctrineORMSpec extends ObjectBehavior
     function it_can_filter_query_builders(QueryBuilder $qb)
     {
         $this->supports($qb, CompilationTarget::MODE_FILTER)->shouldReturn(true);
-    }
-
-    function it_can_not_filter_other_types()
-    {
-        foreach ($this->unsupportedTypes() as $type) {
-            $this->supports($type, CompilationTarget::MODE_FILTER)->shouldReturn(false);
-        }
     }
 
     function it_can_returns_an_executor_model()
@@ -73,19 +65,5 @@ class DoctrineORMSpec extends ObjectBehavior
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->getCompiledRule()->shouldReturn($expectedDql);
-    }
-
-    private function unsupportedTypes()
-    {
-        return [
-            'string',
-            42,
-            new \stdClass,
-        ];
-    }
-
-    private function parseRule($rule)
-    {
-        return (new Parser())->parse($rule);
     }
 }

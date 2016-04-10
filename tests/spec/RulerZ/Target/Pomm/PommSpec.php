@@ -2,18 +2,16 @@
 
 namespace spec\RulerZ\Target\Pomm;
 
-use PhpSpec\ObjectBehavior;
-
 use RulerZ\Compiler\CompilationTarget;
 use RulerZ\Compiler\Context;
 use RulerZ\Model\Executor;
-use RulerZ\Parser\Parser;
 use RulerZ\Stub\ModelStub;
+use spec\RulerZ\Target\BaseTargetBehavior;
 
 /**
  * TODO: refactor. It currently tests both the Pomm and PommVisitor classes.
  */
-class PommSpec extends ObjectBehavior
+class PommSpec extends BaseTargetBehavior
 {
     function it_supports_satisfies_mode()
     {
@@ -23,13 +21,6 @@ class PommSpec extends ObjectBehavior
     function it_can_filter_where_clauses()
     {
         $this->supports(new ModelStub(), CompilationTarget::MODE_FILTER)->shouldReturn(true);
-    }
-
-    function it_can_not_filter_other_types()
-    {
-        foreach ($this->unsupportedTypes() as $type) {
-            $this->supports($type, CompilationTarget::MODE_FILTER)->shouldReturn(false);
-        }
     }
 
     function it_can_returns_an_executor_model()
@@ -86,20 +77,5 @@ class PommSpec extends ObjectBehavior
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->getCompiledRule()->shouldReturn('(new \PommProject\Foundation\Where("points > 30", []))->andWhere((new \PommProject\Foundation\Where("always_true()", [])))');
-    }
-
-    private function unsupportedTypes()
-    {
-        return [
-            'string',
-            42,
-            new \stdClass,
-            [],
-        ];
-    }
-
-    private function parseRule($rule)
-    {
-        return (new Parser())->parse($rule);
     }
 }

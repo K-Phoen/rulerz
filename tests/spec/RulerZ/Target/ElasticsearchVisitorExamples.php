@@ -4,10 +4,11 @@ namespace spec\RulerZ\Target;
 
 use RulerZ\Compiler\Context;
 use RulerZ\Model\Executor;
-use RulerZ\Parser\Parser;
 
 trait ElasticsearchVisitorExamples
 {
+    abstract protected function parseRule($rule);
+
     function it_can_returns_an_executor_model()
     {
         $rule = '1 = 1';
@@ -60,10 +61,5 @@ QUERY;
         $this
             ->shouldThrow('RulerZ\Exception\OperatorNotFoundException')
             ->duringCompile($this->parseRule('operator_that_does_not_exist() = 42'), new Context());
-    }
-
-    protected function parseRule($rule)
-    {
-        return (new Parser())->parse($rule);
     }
 }
