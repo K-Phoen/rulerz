@@ -9,7 +9,6 @@ use RulerZ\Compiler\CompilationTarget;
 use RulerZ\Compiler\Context;
 use RulerZ\Model\Executor;
 use RulerZ\Parser\Parser;
-use RulerZ\Stub\ModelStub;
 
 /**
  * TODO: refactor. It currently tests both the DoctrineDBAL and GenericSQLisitor classes.

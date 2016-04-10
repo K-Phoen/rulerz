@@ -1,9 +1,10 @@
 <?php
 
-namespace spec\RulerZ\Compiler\Target\Elasticsearch;
+namespace spec\RulerZ\Target;
 
+use RulerZ\Compiler\Context;
 use RulerZ\Model\Executor;
-use RulerZ\Parser\HoaParser;
+use RulerZ\Parser\Parser;
 
 trait ElasticsearchVisitorExamples
 {
@@ -12,7 +13,7 @@ trait ElasticsearchVisitorExamples
         $rule = '1 = 1';
 
         /** @var Executor $executorModel */
-        $executorModel = $this->compile($this->parseRule($rule));
+        $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->shouldHaveType('RulerZ\Model\Executor');
 
         $executorModel->getTraits()->shouldHaveCount(2);
@@ -32,7 +33,7 @@ trait ElasticsearchVisitorExamples
 QUERY;
 
         /** @var Executor $executorModel */
-        $executorModel = $this->compile($this->parseRule($rule));
+        $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->getCompiledRule()->shouldReturn($expectedQuery);
     }
 
@@ -50,7 +51,7 @@ QUERY;
 QUERY;
 
         /** @var Executor $executorModel */
-        $executorModel = $this->compile($this->parseRule($rule));
+        $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->getCompiledRule()->shouldReturn($expectedQuery);
     }
 
@@ -58,11 +59,11 @@ QUERY;
     {
         $this
             ->shouldThrow('RulerZ\Exception\OperatorNotFoundException')
-            ->duringCompile($this->parseRule('operator_that_does_not_exist() = 42'));
+            ->duringCompile($this->parseRule('operator_that_does_not_exist() = 42'), new Context());
     }
 
     protected function parseRule($rule)
     {
-        return (new HoaParser())->parse($rule);
+        return (new Parser())->parse($rule);
     }
 }
