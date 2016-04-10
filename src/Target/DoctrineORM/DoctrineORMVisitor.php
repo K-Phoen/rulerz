@@ -39,11 +39,6 @@ class DoctrineORMVisitor extends GenericSqlVisitor
      */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
-        // simple attribute access
-        if (count($element->getDimensions()) === 0) {
-            return sprintf('%s.%s', $this->getRootAlias(), $element->getId());
-        }
-
         return $this->autoJoin->buildAccessPath($element);
     }
 
