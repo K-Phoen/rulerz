@@ -169,8 +169,8 @@ class HoaParser implements Parser, Visitor\Visit
 
                     case 'positional_parameter':
                         $index = $this->nextParameterIndex++;
-
-                        return new Model\Parameter($index);
+                        $prefix = '_';
+                        return new Model\Parameter($prefix.$index);
 
                     case 'true':
                         return true;
