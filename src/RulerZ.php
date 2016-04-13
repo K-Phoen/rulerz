@@ -53,6 +53,7 @@ class RulerZ
      */
     public function applyFilter($target, $rule, array $parameters = [], array $executionContext = [])
     {
+        $parameters = $this->normalizeParameters($parameters);
         $targetCompiler = $this->findTargetCompiler($target, CompilationTarget::MODE_APPLY_FILTER);
         $executor       = $this->compiler->compile($rule, $targetCompiler);
 
@@ -72,6 +73,7 @@ class RulerZ
      */
     public function filter($target, $rule, array $parameters = [], array $executionContext = [])
     {
+        $parameters = $this->normalizeParameters($parameters);
         $targetCompiler = $this->findTargetCompiler($target, CompilationTarget::MODE_FILTER);
         $executor       = $this->compiler->compile($rule, $targetCompiler);
 
@@ -160,5 +162,25 @@ class RulerZ
         }
 
         throw new TargetUnsupportedException('The given target is not supported.');
+    }
+    
+    /**
+     * Ensures positional parameters are prefixed with a string
+     * 
+     * @param array $params The parameters to normalize
+     * 
+     * @return array
+     */
+    private function normalizeParameters(array $params) 
+    {
+        $normalizedParams = [];
+        $prefix = '_';
+        foreach ($params as $key => $value) {
+            if (is_int($key)) {
+                $key = $prefix.(string) $key;
+            }
+            $normalizedParams[$key] = $value;
+        }
+        return $normalizedParams;
     }
 }
