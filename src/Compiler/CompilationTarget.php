@@ -39,7 +39,20 @@ interface CompilationTarget
      */
     public function createCompilationContext($target);
 
+    /**
+     * Define a runtime operator.
+     *
+     * @param string $name The operator name.
+     * @param callable $transformer The operator implementation (will be called at runtime when the operator is used).
+     */
     public function defineOperator($name, callable $transformer);
+
+    /**
+     * Define a compile-time operator.
+     *
+     * @param string $name The operator name.
+     * @param callable $transformer The operator implementation (will be called at compile-time when the operator is used).
+     */
     public function defineInlineOperator($name, callable $transformer);
 
     /**
