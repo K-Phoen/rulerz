@@ -72,6 +72,17 @@ class DoctrineORMSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn($expectedRule);
     }
 
+    function it_supports_positional_parameters()
+    {
+        $context = $this->createContext();
+        $rule = 'points >= ?';
+        $expectedRule = '"player.points >= ?0"';
+
+        /** @var Executor $executorModel */
+        $executorModel = $this->compile($this->parseRule($rule), $context);
+        $executorModel->getCompiledRule()->shouldReturn($expectedRule);
+    }
+
     function it_uses_the_metadata_to_join_tables()
     {
         $context = $this->createContext();

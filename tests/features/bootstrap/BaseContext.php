@@ -98,7 +98,16 @@ abstract class BaseContext implements Context
      */
     public function iDefineTheParameters(TableNode $parameters)
     {
-        $this->parameters = $parameters->getRowsHash();
+        // named parameters
+        if (count($parameters->getRow(0)) !== 1) {
+            $this->parameters = $parameters->getRowsHash();
+            return;
+        }
+
+        // positional parameters
+        $this->parameters = array_map(function($row) {
+            return $row[0];
+        }, $parameters->getRows());
     }
 
     /**

@@ -13,3 +13,14 @@ Feature: Custom operators can be used to filter data
         Then I should have the following results:
             | pseudo   |
             | Margaret |
+
+    Scenario: Positional parameters are supported
+        Given I define the parameters:
+            | Paoli |
+        When I filter the dataset with the rule:
+            """
+            address.city = ?
+            """
+        Then I should have the following results:
+            | pseudo   |
+            | Margaret |
