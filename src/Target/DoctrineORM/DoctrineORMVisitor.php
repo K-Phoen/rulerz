@@ -47,12 +47,12 @@ class DoctrineORMVisitor extends GenericSqlVisitor
      */
     public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
     {
-        // make it a placeholder
-        return ':' . $element->getName();
-    }
+        // placeholder for a positional parameters
+        if (is_int($element->getName())) {
+            return '?' . $element->getName();
+        }
 
-    private function getRootAlias()
-    {
-        return $this->context['root_aliases'][0];
+        // placeholder for a named parameter
+        return ':' . $element->getName();
     }
 }
