@@ -27,22 +27,22 @@ Once elastic/elasticsearch-php is installed and configured we can the RulerZ eng
 ```php
 $rulerz = new RulerZ(
     $compiler, [
-        new \RulerZ\Compiler\Target\Elasticsearch\ElasticsearchVisitor(), // this line is Elasticsearch-specific
+        new \RulerZ\Compiler\Target\Elasticsearch\Elasticsearch(), // this line is Elasticsearch-specific
         // other compilation targets...
     ]
 );
 ```
 
-The only Elasticsearch-related configuration is the `ElasticsearchVisitor` being added
-to the list of the known compilation targets.
+The only Elasticsearch-related configuration is the `Elasticsearch` target being
+added to the list of the known compilation targets.
 
 ## Filter your target
 
 Now that both elastic/elasticsearch-php and RulerZ are ready, you can use them
 to retrieve data.
 
-The `ElasticsearchVisitor` instance that we previously injected into the RulerZ
-engine only knows how to use `Elasticsearch\Client` objects so the first step is
+The `Elasticsearch` instance that we previously injected into the RulerZ engine
+only knows how to use `Elasticsearch\Client` objects so the first step is
 creating one:
 
 ```php
@@ -69,7 +69,7 @@ var_dump($rulerz->filter($client, $rule, $parameters, $executionContext));
 ```
 
 **N.B**: you'll notice an unusual variable named `$executionContext`. It
-contains a few parameters needed by the `ElasticsearchVisitor` in order to make
+contains a few parameters needed by the `Elasticsearch` in order to make
 the request and are mandatory.
 
 ## That was it!

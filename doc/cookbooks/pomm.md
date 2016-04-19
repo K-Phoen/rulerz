@@ -30,14 +30,14 @@ $rulerz = new RulerZ(
 );
 ```
 
-The only Pomm-related configuration is the `PommVisitor` being added to the
-list of the known compilation targets.
+The only Pomm-related configuration is the `Pomm` target being added to the list
+of the known compilation targets.
 
 ## Filter your target
 
 Now that both Pomm and RulerZ are ready, you can use them to retrieve data.
 
-The `PommVisitor` instance that we previously injected into the RulerZ engine
+The `Pomm` instance that we previously injected into the RulerZ engine
 only knows how to use `PommProject\ModelManager\Model\Model` so the first step
 is to access the model to query:
 

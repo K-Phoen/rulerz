@@ -3,7 +3,7 @@
 namespace RulerZ;
 
 use RulerZ\Compiler\Compiler;
-use RulerZ\Compiler\Target\CompilationTarget;
+use RulerZ\Compiler\CompilationTarget;
 use RulerZ\Context\ExecutionContext;
 use RulerZ\Exception\TargetUnsupportedException;
 use RulerZ\Spec\Specification;
@@ -11,15 +11,12 @@ use RulerZ\Spec\Specification;
 class RulerZ
 {
     /**
-     * @var array<CompilationTarget> $compilationTargets
+     * @var array<CompilationTarget>
      */
     private $compilationTargets = [];
 
     /**
-     * Constructor.
-     *
-     * @param Compiler $compiler           The compiler.
-     * @param array    $compilationTargets A list of target compilers, each one handles a specific target (an array, a DoctrineQueryBuilder, ...)
+     * @param array $compilationTargets A list of compilation targets, each one handles a specific target type (an array, a DoctrineQueryBuilder, ...)
      */
     public function __construct(Compiler $compiler, array $compilationTargets = [])
     {
@@ -50,13 +47,16 @@ class RulerZ
      * @param array  $executionContext The execution context.
      *
      * @return mixed
+     *
+     * @throws TargetUnsupportedException
      */
     public function applyFilter($target, $rule, array $parameters = [], array $executionContext = [])
     {
         $targetCompiler = $this->findTargetCompiler($target, CompilationTarget::MODE_APPLY_FILTER);
-        $executor       = $this->compiler->compile($rule, $targetCompiler);
+        $compilationContext = $targetCompiler->createCompilationContext($target);
+        $executor = $this->compiler->compile($rule, $targetCompiler, $compilationContext);
 
-        return $executor->applyFilter($target, $parameters, $targetCompiler->getOperators(), new ExecutionContext($executionContext));
+        return $executor->applyFilter($target, $parameters, $targetCompiler->getOperators()->getOperators(), new ExecutionContext($executionContext));
     }
 
     /**
@@ -69,13 +69,16 @@ class RulerZ
      * @param array  $executionContext The execution context.
      *
      * @return \Traversable The filtered target.
+     *
+     * @throws TargetUnsupportedException
      */
     public function filter($target, $rule, array $parameters = [], array $executionContext = [])
     {
         $targetCompiler = $this->findTargetCompiler($target, CompilationTarget::MODE_FILTER);
-        $executor       = $this->compiler->compile($rule, $targetCompiler);
+        $compilationContext = $targetCompiler->createCompilationContext($target);
+        $executor = $this->compiler->compile($rule, $targetCompiler, $compilationContext);
 
-        return $executor->filter($target, $parameters, $targetCompiler->getOperators(), new ExecutionContext($executionContext));
+        return $executor->filter($target, $parameters, $targetCompiler->getOperators()->getOperators(), new ExecutionContext($executionContext));
     }
 
     /**
@@ -87,6 +90,8 @@ class RulerZ
      * @param array         $executionContext The execution context.
      *
      * @return mixed The filtered target.
+     *
+     * @throws TargetUnsupportedException
      */
     public function filterSpec($target, Specification $spec, array $executionContext = [])
     {
@@ -100,6 +105,10 @@ class RulerZ
      * @param mixed         $target           The target to filter.
      * @param Specification $spec             The specification to apply.
      * @param array         $executionContext The execution context.
+     *
+     * @return mixed
+     *
+     * @throws TargetUnsupportedException
      */
     public function applyFilterSpec($target, Specification $spec, array $executionContext = [])
     {
@@ -116,13 +125,16 @@ class RulerZ
      * @param array  $executionContext The execution context.
      *
      * @return boolean
+     *
+     * @throws TargetUnsupportedException
      */
     public function satisfies($target, $rule, array $parameters = [], array $executionContext = [])
     {
         $targetCompiler = $this->findTargetCompiler($target, CompilationTarget::MODE_SATISFIES);
-        $executor       = $this->compiler->compile($rule, $targetCompiler);
+        $compilationContext = $targetCompiler->createCompilationContext($target);
+        $executor = $this->compiler->compile($rule, $targetCompiler, $compilationContext);
 
-        return $executor->satisfies($target, $parameters, $targetCompiler->getOperators(), new ExecutionContext($executionContext));
+        return $executor->satisfies($target, $parameters, $targetCompiler->getOperators()->getOperators(), new ExecutionContext($executionContext));
     }
 
     /**
@@ -134,6 +146,8 @@ class RulerZ
      * @param array         $executionContext The execution context.
      *
      * @return boolean
+     *
+     * @throws TargetUnsupportedException
      */
     public function satisfiesSpec($target, Specification $spec, array $executionContext = [])
     {
@@ -146,9 +160,9 @@ class RulerZ
      * @param mixed  $target The target to filter.
      * @param string $mode   The execution mode (MODE_FILTER or MODE_SATISFIES).
      *
-     * @throws TargetUnsupportedException
-     *
      * @return CompilationTarget
+     *
+     * @throws TargetUnsupportedException
      */
     private function findTargetCompiler($target, $mode)
     {

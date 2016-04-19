@@ -14,6 +14,16 @@ class OperatorCollectorVisitor extends Visitor
     /**
      * {@inheritDoc}
      */
+    public function getCompilationData()
+    {
+        return [
+            'operators' => $this->operators,
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
     {
         parent::visitModel($element, $handle, $eldnah);

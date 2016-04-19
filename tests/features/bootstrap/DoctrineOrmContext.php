@@ -19,10 +19,10 @@ class DoctrineOrmContext extends BaseContext
         $isDevMode = true;
 
         // the connection configuration
-        $dbParams = array(
+        $dbParams = [
             'driver' => 'pdo_sqlite',
             'path'   => __DIR__.'/../../../examples/rulerz.db', // meh.
-        );
+        ];
 
         $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
 
@@ -34,7 +34,7 @@ class DoctrineOrmContext extends BaseContext
      */
     protected function getCompilationTarget()
     {
-        return new \RulerZ\Compiler\Target\Sql\DoctrineQueryBuilderVisitor();
+        return new \RulerZ\Target\DoctrineORM\DoctrineORM();
     }
 
     /**

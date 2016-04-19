@@ -15,12 +15,12 @@ $client = new Solarium\Client([
 ]);
 
 // compiler
-$compiler = new \RulerZ\Compiler\EvalCompiler(new \RulerZ\Parser\HoaParser());
+$compiler = \RulerZ\Compiler\Compiler::create();
 
 // RulerZ engine
 $rulerz = new \RulerZ\RulerZ(
     $compiler, [
-        new \RulerZ\Compiler\Target\Solr\SolariumVisitor(),
+        new \RulerZ\Target\Solarium\Solarium(),
     ]
 );
 

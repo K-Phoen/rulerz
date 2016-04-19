@@ -25,22 +25,21 @@ Once Doctrine is installed and configured we can the RulerZ engine:
 ```php
 $rulerz = new RulerZ(
     $compiler, [
-        new \RulerZ\Compiler\Target\Sql\DoctrineQueryBuilderVisitor(), // this line is Doctrine-specific
+        new \RulerZ\Compiler\Target\Sql\DoctrineQueryBuilder(), // this line is Doctrine-specific
         // other compilation targets...
     ]
 );
 ```
 
-The only Doctrine-related configuration is the `DoctrineQueryBuilderVisitor`
+The only Doctrine-related configuration is the `DoctrineQueryBuilder` target
 being added to the list of the known compilation targets.
 
 ## Filter your target
 
 Now that both Doctrine and RulerZ are ready, you can use them to retrieve data.
 
-The `DoctrineQueryBuilderVisitor` instance that we previously injected into the
-RulerZ engine only knows how to use `QueryBuilder`s so the first step is to
-create one:
+The `DoctrineQueryBuilder` instance that we previously injected into the RulerZ
+engine only knows how to use `QueryBuilder`s so the first step is to create one:
 
 ```php
 $playersQueryBuilder = $entityManager

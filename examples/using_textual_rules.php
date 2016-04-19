@@ -7,6 +7,7 @@ list($entityManager, $rulerz) = require __DIR__ . '/bootstrap/bootstrap_doctrine
 // 1. Write a rule.
 $rule  = 'gender = :gender and points > :points';
 $rule  = 'gender = :gender and group.role.name = "ROLE_ADMIN"';
+$rule  = 'gender = :gender and address.city = "Paoli" and gr.role.name = "ROLE_PLAYER"';
 
 // 2. Define a few targets to filter
 
@@ -14,7 +15,8 @@ $rule  = 'gender = :gender and group.role.name = "ROLE_ADMIN"';
 $playersQb = $entityManager
     ->createQueryBuilder()
     ->select('p')
-    ->from('Entity\Doctrine\Player', 'p');
+    ->from('Entity\Doctrine\Player', 'p')
+    ->leftJoin('p.group', 'gr');
 
 // or an array of arrays
 $playersArr = [
@@ -32,14 +34,14 @@ $playersObj = [
 
 // 3. Enjoy!
 $parameters = [
-//    'points' => 3000,
+    //'points' => 3000,
     'gender' => 'F',
 ];
 
 $players = $rulerz->filter($playersQb, $rule, $parameters);
 var_dump(array_map(function($player) {
     return $player->pseudo;
-}, $players));
+}, iterator_to_array($players)));
 //var_dump($rulerz->filter($playersArr, $rule, $parameters));
 //var_dump($rulerz->filter($playersObj, $rule, $parameters));
 

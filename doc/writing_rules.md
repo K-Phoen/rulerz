@@ -29,19 +29,18 @@ RulerZ engine.
 Enough said, here is the code:
 
 ```php
-use RulerZ\Compiler\FileCompiler;
-use RulerZ\Parser\HoaParser;
+use RulerZ\Compiler\Compiler;
 use RulerZ\Compiler\Target;
 use RulerZ\RulerZ;
 
 // compiler
-$compiler = new FileCompiler(new HoaParser());
+$compiler = new Compiler::create();
 
 // RulerZ engine
 $rulerz = new RulerZ(
     $compiler, [
-        new Target\Sql\DoctrineQueryBuilderVisitor(),
-        new Target\ArrayVisitor([
+        new Target\Sql\DoctrineQueryBuilder(),
+        new Target\Native([
             'length' => 'strlen'
         ]),
     ]

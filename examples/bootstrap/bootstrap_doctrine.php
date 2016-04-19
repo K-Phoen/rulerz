@@ -9,25 +9,25 @@ $paths = [__DIR__.'/../entities'];
 $isDevMode = true;
 
 // the connection configuration
-$dbParams = array(
+$dbParams = [
     'driver' => 'pdo_sqlite',
     'path'   => __DIR__.'/../rulerz.db',
-);
+];
 
 $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
 
 $entityManager = EntityManager::create($dbParams, $config);
 
 // compiler
-$compiler = new \RulerZ\Compiler\EvalCompiler(new \RulerZ\Parser\HoaParser());
+$compiler = new \RulerZ\Compiler\Compiler(new \RulerZ\Compiler\EvalEvaluator());
 
 // RulerZ engine
 $rulerz = new \RulerZ\RulerZ(
     $compiler, [
-        new \RulerZ\Compiler\Target\Sql\DoctrineQueryBuilderVisitor(),
-        new \RulerZ\Compiler\Target\ArrayVisitor([
-            'length' => 'strlen'
-        ]),
+        new \RulerZ\Target\DoctrineORM\DoctrineORM(),
+        //new \RulerZ\Compiler\Target\ArrayVisitor([
+        //    'length' => 'strlen'
+        //]),
     ]
 );
 

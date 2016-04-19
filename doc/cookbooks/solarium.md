@@ -26,23 +26,22 @@ Once solarium/solarium is installed and configured we can the RulerZ engine:
 ```php
 $rulerz = new RulerZ(
     $compiler, [
-        new \RulerZ\Compiler\Target\Solr\SolariumVisitor(), // this line is Solarium-specific
+        new \RulerZ\Compiler\Target\Solr\Solarium(), // this line is Solarium-specific
         // other compilation targets...
     ]
 );
 ```
 
-The only Solarium-related configuration is the `SolariumVisitor` being added
-to the list of the known compilation targets.
+The only Solarium-related configuration is the `Solarium` target being added to
+the list of the known compilation targets.
 
 ## Filter your target
 
 Now that both solarium/solarium and RulerZ are ready, you can use them to retrieve
 data.
 
-The `SolariumVisitor` instance that we previously injected into the RulerZ
-engine only knows how to use `Solarium\Client` objects, so the first step is to
-create one:
+The `Solarium` instance that we previously injected into the RulerZ engine only
+knows how to use `Solarium\Client` objects, so the first step is to create one:
 
 ```php
 $config = [

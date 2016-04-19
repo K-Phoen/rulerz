@@ -21,7 +21,7 @@ class ElasticsearchContext extends BaseContext
 
     protected function getCompilationTarget()
     {
-        return new \RulerZ\Compiler\Target\Elasticsearch\ElasticsearchVisitor();
+        return new \RulerZ\Target\Elasticsearch\Elasticsearch();
     }
 
     /**
