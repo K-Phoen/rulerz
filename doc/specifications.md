@@ -112,7 +112,7 @@ Our previous specifications can be combined using these classes:
 ```php
 use RulerZ\Spec;
 
-$interestingPlayersSpec = Spec\AndX([
+$interestingPlayersSpec = new Spec\AndX([
     new PlayerMinScore(30),
     new IsFemale(),
 ]);
