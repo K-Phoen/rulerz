@@ -19,7 +19,7 @@ $executor = new ArrayExecutor([
 
 $executor->registerOperators([
     'logged' => function($user) {
-        return return $user::CONNECTED === $user->getStatus();
+        return $user::CONNECTED === $user->getStatus();
     },
 ]);
 ```

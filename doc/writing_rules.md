@@ -34,7 +34,7 @@ use RulerZ\Compiler\Target;
 use RulerZ\RulerZ;
 
 // compiler
-$compiler = new Compiler::create();
+$compiler = Compiler::create();
 
 // RulerZ engine
 $rulerz = new RulerZ(

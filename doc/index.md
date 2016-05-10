@@ -6,6 +6,7 @@ Getting started with RulerZ
 The recommended way to install this library is with [Composer](http://getcomposer.org/):
 
 ```
+# ignore
 composer require 'kphoen/rulerz'
 ```
 
