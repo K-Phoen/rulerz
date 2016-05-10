@@ -1,4 +1,7 @@
-tests: phpspec behat
+tests: phpspec behat rusty
+
+rusty:
+	php ./bin/rusty check --no-execute src doc
 
 behat:
 	php ./bin/behat --colors -vvv
