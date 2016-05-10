@@ -12,6 +12,12 @@ class IteratorTools
     /**
      * Creates an iterator from an array.
      *
+     * Usage:
+     *
+     * ```
+     * IteratorTools::fromArray([1, 2, 3]);
+     * ```
+     *
      * @param array $results
      *
      * @return \ArrayIterator
@@ -23,12 +29,16 @@ class IteratorTools
 
     /**
      * Creates an iterator from a generator.
+     *
      * Example of valid usage:
-     * FilterResult::fromGenerator(function() {
+     *
+     * ```
+     * IteratorTools::fromGenerator(function() {
      *     yield 1;
      *     yield 2;
      *     yield 3;
      * });
+     * ```
      *
      * @param callable $generatorCallable A callable, which will return a generator once called.
      *

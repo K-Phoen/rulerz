@@ -1,7 +1,8 @@
 tests: phpspec behat rusty
 
 rusty:
-	php ./bin/rusty check --no-execute src doc
+	php ./bin/rusty check --bootstrap-file=./vendor/autoload.php src
+	php ./bin/rusty check --no-execute doc
 
 behat:
 	php ./bin/behat --colors -vvv

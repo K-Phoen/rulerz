@@ -11,6 +11,18 @@ use RulerZ\Model;
 
 /**
  * Parses a rule.
+ *
+ * A valid rule returns an AST:
+ * ```
+ * $parser = new Parser;
+ * $ast = $parser->parse('foo = 42');
+ * ```
+ *
+ * And an invalid one throw an exception:
+ * ```should_throw
+ * $parser = new Parser;
+ * $parser->parse('foo = ');
+ * ```
  */
 class Parser implements Visitor\Visit
 {
