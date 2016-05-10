@@ -1,4 +1,4 @@
-tests: phpspec behat rusty
+tests: phpspec behat
 
 rusty:
 	php ./bin/rusty check --bootstrap-file=./vendor/autoload.php src

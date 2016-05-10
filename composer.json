@@ -52,9 +52,7 @@
         "coduo/phpspec-data-provider-extension": "~1.0,!=1.0.2",
         "phpspec/phpspec": "~2.0,>=2.4@dev",
 
-        "behat/behat": "~3.0",
-
-        "kphoen/rusty": "dev-master"
+        "behat/behat": "~3.0"
     },
     "suggest": {
         "kphoen/rulerz-spec-builder": "If you want a specification builder",
