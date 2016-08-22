@@ -20,7 +20,7 @@ class DoctrineAutoJoin
     private $detectedJoins = [];
 
     /**
-     * @var array<Entity,alias>
+     * @var array<Entity,array<dimmension,alias>
      */
     private $knownEntities = [];
 
@@ -39,17 +39,15 @@ class DoctrineAutoJoin
         $this->em = $em;
         $this->rootEntities = $rootEntities;
 
-        $this->knownEntities = array_combine($rootEntities, $rootAliases);
-        $this->aliasMap = array_flip($this->knownEntities);
+        $this->aliasMap = array_combine($rootAliases, $rootEntities);
 
         foreach ($existingJoins as $joins) {
             /** @var \Doctrine\ORM\Query\Expr\Join $join */
             foreach ($joins as $join) {
                 list($fromAlias, $attribute) = explode('.', $join->getJoin());
-                $relation = $this->getRelation($attribute, $this->aliasMap[$fromAlias]);
+                $relation = $this->getRelation($attribute, $this->getEntity($fromAlias));
 
-                $this->knownEntities[$relation['targetEntity']] = $join->getAlias();
-                $this->aliasMap[$join->getAlias()] = $relation['targetEntity'];
+                $this->saveAlias($relation['targetEntity'], $relation['fieldName'], $join->getAlias());
             }
         }
     }
@@ -67,6 +65,7 @@ class DoctrineAutoJoin
         array_unshift($dimensionNames, $element->getId());
 
         $currentEntity = current($this->rootEntities);
+        $lastAlias = array_flip($this->aliasMap)[$currentEntity];
 
         foreach ($dimensionNames as $i => $dimension) {
             if (!$this->em->getClassMetadata($currentEntity)) {
@@ -75,7 +74,8 @@ class DoctrineAutoJoin
 
             // the current dimension is an alias (a table already joined for instance)
             if (isset($this->aliasMap[$dimension])) {
-                $currentEntity = $this->aliasMap[$dimension];
+                $currentEntity = $this->getEntity($dimension);
+                $lastAlias = $this->getAlias($currentEntity, $dimension);
                 continue;
             }
 
@@ -85,20 +85,20 @@ class DoctrineAutoJoin
                 $classMetadata = $this->em->getClassMetadata($currentEntity);
                 $association = $classMetadata->getAssociationMapping($dimension);
 
-                if (!isset($this->knownEntities[$association['targetEntity']])) {
+                if (!isset($this->knownEntities[$currentEntity], $this->knownEntities[$currentEntity][$association['fieldName']])) {
                     $alias = sprintf('_%d_%s', count($this->knownEntities), $dimension);
 
-                    $this->knownEntities[$association['targetEntity']] = $alias;
-                    $this->aliasMap[$alias] = $association['targetEntity'];
+                    $this->saveAlias($currentEntity, $association['fieldName'], $alias);
                 }
 
                 $this->detectedJoins[] = [
-                    'root' => $this->knownEntities[$currentEntity],
+                    'root' => $lastAlias,
                     'column' => $dimension,
-                    'as' => $this->knownEntities[$association['targetEntity']],
+                    'as' => $alias = $this->getAlias($currentEntity, $association['fieldName']),
                 ];
 
                 $currentEntity = $association['targetEntity'];
+                $lastAlias = $alias;
                 continue;
             }
 
@@ -108,16 +108,15 @@ class DoctrineAutoJoin
                 $classMetadata = $this->em->getClassMetadata($currentEntity);
                 $embeddableMetadata = $classMetadata->embeddedClasses[$dimension];
 
-                $this->knownEntities[$embeddableMetadata['class']] = $this->knownEntities[$currentEntity] . '.' .$dimension;
                 $currentEntity = $embeddableMetadata['class'];
-
+                $lastAlias = $lastAlias.'.'.$dimension;
                 continue;
             }
 
             // or, at last, it's a column access.
             if ($this->columnExists($dimension, $currentEntity)) {
                 if (($i + 1) === count($dimensionNames)) {
-                    return sprintf('%s.%s', $this->knownEntities[$currentEntity], $dimension);
+                    return sprintf('%s.%s', $lastAlias, $dimension);
                 }
 
                 throw new \RuntimeException('Found scalar attribute in the middle of an access path.');
@@ -125,6 +124,8 @@ class DoctrineAutoJoin
 
             throw new \Exception(sprintf('"%s" not found for entity "%s"', $dimension, $currentEntity));
         }
+
+        return $lastAlias;
     }
 
     private function columnExists($name, $rootEntity)
@@ -157,5 +158,25 @@ class DoctrineAutoJoin
         $classMetadata = $this->em->getClassMetadata($rootEntity);
 
         return isset($classMetadata->embeddedClasses) && isset($classMetadata->embeddedClasses[$name]);
+    }
+
+    private function saveAlias(string $entity, string $dimension, string $alias)
+    {
+        if (!isset($this->knownEntities[$entity])) {
+            $this->knownEntities[$entity] = [];
+        }
+
+        $this->knownEntities[$entity][$dimension] = $alias;
+        $this->aliasMap[$alias] = $entity;
+    }
+
+    private function getAlias(string $entity, string $dimension)
+    {
+        return $this->knownEntities[$entity][$dimension];
+    }
+
+    private function getEntity(string $entity)
+    {
+        return $this->aliasMap[$entity];
     }
 }
