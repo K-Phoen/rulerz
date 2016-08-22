@@ -37,7 +37,7 @@ class DoctrineAutoJoin
     public function __construct(EntityManager $em, array $rootEntities, array $rootAliases, array $existingJoins)
     {
         $this->em = $em;
-        $this->rootEntities = $rootEntities;
+        $this->rootEntities = array_combine($rootAliases, $rootEntities);
 
         $this->aliasMap = array_combine($rootAliases, $rootEntities);
 
@@ -65,7 +65,7 @@ class DoctrineAutoJoin
         array_unshift($dimensionNames, $element->getId());
 
         $currentEntity = current($this->rootEntities);
-        $lastAlias = array_flip($this->aliasMap)[$currentEntity];
+        $lastAlias = key($this->aliasMap);
 
         foreach ($dimensionNames as $i => $dimension) {
             if (!$this->em->getClassMetadata($currentEntity)) {

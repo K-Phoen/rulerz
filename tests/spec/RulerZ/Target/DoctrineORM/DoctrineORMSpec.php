@@ -87,7 +87,7 @@ class DoctrineORMSpec extends BaseTargetBehavior
     {
         $context = $this->createContext();
         $rule = 'group.name = "ADMIN"';
-        $expectedRule = '"_1_group.name = \'ADMIN\'"';
+        $expectedRule = '"_0_group.name = \'ADMIN\'"';
 
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule), $context);
@@ -97,7 +97,7 @@ class DoctrineORMSpec extends BaseTargetBehavior
                 [
                     'root' => 'player',
                     'column' => 'group',
-                    'as' => '_1_group',
+                    'as' => '_0_group',
                 ]
             ],
         ]);
