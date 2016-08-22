@@ -160,7 +160,7 @@ class DoctrineAutoJoin
         return isset($classMetadata->embeddedClasses) && isset($classMetadata->embeddedClasses[$name]);
     }
 
-    private function saveAlias(string $entity, string $dimension, string $alias)
+    private function saveAlias($entity, $dimension, $alias)
     {
         if (!isset($this->knownEntities[$entity])) {
             $this->knownEntities[$entity] = [];
@@ -170,12 +170,12 @@ class DoctrineAutoJoin
         $this->aliasMap[$alias] = $entity;
     }
 
-    private function getAlias(string $entity, string $dimension)
+    private function getAlias($entity, $dimension)
     {
         return $this->knownEntities[$entity][$dimension];
     }
 
-    private function getEntity(string $entity)
+    private function getEntity($entity)
     {
         return $this->aliasMap[$entity];
     }
