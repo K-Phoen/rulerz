@@ -17,7 +17,7 @@ trait FilterTrait
         /** @var \Doctrine\ORM\QueryBuilder $target */
 
         foreach ($this->detectedJoins as $join) {
-            $target->join(sprintf('%s.%s', $join['root'], $join['column']), $join['as']);
+            $target->leftJoin(sprintf('%s.%s', $join['root'], $join['column']), $join['as']);
         }
 
         // this will return DQL code
