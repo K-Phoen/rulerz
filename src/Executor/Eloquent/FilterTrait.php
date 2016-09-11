@@ -32,6 +32,6 @@ trait FilterTrait
     {
         $query = $this->applyFilter($target, $parameters, $operators, $context);
 
-        return IteratorTools::fromArray($query->get());
+        return $query->get();
     }
 }

@@ -28,7 +28,7 @@ $compiler = new \RulerZ\Compiler\Compiler(new \RulerZ\Compiler\EvalEvaluator());
 // RulerZ engine
 $rulerz = new \RulerZ\RulerZ(
     $compiler, [
-        new \RulerZ\Compiler\Target\Sql\Eloquent(),
+        new \RulerZ\Target\Eloquent\Eloquent(),
     ]
 );
 $qb = Player::query();
