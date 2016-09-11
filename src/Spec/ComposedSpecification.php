@@ -8,7 +8,7 @@ namespace RulerZ\Spec;
  * Sample usage:
  *
  * ```
- * class AccessibleBy extends \RulerZ\Spec\SpecificationSpecification
+ * class AccessibleBy extends \RulerZ\Spec\ComposedSpecification
  * {
  *     private $user;
  *
