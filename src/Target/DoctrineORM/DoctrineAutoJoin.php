@@ -75,7 +75,7 @@ class DoctrineAutoJoin
             // the current dimension is an alias (a table already joined for instance)
             if (isset($this->aliasMap[$dimension])) {
                 $currentEntity = $this->getEntity($dimension);
-                $lastAlias = $this->getAlias($currentEntity, $dimension);
+                $lastAlias = $dimension;
                 continue;
             }
 
