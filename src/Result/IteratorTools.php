@@ -9,6 +9,19 @@ use ArrayIterator;
  */
 class IteratorTools
 {
+    public static function ensureTraversable($items)
+    {
+        if ($items instanceof \Traversable) {
+            return $items;
+        }
+
+        if (is_array($items)) {
+            return self::fromArray($items);
+        }
+
+        throw new \InvalidArgumentException('Un-handled argument of type: '.get_class($items));
+    }
+
     /**
      * Creates an iterator from an array.
      *

@@ -32,6 +32,6 @@ trait FilterTrait
     {
         $query = $this->applyFilter($target, $parameters, $operators, $context);
 
-        return $query->get();
+        return IteratorTools::ensureTraversable($query->get());
     }
 }
