@@ -44,7 +44,7 @@ class FilterTraitSpec extends ObjectBehavior
 
         DoctrineORMExecutorStub::$executeReturn = $dql;
 
-        $target->join('root_alias.join_column', 'join_alias')->shouldBeCalled();
+        $target->leftJoin('root_alias.join_column', 'join_alias')->shouldBeCalled();
         $target->setParameter('foo', 'bar')->shouldBeCalled();
         $target->andWhere($dql)->shouldBeCalled();
 
@@ -65,7 +65,7 @@ class FilterTraitSpec extends ObjectBehavior
 
         DoctrineORMExecutorStub::$executeReturn = $dql;
 
-        $target->join('root_alias.join_column', 'join_alias')->shouldBeCalled();
+        $target->leftJoin('root_alias.join_column', 'join_alias')->shouldBeCalled();
         $target->setParameter('foo', 'bar')->shouldBeCalled();
         $target->andWhere($dql)->shouldBeCalled();
         $target->getQuery()->willReturn($query);
