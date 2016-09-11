@@ -4,6 +4,7 @@ namespace spec\RulerZ\Executor\Eloquent;
 
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Support\Collection as EloquentCollection;
 use PhpSpec\ObjectBehavior;
 
 use RulerZ\Context\ExecutionContext;
@@ -33,7 +34,7 @@ class FilterTraitSpec extends ObjectBehavior
 
     function it_handles_query_builders(QueryBuilder $queryBuilder)
     {
-        $results    = ['result'];
+        $results    = new EloquentCollection(['result']);
         $parameters = [];
         $sql        = 'sql query';
 
@@ -46,7 +47,7 @@ class FilterTraitSpec extends ObjectBehavior
 
     function it_handles_eloquent_builders(EloquentBuilder $eloquentBuilder, QueryBuilder $builder)
     {
-        $results    = ['result'];
+        $results    = new EloquentCollection(['result']);
         $parameters = [];
         $sql        = 'sql query';
 
