@@ -9,6 +9,22 @@ use ArrayIterator;
  */
 class IteratorTools
 {
+    /**
+     * Ensures that the given items are \Traversable.
+     *
+     * Usage:
+     *
+     * ```
+     * IteratorTools::ensureTraversable([1, 2, 3]);
+     * IteratorTools::ensureTraversable(new \ArrayIterator([1, 2, 3]));
+     * ```
+     *
+     * @param $items
+     *
+     * @return \Traversable
+     *
+     * @throws \InvalidArgumentException
+     */
     public static function ensureTraversable($items)
     {
         if ($items instanceof \Traversable) {
