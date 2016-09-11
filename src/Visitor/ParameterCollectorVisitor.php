@@ -15,6 +15,16 @@ class ParameterCollectorVisitor extends Visitor
     /**
      * {@inheritDoc}
      */
+    public function getCompilationData()
+    {
+        return [
+            'parameters' => $this->parameters,
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
     {
         $this->parameters[$element->getName()] = $element;
