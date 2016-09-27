@@ -45,12 +45,13 @@ class Player
      */
     public $address;
 
-    public function __construct($pseudo, $fullname, $gender, $age, $points)
+    public function __construct($pseudo, $fullname, $gender, $age, $points, $group = null)
     {
         $this->pseudo   = $pseudo;
         $this->fullname = $fullname;
         $this->gender   = $gender;
         $this->age      = $age;
         $this->points   = $points;
+        $this->group    = $group;
     }
 }
