@@ -1,6 +1,7 @@
 <?php
 
 use Entity\Doctrine\Player;
+use Entity\Doctrine\Group;
 
 class ArrayContext extends BaseContext
 {
@@ -52,13 +53,19 @@ class ArrayContext extends BaseContext
 
     private function getArrayOfObjectsDataset()
     {
+        $groups = [
+            new Group('Océania'),
+            new Group('Eurasia'),
+            new Group('Estasia'),
+        ];
+
         return [
-            new Player('Joe',      'Joe la frite',      'M', 34,  2500),
-            new Player('Bob',      'Bob Morane',        'M', 62,  9001),
-            new Player('Ada',      'Ada Lovelace',      'F', 175, 10000),
-            new Player('Kévin',    'Yup, that is me.',  'M', 24,  100),
-            new Player('Margaret', 'Margaret Hamilton', 'F', 78,  5000),
-            new Player('Alice',    'Alice foo',         'F', 30,  175),
+            new Player('Joe',      'Joe la frite',      'M', 34,  2500,  $groups[2]),
+            new Player('Bob',      'Bob Morane',        'M', 62,  9001,  $groups[0]),
+            new Player('Ada',      'Ada Lovelace',      'F', 175, 10000, $groups[1]),
+            new Player('Kévin',    'Yup, that is me.',  'M', 24,  100,   $groups[1]),
+            new Player('Margaret', 'Margaret Hamilton', 'F', 78,  5000,  $groups[2]),
+            new Player('Alice',    'Alice foo',         'F', 30,  175,   $groups[0]),
         ];
     }
 }

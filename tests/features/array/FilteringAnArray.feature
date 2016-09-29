@@ -21,3 +21,15 @@ Feature: RulerZ can filter an array
         Then I should have the following results:
             | pseudo | points |
             | Ada    | 10000  |
+
+    Scenario: It works with nested objects
+        Given RulerZ is configured
+        And I use the array of objects dataset
+        When I filter the dataset with the rule:
+            """
+            group.name = "Estasia"
+            """
+        Then I should have the following results:
+            | pseudo   |
+            | Joe      |
+            | Margaret |
