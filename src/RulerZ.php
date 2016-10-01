@@ -11,6 +11,11 @@ use RulerZ\Spec\Specification;
 class RulerZ
 {
     /**
+     * @var Compiler
+     */
+    private $compiler;
+
+    /**
      * @var array<CompilationTarget>
      */
     private $compilationTargets = [];
