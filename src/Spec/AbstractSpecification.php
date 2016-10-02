@@ -34,7 +34,7 @@ abstract class AbstractSpecification implements Specification
     /**
      * Negate the current specification.
      *
-     * @return Specification
+     * @return Not
      */
     public function not()
     {

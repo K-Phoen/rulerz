@@ -5,7 +5,7 @@ namespace RulerZ\Spec;
 /**
  * Negates a specification.
  */
-class Not implements Specification
+class Not extends AbstractSpecification
 {
     /**
      * @var Specification
