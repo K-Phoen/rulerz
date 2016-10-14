@@ -62,6 +62,8 @@ class Parser implements Visitor\Visit
             );
         }
 
+        $this->nextParameterIndex = 0;
+
         return $this->visit($this->parser->parse($rule));
     }
 

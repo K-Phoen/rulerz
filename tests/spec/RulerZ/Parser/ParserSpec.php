@@ -62,4 +62,23 @@ class ParserSpec extends ObjectBehavior
             [ 'name.foo() = "a"' ],
         ];
     }
+
+    function it_converts_positional_parameters_to_indexed_ones()
+    {
+        $model = $this->parse('name = ?');
+        $parameters = $model->getParameters();
+
+        $parameters->shouldHaveCount(1);
+        $parameters[0]->getName()->shouldBe(0);
+    }
+
+    function it_can_parse_several_rules_and_generate_valid_indexes_for_parameters()
+    {
+        $this->parse('name = ?');
+        $model = $this->parse('name = ?');
+        $parameters = $model->getParameters();
+
+        $parameters->shouldHaveCount(1);
+        $parameters[0]->getName()->shouldBe(0);
+    }
 }
