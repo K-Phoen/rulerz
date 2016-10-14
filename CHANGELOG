@@ -3,6 +3,66 @@ VERSION 0  FIXED ELASTICSEARCH-RELATED TARGETS
 ==============================================
 
    Version 0.19 - Add a way to retrieve the parameters used in a rule
+      14/10/2016 11:47  0.19.2  Fix positional parameters numbering
+         28d6c10 Initialize positional parameter index before parsing a rule
+         d50588e The Not specification should be composable
+         d655bd3 Fix usage of undeclared property
+         10e6bad Merge pull request #51 from jdeniau/master
+         35ae664 add test for nested object
+         3d9bc00 Add a few tests for the OperatorCollector visitor
+         2676832 Fix the ParameterCollector visitor
+         cd12e32 Add doc
+         b7abcdb Ensure traversable
+         7105b6b Update Eloquent/FilterTraitSpec
+         b1a50a4 Fix eloquent target
+         7965065 Fix Doctrine auto-join for pre-joined tables
+         fbc03cc Fix ComposedSpecification code sample
+         d96bd9c Add composer cache directory to the builds cache
+         d1c2e6d Fix some DoctrineORM/FilterTrait tests
+         ba813f1 Add a shortcut to launch all docker instances
+         71b2176 Wrap object as long as they are not scalars
+         c2bbd74 Make doctrine executor do left-joins by default
+         7d9e02f PHP <7 compatibility
+         43303bf Fix tests
+         24820b6 Improve the doctrine auto-join
+         10d0932 Introduce the ComposedSpecification class
+         988d8e6 Only use rusty when PHP 7.0 is installed
+         48ab08c Add a few code samples
+         c91d954 Fix errors spotted by Rusty
+         914a781 Include rusty in the test-suite
+         9a27b85 Merge pull request #47 from jdecool/patch-1
+         8938ab9 Fix typo in specifications documentation
+         10f0f36 Merge branch 'fix-positional-parameters'
+         60a9349 The positional parameters-related test should not be Doctrine-specific
+         d5b0540 Add a few missing test cases for positional parameters and Doctrine ORM
+         6c77a16 Fix support for positional parameters in Doctrine ORM
+         073c54f Merge branch 'doctrine-compile-time-metadata'
+         6bf4cc8 Add a few missing docblocks
+         33854ac Remove obscure test file
+         6587a74 Improve a bit DoctrineORM tests
+         3dde09f Fix DoctrineAutoJoin
+         1f0f6d0 Update DoctrineORM target tests
+         a93d957 Moar tests
+         b407218 Fix the Doctrine FilterTrait spec
+         8912584 Skip tests for not implemented features
+         01d8c56 Delete outdated tests
+         cddc0b9 Refactor a bit the target tests
+         74191a1 Add tests for the Elasticsearch targets
+         3022e3d Add tests for the DoctrineDBAL target
+         4365379 Add tests for the Solarium target
+         99214c7 Add tests for the Eloquent target
+         68be217 Add a bit of documentation about joins and the doctrine ORM target
+         70e550d WIP
+         dd37687 Refactor the operators definition
+         8d9d8cf Fix elasticsearch and solarium bootstrap files
+         280004b Fixed Compiler and Evaluator-related tests
+         fdcb498 Fixed parser tests
+         27d28d5 Reorganize compilation targets
+         c3d2baf Remove useless comments
+         ef473c2 Simplify even more compiler instanciation
+         ab212fc Simplify the compiler instanciation
+         6da42cd Clear split between compilation targets and visitors
+         c7a4e1d WIP
       18/03/2016 08:34  0.19.1  Compilation issue with DoctrineORM target
          4dafc3d Reset the detected joins when visiting a new model
          d38046c Add a few test cases with UTF-8 operators
