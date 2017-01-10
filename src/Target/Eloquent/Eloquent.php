@@ -2,6 +2,7 @@
 
 namespace RulerZ\Target\Eloquent;
 
+use RulerZ\Compiler\Context;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
@@ -9,6 +10,25 @@ use RulerZ\Target\AbstractSqlTarget;
 
 class Eloquent extends AbstractSqlTarget
 {
+    /**
+     * Allow eloquent builder as query.
+     *
+     * @var bool
+     */
+    protected $allowEloquentBuilderAsQuery = false;
+
+    /**
+     * Constructor.
+     *
+     * @param bool            $allowEloquentBuilderAsQuery Whether to allow the execution target to be eloquent builder instead of query builder.
+     */
+    public function __construct($allowEloquentBuilderAsQuery = false)
+    {
+        parent::__construct();
+
+        $this->allowEloquentBuilderAsQuery = (bool) $allowEloquentBuilderAsQuery;
+    }
+
     /**
      * @inheritDoc
      */
@@ -26,5 +46,13 @@ class Eloquent extends AbstractSqlTarget
             '\RulerZ\Executor\Eloquent\FilterTrait',
             '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function createVisitor(Context $context)
+    {
+        return new EloquentVisitor($context, $this->getOperators(), $this->allowStarOperator, $this->allowEloquentBuilderAsQuery);
     }
 }
