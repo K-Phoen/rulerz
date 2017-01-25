@@ -54,7 +54,7 @@ class Compiler
         $executorModel = $compilationTarget->compile($ast, $context);
 
         $flattenedTraits = implode(PHP_EOL, array_map(function($trait) {
-            return "\t" . 'use ' . $trait . ';';
+            return "\t" . 'use \\' . ltrim($trait, '\\') . ';';
         }, $executorModel->getTraits()));
 
         $extraCode = '';
