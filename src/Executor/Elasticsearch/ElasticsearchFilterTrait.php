@@ -10,7 +10,7 @@ trait ElasticsearchFilterTrait
     abstract protected function execute($target, array $operators, array $parameters);
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function applyFilter($target, array $parameters, array $operators, ExecutionContext $context)
     {
@@ -18,7 +18,7 @@ trait ElasticsearchFilterTrait
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function filter($target, array $parameters, array $operators, ExecutionContext $context)
     {
@@ -28,15 +28,15 @@ trait ElasticsearchFilterTrait
         /** @var \Elasticsearch\Client $target */
         $results = $target->search([
             'index' => $context['index'],
-            'type'  => $context['type'],
-            'body'  => ['query' => $searchQuery],
+            'type' => $context['type'],
+            'body' => ['query' => $searchQuery],
         ]);
 
         if (empty($results['hits'])) {
             return IteratorTools::fromArray([]);
         }
 
-        return IteratorTools::fromArray(array_map(function($result) {
+        return IteratorTools::fromArray(array_map(function ($result) {
             return $result['_source'];
         }, $results['hits']['hits']));
     }

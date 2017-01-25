@@ -28,7 +28,7 @@ class Eloquent extends AbstractSqlTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function supports($target, $mode)
     {
@@ -36,7 +36,7 @@ class Eloquent extends AbstractSqlTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getExecutorTraits()
     {
@@ -47,7 +47,7 @@ class Eloquent extends AbstractSqlTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function createVisitor(Context $context)
     {

@@ -12,7 +12,7 @@ class AccessCollectorVisitor extends Visitor
     private $accesses = [];
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getCompilationData()
     {
@@ -22,7 +22,7 @@ class AccessCollectorVisitor extends Visitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
@@ -30,7 +30,7 @@ class AccessCollectorVisitor extends Visitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
     {

@@ -34,11 +34,11 @@ class Compiler
     public function compile($rule, CompilationTarget $target, Context $context)
     {
         $context['rule_identifier'] = $this->getRuleIdentifier($target, $rule);
-        $context['executor_classname'] = 'Executor_' . $context['rule_identifier'];
-        $context['executor_fqcn'] = '\RulerZ\Compiled\Executor\\Executor_' . $context['rule_identifier'];
+        $context['executor_classname'] = 'Executor_'.$context['rule_identifier'];
+        $context['executor_fqcn'] = '\RulerZ\Compiled\Executor\\Executor_'.$context['rule_identifier'];
 
         if (!class_exists($context['executor_fqcn'], false)) {
-            $compiler = function() use ($rule, $target, $context) {
+            $compiler = function () use ($rule, $target, $context) {
                 return $this->compileToSource($rule, $target, $context);
             };
 
@@ -53,13 +53,13 @@ class Compiler
         $ast = $this->parser->parse($rule);
         $executorModel = $compilationTarget->compile($ast, $context);
 
-        $flattenedTraits = implode(PHP_EOL, array_map(function($trait) {
-            return "\t" . 'use \\' . ltrim($trait, '\\') . ';';
+        $flattenedTraits = implode(PHP_EOL, array_map(function ($trait) {
+            return "\t".'use \\'.ltrim($trait, '\\').';';
         }, $executorModel->getTraits()));
 
         $extraCode = '';
         foreach ($executorModel->getCompiledData() as $key => $value) {
-            $extraCode .= sprintf('private $%s = %s;' . PHP_EOL, $key, var_export($value, true));
+            $extraCode .= sprintf('private $%s = %s;'.PHP_EOL, $key, var_export($value, true));
         }
 
         return <<<EXECUTOR
@@ -84,6 +84,6 @@ EXECUTOR;
 
     protected function getRuleIdentifier(CompilationTarget $compilationTarget, $rule)
     {
-        return hash('crc32b', get_class($compilationTarget) . $rule);
+        return hash('crc32b', get_class($compilationTarget).$rule);
     }
 }

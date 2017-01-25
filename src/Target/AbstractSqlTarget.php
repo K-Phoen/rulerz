@@ -17,7 +17,7 @@ abstract class AbstractSqlTarget extends AbstractCompilationTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function createVisitor(Context $context)
     {
@@ -25,7 +25,7 @@ abstract class AbstractSqlTarget extends AbstractCompilationTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getOperators()
     {

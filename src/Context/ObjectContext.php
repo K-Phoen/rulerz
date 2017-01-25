@@ -23,12 +23,12 @@ class ObjectContext implements \ArrayAccess
      */
     public function __construct($object)
     {
-        $this->object   = $object;
+        $this->object = $object;
         $this->accessor = PropertyAccess::createPropertyAccessor();
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function offsetGet($id)
     {
@@ -42,7 +42,7 @@ class ObjectContext implements \ArrayAccess
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function offsetExists($id)
     {
@@ -50,7 +50,7 @@ class ObjectContext implements \ArrayAccess
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function offsetSet($id, $value)
     {
@@ -58,7 +58,7 @@ class ObjectContext implements \ArrayAccess
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function offsetUnset($id)
     {

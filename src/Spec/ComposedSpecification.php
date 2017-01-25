@@ -36,7 +36,7 @@ abstract class ComposedSpecification extends AbstractSpecification
     abstract protected function getSpecification();
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getRule()
     {
@@ -46,7 +46,7 @@ abstract class ComposedSpecification extends AbstractSpecification
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getParameters()
     {

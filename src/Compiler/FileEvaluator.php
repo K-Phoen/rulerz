@@ -15,11 +15,11 @@ class FileEvaluator implements Evaluator
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function evaluate($ruleIdentifier, callable $compiler)
     {
-        $fileName = $this->directory . DIRECTORY_SEPARATOR . 'rulerz_executor_' . $ruleIdentifier;
+        $fileName = $this->directory.DIRECTORY_SEPARATOR.'rulerz_executor_'.$ruleIdentifier;
 
         if (!file_exists($fileName)) {
             file_put_contents($fileName, '<?php'."\n".$compiler());

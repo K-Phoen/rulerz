@@ -9,14 +9,15 @@ use RulerZ\Target\AbstractSqlTarget;
 class DoctrineDBAL extends AbstractSqlTarget
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function supports($target, $mode)
     {
         return $target instanceof QueryBuilder;
     }
+
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getExecutorTraits()
     {

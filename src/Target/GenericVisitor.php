@@ -21,7 +21,7 @@ abstract class GenericVisitor implements RuleVisitor
     protected $operators;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @note The aim of this method is to be overriden.
      */
@@ -36,7 +36,7 @@ abstract class GenericVisitor implements RuleVisitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visit(VisitorElement $element, &$handle = null, $eldnah = null)
     {
@@ -68,7 +68,7 @@ abstract class GenericVisitor implements RuleVisitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
     {
@@ -76,7 +76,7 @@ abstract class GenericVisitor implements RuleVisitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitScalar(AST\Bag\Scalar $element, &$handle = null, $eldnah = null)
     {
@@ -84,7 +84,7 @@ abstract class GenericVisitor implements RuleVisitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitArray(AST\Bag\RulerArray $element, &$handle = null, $eldnah = null)
     {
@@ -94,7 +94,7 @@ abstract class GenericVisitor implements RuleVisitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitOperator(AST\Operator $element, &$handle = null, $eldnah = null)
     {
@@ -117,7 +117,7 @@ abstract class GenericVisitor implements RuleVisitor
             return call_user_func_array($callable, $arguments);
         }
 
-        $inlinedArguments = empty($arguments) ? '' : ', ' . implode(', ', $arguments);
+        $inlinedArguments = empty($arguments) ? '' : ', '.implode(', ', $arguments);
 
         // or defer it.
         return sprintf('call_user_func($operators["%s"]%s)', $operatorName, $inlinedArguments);

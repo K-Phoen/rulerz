@@ -47,7 +47,7 @@ class FilterTraitSpec extends ObjectBehavior
         $modelStub->findCustom($whereClause)->willReturn($results);
 
         $this->filter($modelStub, $parameters = [], $operators = [], new ExecutionContext([
-            'method' => 'findCustom'
+            'method' => 'findCustom',
         ]))->shouldReturnResults($results);
     }
 }

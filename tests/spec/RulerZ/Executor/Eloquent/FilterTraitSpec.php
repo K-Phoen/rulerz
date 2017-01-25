@@ -23,7 +23,7 @@ class FilterTraitSpec extends ObjectBehavior
     function it_can_apply_a_filter_on_a_target(QueryBuilder $queryBuilder)
     {
         $parameters = [];
-        $sql        = 'sql query';
+        $sql = 'sql query';
 
         EloquentExecutorStub::$executeReturn = $sql;
         $queryBuilder->whereRaw($sql, $parameters)->shouldBeCalled();
@@ -34,9 +34,9 @@ class FilterTraitSpec extends ObjectBehavior
 
     function it_handles_query_builders(QueryBuilder $queryBuilder)
     {
-        $results    = new EloquentCollection(['result']);
+        $results = new EloquentCollection(['result']);
         $parameters = [];
-        $sql        = 'sql query';
+        $sql = 'sql query';
 
         EloquentExecutorStub::$executeReturn = $sql;
         $queryBuilder->whereRaw($sql, $parameters)->shouldBeCalled();
@@ -47,9 +47,9 @@ class FilterTraitSpec extends ObjectBehavior
 
     function it_handles_eloquent_builders(EloquentBuilder $eloquentBuilder, QueryBuilder $builder)
     {
-        $results    = new EloquentCollection(['result']);
+        $results = new EloquentCollection(['result']);
         $parameters = [];
-        $sql        = 'sql query';
+        $sql = 'sql query';
 
         EloquentExecutorStub::$executeReturn = $sql;
         $eloquentBuilder->getQuery()->willReturn($builder);

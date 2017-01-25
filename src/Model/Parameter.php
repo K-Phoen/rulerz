@@ -39,6 +39,7 @@ class Parameter implements Visitor\Element
      * @param   \Hoa\Visitor\Visit  $visitor    Visitor.
      * @param   mixed               &$handle    Handle (reference).
      * @param   mixed               $eldnah     Handle (no reference).
+     *
      * @return  mixed
      */
     public function accept(Visitor\Visit $visitor, &$handle = null, $eldnah = null)

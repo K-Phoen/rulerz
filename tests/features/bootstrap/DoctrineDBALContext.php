@@ -11,19 +11,19 @@ class DoctrineDBALContext extends BaseContext
     private $connection;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function initialize()
     {
         $connectionParams = [
             'driver' => 'pdo_sqlite',
-            'path'   => __DIR__.'/../../../examples/rulerz.db', // meh.
+            'path' => __DIR__.'/../../../examples/rulerz.db', // meh.
         ];
         $this->connection = DriverManager::getConnection($connectionParams, new Configuration());
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getCompilationTarget()
     {
@@ -31,7 +31,7 @@ class DoctrineDBALContext extends BaseContext
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getDefaultDataset()
     {

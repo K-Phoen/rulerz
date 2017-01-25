@@ -39,24 +39,24 @@ class FilterTraitSpec extends ObjectBehavior
             '_shards' => [],
             'hits' => [
                 'total' => 1,
-                'hits'  => [
+                'hits' => [
                     ['_source' => 'first document'],
-                    ['_source' => 'other document' ],
+                    ['_source' => 'other document'],
                 ],
-            ]
+            ],
         ];
         $esQuery = ['array with the ES query'];
 
         ElasticsearchExecutorStub::$executeReturn = $esQuery;
         $target->search([
             'index' => 'es_index',
-            'type'  => 'es_type',
-            'body'  => ['query' => $esQuery],
+            'type' => 'es_type',
+            'body' => ['query' => $esQuery],
         ])->willReturn($result);
 
         $this->filter($target, $parameters = [], $operators = [], new ExecutionContext([
             'index' => 'es_index',
-            'type'  => 'es_type',
+            'type' => 'es_type',
         ]))->shouldReturnResults($documents);
     }
 

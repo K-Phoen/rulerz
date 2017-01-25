@@ -10,8 +10,8 @@ $client = new Solarium\Client([
             'port' => $_ENV['SOLR_PORT'],
             'path' => $_ENV['SOLR_PATH'],
             'core' => $_ENV['SOLR_CORE'],
-        ]
-    ]
+        ],
+    ],
 ]);
 
 // compiler

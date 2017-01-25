@@ -16,7 +16,7 @@ class FileEvaluatorSpec extends ObjectBehavior
     function let()
     {
         $this->codeDirectory = vfsStream::setup('some_directory', null, [
-            'rulerz_executor_foo' => '<?php class DummyExecutor {}'
+            'rulerz_executor_foo' => '<?php class DummyExecutor {}',
         ]);
 
         $this->beConstructedWith($this->codeDirectory->url());
@@ -40,7 +40,7 @@ class FileEvaluatorSpec extends ObjectBehavior
     function it_uses_the_compiler_if_no_file_exists()
     {
         $ruleIdentifier = 'identifier that does not already exists';
-        $compilerCallable = function() { return 'class NewDummyExecutor {}'; };
+        $compilerCallable = function () { return 'class NewDummyExecutor {}'; };
 
         $this->evaluate($ruleIdentifier, $compilerCallable);
         $this->shouldHaveLoaded('NewDummyExecutor');

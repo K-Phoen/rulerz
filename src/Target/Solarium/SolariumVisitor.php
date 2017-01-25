@@ -10,17 +10,17 @@ use RulerZ\Target\GenericVisitor;
 class SolariumVisitor extends GenericVisitor
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
     {
         $searchQuery = parent::visitModel($element, $handle, $eldnah);
 
-        return "'" . $searchQuery . "'";
+        return "'".$searchQuery."'";
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
@@ -28,7 +28,7 @@ class SolariumVisitor extends GenericVisitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitScalar(AST\Bag\Scalar $element, &$handle = null, $eldnah = null)
     {
@@ -38,7 +38,7 @@ class SolariumVisitor extends GenericVisitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
     {

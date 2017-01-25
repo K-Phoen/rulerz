@@ -2,8 +2,6 @@
 
 namespace Entity\Doctrine;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 /**
  * @Entity
  * @Table(name="groups")

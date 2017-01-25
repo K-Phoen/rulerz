@@ -23,7 +23,7 @@ trait ElasticsearchVisitorExamples
     function it_can_compile_a_simple_rule()
     {
         $rule = 'points > 30';
-        $expectedQuery = <<<QUERY
+        $expectedQuery = <<<'QUERY'
 [
     'bool' => ['must' => [
                 'range' => [
@@ -41,7 +41,7 @@ QUERY;
     function it_handles_nested_accesses()
     {
         $rule = 'user.stats.points > 30';
-        $expectedQuery = <<<QUERY
+        $expectedQuery = <<<'QUERY'
 [
     'bool' => ['must' => [
                 'range' => [

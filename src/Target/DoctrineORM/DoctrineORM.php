@@ -10,7 +10,7 @@ use RulerZ\Target\AbstractSqlTarget;
 class DoctrineORM extends AbstractSqlTarget
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function supports($target, $mode)
     {
@@ -18,11 +18,11 @@ class DoctrineORM extends AbstractSqlTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function createCompilationContext($target)
     {
-        /** @var \Doctrine\ORM\QueryBuilder $target */
+        /* @var \Doctrine\ORM\QueryBuilder $target */
 
         return new Context([
             'root_aliases' => $target->getRootAliases(),
@@ -33,7 +33,7 @@ class DoctrineORM extends AbstractSqlTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function createVisitor(Context $context)
     {
@@ -41,7 +41,7 @@ class DoctrineORM extends AbstractSqlTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getExecutorTraits()
     {

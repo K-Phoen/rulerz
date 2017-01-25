@@ -5,9 +5,9 @@ use Entity\Doctrine\Player;
 list($entityManager, $rulerz) = require __DIR__ . '/bootstrap/bootstrap_doctrine.php';
 
 // 1. Write a rule.
-$rule  = 'gender = :gender and points > :points';
-$rule  = 'gender = :gender and group.role.name = "ROLE_ADMIN"';
-$rule  = 'gender = :gender and address.city = "Paoli" and gr.role.name = "ROLE_PLAYER"';
+$rule = 'gender = :gender and points > :points';
+$rule = 'gender = :gender and group.role.name = "ROLE_ADMIN"';
+$rule = 'gender = :gender and address.city = "Paoli" and gr.role.name = "ROLE_PLAYER"';
 
 // 2. Define a few targets to filter
 
@@ -39,12 +39,11 @@ $parameters = [
 ];
 
 $players = $rulerz->filter($playersQb, $rule, $parameters);
-var_dump(array_map(function($player) {
+var_dump(array_map(function ($player) {
     return $player->pseudo;
 }, iterator_to_array($players)));
 //var_dump($rulerz->filter($playersArr, $rule, $parameters));
 //var_dump($rulerz->filter($playersObj, $rule, $parameters));
-
 
 // check if a target satisfies a rule
 //var_dump($rulerz->satisfies($playersQb, $rule, $parameters));

@@ -8,7 +8,7 @@ class SolariumContext extends BaseContext
     private $client;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function initialize()
     {
@@ -19,18 +19,18 @@ class SolariumContext extends BaseContext
                     'port' => $_ENV['SOLR_PORT'],
                     'path' => $_ENV['SOLR_PATH'],
                     'core' => $_ENV['SOLR_CORE'],
-                ]
-            ]
+                ],
+            ],
         ]);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getCompilationTarget()
     {
         $visitor = new \RulerZ\Target\Solarium\Solarium();
-        $visitor->defineInlineOperator('boost', function($expression, $factor) {
+        $visitor->defineInlineOperator('boost', function ($expression, $factor) {
             return sprintf('%s^%d', $expression, $factor);
         });
 
@@ -38,7 +38,7 @@ class SolariumContext extends BaseContext
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getDefaultDataset()
     {

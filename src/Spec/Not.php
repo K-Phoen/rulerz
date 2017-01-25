@@ -23,7 +23,7 @@ class Not extends AbstractSpecification
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getRule()
     {
@@ -31,7 +31,7 @@ class Not extends AbstractSpecification
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getParameters()
     {

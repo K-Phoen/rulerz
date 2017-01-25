@@ -7,7 +7,7 @@ use RulerZ\Exception\ParameterOverridenException;
 class Composite implements Specification
 {
     /**
-     * @var string $operator
+     * @var string
      */
     private $operator;
 
@@ -32,7 +32,7 @@ class Composite implements Specification
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getRule()
     {
@@ -42,7 +42,7 @@ class Composite implements Specification
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getParameters()
     {
@@ -59,12 +59,12 @@ class Composite implements Specification
         // error handling in case of overriden parameters
         if ($parametersCount !== count($mergedParameters)) {
             $overridenParameters = $this->searchOverridenParameters($parametersList);
-            $specificationsTypes = array_map(function(Specification $spec) {
+            $specificationsTypes = array_map(function (Specification $spec) {
                 return get_class($spec);
             }, $this->specifications);
 
             throw new ParameterOverridenException(sprintf(
-                'Looks like some parameters were overriden (%s) while combining specifications of types %s' . "\n" .
+                'Looks like some parameters were overriden (%s) while combining specifications of types %s'."\n".
                 'More information on how to solve this can be found here: https://github.com/K-Phoen/rulerz/issues/3',
                 implode(', ', $overridenParameters),
                 implode(', ', $specificationsTypes)
@@ -85,18 +85,18 @@ class Composite implements Specification
     }
 
     /**
-     * Search the parameters that were overriden during the parameters-merge phase.
+     * Search the parameters that were overridden during the parameters-merge phase.
      *
      * @param array $parametersList
      *
-     * @return array Names of the overriden parameters.
+     * @return array Names of the overridden parameters.
      */
     private function searchOverridenParameters(array $parametersList)
     {
         $parametersUsageCount = [];
 
         foreach ($parametersList as $list) {
-            foreach (array_keys($list) as $parameter) {
+            foreach ($list as $parameter => $_value) {
                 if (!isset($parametersUsageCount[$parameter])) {
                     $parametersUsageCount[$parameter] = 0;
                 }
@@ -105,10 +105,10 @@ class Composite implements Specification
             }
         }
 
-        $overridenParameters = array_filter($parametersUsageCount, function($count) {
+        $overriddenParameters = array_filter($parametersUsageCount, function ($count) {
             return $count > 1;
         });
 
-        return array_keys($overridenParameters);
+        return array_keys($overriddenParameters);
     }
 }

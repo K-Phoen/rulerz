@@ -29,7 +29,7 @@ class Parser implements Visitor\Visit
     /**
      * Parser.
      *
-     * @var \Hoa\Compiler\Llk\Parser $parser
+     * @var \Hoa\Compiler\Llk\Parser
      */
     private $parser;
 
@@ -58,7 +58,7 @@ class Parser implements Visitor\Visit
     {
         if ($this->parser === null) {
             $this->parser = Compiler\Llk::load(
-                new File\Read(__DIR__ .'/../Grammar.pp')
+                new File\Read(__DIR__.'/../Grammar.pp')
             );
         }
 
@@ -70,7 +70,6 @@ class Parser implements Visitor\Visit
     /**
      * Visit an element.
      *
-     * @access  public
      * @param   \Hoa\Visitor\Element  $element    Element to visit.
      * @param   mixed                 &$handle    Handle (reference).
      * @param   mixed                 $eldnah     Handle (not reference).
@@ -82,12 +81,12 @@ class Parser implements Visitor\Visit
     public function visit(Visitor\Element $element, &$handle = null, $eldnah = null)
     {
         /** @var \Hoa\Compiler\Llk\TreeNode $element */
-        $id       = $element->getId();
+        $id = $element->getId();
         $variable = false !== $eldnah;
 
         switch ($id) {
             case '#expression':
-                $this->root             = new Model\Rule();
+                $this->root = new Model\Rule();
                 $this->root->expression = $element->getChild(0)->accept(
                     $this,
                     $handle,
@@ -98,9 +97,9 @@ class Parser implements Visitor\Visit
 
             case '#operation':
                 $children = $element->getChildren();
-                $left     = $children[0]->accept($this, $handle, $eldnah);
-                $right    = $children[2]->accept($this, $handle, $eldnah);
-                $name     = $children[1]->accept($this, $handle, false);
+                $left = $children[0]->accept($this, $handle, $eldnah);
+                $right = $children[2]->accept($this, $handle, $eldnah);
+                $name = $children[1]->accept($this, $handle, false);
 
                 return $this->root->_operator(
                     $name,
@@ -110,7 +109,7 @@ class Parser implements Visitor\Visit
 
             case '#variable_access':
                 $children = $element->getChildren();
-                $name     = $children[0]->accept($this, $handle, $eldnah);
+                $name = $children[0]->accept($this, $handle, $eldnah);
                 array_shift($children);
 
                 foreach ($children as $child) {
@@ -139,7 +138,7 @@ class Parser implements Visitor\Visit
 
             case '#function_call':
                 $children = $element->getChildren();
-                $name     = $children[0]->accept($this, $handle, false);
+                $name = $children[0]->accept($this, $handle, false);
                 array_shift($children);
 
                 $arguments = [];
@@ -157,10 +156,10 @@ class Parser implements Visitor\Visit
             case '#and':
             case '#or':
             case '#xor':
-                $name     = substr($id, 1);
+                $name = substr($id, 1);
                 $children = $element->getChildren();
-                $left     = $children[0]->accept($this, $handle, $eldnah);
-                $right    = $children[1]->accept($this, $handle, $eldnah);
+                $left = $children[0]->accept($this, $handle, $eldnah);
+                $right = $children[1]->accept($this, $handle, $eldnah);
 
                 return $this->root->operation($name, [$left, $right]);
 
@@ -204,7 +203,7 @@ class Parser implements Visitor\Visit
 
                     case 'string':
                         return str_replace(
-                            '\\' . $value[0],
+                            '\\'.$value[0],
                             $value[0],
                             substr($value, 1, -1)
                         );

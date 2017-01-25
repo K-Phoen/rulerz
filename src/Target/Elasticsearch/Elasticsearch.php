@@ -12,7 +12,7 @@ use RulerZ\Target\Operators\GenericElasticsearchDefinitions;
 class Elasticsearch extends AbstractCompilationTarget
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supports($target, $mode)
     {
@@ -20,7 +20,7 @@ class Elasticsearch extends AbstractCompilationTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function createVisitor(Context $context)
     {
@@ -28,7 +28,7 @@ class Elasticsearch extends AbstractCompilationTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getExecutorTraits()
     {
@@ -39,7 +39,7 @@ class Elasticsearch extends AbstractCompilationTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getOperators()
     {

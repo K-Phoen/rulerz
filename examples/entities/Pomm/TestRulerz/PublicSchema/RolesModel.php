@@ -3,13 +3,9 @@
 namespace Entity\Pomm\TestRulerz\PublicSchema;
 
 use PommProject\ModelManager\Model\Model;
-use PommProject\ModelManager\Model\Projection;
 use PommProject\ModelManager\Model\ModelTrait\WriteQueries;
 
-use PommProject\Foundation\Where;
-
 use Entity\Pomm\TestRulerz\PublicSchema\AutoStructure\Roles as RolesStructure;
-use Entity\Pomm\TestRulerz\PublicSchema\Roles;
 
 /**
  * RolesModel
@@ -26,12 +22,10 @@ class RolesModel extends Model
      * __construct()
      *
      * Model constructor
-     *
-     * @access public
      */
     public function __construct()
     {
-        $this->structure = new RolesStructure;
+        $this->structure = new RolesStructure();
         $this->flexible_entity_class = '\Entity\Pomm\TestRulerz\PublicSchema\Roles';
     }
 }

@@ -10,7 +10,7 @@ use RulerZ\Target\AbstractSqlTarget;
 class Pomm extends AbstractSqlTarget
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function supports($target, $mode)
     {
@@ -20,7 +20,7 @@ class Pomm extends AbstractSqlTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function createVisitor(Context $context)
     {
@@ -28,7 +28,7 @@ class Pomm extends AbstractSqlTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getExecutorTraits()
     {
@@ -39,7 +39,7 @@ class Pomm extends AbstractSqlTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getOperators()
     {

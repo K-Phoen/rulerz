@@ -32,13 +32,13 @@ trait FilterResultMatcherTrait
                             "Wrong result %d:\nExpected:\n%s\nActual:\n%s",
                             $i,
                             var_export($expectedResults, true),
-                            var_export($results, true)
+                            var_export($receivedResults, true)
                         ));
                     }
                 }
 
                 return true;
-            }
+            },
         ];
     }
 }

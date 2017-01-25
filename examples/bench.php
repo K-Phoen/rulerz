@@ -3,7 +3,7 @@
 use Webmozart\Expression\Expr;
 use Webmozart\Expression\Logic\Disjunction;
 
-list($entityManager, $rulerz) = require __DIR__ . '/bootstrap/bootstrap_doctrine.php';
+list($entityManager, $rulerz) = require __DIR__.'/bootstrap/bootstrap_doctrine.php';
 
 const REPETITIONS = 10000;
 
@@ -34,7 +34,7 @@ $bench->{'kphoen/rulerz'}->stop();
 // Expression
 $expr = new Disjunction([
     Expr::greaterThan(42, 'points')->andEquals('guest', 'group'),
-    Expr::equals('admin', 'group')->andGreaterThan(250, 'points')
+    Expr::equals('admin', 'group')->andGreaterThan(250, 'points'),
 ]);
 
 $expression_results = [];
@@ -56,9 +56,9 @@ foreach (range(0, REPETITIONS) as $i) {
 $bench->{'webmozart/expression'}->stop();
 
 if (!empty(array_diff($rulerz_results, $expression_results))) {
-    echo 'Incoherency between rulerz and expression results.' . PHP_EOL;
-    echo 'rulerz: ' . var_export($rulerz_results) . PHP_EOL;
-    echo 'expression: ' . var_export($expression_results) . PHP_EOL;
+    echo 'Incoherency between rulerz and expression results.'.PHP_EOL;
+    echo 'rulerz: '.var_export($rulerz_results).PHP_EOL;
+    echo 'expression: '.var_export($expression_results).PHP_EOL;
     exit(1);
 }
 

@@ -18,7 +18,7 @@ class FilterTraitSpec extends ObjectBehavior
 
     function it_can_NOT_apply_a_filter_on_a_target()
     {
-        $target = [ ['some' => 'item'], ['another' => 'item'] ];
+        $target = [['some' => 'item'], ['another' => 'item']];
 
         $this
             ->shouldThrow('LogicException')
@@ -27,7 +27,7 @@ class FilterTraitSpec extends ObjectBehavior
 
     function it_filters_the_target_using_execute()
     {
-        $target = [ ['some' => 'item'], ['another' => 'item'] ];
+        $target = [['some' => 'item'], ['another' => 'item']];
         $results = $target;
 
         ArrayExecutorStub::$executeReturn = true;

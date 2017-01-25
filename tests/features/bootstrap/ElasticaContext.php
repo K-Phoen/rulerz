@@ -8,7 +8,7 @@ class ElasticaContext extends BaseContext
     private $client;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function initialize()
     {
@@ -19,7 +19,7 @@ class ElasticaContext extends BaseContext
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getCompilationTarget()
     {
@@ -27,7 +27,7 @@ class ElasticaContext extends BaseContext
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getDefaultDataset()
     {

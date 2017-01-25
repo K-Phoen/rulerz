@@ -13,13 +13,11 @@ use PommProject\ModelManager\Model\RowStructure;
  * Players
  *
  * Structure class for relation public.players.
- * 
+ *
  * Class and fields comments are inspected from table and fields comments.
  * Just add comments in your database and they will appear here.
+ *
  * @see http://www.postgresql.org/docs/9.0/static/sql-comment.html
- *
- *
- *
  * @see RowStructure
  */
 class Players extends RowStructure
@@ -28,8 +26,6 @@ class Players extends RowStructure
      * __construct
      *
      * Structure definition.
-     *
-     * @access public
      */
     public function __construct()
     {

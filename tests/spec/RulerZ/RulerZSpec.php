@@ -31,8 +31,8 @@ class RulerZSpec extends ObjectBehavior
 
     function it_chooses_the_right_compilation_target_for_a_given_target(Compiler $compiler, CompilationTarget $compilationTargetYes, CompilationTarget $compilationTargetNo, Executor $executor)
     {
-        $target    = ['dummy target'];
-        $rule      = 'dummy rule';
+        $target = ['dummy target'];
+        $rule = 'dummy rule';
         $operators = new Operators\Definitions();
         $compilationContext = new CompilationContext();
 
@@ -53,10 +53,10 @@ class RulerZSpec extends ObjectBehavior
 
     function it_can_filter_a_target_with_a_rule(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor)
     {
-        $target    = ['dummy target'];
-        $rule      = 'dummy rule';
+        $target = ['dummy target'];
+        $rule = 'dummy rule';
         $operators = new Operators\Definitions();
-        $result    = 'dummy result';
+        $result = 'dummy result';
         $compilationContext = new CompilationContext();
 
         $compiler->compile($rule, $compilationTarget, $compilationContext)->willReturn($executor);
@@ -72,10 +72,10 @@ class RulerZSpec extends ObjectBehavior
 
     function it_can_filter_a_target_with_a_specification(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor, Specification $spec)
     {
-        $target     = ['dummy target'];
-        $rule       = 'dummy rule';
+        $target = ['dummy target'];
+        $rule = 'dummy rule';
         $operators = new Operators\Definitions();
-        $result     = 'dummy result';
+        $result = 'dummy result';
         $parameters = ['dummy param'];
         $compilationContext = new CompilationContext();
 
@@ -95,10 +95,10 @@ class RulerZSpec extends ObjectBehavior
 
     function it_can_check_if_a_target_satisfies_a_rule(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor)
     {
-        $target    = ['dummy target'];
-        $rule      = 'dummy rule';
+        $target = ['dummy target'];
+        $rule = 'dummy rule';
         $operators = new Operators\Definitions();
-        $result    = true;
+        $result = true;
         $compilationContext = new CompilationContext();
 
         $compiler->compile($rule, $compilationTarget, $compilationContext)->willReturn($executor);
@@ -114,11 +114,11 @@ class RulerZSpec extends ObjectBehavior
 
     function it_can_check_if_a_target_satisfies_a_specification(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor, Specification $spec)
     {
-        $target     = ['dummy target'];
-        $rule       = 'dummy rule';
+        $target = ['dummy target'];
+        $rule = 'dummy rule';
         $operators = new Operators\Definitions();
         $parameters = ['dummy param'];
-        $result    = true;
+        $result = true;
         $compilationContext = new CompilationContext();
 
         $spec->getRule()->willReturn($rule);
@@ -144,10 +144,10 @@ class RulerZSpec extends ObjectBehavior
 
     function it_can_apply_a_filter_on_a_target_with_a_rule(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor)
     {
-        $target    = ['dummy target'];
-        $rule      = 'dummy rule';
+        $target = ['dummy target'];
+        $rule = 'dummy rule';
         $operators = new Operators\Definitions();
-        $result    = 'updated target';
+        $result = 'updated target';
         $compilationContext = new CompilationContext();
 
         $compiler->compile($rule, $compilationTarget, $compilationContext)->willReturn($executor);
@@ -163,10 +163,10 @@ class RulerZSpec extends ObjectBehavior
 
     function it_can_apply_a_filter_on_a_target_with_a_specification(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor, Specification $spec)
     {
-        $target    = ['dummy target'];
-        $rule      = 'dummy rule';
+        $target = ['dummy target'];
+        $rule = 'dummy rule';
         $operators = new Operators\Definitions();
-        $result    = 'updated target';
+        $result = 'updated target';
         $compilationContext = new CompilationContext();
 
         $spec->getRule()->willReturn($rule);

@@ -42,7 +42,7 @@ abstract class AbstractSpecification implements Specification
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getParameters()
     {

@@ -6,9 +6,9 @@ use RulerZ\Model\Rule;
 
 interface CompilationTarget
 {
-    const MODE_FILTER       = 'filter';
+    const MODE_FILTER = 'filter';
     const MODE_APPLY_FILTER = 'apply_filter';
-    const MODE_SATISFIES    = 'satisfies';
+    const MODE_SATISFIES = 'satisfies';
 
     /**
      * Compiles the given rule.
@@ -26,7 +26,7 @@ interface CompilationTarget
      * @param mixed  $target The target to test.
      * @param string $mode The execution mode (MODE_FILTER or MODE_SATISFIES).
      *
-     * @return boolean
+     * @return bool
      */
     public function supports($target, $mode);
 
