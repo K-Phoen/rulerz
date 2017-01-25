@@ -17,7 +17,7 @@ class GenericElasticsearchDefinitions
     'bool' => ['must' => $query]
 ]";
         };
-        $mustNot = function($query) {
+        $mustNot = function ($query) {
             return "[
                 'bool' => ['must_not' => $query]
             ]";
