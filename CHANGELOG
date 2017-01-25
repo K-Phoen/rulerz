@@ -3,6 +3,23 @@ VERSION 0  FIXED ELASTICSEARCH-RELATED TARGETS
 ==============================================
 
    Version 0.19 - Add a way to retrieve the parameters used in a rule
+      25/01/2017 12:54  0.19.3  Minor fixes regarding Eloquent target
+         74d5ddb Fix Pomm example
+         8cf10d0 Merge branch 'styleci'
+         5152f35 Add missing space before anonymous function declaration
+         b94cb5f Update styleci config
+         c99c21b More style fixes
+         1a819fa Fix typo in variable name
+         6451812 Few style fixes
+         b10b691 Disable some useless fixers
+         9205fc6 Start to configure StyleCI
+         a991f4f Few style fixes
+         2a2416e Enable native target for doctrine-related examples
+         0c4fc7e Fix incorrect phpdoc return type
+         5bce417 Merge pull request #56 from BakoBako/allow-eloquent-builder-execution
+         a24de7f Merge pull request #59 from oxman/feature/support-of-suffix-class-to-declare-executors-traits
+         aa49dd4 getExecutorTraits now support class declared with ::class
+         7393187 Eloquent visitor to enable use of eloquent builder instead of only using query builder in laravel
       18/03/2016 08:34  0.19.1  Compilation issue with DoctrineORM target
          4dafc3d Reset the detected joins when visiting a new model
          d38046c Add a few test cases with UTF-8 operators
