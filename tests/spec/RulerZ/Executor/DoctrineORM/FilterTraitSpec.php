@@ -38,7 +38,7 @@ class FilterTraitSpec extends ObjectBehavior
                 'root' => 'root_alias',
                 'column' => 'join_column',
                 'as' => 'join_alias',
-            ]
+            ],
         ];
         $dql = 'some_dql';
 
@@ -58,7 +58,7 @@ class FilterTraitSpec extends ObjectBehavior
                 'root' => 'root_alias',
                 'column' => 'join_column',
                 'as' => 'join_alias',
-            ]
+            ],
         ];
         $dql = 'some_dql';
         $results = ['result'];

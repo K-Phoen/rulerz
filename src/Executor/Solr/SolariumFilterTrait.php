@@ -9,7 +9,7 @@ trait SolariumFilterTrait
     abstract protected function execute($target, array $operators, array $parameters);
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function applyFilter($target, array $parameters, array $operators, ExecutionContext $context)
     {
@@ -25,7 +25,7 @@ trait SolariumFilterTrait
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function filter($target, array $parameters, array $operators, ExecutionContext $context)
     {

@@ -21,7 +21,7 @@ abstract class BaseTargetBehavior extends ObjectBehavior
         return [
             'string',
             42,
-            new \stdClass,
+            new \stdClass(),
             [],
         ];
     }

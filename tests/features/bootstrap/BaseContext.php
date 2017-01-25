@@ -48,15 +48,15 @@ abstract class BaseContext implements Context
 
     public function __construct()
     {
-        $dotenv = new Dotenv\Dotenv(__DIR__ . '/../../../');
+        $dotenv = new Dotenv\Dotenv(__DIR__.'/../../../');
         $dotenv->load();
 
         $this->initialize();
     }
 
-    /**
-     * @BeforeSuite
-     */
+     /**
+      * @BeforeSuite
+      */
      public static function prepare(BeforeSuiteScope $scope)
      {
          echo $scope->getSuite()->getName();
@@ -101,11 +101,12 @@ abstract class BaseContext implements Context
         // named parameters
         if (count($parameters->getRow(0)) !== 1) {
             $this->parameters = $parameters->getRowsHash();
+
             return;
         }
 
         // positional parameters
-        $this->parameters = array_map(function($row) {
+        $this->parameters = array_map(function ($row) {
             return $row[0];
         }, $parameters->getRows());
     }
@@ -133,7 +134,7 @@ abstract class BaseContext implements Context
     {
         $this->results = $this->rulerz->filter($this->dataset, (string) $rule, $this->parameters, $this->executionContext);
 
-        $this->parameters       = [];
+        $this->parameters = [];
         $this->executionContext = [];
     }
 

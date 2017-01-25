@@ -2,10 +2,10 @@
 
 use Entity\Doctrine\Player;
 
-list($entityManager, $rulerz) = require __DIR__ . '/bootstrap/bootstrap_doctrine.php';
+list($entityManager, $rulerz) = require __DIR__.'/bootstrap/bootstrap_doctrine.php';
 
 // 1. Write a rule.
-$rule  = 'points > :points and length(pseudo) > 4';
+$rule = 'points > :points and length(pseudo) > 4';
 
 // 2. Define a few targets to filter
 
@@ -36,7 +36,6 @@ $parameters = [
 
 var_dump($rulerz->filter($playersQb, $rule, $parameters));
 var_dump($rulerz->filter($playersArr, $rule, $parameters));
-
 
 // check if a target satisfies a rule
 var_dump($rulerz->satisfies($playersArr[1], $rule, $parameters));

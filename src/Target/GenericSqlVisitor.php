@@ -40,26 +40,26 @@ class GenericSqlVisitor extends GenericVisitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
     {
         $sql = parent::visitModel($element, $handle, $eldnah);
 
-        return '"' . $sql . '"';
+        return '"'.$sql.'"';
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
     {
         // make it a placeholder
-        return ':' . $element->getName();
+        return ':'.$element->getName();
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
@@ -67,7 +67,7 @@ class GenericSqlVisitor extends GenericVisitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitArray(AST\Bag\RulerArray $element, &$handle = null, $eldnah = null)
     {
@@ -77,7 +77,7 @@ class GenericSqlVisitor extends GenericVisitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitOperator(AST\Operator $element, &$handle = null, $eldnah = null)
     {

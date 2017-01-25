@@ -12,7 +12,7 @@ class OperatorCollectorVisitor extends Visitor
     private $operators = [];
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getCompilationData()
     {
@@ -22,7 +22,7 @@ class OperatorCollectorVisitor extends Visitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
     {
@@ -32,7 +32,7 @@ class OperatorCollectorVisitor extends Visitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitOperator(AST\Operator $element, &$handle = null, $eldnah = null)
     {

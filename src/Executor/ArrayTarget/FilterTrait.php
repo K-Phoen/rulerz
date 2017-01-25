@@ -11,7 +11,7 @@ trait FilterTrait
     abstract protected function execute($target, array $operators, array $parameters);
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function applyFilter($target, array $parameters, array $operators, ExecutionContext $context)
     {
@@ -19,11 +19,11 @@ trait FilterTrait
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function filter($target, array $parameters, array $operators, ExecutionContext $context)
     {
-        return IteratorTools::fromGenerator(function() use ($target, $parameters, $operators) {
+        return IteratorTools::fromGenerator(function () use ($target, $parameters, $operators) {
             foreach ($target as $row) {
                 $targetRow = is_array($row) ? $row : new ObjectContext($row);
 

@@ -10,11 +10,11 @@ trait FilterTrait
     abstract protected function execute($target, array $operators, array $parameters);
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function applyFilter($target, array $parameters, array $operators, ExecutionContext $context)
     {
-        /** @var \Doctrine\ORM\QueryBuilder $target */
+        /* @var \Doctrine\ORM\QueryBuilder $target */
 
         foreach ($this->detectedJoins as $join) {
             $target->leftJoin(sprintf('%s.%s', $join['root'], $join['column']), $join['as']);
@@ -35,11 +35,11 @@ trait FilterTrait
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function filter($target, array $parameters, array $operators, ExecutionContext $context)
     {
-        /** @var \Doctrine\ORM\QueryBuilder $target */
+        /* @var \Doctrine\ORM\QueryBuilder $target */
 
         $this->applyFilter($target, $parameters, $operators, $context);
 
@@ -49,7 +49,7 @@ trait FilterTrait
         // and return the appropriate result type
         if ($result instanceof \Traversable) {
             return $result;
-        } else if (is_array($result)) {
+        } elseif (is_array($result)) {
             return IteratorTools::fromArray($result);
         }
 

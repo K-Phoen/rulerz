@@ -10,7 +10,7 @@ use RulerZ\Target\GenericSqlVisitor;
 class PommVisitor extends GenericSqlVisitor
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
     {
@@ -18,7 +18,7 @@ class PommVisitor extends GenericSqlVisitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
     {
@@ -29,13 +29,13 @@ class PommVisitor extends GenericSqlVisitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitOperator(AST\Operator $element, &$handle = null, $eldnah = null)
     {
         $parameters = [];
-        $operator   = $element->getName();
-        $sql        = parent::visitOperator($element, $parameters, $eldnah);
+        $operator = $element->getName();
+        $sql = parent::visitOperator($element, $parameters, $eldnah);
 
         if (in_array($operator, ['and', 'or', 'not'], true)) {
             return $sql;

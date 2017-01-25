@@ -30,7 +30,7 @@ class DoctrineORMSpec extends BaseTargetBehavior
         // the connection configuration
         $dbParams = [
             'driver' => 'pdo_sqlite',
-            'path'   => 'sqlite::memory:',
+            'path' => 'sqlite::memory:',
         ];
 
         $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
@@ -98,7 +98,7 @@ class DoctrineORMSpec extends BaseTargetBehavior
                     'root' => 'player',
                     'column' => 'group',
                     'as' => '_0_group',
-                ]
+                ],
             ],
         ]);
     }
@@ -144,7 +144,7 @@ class DoctrineORMSpec extends BaseTargetBehavior
 
         $rule = 'points > 30 and always_true()';
 
-        $this->defineOperator('always_true', function() {
+        $this->defineOperator('always_true', function () {
             throw new \LogicException('should not be called');
         });
 
@@ -159,8 +159,8 @@ class DoctrineORMSpec extends BaseTargetBehavior
         $rule = 'points >= 42 and always_true(42)';
         $expectedDql = '"(player.points >= 42 AND inline_always_true(42))"';
 
-        $this->defineInlineOperator('always_true', function($value) {
-            return 'inline_always_true(' . $value . ')';
+        $this->defineInlineOperator('always_true', function ($value) {
+            return 'inline_always_true('.$value.')';
         });
 
         /** @var Executor $executorModel */
@@ -176,8 +176,8 @@ class DoctrineORMSpec extends BaseTargetBehavior
             'root_aliases' => ['player'],
             'joins' => [
                 'player' => [
-                    new Join(Join::INNER_JOIN, 'player.group', 'joined_group_alias')
-                ]
+                    new Join(Join::INNER_JOIN, 'player.group', 'joined_group_alias'),
+                ],
             ],
         ]);
         $rule = 'joined_group_alias.name = \'FOO\'';

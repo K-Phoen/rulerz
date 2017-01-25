@@ -61,7 +61,7 @@ class NativeSpec extends BaseTargetBehavior
     {
         $rule = 'points >= 42 and always_true()';
 
-        $this->defineOperator('always_true', function() {
+        $this->defineOperator('always_true', function () {
             throw new \LogicException('should never be called');
         });
 
@@ -74,7 +74,7 @@ class NativeSpec extends BaseTargetBehavior
     {
         $rule = 'points >= 42 and always_true(42)';
 
-        $this->defineOperator('always_true', function() {
+        $this->defineOperator('always_true', function () {
             throw new \LogicException('should never be called');
         });
 
@@ -94,8 +94,8 @@ class NativeSpec extends BaseTargetBehavior
     {
         $rule = 'points >= 42 and always_true(42)';
 
-        $this->defineInlineOperator('always_true', function($value) {
-            return 'inline_always_true(' . $value . ')';
+        $this->defineInlineOperator('always_true', function ($value) {
+            return 'inline_always_true('.$value.')';
         });
 
         /** @var Executor $executorModel */
@@ -108,7 +108,7 @@ class NativeSpec extends BaseTargetBehavior
         return [
             'string',
             42,
-            new \stdClass,
+            new \stdClass(),
         ];
     }
 

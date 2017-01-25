@@ -11,7 +11,7 @@ use RulerZ\Compiler\Context;
 class Solarium extends AbstractCompilationTarget
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supports($target, $mode)
     {
@@ -19,7 +19,7 @@ class Solarium extends AbstractCompilationTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function createVisitor(Context $context)
     {
@@ -27,7 +27,7 @@ class Solarium extends AbstractCompilationTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getExecutorTraits()
     {
@@ -38,7 +38,7 @@ class Solarium extends AbstractCompilationTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getOperators()
     {

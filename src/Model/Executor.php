@@ -2,8 +2,6 @@
 
 namespace RulerZ\Model;
 
-use Hoa\Ruler\Model as HoaModel;
-
 class Executor
 {
     /**
@@ -29,7 +27,7 @@ class Executor
 
     public function __construct(array $traits, $compiledRule, array $compilationData = [])
     {
-        $this->traits       = $traits;
+        $this->traits = $traits;
         $this->compiledRule = $compiledRule;
         $this->compiledData = $compilationData;
     }

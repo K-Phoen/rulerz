@@ -8,7 +8,7 @@ use RulerZ\Target\AbstractCompilationTarget;
 class Native extends AbstractCompilationTarget
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function supports($target, $mode)
     {
@@ -26,7 +26,7 @@ class Native extends AbstractCompilationTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function createVisitor(Context $context)
     {
@@ -34,7 +34,7 @@ class Native extends AbstractCompilationTarget
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getExecutorTraits()
     {
@@ -45,7 +45,7 @@ class Native extends AbstractCompilationTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getOperators()
     {

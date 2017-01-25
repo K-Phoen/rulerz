@@ -48,7 +48,7 @@ class PommSpec extends BaseTargetBehavior
     {
         $rule = 'points > 30 and always_true()';
 
-        $this->defineOperator('always_true', function() {
+        $this->defineOperator('always_true', function () {
             throw new \LogicException('should not be called');
         });
 
@@ -61,7 +61,7 @@ class PommSpec extends BaseTargetBehavior
     {
         $rule = 'points > 30 and always_true()';
 
-        $this->defineInlineOperator('always_true', function() {
+        $this->defineInlineOperator('always_true', function () {
             return '1 = 1';
         });
 

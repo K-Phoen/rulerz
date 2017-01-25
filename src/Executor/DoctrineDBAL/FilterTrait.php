@@ -11,7 +11,7 @@ trait FilterTrait
     abstract protected function execute($target, array $operators, array $parameters);
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function applyFilter($target, array $parameters, array $operators, ExecutionContext $context)
     {
@@ -32,11 +32,11 @@ trait FilterTrait
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function filter($target, array $parameters, array $operators, ExecutionContext $context)
     {
-        /** @var \Doctrine\DBAL\Query\QueryBuilder $target */
+        /* @var \Doctrine\DBAL\Query\QueryBuilder $target */
 
         $this->applyFilter($target, $parameters, $operators, $context);
 

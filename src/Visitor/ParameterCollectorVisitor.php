@@ -13,7 +13,7 @@ class ParameterCollectorVisitor extends Visitor
     private $parameters = [];
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getCompilationData()
     {
@@ -23,7 +23,7 @@ class ParameterCollectorVisitor extends Visitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
     {
@@ -31,7 +31,7 @@ class ParameterCollectorVisitor extends Visitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
     {

@@ -38,7 +38,7 @@ abstract class AbstractCompilationTarget implements CompilationTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function compile(Model\Rule $rule, Context $compilationContext)
     {
@@ -53,7 +53,7 @@ abstract class AbstractCompilationTarget implements CompilationTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function createCompilationContext($target)
     {
@@ -61,7 +61,7 @@ abstract class AbstractCompilationTarget implements CompilationTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function defineOperator($name, callable $transformer)
     {
@@ -69,7 +69,7 @@ abstract class AbstractCompilationTarget implements CompilationTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function defineInlineOperator($name, callable $transformer)
     {
@@ -77,7 +77,7 @@ abstract class AbstractCompilationTarget implements CompilationTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getOperators()
     {

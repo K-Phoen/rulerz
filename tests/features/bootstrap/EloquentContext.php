@@ -1,23 +1,22 @@
 <?php
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Database\Eloquent\Model;
 
 use Entity\Eloquent\Player;
 
 class EloquentContext extends BaseContext
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function initialize()
     {
         $capsule = new Capsule();
 
         $capsule->addConnection([
-            'driver'    => 'sqlite',
-            'database'  => __DIR__.'/../../../examples/rulerz.db', // meh.
-            'charset'   => 'utf8',
+            'driver' => 'sqlite',
+            'database' => __DIR__.'/../../../examples/rulerz.db', // meh.
+            'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
         ]);
 
@@ -26,7 +25,7 @@ class EloquentContext extends BaseContext
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getCompilationTarget()
     {
@@ -34,7 +33,7 @@ class EloquentContext extends BaseContext
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getDefaultDataset()
     {

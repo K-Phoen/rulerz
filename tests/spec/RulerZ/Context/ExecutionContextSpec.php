@@ -9,7 +9,7 @@ class ExecutionContextSpec extends ObjectBehavior
     function let()
     {
         $this->beConstructedWith([
-            'some' => 'data'
+            'some' => 'data',
         ]);
         $this->shouldImplement('ArrayAccess');
     }

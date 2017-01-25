@@ -8,13 +8,13 @@ class ElasticsearchContext extends BaseContext
     private $client;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function initialize()
     {
         $this->client = new Elasticsearch\Client([
             'hosts' => [
-                sprintf('%s:%d', $_ENV['ELASTICSEARCH_HOST'], $_ENV['ELASTICSEARCH_PORT'])
+                sprintf('%s:%d', $_ENV['ELASTICSEARCH_HOST'], $_ENV['ELASTICSEARCH_PORT']),
             ],
         ]);
     }
@@ -25,7 +25,7 @@ class ElasticsearchContext extends BaseContext
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getDefaultDataset()
     {
@@ -33,13 +33,13 @@ class ElasticsearchContext extends BaseContext
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getDefaultExecutionContext()
     {
         return [
             'index' => 'rulerz_tests',
-            'type'  => 'player'
+            'type' => 'player',
         ];
     }
 }

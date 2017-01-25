@@ -129,7 +129,7 @@ class RulerZ
      * @param array  $parameters       The parameters used in the rule.
      * @param array  $executionContext The execution context.
      *
-     * @return boolean
+     * @return bool
      *
      * @throws TargetUnsupportedException
      */
@@ -150,7 +150,7 @@ class RulerZ
      * @param Specification $spec             The specification to use.
      * @param array         $executionContext The execution context.
      *
-     * @return boolean
+     * @return bool
      *
      * @throws TargetUnsupportedException
      */

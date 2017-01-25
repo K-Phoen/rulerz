@@ -11,7 +11,7 @@ use RulerZ\Model;
 abstract class Visitor implements RuleVisitor
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visit(VisitorElement $element, &$handle = null, $eldnah = null)
     {
@@ -43,14 +43,14 @@ abstract class Visitor implements RuleVisitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitModel(AST\Model $element, &$handle = null, $eldnah = null)
     {
@@ -58,14 +58,14 @@ abstract class Visitor implements RuleVisitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitScalar(AST\Bag\Scalar $element, &$handle = null, $eldnah = null)
     {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitArray(AST\Bag\RulerArray $element, &$handle = null, $eldnah = null)
     {
@@ -75,7 +75,7 @@ abstract class Visitor implements RuleVisitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitOperator(AST\Operator $element, &$handle = null, $eldnah = null)
     {
@@ -86,7 +86,7 @@ abstract class Visitor implements RuleVisitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
     {

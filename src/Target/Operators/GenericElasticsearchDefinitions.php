@@ -12,7 +12,7 @@ class GenericElasticsearchDefinitions
         $definitions = new Definitions();
 
         // start with a few helpers
-        $must = function($query) {
+        $must = function ($query) {
             return "[
     'bool' => ['must' => $query]
 ]";
@@ -22,7 +22,7 @@ class GenericElasticsearchDefinitions
                 'bool' => ['must_not' => $query]
             ]";
         };
-        $range = function($field, $value, $operator) use ($must) {
+        $range = function ($field, $value, $operator) use ($must) {
             return $must("[
                 'range' => [
                     '$field' => ['$operator' => $value],
@@ -50,7 +50,7 @@ class GenericElasticsearchDefinitions
             ]");
         });
         $definitions->defineInlineOperator('has', function ($a, $b) use ($must) {
-            $value = is_array($b) ? '[' . implode(', ', $b) . ']' : $b;
+            $value = is_array($b) ? '['.implode(', ', $b).']' : $b;
 
             return $must("[
                 'terms' => [

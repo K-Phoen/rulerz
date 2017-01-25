@@ -5,7 +5,7 @@ namespace RulerZ\Context;
 class ExecutionContext implements \ArrayAccess
 {
     /**
-     * @var array $data
+     * @var array
      */
     private $data = [];
 

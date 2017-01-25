@@ -28,7 +28,7 @@ class CompilerSpec extends ObjectBehavior
         $self = $this;
         $expectedExecutorName = null;
 
-        $evaluator->evaluate(Argument::any(), Argument::any())->will(function($args) use ($self, &$expectedExecutorName) {
+        $evaluator->evaluate(Argument::any(), Argument::any())->will(function ($args) use ($self, &$expectedExecutorName) {
             $expectedExecutorName = 'Executor_'.$args[0];
 
             $self->loadExecutor($expectedExecutorName);

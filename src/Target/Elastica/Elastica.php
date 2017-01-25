@@ -14,7 +14,7 @@ use RulerZ\Target\Operators\GenericElasticsearchDefinitions;
 class Elastica extends AbstractCompilationTarget
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supports($target, $mode)
     {
@@ -22,7 +22,7 @@ class Elastica extends AbstractCompilationTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function createVisitor(Context $context)
     {
@@ -30,7 +30,7 @@ class Elastica extends AbstractCompilationTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getExecutorTraits()
     {
@@ -41,7 +41,7 @@ class Elastica extends AbstractCompilationTarget
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getOperators()
     {

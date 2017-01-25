@@ -2,7 +2,7 @@
 
 use Entity\Doctrine\Player;
 
-list($entityManager, $rulerz) = require __DIR__ . '/bootstrap/bootstrap_doctrine.php';
+list($entityManager, $rulerz) = require __DIR__.'/bootstrap/bootstrap_doctrine.php';
 
 // 1. Write a specification
 $spec = (new SampleSpecs\FemalePlayer())->andX(new SampleSpecs\MinScore(3000)); // female players having at least 3000 points
@@ -33,7 +33,6 @@ $playersObj = [
 var_dump($rulerz->filterSpec($playersQb, $spec));
 var_dump($rulerz->filterSpec($playersArr, $spec));
 var_dump($rulerz->filterSpec($playersObj, $spec));
-
 
 // 4. check if an existing target satisfies the spec
 var_dump($rulerz->satisfiesSpec($playersObj[1], $spec));

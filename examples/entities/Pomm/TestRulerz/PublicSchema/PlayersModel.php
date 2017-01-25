@@ -3,13 +3,9 @@
 namespace Entity\Pomm\TestRulerz\PublicSchema;
 
 use PommProject\ModelManager\Model\Model;
-use PommProject\ModelManager\Model\Projection;
 use PommProject\ModelManager\Model\ModelTrait\WriteQueries;
 
-use PommProject\Foundation\Where;
-
 use Entity\Pomm\TestRulerz\PublicSchema\AutoStructure\Players as PlayersStructure;
-use Entity\Pomm\TestRulerz\PublicSchema\Players;
 
 /**
  * PlayersModel
@@ -26,12 +22,10 @@ class PlayersModel extends Model
      * __construct()
      *
      * Model constructor
-     *
-     * @access public
      */
     public function __construct()
     {
-        $this->structure = new PlayersStructure;
+        $this->structure = new PlayersStructure();
         $this->flexible_entity_class = '\Entity\Pomm\TestRulerz\PublicSchema\Players';
     }
 }

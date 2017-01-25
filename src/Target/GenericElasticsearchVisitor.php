@@ -14,7 +14,7 @@ class GenericElasticsearchVisitor extends GenericVisitor
     use Polyfill\AccessPath;
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
@@ -29,7 +29,7 @@ class GenericElasticsearchVisitor extends GenericVisitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitParameter(Model\Parameter $element, &$handle = null, $eldnah = null)
     {
@@ -37,7 +37,7 @@ class GenericElasticsearchVisitor extends GenericVisitor
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function visitArray(AST\Bag\RulerArray $element, &$handle = null, $eldnah = null)
     {

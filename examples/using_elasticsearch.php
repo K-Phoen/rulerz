@@ -1,14 +1,14 @@
 <?php
 
-list($client, $rulerz) = require __DIR__ . '/bootstrap/bootstrap_elasticsearch.php';
+list($client, $rulerz) = require __DIR__.'/bootstrap/bootstrap_elasticsearch.php';
 
 // 1. Write a rule.
-$rule  = 'gender = :gender';
+$rule = 'gender = :gender';
 
 // 2. Define the execution context
 $context = [
     'index' => 'rulerz_tests',
-    'type'  => 'player'
+    'type' => 'player',
 ];
 
 // 3. Enjoy!

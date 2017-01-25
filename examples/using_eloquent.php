@@ -11,9 +11,9 @@ require __DIR__.'/../vendor/autoload.php';
 $capsule = new Capsule();
 
 $capsule->addConnection([
-    'driver'    => 'sqlite',
-    'database'  => __DIR__.'/rulerz.db',
-    'charset'   => 'utf8',
+    'driver' => 'sqlite',
+    'database' => __DIR__.'/rulerz.db',
+    'charset' => 'utf8',
     'collation' => 'utf8_unicode_ci',
 ]);
 
@@ -32,7 +32,7 @@ $rulerz = new \RulerZ\RulerZ(
     ]
 );
 $qb = Player::query();
-$rule  = 'points > :points AND LENGTH(pseudo) > 3';
+$rule = 'points > :points AND LENGTH(pseudo) > 3';
 $parameters = [
     'points' => 30,
 ];

@@ -4,7 +4,7 @@ require __DIR__.'/bootstrap_general.php';
 
 $client = new Elasticsearch\Client([
     'hosts' => [
-        sprintf('%s:%d', $_ENV['ELASTICSEARCH_HOST'], $_ENV['ELASTICSEARCH_PORT'])
+        sprintf('%s:%d', $_ENV['ELASTICSEARCH_HOST'], $_ENV['ELASTICSEARCH_PORT']),
     ],
 ]);
 

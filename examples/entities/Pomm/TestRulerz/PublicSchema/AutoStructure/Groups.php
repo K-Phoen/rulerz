@@ -13,23 +13,19 @@ use PommProject\ModelManager\Model\RowStructure;
  * Groups
  *
  * Structure class for relation public.groups.
- * 
+ *
  * Class and fields comments are inspected from table and fields comments.
  * Just add comments in your database and they will appear here.
+ *
  * @see http://www.postgresql.org/docs/9.0/static/sql-comment.html
- *
- *
- *
  * @see RowStructure
  */
 class Groups extends RowStructure
 {
     /**
-     * __construct
+     * __construct.
      *
      * Structure definition.
-     *
-     * @access public
      */
     public function __construct()
     {

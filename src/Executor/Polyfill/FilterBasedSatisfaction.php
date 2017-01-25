@@ -7,12 +7,12 @@ use RulerZ\Context\ExecutionContext;
 trait FilterBasedSatisfaction
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     abstract public function filter($target, array $parameters, array $operators, ExecutionContext $context);
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function satisfies($target, array $parameters, array $operators, ExecutionContext $context)
     {

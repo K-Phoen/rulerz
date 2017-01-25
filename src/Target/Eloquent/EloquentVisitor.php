@@ -2,8 +2,6 @@
 
 namespace RulerZ\Target\Eloquent;
 
-use Hoa\Ruler\Model as AST;
-
 use RulerZ\Compiler\Context;
 use RulerZ\Target\GenericSqlVisitor;
 use RulerZ\Target\Operators\Definitions as OperatorsDefinitions;
@@ -25,7 +23,7 @@ class EloquentVisitor extends GenericSqlVisitor
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getCompilationData()
     {

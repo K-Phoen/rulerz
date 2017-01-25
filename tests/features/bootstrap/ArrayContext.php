@@ -6,17 +6,17 @@ use Entity\Doctrine\Group;
 class ArrayContext extends BaseContext
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getCompilationTarget()
     {
         return new \RulerZ\Target\Native\Native([
-            'length' => 'strlen'
+            'length' => 'strlen',
         ]);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getDefaultDataset()
     {

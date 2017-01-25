@@ -11,7 +11,7 @@ $isDevMode = true;
 // the connection configuration
 $dbParams = [
     'driver' => 'pdo_sqlite',
-    'path'   => __DIR__.'/../rulerz.db',
+    'path' => __DIR__.'/../rulerz.db',
 ];
 
 $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
@@ -26,7 +26,7 @@ $rulerz = new \RulerZ\RulerZ(
     $compiler, [
         new \RulerZ\Target\DoctrineORM\DoctrineORM(),
         new \RulerZ\Target\Native\Native([
-            'length' => 'strlen'
+            'length' => 'strlen',
         ]),
     ]
 );

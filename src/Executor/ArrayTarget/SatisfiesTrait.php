@@ -10,7 +10,7 @@ trait SatisfiesTrait
     abstract protected function execute($target, array $operators, array $parameters);
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function satisfies($target, array $parameters, array $operators, ExecutionContext $context)
     {
