@@ -25,9 +25,9 @@ $compiler = new \RulerZ\Compiler\Compiler(new \RulerZ\Compiler\EvalEvaluator());
 $rulerz = new \RulerZ\RulerZ(
     $compiler, [
         new \RulerZ\Target\DoctrineORM\DoctrineORM(),
-        //new \RulerZ\Compiler\Target\ArrayVisitor([
-        //    'length' => 'strlen'
-        //]),
+        new \RulerZ\Target\Native\Native([
+            'length' => 'strlen'
+        ]),
     ]
 );
 
