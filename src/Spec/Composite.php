@@ -85,18 +85,18 @@ class Composite implements Specification
     }
 
     /**
-     * Search the parameters that were overriden during the parameters-merge phase.
+     * Search the parameters that were overridden during the parameters-merge phase.
      *
      * @param array $parametersList
      *
-     * @return array Names of the overriden parameters.
+     * @return array Names of the overridden parameters.
      */
     private function searchOverridenParameters(array $parametersList)
     {
         $parametersUsageCount = [];
 
         foreach ($parametersList as $list) {
-            foreach (array_keys($list) as $parameter) {
+            foreach ($list as $parameter => $_value) {
                 if (!isset($parametersUsageCount[$parameter])) {
                     $parametersUsageCount[$parameter] = 0;
                 }
@@ -105,10 +105,10 @@ class Composite implements Specification
             }
         }
 
-        $overridenParameters = array_filter($parametersUsageCount, function ($count) {
+        $overriddenParameters = array_filter($parametersUsageCount, function ($count) {
             return $count > 1;
         });
 
-        return array_keys($overridenParameters);
+        return array_keys($overriddenParameters);
     }
 }
