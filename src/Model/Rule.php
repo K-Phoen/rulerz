@@ -34,7 +34,7 @@ class Rule extends HoaModel\Model
     /**
      * Returns a list of used parameters.
      *
-     * @return \Hoa\Ruler\Model\Parameter[]
+     * @return \RulerZ\Model\Parameter[]
      */
     public function getParameters()
     {
