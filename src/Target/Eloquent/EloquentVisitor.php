@@ -17,12 +17,8 @@ class EloquentVisitor extends GenericSqlVisitor
      */
     protected $allowEloquentBuilderAsQuery = false;
 
-    public function __construct(
-        Context $context,
-        OperatorsDefinitions $operators,
-        $allowStarOperator = true,
-        $allowEloquentBuilderAsQuery = false
-    ) {
+    public function __construct(Context $context, OperatorsDefinitions $operators, $allowStarOperator = true, $allowEloquentBuilderAsQuery = false)
+    {
         parent::__construct($context, $operators, $allowStarOperator);
 
         $this->allowEloquentBuilderAsQuery = (bool) $allowEloquentBuilderAsQuery;

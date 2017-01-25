@@ -18,9 +18,7 @@ class Eloquent extends AbstractSqlTarget
     protected $allowEloquentBuilderAsQuery = false;
 
     /**
-     * Constructor.
-     *
-     * @param bool            $allowEloquentBuilderAsQuery Whether to allow the execution target to be eloquent builder instead of query builder.
+     * @param bool $allowEloquentBuilderAsQuery Whether to allow the execution target to be eloquent builder instead of query builder.
      */
     public function __construct($allowEloquentBuilderAsQuery = false)
     {
