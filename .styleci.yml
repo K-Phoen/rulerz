@@ -1,1 +1,7 @@
 preset: symfony
+
+disabled:
+    - phpdoc_annotation_without_dot
+    - no_blank_lines_between_imports
+    - phpdoc_align
+    - phpdoc_no_empty_return
