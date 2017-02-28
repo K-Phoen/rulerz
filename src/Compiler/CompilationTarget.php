@@ -24,7 +24,7 @@ interface CompilationTarget
      * Indicates whether the given target is supported or not.
      *
      * @param mixed  $target The target to test.
-     * @param string $mode The execution mode (MODE_FILTER or MODE_SATISFIES).
+     * @param string $mode The execution mode (see MODE_* constants).
      *
      * @return bool
      */

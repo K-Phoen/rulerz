@@ -12,10 +12,10 @@ interface Executor
     /**
      * Apply the filters on a target using the given rule and parameters.
      *
-     * @param mixed            $target     The target.
-     * @param array            $parameters The parameters used in the rule.
-     * @param array<Xcallable> $operators  The available operators.
-     * @param ExecutionContext $context    The execution context.
+     * @param mixed $target The target.
+     * @param array $parameters The parameters used in the rule.
+     * @param array<callable> $operators The available operators.
+     * @param ExecutionContext $context The execution context.
      *
      * @return mixed
      */
@@ -24,10 +24,10 @@ interface Executor
     /**
      * Filters a target using the given rule and parameters.
      *
-     * @param mixed            $target     The target.
-     * @param array            $parameters The parameters used in the rule.
-     * @param array<Xcallable> $operators  The available operators.
-     * @param ExecutionContext $context    The execution context.
+     * @param mixed $target The target.
+     * @param array $parameters The parameters used in the rule.
+     * @param array<callable> $operators The available operators.
+     * @param ExecutionContext $context The execution context.
      *
      * @return \IteratorAggregate
      */
@@ -36,10 +36,10 @@ interface Executor
     /**
      * Tells if a target satisfies the given rule and parameters.
      *
-     * @param mixed            $target     The target.
-     * @param array            $parameters The parameters used in the rule.
-     * @param array<Xcallable> $operators  The available operators.
-     * @param ExecutionContext $context    The execution context.
+     * @param mixed $target The target.
+     * @param array $parameters The parameters used in the rule.
+     * @param array<callable> $operators The available operators.
+     * @param ExecutionContext $context The execution context.
      *
      * @return bool
      */
