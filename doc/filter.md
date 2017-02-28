@@ -5,7 +5,7 @@ This guide will show you how to filter any kind of target using a simple languag
 
 Here is a summary of what you will have to do:
 
- * [instanciate the RulerZ engine](writing_rules.md#step-1-instanciate-the-rulerz-engine) ;
+ * [instantiate the RulerZ engine](writing_rules.md#step-1-instantiate-the-rulerz-engine) ;
  * [write a rule](writing_rules.md#step-2-write-a-rule) ;
  * [filter your target](#filter-your-target).
 

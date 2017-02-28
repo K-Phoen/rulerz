@@ -15,7 +15,7 @@ $players = [
 ];
 ```
 
-## Step 1: Instanciate the RulerZ engine
+## Step 1: Instantiate the RulerZ engine
 
 In order to work, the `RulerZ` engine needs a compiler and at least one
 compilation target.

@@ -107,7 +107,7 @@ $rule = '"ROLE_ADMIN" IN g.roles';
 var_dump($rulerz->filter($playersQueryBuilder, $rule));
 ```
 
-This time, RulerZ is smart enough to understant that `g` might be a joined
+This time, RulerZ is smart enough to understand that `g` might be a joined
 entity and that it should not try to join it itself.
 
 ## That was it!
