@@ -28,6 +28,16 @@ class ObjectContext implements \ArrayAccess
     }
 
     /**
+     * Returns the object of the context.
+     *
+     * @return mixed
+     */
+    public function getObject()
+    {
+        return $this->object;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function offsetGet($id)
