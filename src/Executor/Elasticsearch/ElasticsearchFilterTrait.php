@@ -24,20 +24,47 @@ trait ElasticsearchFilterTrait
     {
         /** @var array $searchQuery */
         $searchQuery = $this->execute($target, $operators, $parameters);
-
-        /** @var \Elasticsearch\Client $target */
-        $results = $target->search([
+        $chunkSize = 100;
+        $searchParams = [
             'index' => $context['index'],
             'type' => $context['type'],
-            'body' => ['query' => $searchQuery],
-        ]);
+            'body' => [
+                'from' => 0,
+                'size' => $chunkSize,
+                'query' => $searchQuery,
+            ],
+        ];
+
+        /** @var \Elasticsearch\Client $target */
+        $results = $target->search($searchParams);
 
         if (empty($results['hits'])) {
             return IteratorTools::fromArray([]);
         }
 
-        return IteratorTools::fromArray(array_map(function ($result) {
-            return $result['_source'];
-        }, $results['hits']['hits']));
+        $totalHits = $results['hits']['total'];
+        if ($totalHits > count($results['hits']['hits'])) {
+            return IteratorTools::fromGenerator(
+                function () use ($results, $totalHits, $chunkSize, $target, $searchParams) {
+                    foreach ($results['hits']['hits'] as $result) {
+                        yield $result['_source'];
+                    }
+
+                    for ($i = $chunkSize; $i < $totalHits; $i += $chunkSize) {
+                        $searchParams['body']['from'] = $i;
+                        $results = $target->search($searchParams);
+                        if (empty($results['hits']['hits'])) {
+                            return;
+                        }
+
+                        foreach ($results['hits']['hits'] as $result) {
+                            yield $result['_source'];
+                        }
+                    }
+                }
+            );
+        }
+
+        return IteratorTools::fromArray(array_column($results['hits']['hits'], '_source'));
     }
 }
