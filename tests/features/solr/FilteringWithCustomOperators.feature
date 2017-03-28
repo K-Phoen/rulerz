@@ -16,3 +16,4 @@ Feature: Custom operators can be used to filter data
             | Margaret |
             | Alice    |
             | Bob      |
+            | Louise   |

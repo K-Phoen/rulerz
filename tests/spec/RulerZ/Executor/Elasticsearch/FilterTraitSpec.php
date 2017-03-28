@@ -20,7 +20,6 @@ class FilterTraitSpec extends ObjectBehavior
 
     function it_can_apply_a_filter_on_a_target(Client $target)
     {
-        $results = new \ArrayIterator(['result']);
         $esQuery = ['array with the ES query'];
 
         ElasticsearchExecutorStub::$executeReturn = $esQuery;
@@ -36,14 +35,7 @@ class FilterTraitSpec extends ObjectBehavior
             'other document',
         ];
         $result = [
-            '_shards' => [],
-            'hits' => [
-                'total' => 1,
-                'hits' => [
-                    ['_source' => 'first document'],
-                    ['_source' => 'other document'],
-                ],
-            ],
+            '_scroll_id' => 'some-scroll-id',
         ];
         $esQuery = ['array with the ES query'];
 
@@ -51,19 +43,35 @@ class FilterTraitSpec extends ObjectBehavior
         $target->search([
             'index' => 'es_index',
             'type' => 'es_type',
+            'search_type' => 'scan',
+            'scroll' => '30s',
+            'size' => 50,
             'body' => ['query' => $esQuery],
         ])->willReturn($result);
+
+        $target->scroll([
+            'scroll_id' => 'some-scroll-id',
+            'scroll' => '30s',
+        ])->willReturn([
+            '_scroll_id' => 'some-scroll-id',
+            'hits' => [
+                'total' => 1,
+                'hits' => [
+                    ['_source' => 'first document'],
+                    ['_source' => 'other document'],
+                ],
+            ],
+        ], [
+            '_scroll_id' => 'some-scroll-id',
+            'hits' => [
+                'total' => 1,
+                'hits' => [],
+            ],
+        ]);
 
         $this->filter($target, $parameters = [], $operators = [], new ExecutionContext([
             'index' => 'es_index',
             'type' => 'es_type',
         ]))->shouldReturnResults($documents);
-    }
-
-    function it_throws_an_exception_when_the_execution_context_is_incomplete(Client $target)
-    {
-        $this
-            ->shouldThrow('RuntimeException')
-            ->duringFilter($target, $parameters = [], $operators = [], new ExecutionContext());
     }
 }
