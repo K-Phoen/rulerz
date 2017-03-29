@@ -32,3 +32,8 @@ composer require 'kphoen/rulerz'
  * [Using Elasticsearch and elastic/elasticsearch-php](cookbooks/elastic_elasticsearch_php.md)
  * [Using Eloquent ORM](cookbooks/eloquent_orm.md)
  * [Using Solr and Solarium](cookbooks/solarium.md)
+
+## Integrations
+
+ * [Symfony](https://github.com/K-Phoen/RulerZBundle)
+ * [Silex](https://github.com/K-Phoen/silex-rulerz-provider)
