@@ -38,17 +38,17 @@ class DoctrineORMSpec extends BaseTargetBehavior
         $this->em = EntityManager::create($dbParams, $config);
     }
 
-    function it_supports_satisfies_mode(QueryBuilder $qb)
+    public function it_supports_satisfies_mode(QueryBuilder $qb)
     {
         $this->supports($qb, CompilationTarget::MODE_SATISFIES)->shouldReturn(true);
     }
 
-    function it_can_filter_query_builders(QueryBuilder $qb)
+    public function it_can_filter_query_builders(QueryBuilder $qb)
     {
         $this->supports($qb, CompilationTarget::MODE_FILTER)->shouldReturn(true);
     }
 
-    function it_can_returns_an_executor_model()
+    public function it_can_returns_an_executor_model()
     {
         $context = $this->createContext();
         $rule = '1 = 1';
@@ -61,7 +61,7 @@ class DoctrineORMSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn('"1 = 1"');
     }
 
-    function it_prefixes_column_accesses_with_the_right_entity_alias()
+    public function it_prefixes_column_accesses_with_the_right_entity_alias()
     {
         $context = $this->createContext();
         $rule = 'points >= 1';
@@ -72,7 +72,7 @@ class DoctrineORMSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn($expectedRule);
     }
 
-    function it_supports_positional_parameters()
+    public function it_supports_positional_parameters()
     {
         $context = $this->createContext();
         $rule = 'points >= ?';
@@ -83,7 +83,7 @@ class DoctrineORMSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn($expectedRule);
     }
 
-    function it_uses_the_metadata_to_join_tables()
+    public function it_uses_the_metadata_to_join_tables()
     {
         $context = $this->createContext();
         $rule = 'group.name = "ADMIN"';
@@ -102,13 +102,13 @@ class DoctrineORMSpec extends BaseTargetBehavior
             ],
         ]);
     }
-    
-    function it_does_not_duplicate_join_tables()
+
+    public function it_does_not_duplicate_join_tables()
     {
         $context = $this->createContext();
         $rule = 'group.name = "ADMIN" or group.name = "OWNER"';
         $expectedRule = '"(_0_group.name = \'ADMIN\' OR _0_group.name = \'OWNER\')"';
-        
+
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule), $context);
         $executorModel->getCompiledRule()->shouldReturn($expectedRule);
@@ -123,7 +123,7 @@ class DoctrineORMSpec extends BaseTargetBehavior
         ]);
     }
 
-    function it_uses_the_metadata_to_detect_invalid_attribute_access()
+    public function it_uses_the_metadata_to_detect_invalid_attribute_access()
     {
         $context = $this->createContext();
         $rule = 'attr_does_not_exist = "ADMIN"';
@@ -131,7 +131,7 @@ class DoctrineORMSpec extends BaseTargetBehavior
         $this->shouldThrow(new \Exception('"attr_does_not_exist" not found for entity "Entity\Doctrine\Player"'))->duringCompile($this->parseRule($rule), $context);
     }
 
-    function it_uses_the_metadata_to_detect_invalid_joins()
+    public function it_uses_the_metadata_to_detect_invalid_joins()
     {
         $context = $this->createContext();
         $rule = 'does_not_exist.name = "ADMIN"';
@@ -139,7 +139,7 @@ class DoctrineORMSpec extends BaseTargetBehavior
         $this->shouldThrow(new \Exception('"does_not_exist" not found for entity "Entity\Doctrine\Player"'))->duringCompile($this->parseRule($rule), $context);
     }
 
-    function it_uses_the_metadata_to_detect_invalid_attribute_access_on_join()
+    public function it_uses_the_metadata_to_detect_invalid_attribute_access_on_join()
     {
         $context = $this->createContext();
         $rule = 'group.attr_does_not_exist = "ADMIN"';
@@ -147,7 +147,7 @@ class DoctrineORMSpec extends BaseTargetBehavior
         $this->shouldThrow(new \Exception('"attr_does_not_exist" not found for entity "Entity\Doctrine\Group"'))->duringCompile($this->parseRule($rule), $context);
     }
 
-    function it_implicitly_converts_unknown_operators()
+    public function it_implicitly_converts_unknown_operators()
     {
         $context = $this->createContext();
         $rule = 'points >= 42 and always_true(42)';
@@ -158,10 +158,9 @@ class DoctrineORMSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn($expectedDql);
     }
 
-    function it_supports_custom_operators()
+    public function it_supports_custom_operators()
     {
         throw new SkippingException('Not yet implemented.');
-
         $rule = 'points > 30 and always_true()';
 
         $this->defineOperator('always_true', function () {
@@ -173,7 +172,7 @@ class DoctrineORMSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn('"(player.points > 30 AND ".call_user_func($operators["always_true"]).")"');
     }
 
-    function it_supports_custom_inline_operators()
+    public function it_supports_custom_inline_operators()
     {
         $context = $this->createContext();
         $rule = 'points >= 42 and always_true(42)';
@@ -188,7 +187,7 @@ class DoctrineORMSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn($expectedDql);
     }
 
-    function it_reuses_joined_tables()
+    public function it_reuses_joined_tables()
     {
         $context = new Context([
             'em' => $this->em,
@@ -211,7 +210,7 @@ class DoctrineORMSpec extends BaseTargetBehavior
         ]);
     }
 
-    function it_allows_embedded_classes_to_be_used()
+    public function it_allows_embedded_classes_to_be_used()
     {
         $context = $this->createContext();
         $rule = 'address.country = \'France\'';

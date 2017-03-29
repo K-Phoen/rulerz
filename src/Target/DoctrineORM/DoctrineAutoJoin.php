@@ -54,7 +54,7 @@ class DoctrineAutoJoin
     {
         return $this->detectedJoins;
     }
-    
+
     /**
      * @param string $root
      * @param string $column
@@ -70,9 +70,9 @@ class DoctrineAutoJoin
             }
         }
         $this->detectedJoins[] = [
-            'root'   => (string) $root,
+            'root' => (string) $root,
             'column' => (string) $column,
-            'as'     => (string) $alias,
+            'as' => (string) $alias,
         ];
     }
 
