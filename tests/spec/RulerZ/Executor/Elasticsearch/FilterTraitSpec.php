@@ -51,7 +51,7 @@ class FilterTraitSpec extends ObjectBehavior
         $target->search([
             'index' => 'es_index',
             'type' => 'es_type',
-            'body' => ['query' => $esQuery],
+            'body' => ['from' => 0, 'size' => 100, 'query' => $esQuery],
         ])->willReturn($result);
 
         $this->filter($target, $parameters = [], $operators = [], new ExecutionContext([
