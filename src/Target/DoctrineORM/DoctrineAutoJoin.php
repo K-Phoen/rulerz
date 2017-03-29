@@ -54,6 +54,27 @@ class DoctrineAutoJoin
     {
         return $this->detectedJoins;
     }
+    
+    /**
+     * @param string $root
+     * @param string $column
+     * @param string $alias
+     */
+    private function addDetectedJoin($root, $column, $alias)
+    {
+        foreach ($this->detectedJoins as &$join) {
+            if ($join['root'] === (string) $root && $join['column'] === (string) $column &&
+                $join['as'] === (string) $alias
+            ) {
+                return;
+            }
+        }
+        $this->detectedJoins[] = [
+            'root'   => (string) $root,
+            'column' => (string) $column,
+            'as'     => (string) $alias,
+        ];
+    }
 
     public function buildAccessPath(AST\Bag\Context $element)
     {
@@ -89,11 +110,11 @@ class DoctrineAutoJoin
                     $this->saveAlias($currentEntity, $association['fieldName'], $alias);
                 }
 
-                $this->detectedJoins[] = [
-                    'root' => $lastAlias,
-                    'column' => $dimension,
-                    'as' => $alias = $this->getAlias($currentEntity, $association['fieldName']),
-                ];
+                $this->addDetectedJoin(
+                    $lastAlias,
+                    $dimension,
+                    $alias = $this->getAlias($currentEntity, $association['fieldName'])
+                );
 
                 $currentEntity = $association['targetEntity'];
                 $lastAlias = $alias;

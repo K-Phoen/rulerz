@@ -102,6 +102,26 @@ class DoctrineORMSpec extends BaseTargetBehavior
             ],
         ]);
     }
+    
+    function it_does_not_duplicate_join_tables()
+    {
+        $context = $this->createContext();
+        $rule = 'group.name = "ADMIN" or group.name = "OWNER"';
+        $expectedRule = '"(_0_group.name = \'ADMIN\' OR _0_group.name = \'OWNER\')"';
+        
+        /** @var Executor $executorModel */
+        $executorModel = $this->compile($this->parseRule($rule), $context);
+        $executorModel->getCompiledRule()->shouldReturn($expectedRule);
+        $executorModel->getCompiledData()->shouldReturn([
+            'detectedJoins' => [
+                [
+                    'root' => 'player',
+                    'column' => 'group',
+                    'as' => '_0_group',
+                ],
+            ],
+        ]);
+    }
 
     function it_uses_the_metadata_to_detect_invalid_attribute_access()
     {
