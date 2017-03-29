@@ -22,6 +22,7 @@ composer require 'kphoen/rulerz'
  * [Defining custom operators](custom_operators.md)
  * [Using RulerZ to build filters](build_filters.md)
  * [Creating custom compilation targets](custom_compilation_targets.md)
+ * [Building rules without using the DSL](building_rules_without_the_dsl.md)
 
 ## Cookbooks
 
