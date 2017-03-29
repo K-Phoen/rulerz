@@ -8,6 +8,8 @@ The [`K-Phoen/rulerz-spec-builder`](https://github.com/K-Phoen/rulerz-spec-build
 API to build Specifications for RulerZ:
 
 ```php
+# no_execute
+
 // gender = "F" and points > 3000 becomes:
 $spec = Expr::andX(
     Expr::equals('gender', 'F'),
