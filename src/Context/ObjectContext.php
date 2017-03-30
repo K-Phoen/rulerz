@@ -44,7 +44,7 @@ class ObjectContext implements \ArrayAccess
     {
         $value = $this->accessor->getValue($this->object, $id);
 
-        if (is_scalar($value)) {
+        if (is_scalar($value) || is_array($value)) {
             return $value;
         }
 
