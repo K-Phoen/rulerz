@@ -3,10 +3,13 @@
 namespace RulerZ\Executor\Elasticsearch;
 
 use RulerZ\Context\ExecutionContext;
-use RulerZ\Result\IteratorTools;
 
 trait ElasticsearchFilterTrait
 {
+    // just because traits can not have constants
+    private static $DEFAULT_CHUNK_SIZE = 50;
+    private static $DEFAULT_SCROLL_DURATION = '30s';
+
     abstract protected function execute($target, array $operators, array $parameters);
 
     /**
@@ -26,18 +29,32 @@ trait ElasticsearchFilterTrait
         $searchQuery = $this->execute($target, $operators, $parameters);
 
         /** @var \Elasticsearch\Client $target */
-        $results = $target->search([
+        $response = $target->search([
             'index' => $context['index'],
             'type' => $context['type'],
+            'search_type' => 'scan',
+            'scroll' => $context->get('scroll_duration', self::$DEFAULT_SCROLL_DURATION),
+            'size' => $context->get('chunks_size', self::$DEFAULT_CHUNK_SIZE),
             'body' => ['query' => $searchQuery],
         ]);
 
-        if (empty($results['hits'])) {
-            return IteratorTools::fromArray([]);
-        }
+        $scrollId = $response['_scroll_id'];
 
-        return IteratorTools::fromArray(array_map(function ($result) {
-            return $result['_source'];
-        }, $results['hits']['hits']));
+        while (true) {
+            $results = $target->scroll([
+                'scroll_id' => $scrollId,
+                'scroll' => $context->get('scroll_duration', self::$DEFAULT_SCROLL_DURATION),
+            ]);
+
+            if (empty($results['hits']['hits'])) {
+                break;
+            }
+
+            $scrollId = $results['_scroll_id'];
+
+            foreach ($results['hits']['hits'] as $result) {
+                yield  $result['_source'];
+            }
+        }
     }
 }

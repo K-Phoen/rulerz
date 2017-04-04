@@ -42,12 +42,17 @@ class ArrayContext extends BaseContext
     private function getArrayOfArraysDataset()
     {
         return [
-            ['pseudo' => 'Joe',      'fullname' => 'Joe la frite',      'gender' => 'M', 'age' => 34,  'points' => 2500],
-            ['pseudo' => 'Bob',      'fullname' => 'Bob Morane',        'gender' => 'M', 'age' => 62,  'points' => 9001],
-            ['pseudo' => 'Ada',      'fullname' => 'Ada Lovelace',      'gender' => 'F', 'age' => 175, 'points' => 10000],
-            ['pseudo' => 'Kévin',    'fullname' => 'Yup, that is me.',  'gender' => 'M', 'age' => 24,  'points' => 100],
-            ['pseudo' => 'Margaret', 'fullname' => 'Margaret Hamilton', 'gender' => 'F', 'age' => 78,  'points' => 5000],
-            ['pseudo' => 'Alice',    'fullname' => 'Alice foo',         'gender' => 'F', 'age' => 30,  'points' => 175],
+            ['pseudo' => 'Joe',       'fullname' => 'Joe la frite',      'gender' => 'M', 'age' => 34,  'points' => 2500],
+            ['pseudo' => 'Bob',       'fullname' => 'Bob Morane',        'gender' => 'M', 'age' => 62,  'points' => 9001],
+            ['pseudo' => 'Ada',       'fullname' => 'Ada Lovelace',      'gender' => 'F', 'age' => 175, 'points' => 10000],
+            ['pseudo' => 'Kévin',     'fullname' => 'Yup, that is me.',  'gender' => 'M', 'age' => 24,  'points' => 100],
+            ['pseudo' => 'Margaret',  'fullname' => 'Margaret Hamilton', 'gender' => 'F', 'age' => 78,  'points' => 5000],
+            ['pseudo' => 'Alice',     'fullname' => 'Alice foo',         'gender' => 'F', 'age' => 30,  'points' => 175],
+            ['pseudo' => 'Louise',    'fullname' => 'Louise foo',        'gender' => 'F', 'age' => 32,  'points' => 800],
+            ['pseudo' => 'Francis',   'fullname' => 'Francis foo',       'gender' => 'M', 'age' => 30,  'points' => 345],
+            ['pseudo' => 'John',      'fullname' => 'John foo',          'gender' => 'M', 'age' => 40,  'points' => 23],
+            ['pseudo' => 'Arthur',    'fullname' => 'Arthur foo',        'gender' => 'M', 'age' => 25,  'points' => 200],
+            ['pseudo' => 'Moon Moon', 'fullname' => 'Moon moon foo',     'gender' => 'D', 'age' => 7,   'points' => 300],
         ];
     }
 
@@ -59,13 +64,33 @@ class ArrayContext extends BaseContext
             new Group('Estasia'),
         ];
 
-        return [
-            new Player('Joe',      'Joe la frite',      'M', 34,  2500,  $groups[2]),
-            new Player('Bob',      'Bob Morane',        'M', 62,  9001,  $groups[0]),
-            new Player('Ada',      'Ada Lovelace',      'F', 175, 10000, $groups[1]),
-            new Player('Kévin',    'Yup, that is me.',  'M', 24,  100,   $groups[1]),
-            new Player('Margaret', 'Margaret Hamilton', 'F', 78,  5000,  $groups[2]),
-            new Player('Alice',    'Alice foo',         'F', 30,  175,   $groups[0]),
+        $groupsMapping = [
+            'Joe' => 2,
+            'Bob' => 0,
+            'Ada' => 1,
+            'Kévin' => 1,
+            'Margaret' => 2,
+            'Alice' => 0,
+            'Louise' => 1,
+            'Francis' => 1,
+            'John' => 1,
+            'Arthur' => 1,
+            'Moon Moon' => 1,
         ];
+
+        $players = [];
+
+        foreach ($this->getArrayOfArraysDataset() as $data) {
+            $players[] = new Player(
+                $data['pseudo'],
+                $data['fullname'],
+                $data['gender'],
+                $data['age'],
+                $data['points'],
+                $groups[$groupsMapping[$data['pseudo']]]
+            );
+        }
+
+        return $players;
     }
 }

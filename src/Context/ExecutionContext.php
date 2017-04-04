@@ -17,6 +17,15 @@ class ExecutionContext implements \ArrayAccess
         $this->data = $data;
     }
 
+    public function get($key, $default = null)
+    {
+        if (isset($this->data[$key])) {
+            return $this->data[$key];
+        }
+
+        return $default;
+    }
+
     /**
      * Get a data.
      *
