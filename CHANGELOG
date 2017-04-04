@@ -2,6 +2,22 @@
 VERSION 0  FIXED ELASTICSEARCH-RELATED TARGETS
 ==============================================
 
+   Version 0.20 - Allow to unwrap decorated values and improve ES results fetching
+      04/04/2017 20:05  0.20.0  initial release
+         a00a013 Merge pull request #70 from K-Phoen/fix-es-results-number
+         cd4d8a6 Mention Symfony and Silex integrations
+         34514fd Configure rusty to not execute spec builders examples
+         7830c39 Add a cookbook entry to describe how to build rules without using the DSL
+         5421119 Update tests for the new fixtures
+         847aff0 Add more test fixtures
+         42198f5 Efficiently return more results from ES by using scroll queries
+         e54d6e5 Merge pull request #67 from iainmckay/master
+         d6efd03 Expose the object contained in ObjectContext
+         c2ff3f8 Fix code samples in documentation
+         12f00a2 Describe how to create new compilation targets
+         a679696 Fix a few typos in the doc
+         96caaad Add editorconfig
+
    Version 0.19 - Add a way to retrieve the parameters used in a rule
       25/01/2017 12:54  0.19.3  Minor fixes regarding Eloquent target
          74d5ddb Fix Pomm example
