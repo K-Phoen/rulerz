@@ -87,13 +87,15 @@ class DoctrineAutoJoin
                     $alias = sprintf('_%d_%s', count($this->knownEntities), $dimension);
 
                     $this->saveAlias($currentEntity, $association['fieldName'], $alias);
-                }
 
-                $this->detectedJoins[] = [
-                    'root' => $lastAlias,
-                    'column' => $dimension,
-                    'as' => $alias = $this->getAlias($currentEntity, $association['fieldName']),
-                ];
+                    $this->detectedJoins[] = [
+                        'root' => $lastAlias,
+                        'column' => $dimension,
+                        'as' => $alias = $this->getAlias($currentEntity, $association['fieldName']),
+                    ];
+                } else {
+                    $alias = $this->getAlias($currentEntity, $association['fieldName']);
+                }
 
                 $currentEntity = $association['targetEntity'];
                 $lastAlias = $alias;
