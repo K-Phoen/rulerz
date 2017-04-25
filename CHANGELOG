@@ -3,6 +3,10 @@ VERSION 0  FIXED ELASTICSEARCH-RELATED TARGETS
 ==============================================
 
    Version 0.20 - Allow to unwrap decorated values and improve ES results fetching
+      25/04/2017 11:49  0.20.1  Fix automatic join detections for Doctrine ORM
+         10af0a0 Merge pull request #73 from K-Phoen/doctrine-orm-duplicated-joins
+         b0c0f75 Add a unit test
+         0441e29 Avoid creating duplicate joins in Doctrine ORM
       04/04/2017 20:05  0.20.0  initial release
          a00a013 Merge pull request #70 from K-Phoen/fix-es-results-number
          cd4d8a6 Mention Symfony and Silex integrations
