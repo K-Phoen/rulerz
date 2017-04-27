@@ -3,6 +3,9 @@ VERSION 0  FIXED ELASTICSEARCH-RELATED TARGETS
 ==============================================
 
    Version 0.20 - Allow to unwrap decorated values and improve ES results fetching
+      27/04/2017 19:25  0.20.2  Fix compilation for multiline rules
+         8cc49cc Merge pull request #74 from jhuet/fix-multilines-rule
+         4e0e1b2 Fix compilation when multilines rule is provided
       25/04/2017 11:49  0.20.1  Fix automatic join detections for Doctrine ORM
          10af0a0 Merge pull request #73 from K-Phoen/doctrine-orm-duplicated-joins
          b0c0f75 Add a unit test
