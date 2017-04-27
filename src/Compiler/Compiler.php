@@ -62,6 +62,8 @@ class Compiler
             $extraCode .= sprintf('private $%s = %s;'.PHP_EOL, $key, var_export($value, true));
         }
 
+        $commentedRule = str_replace(PHP_EOL, PHP_EOL . '    // ', $rule);
+
         return <<<EXECUTOR
 namespace RulerZ\Compiled\Executor;
 
@@ -73,7 +75,7 @@ class {$context['executor_classname']} implements Executor
 
     $extraCode
 
-    // $rule
+    // $commentedRule
     protected function execute(\$target, array \$operators, array \$parameters)
     {
         return {$executorModel->getCompiledRule()};
