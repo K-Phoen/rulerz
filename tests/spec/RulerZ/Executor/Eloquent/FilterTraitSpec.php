@@ -15,12 +15,12 @@ class FilterTraitSpec extends ObjectBehavior
 {
     use FilterResultMatcherTrait;
 
-    function let()
+    public function let()
     {
         $this->beAnInstanceOf('RulerZ\Stub\Executor\EloquentExecutorStub');
     }
 
-    function it_can_apply_a_filter_on_a_target(QueryBuilder $queryBuilder)
+    public function it_can_apply_a_filter_on_a_target(QueryBuilder $queryBuilder)
     {
         $parameters = [];
         $sql = 'sql query';
@@ -32,7 +32,7 @@ class FilterTraitSpec extends ObjectBehavior
         $this->applyFilter($queryBuilder, $parameters, $operators = [], new ExecutionContext())->shouldReturn($queryBuilder);
     }
 
-    function it_handles_query_builders(QueryBuilder $queryBuilder)
+    public function it_handles_query_builders(QueryBuilder $queryBuilder)
     {
         $results = new EloquentCollection(['result']);
         $parameters = [];
@@ -45,7 +45,7 @@ class FilterTraitSpec extends ObjectBehavior
         $this->filter($queryBuilder, $parameters, $operators = [], new ExecutionContext())->shouldReturnResults($results);
     }
 
-    function it_handles_eloquent_builders(EloquentBuilder $eloquentBuilder, QueryBuilder $builder)
+    public function it_handles_eloquent_builders(EloquentBuilder $eloquentBuilder, QueryBuilder $builder)
     {
         $results = new EloquentCollection(['result']);
         $parameters = [];

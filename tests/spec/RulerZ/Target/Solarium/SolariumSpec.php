@@ -15,17 +15,17 @@ use spec\RulerZ\Target\BaseTargetBehavior;
  */
 class SolariumSpec extends BaseTargetBehavior
 {
-    function it_supports_satisfies_mode_with_a_solarium_client(SolariumClient $client)
+    public function it_supports_satisfies_mode_with_a_solarium_client(SolariumClient $client)
     {
         $this->supports($client, CompilationTarget::MODE_SATISFIES)->shouldReturn(true);
     }
 
-    function it_supports_filter_mode_with_a_solarium_client(SolariumClient $client)
+    public function it_supports_filter_mode_with_a_solarium_client(SolariumClient $client)
     {
         $this->supports($client, CompilationTarget::MODE_FILTER)->shouldReturn(true);
     }
 
-    function it_can_return_an_executor_model()
+    public function it_can_return_an_executor_model()
     {
         $rule = 'points = 1';
 
@@ -37,7 +37,7 @@ class SolariumSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn("'points:1'");
     }
 
-    function it_supports_parameters()
+    public function it_supports_parameters()
     {
         $rule = 'points > :nb_points and group IN [:admin_group, :super_admin_group]';
 
@@ -46,10 +46,9 @@ class SolariumSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn('\'(points:{\'. $parameters[\'nb_points\'] .\' TO *] AND group:(\'. $parameters[\'admin_group\'] .\' OR \'. $parameters[\'super_admin_group\'] .\'))\'');
     }
 
-    function it_supports_custom_operators()
+    public function it_supports_custom_operators()
     {
         throw new SkippingException('Not yet implemented.');
-
         $rule = 'points > 30 and always_true()';
 
         $this->defineOperator('always_true', function () {
@@ -61,7 +60,7 @@ class SolariumSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn('\'(points:{30 TO *] AND \'.call_user_func($operators["always_true"])).\'\'');
     }
 
-    function it_supports_custom_inline_operators()
+    public function it_supports_custom_inline_operators()
     {
         $rule = 'points > 30 and always_true()';
 

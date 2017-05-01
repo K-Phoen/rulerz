@@ -13,7 +13,7 @@ class FileEvaluatorSpec extends ObjectBehavior
      */
     private $codeDirectory;
 
-    function let()
+    public function let()
     {
         $this->codeDirectory = vfsStream::setup('some_directory', null, [
             'rulerz_executor_foo' => '<?php class DummyExecutor {}',
@@ -22,25 +22,28 @@ class FileEvaluatorSpec extends ObjectBehavior
         $this->beConstructedWith($this->codeDirectory->url());
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('RulerZ\Compiler\FileEvaluator');
         $this->shouldHaveType('RulerZ\Compiler\Evaluator');
     }
 
-    function it_can_evaluate_a_rule_from_an_existing_file()
+    public function it_can_evaluate_a_rule_from_an_existing_file()
     {
         $ruleIdentifier = 'foo';
-        $compilerCallable = function() {};
+        $compilerCallable = function () {
+        };
 
         $this->evaluate($ruleIdentifier, $compilerCallable);
         $this->shouldHaveLoaded('DummyExecutor');
     }
 
-    function it_uses_the_compiler_if_no_file_exists()
+    public function it_uses_the_compiler_if_no_file_exists()
     {
         $ruleIdentifier = 'identifier that does not already exists';
-        $compilerCallable = function () { return 'class NewDummyExecutor {}'; };
+        $compilerCallable = function () {
+            return 'class NewDummyExecutor {}';
+        };
 
         $this->evaluate($ruleIdentifier, $compilerCallable);
         $this->shouldHaveLoaded('NewDummyExecutor');

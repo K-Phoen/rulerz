@@ -14,22 +14,22 @@ use RulerZ\Spec\Specification;
 
 class RulerZSpec extends ObjectBehavior
 {
-    function let(Compiler $compiler, CompilationTarget $compilationTarget)
+    public function let(Compiler $compiler, CompilationTarget $compilationTarget)
     {
         $this->beConstructedWith($compiler, [$compilationTarget]);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('RulerZ\RulerZ');
     }
 
-    function it_accepts_new_executors_after_construction(CompilationTarget $anotherCompilationTarget)
+    public function it_accepts_new_executors_after_construction(CompilationTarget $anotherCompilationTarget)
     {
         $this->registerCompilationTarget($anotherCompilationTarget);
     }
 
-    function it_chooses_the_right_compilation_target_for_a_given_target(Compiler $compiler, CompilationTarget $compilationTargetYes, CompilationTarget $compilationTargetNo, Executor $executor)
+    public function it_chooses_the_right_compilation_target_for_a_given_target(Compiler $compiler, CompilationTarget $compilationTargetYes, CompilationTarget $compilationTargetNo, Executor $executor)
     {
         $target = ['dummy target'];
         $rule = 'dummy rule';
@@ -51,7 +51,7 @@ class RulerZSpec extends ObjectBehavior
         $this->filter($target, $rule);
     }
 
-    function it_can_filter_a_target_with_a_rule(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor)
+    public function it_can_filter_a_target_with_a_rule(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor)
     {
         $target = ['dummy target'];
         $rule = 'dummy rule';
@@ -70,7 +70,7 @@ class RulerZSpec extends ObjectBehavior
         $this->filter($target, $rule)->shouldReturn($result);
     }
 
-    function it_can_filter_a_target_with_a_specification(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor, Specification $spec)
+    public function it_can_filter_a_target_with_a_specification(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor, Specification $spec)
     {
         $target = ['dummy target'];
         $rule = 'dummy rule';
@@ -93,7 +93,7 @@ class RulerZSpec extends ObjectBehavior
         $this->filterSpec($target, $spec)->shouldReturn($result);
     }
 
-    function it_can_check_if_a_target_satisfies_a_rule(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor)
+    public function it_can_check_if_a_target_satisfies_a_rule(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor)
     {
         $target = ['dummy target'];
         $rule = 'dummy rule';
@@ -112,7 +112,7 @@ class RulerZSpec extends ObjectBehavior
         $this->satisfies($target, $rule)->shouldReturn($result);
     }
 
-    function it_can_check_if_a_target_satisfies_a_specification(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor, Specification $spec)
+    public function it_can_check_if_a_target_satisfies_a_specification(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor, Specification $spec)
     {
         $target = ['dummy target'];
         $rule = 'dummy rule';
@@ -135,14 +135,14 @@ class RulerZSpec extends ObjectBehavior
         $this->satisfiesSpec($target, $spec)->shouldReturn(true);
     }
 
-    function it_cant_filter_without_a_compilation_target()
+    public function it_cant_filter_without_a_compilation_target()
     {
         $this
             ->shouldThrow('RulerZ\Exception\TargetUnsupportedException')
             ->duringFilter(['some target'], 'points > 30');
     }
 
-    function it_can_apply_a_filter_on_a_target_with_a_rule(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor)
+    public function it_can_apply_a_filter_on_a_target_with_a_rule(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor)
     {
         $target = ['dummy target'];
         $rule = 'dummy rule';
@@ -161,7 +161,7 @@ class RulerZSpec extends ObjectBehavior
         $this->applyFilter($target, $rule)->shouldReturn($result);
     }
 
-    function it_can_apply_a_filter_on_a_target_with_a_specification(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor, Specification $spec)
+    public function it_can_apply_a_filter_on_a_target_with_a_specification(Compiler $compiler, CompilationTarget $compilationTarget, Executor $executor, Specification $spec)
     {
         $target = ['dummy target'];
         $rule = 'dummy rule';

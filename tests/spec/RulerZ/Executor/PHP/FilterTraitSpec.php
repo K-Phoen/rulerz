@@ -11,12 +11,12 @@ class FilterTraitSpec extends ObjectBehavior
 {
     use FilterResultMatcherTrait;
 
-    function let()
+    public function let()
     {
         $this->beAnInstanceOf('RulerZ\Stub\Executor\ArrayExecutorStub');
     }
 
-    function it_can_NOT_apply_a_filter_on_a_target()
+    public function it_can_NOT_apply_a_filter_on_a_target()
     {
         $target = [['some' => 'item'], ['another' => 'item']];
 
@@ -25,7 +25,7 @@ class FilterTraitSpec extends ObjectBehavior
             ->duringApplyFilter($target, $parameters = [], $operators = [], new ExecutionContext());
     }
 
-    function it_filters_the_target_using_execute()
+    public function it_filters_the_target_using_execute()
     {
         $target = [['some' => 'item'], ['another' => 'item']];
         $results = $target;
