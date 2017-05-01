@@ -13,12 +13,12 @@ class FilterTraitSpec extends ObjectBehavior
 {
     use FilterResultMatcherTrait;
 
-    function let()
+    public function let()
     {
         $this->beAnInstanceOf('RulerZ\Stub\Executor\ElasticsearchExecutorStub');
     }
 
-    function it_can_apply_a_filter_on_a_target(Client $target)
+    public function it_can_apply_a_filter_on_a_target(Client $target)
     {
         $esQuery = ['array with the ES query'];
 
@@ -28,7 +28,7 @@ class FilterTraitSpec extends ObjectBehavior
         $this->applyFilter($target, $parameters = [], $operators = [], new ExecutionContext())->shouldReturn($esQuery);
     }
 
-    function it_calls_search_on_the_target(Client $target)
+    public function it_calls_search_on_the_target(Client $target)
     {
         $documents = [
             'first document',

@@ -13,17 +13,17 @@ use spec\RulerZ\Target\BaseTargetBehavior;
  */
 class PommSpec extends BaseTargetBehavior
 {
-    function it_supports_satisfies_mode()
+    public function it_supports_satisfies_mode()
     {
         $this->supports(new ModelStub(), CompilationTarget::MODE_SATISFIES)->shouldReturn(true);
     }
 
-    function it_can_filter_where_clauses()
+    public function it_can_filter_where_clauses()
     {
         $this->supports(new ModelStub(), CompilationTarget::MODE_FILTER)->shouldReturn(true);
     }
 
-    function it_can_returns_an_executor_model()
+    public function it_can_returns_an_executor_model()
     {
         $rule = '1 = 1';
 
@@ -35,7 +35,7 @@ class PommSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn('(new \PommProject\Foundation\Where("1 = 1", []))');
     }
 
-    function it_supports_parameters()
+    public function it_supports_parameters()
     {
         $rule = 'points > :nb_points and group IN [:admin_group, :super_admin_group]';
 
@@ -44,7 +44,7 @@ class PommSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn('(new \PommProject\Foundation\Where("points > $*", [$parameters["nb_points"]]))->andWhere((new \PommProject\Foundation\Where("group IN ($*, $*)", [$parameters["admin_group"], $parameters["super_admin_group"]])))');
     }
 
-    function it_supports_custom_operators()
+    public function it_supports_custom_operators()
     {
         $rule = 'points > 30 and always_true()';
 
@@ -57,7 +57,7 @@ class PommSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn('(new \PommProject\Foundation\Where("points > 30", []))->andWhere((new \PommProject\Foundation\Where(call_user_func($operators["always_true"]), [])))');
     }
 
-    function it_supports_custom_inline_operators()
+    public function it_supports_custom_inline_operators()
     {
         $rule = 'points > 30 and always_true()';
 
@@ -70,7 +70,7 @@ class PommSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn('(new \PommProject\Foundation\Where("points > 30", []))->andWhere((new \PommProject\Foundation\Where("1 = 1", [])))');
     }
 
-    function it_implicitly_converts_unknown_operators()
+    public function it_implicitly_converts_unknown_operators()
     {
         $rule = 'points > 30 and always_true()';
 

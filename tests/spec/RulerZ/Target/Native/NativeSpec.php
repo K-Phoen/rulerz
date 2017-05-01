@@ -12,22 +12,22 @@ use spec\RulerZ\Target\BaseTargetBehavior;
  */
 class NativeSpec extends BaseTargetBehavior
 {
-    function it_supports_satisfies_mode()
+    public function it_supports_satisfies_mode()
     {
         $this->supports([], CompilationTarget::MODE_SATISFIES)->shouldReturn(true);
     }
 
-    function it_supports_filtering_arrays()
+    public function it_supports_filtering_arrays()
     {
         $this->supports([], CompilationTarget::MODE_FILTER)->shouldReturn(true);
     }
 
-    function it_supports_satisfaction_tests_for_arrays()
+    public function it_supports_satisfaction_tests_for_arrays()
     {
         $this->supports([], CompilationTarget::MODE_SATISFIES)->shouldReturn(true);
     }
 
-    function it_can_returns_an_executor_model()
+    public function it_can_returns_an_executor_model()
     {
         $rule = '1 = 1';
 
@@ -39,7 +39,7 @@ class NativeSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn('1 == 1');
     }
 
-    function it_can_compile_a_simple_rule()
+    public function it_can_compile_a_simple_rule()
     {
         $rule = 'score = 1';
 
@@ -48,7 +48,7 @@ class NativeSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn('$target["score"] == 1');
     }
 
-    function it_handles_nested_accesses()
+    public function it_handles_nested_accesses()
     {
         $rule = 'stats.user.score >= 42';
 
@@ -57,7 +57,7 @@ class NativeSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn('$target["stats"]["user"]["score"] >= 42');
     }
 
-    function it_handles_custom_operators()
+    public function it_handles_custom_operators()
     {
         $rule = 'points >= 42 and always_true()';
 
@@ -70,7 +70,7 @@ class NativeSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn('($target["points"] >= 42 && call_user_func($operators["always_true"]))');
     }
 
-    function it_handles_custom_operators_with_parameters()
+    public function it_handles_custom_operators_with_parameters()
     {
         $rule = 'points >= 42 and always_true(42)';
 
@@ -83,14 +83,14 @@ class NativeSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn('($target["points"] >= 42 && call_user_func($operators["always_true"], 42))');
     }
 
-    function it_throws_an_exception_when_calling_an_unknown_operator()
+    public function it_throws_an_exception_when_calling_an_unknown_operator()
     {
         $this
             ->shouldThrow('RulerZ\Exception\OperatorNotFoundException')
             ->duringCompile($this->parseRule('operator_that_does_not_exist() = 42'), new Context());
     }
 
-    function it_handles_custom_inline_operators()
+    public function it_handles_custom_inline_operators()
     {
         $rule = 'points >= 42 and always_true(42)';
 

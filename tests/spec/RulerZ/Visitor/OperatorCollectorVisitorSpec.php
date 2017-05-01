@@ -7,12 +7,12 @@ use RulerZ\Parser\Parser;
 
 class OperatorCollectorVisitorSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('RulerZ\Visitor\OperatorCollectorVisitor');
     }
 
-    function it_collects_operators()
+    public function it_collects_operators()
     {
         $ruleModel = $this->parse('foo = :bar AND length(baz) = 2');
 

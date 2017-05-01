@@ -2,7 +2,7 @@
 
 use Entity\Doctrine\Player;
 
-list($entityManager, $rulerz) = require __DIR__ . '/bootstrap/bootstrap_doctrine.php';
+list($entityManager, $rulerz) = require __DIR__.'/bootstrap/bootstrap_doctrine.php';
 
 // 1. Write a rule.
 $rule = 'gender = :gender and points > :points';
@@ -27,8 +27,8 @@ $playersArr = [
 
 // or an array of objects
 $playersObj = [
-    new Player('Joe',   'Joe la frite', 'M', 40, 2500),
-    new Player('Moe',   'Moe, from the bar!', 'M', 55, 1230),
+    new Player('Joe', 'Joe la frite', 'M', 40, 2500),
+    new Player('Moe', 'Moe, from the bar!', 'M', 55, 1230),
     new Player('Alice', 'Alice, from... you know.', 'F', 27, 9001),
 ];
 

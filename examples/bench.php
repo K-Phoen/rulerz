@@ -15,9 +15,7 @@ $dataset = [
     ['name' => 'Dad', 'group' => 'admin', 'points' => 500],
 ];
 
-
 $bench = new Hoa\Bench\Bench();
-
 
 $rule = '(group = "guest" and points > 42) or (group = "admin" and points > 250)';
 $rulerz_results = array_column($rulerz->filter($dataset, $rule), 'name');
@@ -29,7 +27,6 @@ foreach (range(0, REPETITIONS) as $i) {
 }
 
 $bench->{'kphoen/rulerz'}->stop();
-
 
 // Expression
 $expr = new Disjunction([

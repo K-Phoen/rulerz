@@ -11,7 +11,7 @@ abstract class BaseTargetBehavior extends ObjectBehavior
     /**
      * @dataProvider unsupportedTypes
      */
-    function it_can_not_filter_other_types($type)
+    public function it_can_not_filter_other_types($type)
     {
         $this->supports($type, CompilationTarget::MODE_FILTER)->shouldReturn(false);
     }

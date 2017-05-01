@@ -14,12 +14,12 @@ class FilterTraitSpec extends ObjectBehavior
 {
     use FilterResultMatcherTrait;
 
-    function let()
+    public function let()
     {
         $this->beAnInstanceOf('RulerZ\Stub\Executor\DoctrineORMExecutorStub');
     }
 
-    function it_can_apply_a_filter_on_a_target(QueryBuilder $target)
+    public function it_can_apply_a_filter_on_a_target(QueryBuilder $target)
     {
         $dql = 'some_dql';
 
@@ -31,7 +31,7 @@ class FilterTraitSpec extends ObjectBehavior
         $this->applyFilter($target, $parameters = ['foo' => 'bar'], $operators = [], new ExecutionContext())->shouldReturn($target);
     }
 
-    function it_can_apply_detected_joins(QueryBuilder $target)
+    public function it_can_apply_detected_joins(QueryBuilder $target)
     {
         $this->detectedJoins = [
             [
@@ -51,7 +51,7 @@ class FilterTraitSpec extends ObjectBehavior
         $this->applyFilter($target, $parameters = ['foo' => 'bar'], $operators = [], new ExecutionContext())->shouldReturn($target);
     }
 
-    function it_call_findWhere_on_the_target(QueryBuilder $target, Query $query)
+    public function it_call_findWhere_on_the_target(QueryBuilder $target, Query $query)
     {
         $this->detectedJoins = [
             [

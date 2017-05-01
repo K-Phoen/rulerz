@@ -14,12 +14,12 @@ class FilterTraitSpec extends ObjectBehavior
 {
     use FilterResultMatcherTrait;
 
-    function let()
+    public function let()
     {
         $this->beAnInstanceOf('RulerZ\Stub\Executor\PommExecutorStub');
     }
 
-    function it_can_apply_a_filter_on_a_target(ModelStub $modelStub)
+    public function it_can_apply_a_filter_on_a_target(ModelStub $modelStub)
     {
         $whereClause = new Where();
 
@@ -29,7 +29,7 @@ class FilterTraitSpec extends ObjectBehavior
         $this->applyFilter($modelStub, $parameters = [], $operators = [], new ExecutionContext())->shouldReturn($whereClause);
     }
 
-    function it_call_findWhere_on_the_target(ModelStub $modelStub, Where $whereClause)
+    public function it_call_findWhere_on_the_target(ModelStub $modelStub, Where $whereClause)
     {
         $results = ['result'];
 
@@ -39,7 +39,7 @@ class FilterTraitSpec extends ObjectBehavior
         $this->filter($modelStub, $parameters = [], $operators = [], new ExecutionContext())->shouldReturnResults($results);
     }
 
-    function it_call_acustom_method_if_specified_in_the_context(ModelStub $modelStub, Where $whereClause)
+    public function it_call_acustom_method_if_specified_in_the_context(ModelStub $modelStub, Where $whereClause)
     {
         $results = ['result'];
 

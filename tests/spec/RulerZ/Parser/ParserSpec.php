@@ -6,7 +6,7 @@ use PhpSpec\ObjectBehavior;
 
 class ParserSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('RulerZ\Parser\Parser');
     }
@@ -14,7 +14,7 @@ class ParserSpec extends ObjectBehavior
     /**
      * @dataProvider validRules
      */
-    function it_returns_an_ast_for_a_valid_rule($rule)
+    public function it_returns_an_ast_for_a_valid_rule($rule)
     {
         $this->parse($rule)->shouldHaveType('RulerZ\Model\Rule');
     }
@@ -22,7 +22,7 @@ class ParserSpec extends ObjectBehavior
     /**
      * @dataProvider invalidRules
      */
-    function it_throws_an_exception_for_an_invalid_rule($rule)
+    public function it_throws_an_exception_for_an_invalid_rule($rule)
     {
         $this->shouldThrow('Hoa\Compiler\Exception')->duringParse($rule);
     }
@@ -62,7 +62,7 @@ class ParserSpec extends ObjectBehavior
         ];
     }
 
-    function it_converts_positional_parameters_to_indexed_ones()
+    public function it_converts_positional_parameters_to_indexed_ones()
     {
         $model = $this->parse('name = ?');
         $parameters = $model->getParameters();
@@ -71,7 +71,7 @@ class ParserSpec extends ObjectBehavior
         $parameters[0]->getName()->shouldBe(0);
     }
 
-    function it_can_parse_several_rules_and_generate_valid_indexes_for_parameters()
+    public function it_can_parse_several_rules_and_generate_valid_indexes_for_parameters()
     {
         $this->parse('name = ?');
         $model = $this->parse('name = ?');

@@ -16,22 +16,22 @@ class ElasticaSpec extends BaseTargetBehavior
 {
     use ElasticsearchVisitorExamples;
 
-    function it_supports_satisfies_mode_with_a_search(Search $search)
+    public function it_supports_satisfies_mode_with_a_search(Search $search)
     {
         $this->supports($search, CompilationTarget::MODE_SATISFIES)->shouldReturn(true);
     }
 
-    function it_supports_filter_mode_with_a_search(Search $search)
+    public function it_supports_filter_mode_with_a_search(Search $search)
     {
         $this->supports($search, CompilationTarget::MODE_FILTER)->shouldReturn(true);
     }
 
-    function it_supports_satisfies_mode_with_a_search_object(SearchableInterface $search)
+    public function it_supports_satisfies_mode_with_a_search_object(SearchableInterface $search)
     {
         $this->supports($search, CompilationTarget::MODE_SATISFIES)->shouldReturn(true);
     }
 
-    function it_supports_filter_mode_with_a_search_object(SearchableInterface $search)
+    public function it_supports_filter_mode_with_a_search_object(SearchableInterface $search)
     {
         $this->supports($search, CompilationTarget::MODE_FILTER)->shouldReturn(true);
     }

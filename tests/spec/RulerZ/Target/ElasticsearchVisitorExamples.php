@@ -9,7 +9,7 @@ trait ElasticsearchVisitorExamples
 {
     abstract protected function parseRule($rule);
 
-    function it_can_returns_an_executor_model()
+    public function it_can_returns_an_executor_model()
     {
         $rule = '1 = 1';
 
@@ -20,7 +20,7 @@ trait ElasticsearchVisitorExamples
         $executorModel->getTraits()->shouldHaveCount(2);
     }
 
-    function it_can_compile_a_simple_rule()
+    public function it_can_compile_a_simple_rule()
     {
         $rule = 'points > 30';
         $expectedQuery = <<<'QUERY'
@@ -38,7 +38,7 @@ QUERY;
         $executorModel->getCompiledRule()->shouldReturn($expectedQuery);
     }
 
-    function it_handles_nested_accesses()
+    public function it_handles_nested_accesses()
     {
         $rule = 'user.stats.points > 30';
         $expectedQuery = <<<'QUERY'
@@ -56,7 +56,7 @@ QUERY;
         $executorModel->getCompiledRule()->shouldReturn($expectedQuery);
     }
 
-    function it_throws_an_exception_when_calling_an_unknown_operator()
+    public function it_throws_an_exception_when_calling_an_unknown_operator()
     {
         $this
             ->shouldThrow('RulerZ\Exception\OperatorNotFoundException')

@@ -28,8 +28,8 @@ $playersArr = [
 
 // or an array of objects
 $playersObj = [
-    new Player('Joe',   'Joe la frite',             'M', 40, 2500),
-    new Player('Moe',   'Moe, from the bar!',       'M', 55, 1230),
+    new Player('Joe', 'Joe la frite', 'M', 40, 2500),
+    new Player('Moe', 'Moe, from the bar!', 'M', 55, 1230),
     new Player('Alice', 'Alice, from... you know.', 'F', 27, 9001),
 ];
 

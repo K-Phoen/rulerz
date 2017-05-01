@@ -11,17 +11,17 @@ use RulerZ\Compiler\EvalEvaluator;
 
 class CompilerSpec extends ObjectBehavior
 {
-    function let(EvalEvaluator $evaluator)
+    public function let(EvalEvaluator $evaluator)
     {
         $this->beConstructedWith($evaluator);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('RulerZ\Compiler\Compiler');
     }
 
-    function it_delegates_code_evaluation_when_the_executor_is_not_loaded(EvalEvaluator $evaluator, CompilationTarget $target)
+    public function it_delegates_code_evaluation_when_the_executor_is_not_loaded(EvalEvaluator $evaluator, CompilationTarget $target)
     {
         $rule = 'points > 42';
         $context = new CompilationContext();

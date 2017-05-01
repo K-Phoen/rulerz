@@ -7,12 +7,12 @@ use RulerZ\Parser\Parser;
 
 class ParameterCollectorVisitorSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('RulerZ\Visitor\ParameterCollectorVisitor');
     }
 
-    function it_collects_parameters()
+    public function it_collects_parameters()
     {
         $ruleModel = $this->parse('foo = :bar AND baz = :biz AND lolz = ?');
 
