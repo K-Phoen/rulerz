@@ -24,6 +24,13 @@ class ObjectContextSpec extends ObjectBehavior
         $this['property']->shouldReturn(42);
     }
 
+    function it_doesnt_wrap_nulls_with_self($object)
+    {
+        $object->property = null;
+
+        $this['property']->shouldReturn(null);
+    }
+
     function it_allows_testing_property_existence($object)
     {
         $object->property = 42;
