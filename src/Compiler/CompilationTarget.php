@@ -45,6 +45,7 @@ interface CompilationTarget
      *
      * @param string $rule The textual rule.
      * @param Context $context The compilation context.
+     *
      * @return string The hint (empty string if not relevant).
      */
     public function getRuleIdentifierHint($rule, Context $context);
