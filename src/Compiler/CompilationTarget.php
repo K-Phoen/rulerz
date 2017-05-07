@@ -40,6 +40,16 @@ interface CompilationTarget
     public function createCompilationContext($target);
 
     /**
+     * Returns a hint that will be used to make the rule identifying process more
+     * accurate.
+     *
+     * @param string $rule The textual rule.
+     * @param Context $context The compilation context.
+     * @return string The hint (empty string if not relevant).
+     */
+    public function getRuleIdentifierHint($rule, Context $context);
+
+    /**
      * Define a runtime operator.
      *
      * @param string $name The operator name.
