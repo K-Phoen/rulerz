@@ -83,4 +83,12 @@ abstract class AbstractCompilationTarget implements CompilationTarget
     {
         return $this->customOperators;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRuleIdentifierHint($rule, Context $context)
+    {
+        return '';
+    }
 }

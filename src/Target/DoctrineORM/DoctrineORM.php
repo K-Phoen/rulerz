@@ -35,6 +35,17 @@ class DoctrineORM extends AbstractSqlTarget
     /**
      * {@inheritdoc}
      */
+    public function getRuleIdentifierHint($rule, Context $context)
+    {
+        $aliases = implode('', $context['root_aliases']);
+        $entities = implode('', $context['root_entities']);
+
+        return $aliases.$entities;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function createVisitor(Context $context)
     {
         return new DoctrineORMVisitor($context, $this->getOperators(), $this->allowStarOperator);

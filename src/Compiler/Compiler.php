@@ -33,7 +33,7 @@ class Compiler
      */
     public function compile($rule, CompilationTarget $target, Context $context)
     {
-        $context['rule_identifier'] = $this->getRuleIdentifier($target, $rule);
+        $context['rule_identifier'] = $this->getRuleIdentifier($target, $context, $rule);
         $context['executor_classname'] = 'Executor_'.$context['rule_identifier'];
         $context['executor_fqcn'] = '\RulerZ\Compiled\Executor\\Executor_'.$context['rule_identifier'];
 
@@ -84,8 +84,8 @@ class {$context['executor_classname']} implements Executor
 EXECUTOR;
     }
 
-    protected function getRuleIdentifier(CompilationTarget $compilationTarget, $rule)
+    protected function getRuleIdentifier(CompilationTarget $compilationTarget, Context $context, $rule)
     {
-        return hash('crc32b', get_class($compilationTarget).$rule);
+        return hash('crc32b', get_class($compilationTarget).$rule.$compilationTarget->getRuleIdentifierHint($rule, $context));
     }
 }
