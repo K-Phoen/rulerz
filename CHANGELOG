@@ -3,6 +3,10 @@ VERSION 0  FIXED ELASTICSEARCH-RELATED TARGETS
 ==============================================
 
    Version 0.20 - Allow to unwrap decorated values and improve ES results fetching
+      07/05/2017 17:48  0.20.4  Fix possible collisions in Doctrine ORM rules identifiers
+         5277bdb Fix style violation
+         0129b8d Merge branch 'avoid-rules-identifier-collisons'
+         f24be58 Avoid rules identifier collisons for Doctrine ORM-related rules
       01/05/2017 11:40  0.20.3  Fix null handling in native rules compilation
          28fa0e3 Merge pull request #78 from K-Phoen/analysis-qoMwO5
          56b3e7d Apply fixes from StyleCI
