@@ -65,7 +65,7 @@
 %token  dot           \.
 
 %token  positional_parameter \?
-%token  named_parameter      :[a-z-A-Z0-9_]+
+%token  named_parameter      :[a-z-A-Z0-9_.]+
 
 %token  identifier    [^\s\(\)\[\],\.]+
 
