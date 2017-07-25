@@ -55,13 +55,8 @@ class DoctrineAutoJoin
         return $this->detectedJoins;
     }
 
-    public function buildAccessPath(AST\Bag\Context $element)
+    public function buildAccessPath(array $dimensionNames)
     {
-        $dimensionNames = array_map(function ($dimension) {
-            return $dimension[1];
-        }, $element->getDimensions());
-        array_unshift($dimensionNames, $element->getId());
-
         $currentEntity = current($this->rootEntities);
         $lastAlias = key($this->aliasMap);
 

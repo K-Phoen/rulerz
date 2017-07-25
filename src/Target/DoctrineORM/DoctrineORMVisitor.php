@@ -38,7 +38,12 @@ class DoctrineORMVisitor extends GenericSqlVisitor
      */
     public function visitAccess(AST\Bag\Context $element, &$handle = null, $eldnah = null)
     {
-        return $this->autoJoin->buildAccessPath($element);
+        $dimensionNames = array_map(function ($dimension) {
+            return $dimension[1];
+        }, $element->getDimensions());
+        array_unshift($dimensionNames, $element->getId());
+
+        return $this->autoJoin->buildAccessPath($dimensionNames);
     }
 
     /**
