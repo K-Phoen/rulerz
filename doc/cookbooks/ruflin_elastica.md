@@ -27,7 +27,7 @@ Once ruflin/elastica is installed and configured we can the RulerZ engine:
 ```php
 $rulerz = new RulerZ(
     $compiler, [
-        new \RulerZ\Compiler\Target\Elasticsearch\Elastica(), // this line is Elastica-specific
+        new \RulerZ\Target\Elastica\Elastica(), // this line is Elastica-specific
         // other compilation targets...
     ]
 );

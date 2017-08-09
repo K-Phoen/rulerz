@@ -25,7 +25,7 @@ Once Doctrine is installed and configured we can the RulerZ engine:
 ```php
 $rulerz = new RulerZ(
     $compiler, [
-        new \RulerZ\Compiler\Target\Sql\DoctrineQueryBuilder(), // this line is Doctrine-specific
+        new \RulerZ\Target\DoctrineORM\DoctrineORM(), // this line is Doctrine-specific
         // other compilation targets...
     ]
 );

@@ -27,7 +27,7 @@ Once elastic/elasticsearch-php is installed and configured we can the RulerZ eng
 ```php
 $rulerz = new RulerZ(
     $compiler, [
-        new \RulerZ\Compiler\Target\Elasticsearch\Elasticsearch(), // this line is Elasticsearch-specific
+        new \RulerZ\Target\Elasticsearch\Elasticsearch(), // this line is Elasticsearch-specific
         // other compilation targets...
     ]
 );

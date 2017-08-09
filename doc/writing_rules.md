@@ -30,7 +30,7 @@ Enough said, here is the code:
 
 ```php
 use RulerZ\Compiler\Compiler;
-use RulerZ\Compiler\Target;
+use RulerZ\Target;
 use RulerZ\RulerZ;
 
 // compiler
@@ -39,8 +39,8 @@ $compiler = Compiler::create();
 // RulerZ engine
 $rulerz = new RulerZ(
     $compiler, [
-        new Target\Sql\DoctrineQueryBuilder(),
-        new Target\Native([
+        new Target\DoctrineORM\DoctrineORM(),
+        new Target\Native\Native([
             'length' => 'strlen'
         ]),
     ]

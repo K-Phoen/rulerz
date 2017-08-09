@@ -35,7 +35,7 @@ abstract class BaseContext implements Context
     /**
      * Returns the compilation target to be tested.
      *
-     * @return \RulerZ\Compiler\Target\CompilationTarget
+     * @return \RulerZ\Compiler\CompilationTarget
      */
     abstract protected function getCompilationTarget();
 
