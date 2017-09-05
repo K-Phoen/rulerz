@@ -45,7 +45,10 @@ class Player
      */
     public $address;
 
-    public function __construct($pseudo, $fullname, $gender, $age, $points, $group = null)
+    /** @var \DateTime */
+    public $birthDate;
+
+    public function __construct($pseudo, $fullname, $gender, $age, $points, $group = null, $birthDate = null)
     {
         $this->pseudo = $pseudo;
         $this->fullname = $fullname;
@@ -53,5 +56,6 @@ class Player
         $this->age = $age;
         $this->points = $points;
         $this->group = $group;
+        $this->birthDate = $birthDate;
     }
 }

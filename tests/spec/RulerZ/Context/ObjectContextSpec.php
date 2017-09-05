@@ -3,6 +3,7 @@
 namespace spec\RulerZ\Context;
 
 use PhpSpec\ObjectBehavior;
+use RulerZ\Context\ObjectContext;
 
 class ObjectContextSpec extends ObjectBehavior
 {
@@ -29,6 +30,20 @@ class ObjectContextSpec extends ObjectBehavior
         $object->property = null;
 
         $this['property']->shouldReturn(null);
+    }
+
+    public function it_should_return_a_new_ObjectContext_when_we_dont_specify_a_property_of_an_object($object)
+    {
+        $object->property = new \stdClass();
+
+        $this['property']->shouldHaveType(ObjectContext::class);
+    }
+
+    public function it_should_return_a_Datetime_object_whithout_an_encapuslation_of_ObjectContext($object)
+    {
+        $object->property = new \DateTime();
+
+        $this['property']->shouldHaveType(\DateTime::class);
     }
 
     public function it_allows_testing_property_existence($object)

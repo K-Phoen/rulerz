@@ -64,6 +64,12 @@ class ArrayContext extends BaseContext
             new Group('Estasia'),
         ];
 
+        $birthDates = [
+            new DateTime('2001-01-02'),
+            new DateTime('2005-01-04'),
+            new DateTime('2007-01-07'),
+        ];
+
         $groupsMapping = [
             'Joe' => 2,
             'Bob' => 0,
@@ -87,7 +93,8 @@ class ArrayContext extends BaseContext
                 $data['gender'],
                 $data['age'],
                 $data['points'],
-                $groups[$groupsMapping[$data['pseudo']]]
+                $groups[$groupsMapping[$data['pseudo']]],
+                $birthDates[$groupsMapping[$data['pseudo']]]
             );
         }
 
