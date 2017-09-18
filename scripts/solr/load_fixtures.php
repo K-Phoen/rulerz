@@ -14,6 +14,7 @@ $players = $entityManager
     ->from('Entity\Doctrine\Player', 'p')
     ->getQuery()->execute();
 
+/** @var \Entity\Doctrine\Player $player */
 foreach ($players as $i => $player) {
     // get an update query instance
     $update = $client->createUpdate();
@@ -24,7 +25,7 @@ foreach ($players as $i => $player) {
     $doc->id = $i + 1;
     $doc->pseudo = $player->pseudo;
     $doc->fullname = $player->fullname;
-    $doc->age = (int) $player->age;
+    $doc->birthday = $player->birthday->format('Y-m-d');
     $doc->gender = $player->gender;
     $doc->points = (int) $player->points;
 

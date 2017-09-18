@@ -35,7 +35,7 @@ class NativeSpec extends BaseTargetBehavior
         $executorModel = $this->compile($this->parseRule($rule), new Context());
         $executorModel->shouldHaveType('RulerZ\Model\Executor');
 
-        $executorModel->getTraits()->shouldHaveCount(2);
+        $executorModel->getTraits()->shouldHaveCount(3);
         $executorModel->getCompiledRule()->shouldReturn('1 == 1');
     }
 

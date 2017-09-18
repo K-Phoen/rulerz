@@ -27,6 +27,9 @@ $rulerz = new \RulerZ\RulerZ(
         new \RulerZ\Target\DoctrineORM\DoctrineORM(),
         new \RulerZ\Target\Native\Native([
             'length' => 'strlen',
+            'is_leap_year' => function (\DateTime $date) {
+                return $date->format('L') === '1';
+            },
         ]),
     ]
 );

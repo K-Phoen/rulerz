@@ -18,7 +18,7 @@ CREATE TABLE players(
   group_id INTEGER DEFAULT NULL,
   fullname VARCHAR(50) NOT NULL,
   gender   CHAR(1) NOT NULL,
-  age      INTEGER NOT NULL,
+  birthday DATE NOT NULL,
   points   INTEGER NOT NULL,
   address_street VARCHAR(255) NOT NULL,
   address_postalCode VARCHAR(255) NOT NULL,
@@ -36,17 +36,18 @@ INSERT INTO roles (id, name) VALUES (2, 'ROLE_PLAYER');
 INSERT INTO groups (id, role_id, name) VALUES (1, 1, 'Admin');
 INSERT INTO groups (id, role_id, name) VALUES (2, 2, 'Players');
 
-INSERT INTO players (pseudo, group_id, fullname, gender, age, points, address_street, address_postalCode, address_city, address_country) VALUES ('Joe',       1, 'Joe la frite',      'M', 34,  2500, 'Baker street', 'NW1 6XE', 'London', 'England');
-INSERT INTO players (pseudo, group_id, fullname, gender, age, points, address_street, address_postalCode, address_city, address_country) VALUES ('Bob',       2, 'Bob Morane',        'M', 62,  9001, 'Baker street', 'NW1 6XE', 'London', 'England');
-INSERT INTO players (pseudo, group_id, fullname, gender, age, points, address_street, address_postalCode, address_city, address_country) VALUES ('Ada',       2, 'Ada Lovelace',      'F', 175, 10000, 'Baker street', 'NW1 6XE', 'London', 'England');
-INSERT INTO players (pseudo, group_id, fullname, gender, age, points, address_street, address_postalCode, address_city, address_country) VALUES ('Kévin',     2, 'Yup, that is me.',  'M', 24,  100, 'Baker street', 'NW1 6XE', 'London', 'England');
-INSERT INTO players (pseudo, group_id, fullname, gender, age, points, address_street, address_postalCode, address_city, address_country) VALUES ('Margaret',  2, 'Margaret Hamilton', 'F', 78,  5000, 'Some street', '47454', 'Paoli', 'United-States');
-INSERT INTO players (pseudo, group_id, fullname, gender, age, points, address_street, address_postalCode, address_city, address_country) VALUES ('Alice',     1, 'Alice Foo',         'F', 30,  175, 'Baker street', 'NW1 6XE', 'London', 'England');
-INSERT INTO players (pseudo, group_id, fullname, gender, age, points, address_street, address_postalCode, address_city, address_country) VALUES ('Louise',    1, 'Louise Foo',        'F', 32,  800, 'Other street', 'NW1 6XE', 'London', 'England');
-INSERT INTO players (pseudo, group_id, fullname, gender, age, points, address_street, address_postalCode, address_city, address_country) VALUES ('Francis',   1, 'Francis Foo',       'M', 30,  345, 'Random street', 'NW1 6XE', 'London', 'England');
-INSERT INTO players (pseudo, group_id, fullname, gender, age, points, address_street, address_postalCode, address_city, address_country) VALUES ('John',      1, 'John Foo',          'M', 40,  23,  'Doe street', 'NW1 6XE', 'London', 'England');
-INSERT INTO players (pseudo, group_id, fullname, gender, age, points, address_street, address_postalCode, address_city, address_country) VALUES ('Arthur',    1, 'Arthur Foo',        'M', 25,  200, 'Round table street', 'NW1 6XE', 'London', 'England');
-INSERT INTO players (pseudo, group_id, fullname, gender, age, points, address_street, address_postalCode, address_city, address_country) VALUES ('Moon Moon', 1, 'Moon moon Foo',     'D', 7,   300, 'Moon moon street', 'NW1 6XE', 'London', 'England');
+INSERT INTO players (pseudo, group_id, fullname, gender, birthday, points, address_street, address_postalCode, address_city, address_country) VALUES
+('Joe',       1, 'Joe la frite',      'M', '1924-03-02',  2500, 'Baker street', 'NW1 6XE', 'London', 'England'),
+('Bob',       2, 'Bob Morane',        'M', '1995-10-02',  9001, 'Baker street', 'NW1 6XE', 'London', 'England'),
+('Ada',       2, 'Ada Lovelace',      'F', '1997-10-02', 10000, 'Baker street', 'NW1 6XE', 'London', 'England'),
+('Kévin',     2, 'Yup, that is me.',  'M', '1999-10-02',  100, 'Baker street', 'NW1 6XE', 'London', 'England'),
+('Margaret',  2, 'Margaret Hamilton', 'F', '1936-08-17',  5000, 'Some street', '47454', 'Paoli', 'United-States'),
+('Alice',     1, 'Alice Foo',         'F', '2001-10-02',  175, 'Baker street', 'NW1 6XE', 'London', 'England'),
+('Louise',    1, 'Louise Foo',        'F', '2002-10-02',  800, 'Other street', 'NW1 6XE', 'London', 'England'),
+('Francis',   1, 'Francis Foo',       'M', '1998-10-02',  345, 'Random street', 'NW1 6XE', 'London', 'England'),
+('John',      1, 'John Foo',          'M', '1987-10-02',  23,  'Doe street', 'NW1 6XE', 'London', 'England'),
+('Arthur',    1, 'Arthur Foo',        'M', '1989-10-02',  200, 'Round table street', 'NW1 6XE', 'London', 'England'),
+('Moon Moon', 1, 'Moon moon Foo',     'D', '1985-10-02',   300, 'Moon moon street', 'NW1 6XE', 'London', 'England');
 
 
 select *

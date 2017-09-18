@@ -146,6 +146,7 @@
   <field name="_root_" type="string" indexed="true" stored="false"/>
   <field name="_version_" type="long" indexed="true" stored="true"/>
   <field name="age" type="int" indexed="true" stored="true"/>
+  <field name="birthday" type="tdate"/>
   <field name="fullname" type="text_general" indexed="true" stored="true"/>
   <field name="gender" type="string" indexed="true" stored="true"/>
   <field name="id" type="string" indexed="true" required="true" stored="true"/>

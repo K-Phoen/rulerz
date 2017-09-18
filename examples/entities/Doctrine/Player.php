@@ -27,11 +27,6 @@ class Player
     /**
      * @Column(type="integer")
      */
-    public $age;
-
-    /**
-     * @Column(type="integer")
-     */
     public $points;
 
     /**
@@ -45,15 +40,16 @@ class Player
      */
     public $address;
 
-    /** @var \DateTime */
+    /**
+     * @Column(type="date")
+     */
     public $birthday;
 
-    public function __construct($pseudo, $fullname, $gender, $age, $points, $group = null, \DateTime $birthday = null)
+    public function __construct($pseudo, $fullname, $gender, $points, $group = null, \DateTime $birthday = null)
     {
         $this->pseudo = $pseudo;
         $this->fullname = $fullname;
         $this->gender = $gender;
-        $this->age = $age;
         $this->points = $points;
         $this->group = $group;
         $this->birthday = $birthday;
