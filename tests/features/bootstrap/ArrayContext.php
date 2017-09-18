@@ -12,6 +12,9 @@ class ArrayContext extends BaseContext
     {
         return new \RulerZ\Target\Native\Native([
             'length' => 'strlen',
+            'is_leap_year' => function (\DateTime $date) {
+                return $date->format('L') === '1';
+            },
         ]);
     }
 
@@ -42,17 +45,19 @@ class ArrayContext extends BaseContext
     private function getArrayOfArraysDataset()
     {
         return [
-            ['pseudo' => 'Joe',       'fullname' => 'Joe la frite',      'gender' => 'M', 'age' => 34,  'points' => 2500],
-            ['pseudo' => 'Bob',       'fullname' => 'Bob Morane',        'gender' => 'M', 'age' => 62,  'points' => 9001],
-            ['pseudo' => 'Ada',       'fullname' => 'Ada Lovelace',      'gender' => 'F', 'age' => 175, 'points' => 10000],
-            ['pseudo' => 'Kévin',     'fullname' => 'Yup, that is me.',  'gender' => 'M', 'age' => 24,  'points' => 100],
-            ['pseudo' => 'Margaret',  'fullname' => 'Margaret Hamilton', 'gender' => 'F', 'age' => 78,  'points' => 5000],
-            ['pseudo' => 'Alice',     'fullname' => 'Alice foo',         'gender' => 'F', 'age' => 30,  'points' => 175],
-            ['pseudo' => 'Louise',    'fullname' => 'Louise foo',        'gender' => 'F', 'age' => 32,  'points' => 800],
-            ['pseudo' => 'Francis',   'fullname' => 'Francis foo',       'gender' => 'M', 'age' => 30,  'points' => 345],
-            ['pseudo' => 'John',      'fullname' => 'John foo',          'gender' => 'M', 'age' => 40,  'points' => 23],
-            ['pseudo' => 'Arthur',    'fullname' => 'Arthur foo',        'gender' => 'M', 'age' => 25,  'points' => 200],
-            ['pseudo' => 'Moon Moon', 'fullname' => 'Moon moon foo',     'gender' => 'D', 'age' => 7,   'points' => 300],
+            // Born on a leap year
+            ['pseudo' => 'Joe',       'fullname' => 'Joe la frite',      'gender' => 'M', 'age' => 34,  'points' => 2500,  'birthday' => new DateTime('1924-03-02')],
+            ['pseudo' => 'Bob',       'fullname' => 'Bob Morane',        'gender' => 'M', 'age' => 62,  'points' => 9001,  'birthday' => new DateTime('1995-10-02')],
+            ['pseudo' => 'Ada',       'fullname' => 'Ada Lovelace',      'gender' => 'F', 'age' => 175, 'points' => 10000, 'birthday' => new DateTime('1997-10-02')],
+            ['pseudo' => 'Kévin',     'fullname' => 'Yup, that is me.',  'gender' => 'M', 'age' => 24,  'points' => 100,   'birthday' => new DateTime('1999-10-02')],
+            // Born on a leap year
+            ['pseudo' => 'Margaret',  'fullname' => 'Margaret Hamilton', 'gender' => 'F', 'age' => 78,  'points' => 5000,  'birthday' => new DateTime('1936-08-17')],
+            ['pseudo' => 'Alice',     'fullname' => 'Alice foo',         'gender' => 'F', 'age' => 30,  'points' => 175,   'birthday' => new DateTime('2001-10-02')],
+            ['pseudo' => 'Louise',    'fullname' => 'Louise foo',        'gender' => 'F', 'age' => 32,  'points' => 800,   'birthday' => new DateTime('2002-10-02')],
+            ['pseudo' => 'Francis',   'fullname' => 'Francis foo',       'gender' => 'M', 'age' => 30,  'points' => 345,   'birthday' => new DateTime('1998-10-02')],
+            ['pseudo' => 'John',      'fullname' => 'John foo',          'gender' => 'M', 'age' => 40,  'points' => 23,    'birthday' => new DateTime('1987-10-02')],
+            ['pseudo' => 'Arthur',    'fullname' => 'Arthur foo',        'gender' => 'M', 'age' => 25,  'points' => 200,   'birthday' => new DateTime('1989-10-02')],
+            ['pseudo' => 'Moon Moon', 'fullname' => 'Moon moon foo',     'gender' => 'D', 'age' => 7,   'points' => 300,   'birthday' => new DateTime('1985-10-02')],
         ];
     }
 
@@ -87,7 +92,8 @@ class ArrayContext extends BaseContext
                 $data['gender'],
                 $data['age'],
                 $data['points'],
-                $groups[$groupsMapping[$data['pseudo']]]
+                $groups[$groupsMapping[$data['pseudo']]],
+                $data['birthday']
             );
         }
 
