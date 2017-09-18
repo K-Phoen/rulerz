@@ -24,7 +24,7 @@ Once Pomm is installed and configured we can the RulerZ engine:
 ```php
 $rulerz = new RulerZ(
     $compiler, [
-        new \RulerZ\Compiler\Target\Sql\PommVisitor(), // this line is Pomm-specific
+        new \RulerZ\Target\Pomm\Pomm(), // this line is Pomm-specific
         // other compilation targets...
     ]
 );

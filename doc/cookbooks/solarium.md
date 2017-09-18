@@ -26,7 +26,7 @@ Once solarium/solarium is installed and configured we can the RulerZ engine:
 ```php
 $rulerz = new RulerZ(
     $compiler, [
-        new \RulerZ\Compiler\Target\Solr\Solarium(), // this line is Solarium-specific
+        new \RulerZ\Target\Solarium\Solarium(), // this line is Solarium-specific
         // other compilation targets...
     ]
 );

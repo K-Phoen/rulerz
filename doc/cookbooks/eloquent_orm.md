@@ -22,8 +22,8 @@ Once Eloquent is installed and configured we can the RulerZ engine:
 
 ```php
 $rulerz = new RulerZ(
-    new HoaInterpreter(), [
-        new \RulerZ\Compiler\Target\Sql\Eloquent(), // this line is Eloquent-specific
+    $compiler, [
+        new \RulerZ\Target\Eloquent\Eloquent(), // this line is Eloquent-specific
         // other compilation targets...
     ]
 );
