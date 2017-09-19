@@ -105,30 +105,21 @@ abstract class GenericVisitor implements RuleVisitor
             throw new OperatorNotFoundException($operatorName, sprintf('Operator "%s" does not exist.', $operatorName));
         }
 
+        // expand the arguments
+        $arguments = array_map(function ($argument) use (&$handle, $eldnah) {
+            return $argument->accept($this, $handle, $eldnah);
+        }, $element->getArguments());
+
+        // and either inline the operator call
         if ($this->operators->hasInlineOperator($operatorName)) {
-            return $this->compileInlineOperator($operatorName, $element->getArguments(), $handle, $eldnah);
+            $callable = $this->operators->getInlineOperator($operatorName);
+
+            return call_user_func_array($callable, $arguments);
         }
 
-        return $this->compileRuntimeOperator($operatorName, $element->getArguments(), $handle, $eldnah);
-    }
+        $inlinedArguments = empty($arguments) ? '' : ', '.implode(', ', $arguments);
 
-    private function compileRuntimeOperator($operatorName, array $arguments, &$handle = null, $eldnah = null)
-    {
-        $compiledArguments = array_map(function ($argument) use (&$handle, $eldnah) {
-            return sprintf('$this->unwrapArgument(%s)', $argument->accept($this, $handle, $eldnah));
-        }, $arguments);
-        $inlinedArguments = empty($arguments) ? '' : ', '.implode(', ', $compiledArguments);
-
+        // or defer it.
         return sprintf('call_user_func($operators["%s"]%s)', $operatorName, $inlinedArguments);
-    }
-
-    private function compileInlineOperator($operatorName, array $arguments, &$handle = null, $eldnah = null)
-    {
-        $operatorCallable = $this->operators->getInlineOperator($operatorName);
-        $compiledArguments = array_map(function ($argument) use (&$handle, $eldnah) {
-            return $argument->accept($this, $handle, $eldnah);
-        }, $arguments);
-
-        return call_user_func_array($operatorCallable, $compiledArguments);
     }
 }

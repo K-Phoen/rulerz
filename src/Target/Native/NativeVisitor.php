@@ -22,7 +22,7 @@ class NativeVisitor extends GenericVisitor
             $flattenedDimensions[] = sprintf('["%s"]', $dimension[AST\Bag\Context::ACCESS_VALUE]);
         }
 
-        return '$target'.implode('', $flattenedDimensions);
+        return sprintf('$this->unwrapArgument($target%s)', implode('', $flattenedDimensions));
     }
 
     /**
