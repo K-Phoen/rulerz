@@ -29,7 +29,7 @@ docker_start: elasticsearch_start postgres_start solr_start
 docker_stop: elasticsearch_stop postgres_stop solr_stop
 
 elasticsearch_start:
-	docker run -d -p 9200:9200 --name es-rulerz elasticsearch:1.7
+	docker run -d -p 9200:9200 --name es-rulerz elasticsearch:2.4
 
 elasticsearch_stop:
 	docker rm -f es-rulerz
