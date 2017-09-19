@@ -44,7 +44,7 @@ class ObjectContext implements \ArrayAccess
     {
         $value = $this->accessor->getValue($this->object, $id);
 
-        if (is_scalar($value) || $value === null) {
+        if (is_scalar($value) || $value instanceof \DateTimeInterface || null === $value) {
             return $value;
         }
 

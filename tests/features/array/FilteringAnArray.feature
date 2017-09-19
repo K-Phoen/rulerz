@@ -33,3 +33,37 @@ Feature: RulerZ can filter an array
             | pseudo   |
             | Joe      |
             | Margaret |
+
+
+    Scenario: It works with birth date bigger than an other one
+        Given RulerZ is configured
+        And I use the array of objects dataset
+        When I define a birthDate parameter to "2005-01-04"
+        When I filter the dataset with the rule:
+            """
+            birthDate > :birthDate
+            """
+        Then I should have the following results:
+            | pseudo   |
+            | Joe      |
+            | Margaret |
+
+    Scenario: It works with birth date smaller or equal to an other one
+        Given RulerZ is configured
+        And I use the array of objects dataset
+        When I define a birthDate parameter to "2005-01-04"
+        When I filter the dataset with the rule:
+            """
+            birthDate <= :birthDate
+            """
+        Then I should have the following results:
+            | pseudo    |
+            | Bob       |
+            | Ada       |
+            | Kévin     |
+            | Alice     |
+            | Louise    |
+            | Francis   |
+            | John      |
+            | Arthur    |
+            | Moon Moon |

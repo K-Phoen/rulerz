@@ -112,6 +112,15 @@ abstract class BaseContext implements Context
     }
 
     /**
+     * @When I define a birthDate parameter to :date
+     */
+    public function iDefineABirthdateParameterTo($date)
+    {
+        $this->parameters['birthDate'] = new DateTime($date);
+    }
+
+
+    /**
      * @When I use the default execution context
      */
     public function iUseTheDefaultExecutionContext()
