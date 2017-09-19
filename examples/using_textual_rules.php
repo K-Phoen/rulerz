@@ -29,9 +29,9 @@ $playersArr = [
 
 // or an array of objects
 $playersObj = [
-    new Player('Joe', 'Joe la frite', 'M', 40, 2500, null, new \DateTime('2020-01-02')),
-    new Player('Moe', 'Moe, from the bar!', 'M', 55, 1230, null, new DateTime('2005-01-04')),
-    new Player('Alice', 'Alice, from... you know.', 'F', 27, 9001, null, new DateTime('2007-01-07')),
+    new Player('Joe', 'Joe la frite', 'M', 2500, null, new \DateTime('2020-01-02')),
+    new Player('Moe', 'Moe, from the bar!', 'M', 1230, null, new DateTime('2005-01-04')),
+    new Player('Alice', 'Alice, from... you know.', 'F', 9001, null, new DateTime('2007-01-07')),
 ];
 
 // 3. Enjoy!
