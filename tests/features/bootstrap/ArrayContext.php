@@ -15,6 +15,10 @@ class ArrayContext extends BaseContext
             'is_leap_year' => function (\DateTime $date) {
                 return $date->format('L') === '1';
             },
+        ], [
+            'inline_is_leap_year' => function ($date) {
+                return sprintf("%s->format('L') === '1'", $date);
+            },
         ]);
     }
 
