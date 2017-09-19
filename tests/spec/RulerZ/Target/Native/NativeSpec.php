@@ -45,7 +45,7 @@ class NativeSpec extends BaseTargetBehavior
 
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule), new Context());
-        $executorModel->getCompiledRule()->shouldReturn('$target["score"] == 1');
+        $executorModel->getCompiledRule()->shouldReturn('$this->unwrapArgument($target["score"]) == 1');
     }
 
     public function it_handles_nested_accesses()
@@ -54,7 +54,7 @@ class NativeSpec extends BaseTargetBehavior
 
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule), new Context());
-        $executorModel->getCompiledRule()->shouldReturn('$target["stats"]["user"]["score"] >= 42');
+        $executorModel->getCompiledRule()->shouldReturn('$this->unwrapArgument($target["stats"]["user"]["score"]) >= 42');
     }
 
     public function it_handles_custom_operators()
@@ -67,7 +67,7 @@ class NativeSpec extends BaseTargetBehavior
 
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule), new Context());
-        $executorModel->getCompiledRule()->shouldReturn('($target["points"] >= 42 && call_user_func($operators["always_true"]))');
+        $executorModel->getCompiledRule()->shouldReturn('($this->unwrapArgument($target["points"]) >= 42 && call_user_func($operators["always_true"]))');
     }
 
     public function it_handles_custom_operators_with_parameters()
@@ -80,7 +80,7 @@ class NativeSpec extends BaseTargetBehavior
 
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule), new Context());
-        $executorModel->getCompiledRule()->shouldReturn('($target["points"] >= 42 && call_user_func($operators["always_true"], 42))');
+        $executorModel->getCompiledRule()->shouldReturn('($this->unwrapArgument($target["points"]) >= 42 && call_user_func($operators["always_true"], 42))');
     }
 
     public function it_throws_an_exception_when_calling_an_unknown_operator()
@@ -100,7 +100,7 @@ class NativeSpec extends BaseTargetBehavior
 
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule), new Context());
-        $executorModel->getCompiledRule()->shouldReturn('($target["points"] >= 42 && inline_always_true(42))');
+        $executorModel->getCompiledRule()->shouldReturn('($this->unwrapArgument($target["points"]) >= 42 && inline_always_true(42))');
     }
 
     public function unsupportedTypes()
@@ -109,15 +109,6 @@ class NativeSpec extends BaseTargetBehavior
             'string',
             42,
             new \stdClass(),
-        ];
-    }
-
-    public function getMatchers()
-    {
-        return [
-            'contain' => function ($subject, $text) {
-                return strpos($subject, $text) !== false;
-            },
         ];
     }
 }
