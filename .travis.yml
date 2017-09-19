@@ -1,6 +1,6 @@
 language: php
 
-sudo: false
+sudo: required
 
 cache:
     directories:
@@ -25,6 +25,8 @@ before_install:
     - phpenv config-rm xdebug.ini || true
     - composer self-update
     - if [ "$TRAVIS_PHP_VERSION" = "7.0" ]; then composer require --dev --no-update kphoen/rusty dev-master; fi
+    - curl -O https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.3.0/elasticsearch-2.3.0.deb && sudo dpkg -i --force-confnew elasticsearch-2.3.0.deb && sudo service elasticsearch restart
+
 
 install:
     - composer install --optimize-autoloader --no-interaction
