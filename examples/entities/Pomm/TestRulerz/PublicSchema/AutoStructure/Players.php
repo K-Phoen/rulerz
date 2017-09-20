@@ -36,8 +36,12 @@ class Players extends RowStructure
             ->addField('group_id', 'int4')
             ->addField('fullname', 'varchar')
             ->addField('gender', 'bpchar')
-            ->addField('age', 'int4')
+            ->addField('birthday', 'date')
             ->addField('points', 'int4')
+            ->addField('address_street', 'varchar')
+            ->addField('address_postalcode', 'varchar')
+            ->addField('address_city', 'varchar')
+            ->addField('address_country', 'varchar')
             ;
     }
 }

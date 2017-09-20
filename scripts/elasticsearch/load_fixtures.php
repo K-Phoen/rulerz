@@ -13,12 +13,13 @@ $players = $entityManager
     ->from('Entity\Doctrine\Player', 'p')
     ->getQuery()->execute();
 
+/** @var \Entity\Doctrine\Player $player */
 foreach ($players as $player) {
     $params = [
         'body' => [
             'pseudo' => $player->pseudo,
             'fullname' => $player->fullname,
-            'age' => (int) $player->age,
+            'birthday' => $player->birthday->format('Y-m-d'),
             'gender' => $player->gender,
             'points' => (int) $player->points,
         ],

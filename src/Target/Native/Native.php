@@ -41,6 +41,7 @@ class Native extends AbstractCompilationTarget
         return [
             '\RulerZ\Executor\ArrayTarget\FilterTrait',
             '\RulerZ\Executor\ArrayTarget\SatisfiesTrait',
+            '\RulerZ\Executor\ArrayTarget\ArgumentUnwrappingTrait',
         ];
     }
 

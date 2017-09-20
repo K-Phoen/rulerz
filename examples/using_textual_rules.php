@@ -2,12 +2,14 @@
 
 use Entity\Doctrine\Player;
 
+/** @var \RulerZ\RulerZ $rulerz */
 list($entityManager, $rulerz) = require __DIR__.'/bootstrap/bootstrap_doctrine.php';
 
 // 1. Write a rule.
 $rule = 'gender = :gender and points > :points';
 $rule = 'gender = :gender and group.role.name = "ROLE_ADMIN"';
-$rule = 'gender = :gender and address.city = "Paoli" and gr.role.name = "ROLE_PLAYER"';
+$rule = 'and gender = :gender and address.city = "Paoli" and gr.role.name = "ROLE_PLAYER"';
+$rule = 'is_leap_year(birthday)';
 
 // 2. Define a few targets to filter
 
@@ -27,9 +29,9 @@ $playersArr = [
 
 // or an array of objects
 $playersObj = [
-    new Player('Joe', 'Joe la frite', 'M', 40, 2500),
-    new Player('Moe', 'Moe, from the bar!', 'M', 55, 1230),
-    new Player('Alice', 'Alice, from... you know.', 'F', 27, 9001),
+    new Player('Joe', 'Joe la frite', 'M', 2500, null, new \DateTime('2020-01-02')),
+    new Player('Moe', 'Moe, from the bar!', 'M', 1230, null, new DateTime('2005-01-04')),
+    new Player('Alice', 'Alice, from... you know.', 'F', 9001, null, new DateTime('2007-01-07')),
 ];
 
 // 3. Enjoy!
@@ -38,7 +40,7 @@ $parameters = [
     'gender' => 'F',
 ];
 
-$players = $rulerz->filter($playersQb, $rule, $parameters);
+$players = $rulerz->filter($playersObj, $rule, $parameters);
 var_dump(array_map(function ($player) {
     return $player->pseudo;
 }, iterator_to_array($players)));
