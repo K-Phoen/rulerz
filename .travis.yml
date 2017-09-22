@@ -24,8 +24,6 @@ matrix:
 
 before_install:
     - phpenv config-rm xdebug.ini || true
-    - composer self-update
-    - if [ "$TRAVIS_PHP_VERSION" = "7.0" ]; then composer require --dev --no-update kphoen/rusty dev-master; fi
 
     # download elasticsearch
     - if [ -f $HOME/elasticsearch-cache/elasticsearch-2.3.0.deb ]; then cp $HOME/elasticsearch-cache/elasticsearch-2.3.0.deb .; fi
@@ -37,6 +35,7 @@ before_install:
     - mkdir -p ./solr-5.3.1/example/multicore/rulerz_tests/conf && cp -r ./scripts/solr/config/conf/* ./solr-5.3.1/example/multicore/rulerz_tests/conf
 
 install:
+    - if [ "$TRAVIS_PHP_VERSION" = "7.0" ]; then composer require --dev --no-update kphoen/rusty dev-master; fi
     - composer install --optimize-autoloader --no-interaction
 
 script:
