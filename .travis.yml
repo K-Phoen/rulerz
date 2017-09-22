@@ -5,12 +5,13 @@ sudo: required
 cache:
     directories:
         - $HOME/.composer/cache
+        - $HOME/solr-cache
+        - $HOME/elasticsearch-cache
 
 addons:
     postgresql: "9.4"
 
 services:
-    - elasticsearch
     - postgresql
 
 php:
@@ -25,15 +26,18 @@ before_install:
     - phpenv config-rm xdebug.ini || true
     - composer self-update
     - if [ "$TRAVIS_PHP_VERSION" = "7.0" ]; then composer require --dev --no-update kphoen/rusty dev-master; fi
+
+    # download elasticsearch
+    - if [ -f $HOME/elasticsearch-cache/elasticsearch-2.3.0.deb ]; then cp $HOME/elasticsearch-cache/elasticsearch-2.3.0.deb .; fi
     - curl -O https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.3.0/elasticsearch-2.3.0.deb && sudo dpkg -i --force-confnew elasticsearch-2.3.0.deb && sudo service elasticsearch restart
 
+    # download solr
+    - if [ -f $HOME/solr-cache/solr-5.3.1.tgz ]; then cp $HOME/solr-cache/solr-5.3.1.tgz .; fi
+    - curl -sSL https://raw.githubusercontent.com/moliware/travis-solr/master/travis-solr.sh | SOLR_VERSION=5.3.1 SOLR_CORE=rulerz_tests SOLR_CONFS="./scripts/solr/config/conf/schema.xml ./scripts/solr/config/conf/solrconfig.xml" bash
+    - mkdir -p ./solr-5.3.1/example/multicore/rulerz_tests/conf && cp -r ./scripts/solr/config/conf/* ./solr-5.3.1/example/multicore/rulerz_tests/conf
 
 install:
     - composer install --optimize-autoloader --no-interaction
-
-before_script:
-    - curl -sSL https://raw.githubusercontent.com/moliware/travis-solr/master/travis-solr.sh | SOLR_VERSION=5.3.1 SOLR_CORE=rulerz_tests SOLR_CONFS="./scripts/solr/config/conf/schema.xml ./scripts/solr/config/conf/solrconfig.xml" bash
-    - mkdir -p ./solr-5.3.1/example/multicore/rulerz_tests/conf && cp -r ./scripts/solr/config/conf/* ./solr-5.3.1/example/multicore/rulerz_tests/conf
 
 script:
     - make databases
