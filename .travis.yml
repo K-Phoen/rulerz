@@ -32,8 +32,8 @@ install:
     - composer install --optimize-autoloader --no-interaction
 
 before_script:
-    - curl -sSL https://raw.githubusercontent.com/moliware/travis-solr/master/travis-solr.sh | SOLR_VERSION=4.10.4 SOLR_CORE=rulerz_tests SOLR_CONFS="./scripts/solr/config/conf/schema.xml ./scripts/solr/config/conf/solrconfig.xml" bash
-    - cp -r ./scripts/solr/config/conf/* ./solr-4.10.4/example/multicore/rulerz_tests/conf
+    - curl -sSL https://raw.githubusercontent.com/moliware/travis-solr/master/travis-solr.sh | SOLR_VERSION=5.3.1 SOLR_CORE=rulerz_tests SOLR_CONFS="./scripts/solr/config/conf/schema.xml ./scripts/solr/config/conf/solrconfig.xml" bash
+    - mkdir -p ./solr-5.3.1/example/multicore/rulerz_tests/conf && cp -r ./scripts/solr/config/conf/* ./solr-5.3.1/example/multicore/rulerz_tests/conf
 
 script:
     - make databases
