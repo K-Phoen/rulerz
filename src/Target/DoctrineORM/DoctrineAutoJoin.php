@@ -84,7 +84,7 @@ class DoctrineAutoJoin
                 $association = $classMetadata->getAssociationMapping($dimension);
 
                 if (!isset($this->knownEntities[$currentEntity], $this->knownEntities[$currentEntity][$association['fieldName']])) {
-                    $alias = sprintf('_%d_%s', count($this->knownEntities), $dimension);
+                    $alias = sprintf('_%d_%s', count($this->knownEntities, COUNT_RECURSIVE), $dimension);
 
                     $this->saveAlias($currentEntity, $association['fieldName'], $alias);
 
