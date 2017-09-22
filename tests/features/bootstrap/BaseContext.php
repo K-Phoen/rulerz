@@ -59,7 +59,7 @@ abstract class BaseContext implements Context
       */
      public static function prepare(BeforeSuiteScope $scope)
      {
-         echo $scope->getSuite()->getName();
+         echo 'Current suite: '.$scope->getSuite()->getName();
      }
 
     /**
@@ -151,14 +151,30 @@ abstract class BaseContext implements Context
 
         foreach ($table as $row) {
             foreach ($results as $result) {
-                $objectResult = is_array($result) ? (object) $result : $result;
+                $value = $this->fieldFromResult($result, 'pseudo');
 
-                if ($objectResult->pseudo === $row['pseudo']) {
+                if ($value === $row['pseudo']) {
                     return;
                 }
             }
 
             throw new \RuntimeException(sprintf('Player "%s" not found in the results.', $row['pseudo']));
         }
+    }
+
+    /**
+     * Fetches a field from a result.
+     * Meant to be overriden by other contexts.
+     *
+     * @param mixed $result
+     * @param string $field
+     *
+     * @return mixed
+     */
+    protected function fieldFromResult($result, $field)
+    {
+        $objectResult = is_array($result) ? (object) $result : $result;
+
+        return $objectResult->$field;
     }
 }

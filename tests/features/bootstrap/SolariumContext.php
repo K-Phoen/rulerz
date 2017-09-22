@@ -44,4 +44,12 @@ class SolariumContext extends BaseContext
     {
         return $this->client;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function fieldFromResult($result, $field)
+    {
+        return $result[$field][0];
+    }
 }

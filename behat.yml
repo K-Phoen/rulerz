@@ -1,6 +1,6 @@
 default:
     formatters:
-        progress: true
+        pretty: true
 
     autoload:
         '': '%paths.base%/tests/features/bootstrap'
