@@ -3,7 +3,6 @@
 namespace RulerZ\Target\DoctrineORM;
 
 use Doctrine\ORM\EntityManagerInterface as EntityManager;
-use Hoa\Ruler\Model as AST;
 
 class DoctrineAutoJoin
 {
@@ -55,13 +54,8 @@ class DoctrineAutoJoin
         return $this->detectedJoins;
     }
 
-    public function buildAccessPath(AST\Bag\Context $element)
+    public function buildAccessPath(array $dimensionNames)
     {
-        $dimensionNames = array_map(function ($dimension) {
-            return $dimension[1];
-        }, $element->getDimensions());
-        array_unshift($dimensionNames, $element->getId());
-
         $currentEntity = current($this->rootEntities);
         $lastAlias = key($this->aliasMap);
 
@@ -74,6 +68,7 @@ class DoctrineAutoJoin
             if (isset($this->aliasMap[$dimension])) {
                 $currentEntity = $this->getEntity($dimension);
                 $lastAlias = $dimension;
+
                 continue;
             }
 
@@ -99,6 +94,7 @@ class DoctrineAutoJoin
 
                 $currentEntity = $association['targetEntity'];
                 $lastAlias = $alias;
+
                 continue;
             }
 
@@ -110,6 +106,7 @@ class DoctrineAutoJoin
 
                 $currentEntity = $embeddableMetadata['class'];
                 $lastAlias = $lastAlias.'.'.$dimension;
+
                 continue;
             }
 
