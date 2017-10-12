@@ -26,6 +26,7 @@ composer require 'kphoen/rulerz'
 
 ## Cookbooks
 
+ * [Using native PHP arrays or objects](filter.md)
  * [Using Doctrine ORM](cookbooks/doctrine_orm.md)
  * [Using Pomm](cookbooks/pomm.md)
  * [Using Elasticsearch and ruflin/Elastica](cookbooks/ruflin_elastica.md)
