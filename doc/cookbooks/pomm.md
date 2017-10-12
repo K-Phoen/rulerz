@@ -56,7 +56,9 @@ $parameters = [
     'gender' => 'M',
 ];
 
-var_dump($rulerz->filter($playerModel, $rule, $parameters));
+var_dump(
+    iterator_to_array($rulerz->filter($playerModel, $rule, $parameters))
+);
 ```
 
 ## That was it!

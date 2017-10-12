@@ -44,7 +44,11 @@ Once the rule is written and the parameters are defined, only the easiest part
 remains: filtering the target.
 
 ```php
-var_dump($rulerz->filter($players, $rule, $parameters)); // the parameters can be omitted if empty
+var_dump(
+    iterator_to_array(
+        $rulerz->filter($players, $rule, $parameters) // the parameters can be omitted if empty
+    )
+);
 
 // will return:
 /*
