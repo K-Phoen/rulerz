@@ -5,7 +5,9 @@ This guide will show you how to filter any kind of target using a simple languag
 
 Here is a summary of what you will have to do:
 
- * [instantiate the RulerZ engine](writing_rules.md#step-1-instantiate-the-rulerz-engine) ;
+ * [instantiate the RulerZ engine](writing_rules.md#step-1-instantiate-the-rulerz-engine)
+   and be sure to **include an instance of `\RulerZ\Target\Native\Native` to the
+   compilation targets** ;
  * [write a rule](writing_rules.md#step-2-write-a-rule) ;
  * [filter your target](#filter-your-target).
 
@@ -20,6 +22,9 @@ $users = [
     ['pseudo' => 'Alice', 'gender' => 'F', 'points' => 60],
 ];
 ```
+
+**Note:** RulerZ will work the same way, whether you want to filter a collection
+of arrays or a collection of objects.
 
 ## Filter your target
 
@@ -44,7 +49,11 @@ Once the rule is written and the parameters are defined, only the easiest part
 remains: filtering the target.
 
 ```php
-var_dump($rulerz->filter($players, $rule, $parameters)); // the parameters can be omitted if empty
+var_dump(
+    iterator_to_array(
+        $rulerz->filter($players, $rule, $parameters) // the parameters can be omitted if empty
+    )
+);
 
 // will return:
 /*

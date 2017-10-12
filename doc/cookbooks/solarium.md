@@ -68,7 +68,9 @@ $parameters = [
     'gender' => 'M',
 ];
 
-var_dump($rulerz->filter($client, $rule, $parameters));
+var_dump(
+    iterator_to_array($rulerz->filter($client, $rule, $parameters))
+);
 ```
 
 ## That was it!

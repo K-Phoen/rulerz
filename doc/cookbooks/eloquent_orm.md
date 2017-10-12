@@ -55,7 +55,9 @@ $parameters = [
     'gender' => 'M',
 ];
 
-var_dump($rulerz->filter($queryBuilder, $rule, $parameters));
+var_dump(
+    iterator_to_array($rulerz->filter($queryBuilder, $rule, $parameters))
+);
 ```
 
 ## That was it!

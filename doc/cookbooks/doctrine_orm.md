@@ -83,7 +83,9 @@ $playersQueryBuilder = $entityManager
 
 $rule = '"ROLE_ADMIN" IN group.roles';
 
-var_dump($rulerz->filter($playersQueryBuilder, $rule));
+var_dump(
+    iterator_to_array($rulerz->filter($playersQueryBuilder, $rule))
+);
 ```
 
 It's important to notice that `group` is not an ordinary attribute: it's another
@@ -104,7 +106,9 @@ $playersQueryBuilder = $entityManager
 
 $rule = '"ROLE_ADMIN" IN g.roles';
 
-var_dump($rulerz->filter($playersQueryBuilder, $rule));
+var_dump(
+    iterator_to_array($rulerz->filter($playersQueryBuilder, $rule))
+);
 ```
 
 This time, RulerZ is smart enough to understand that `g` might be a joined
