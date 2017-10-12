@@ -118,6 +118,7 @@ class Parser implements Visitor\Visit
                     switch ($child->getId()) {
                         case '#attribute_access':
                             $name->attribute($_child);
+
                             break;
                     }
                 }

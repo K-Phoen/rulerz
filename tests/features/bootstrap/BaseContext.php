@@ -54,13 +54,13 @@ abstract class BaseContext implements Context
         $this->initialize();
     }
 
-     /**
-      * @BeforeSuite
-      */
-     public static function prepare(BeforeSuiteScope $scope)
-     {
-         echo 'Current suite: '.$scope->getSuite()->getName();
-     }
+    /**
+     * @BeforeSuite
+     */
+    public static function prepare(BeforeSuiteScope $scope)
+    {
+        echo 'Current suite: '.$scope->getSuite()->getName();
+    }
 
     /**
      * Will be called right after the construction of the context, useful to
