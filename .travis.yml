@@ -12,6 +12,10 @@ addons:
 services:
     - postgresql
 
+branches:
+    only:
+        - master
+
 php:
     - 5.5
     - 5.6
