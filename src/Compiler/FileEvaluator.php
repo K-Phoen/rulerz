@@ -4,7 +4,10 @@ namespace RulerZ\Compiler;
 
 class FileEvaluator implements Evaluator
 {
+    /** @var string */
     private $directory;
+
+    /** @var Filesystem */
     private $fs;
 
     /**
