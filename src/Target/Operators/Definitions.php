@@ -26,7 +26,7 @@ class Definitions
         $this->defineInlineOperators($inlineOperators);
     }
 
-    public function mergeWith(Definitions $other)
+    public function mergeWith(self $other)
     {
         return new static(
             array_merge($this->operators, $other->operators),
