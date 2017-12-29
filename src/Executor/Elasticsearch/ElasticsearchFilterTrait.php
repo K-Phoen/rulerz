@@ -8,6 +8,7 @@ trait ElasticsearchFilterTrait
 {
     // just because traits can not have constants
     private static $DEFAULT_CHUNK_SIZE = 50;
+
     private static $DEFAULT_SCROLL_DURATION = '30s';
 
     abstract protected function execute($target, array $operators, array $parameters);

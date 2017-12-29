@@ -7,6 +7,7 @@ use RulerZ\Executor\Eloquent\FilterTrait;
 class EloquentExecutorStub
 {
     public static $executeReturn;
+
     private $allowEloquentBuilderAsQuery = false;
 
     use FilterTrait;

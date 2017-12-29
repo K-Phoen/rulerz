@@ -7,6 +7,7 @@ use RulerZ\Executor\DoctrineORM\FilterTrait;
 class DoctrineORMExecutorStub
 {
     public static $executeReturn;
+
     public $detectedJoins = [];
 
     use FilterTrait;
