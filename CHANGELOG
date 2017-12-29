@@ -3,6 +3,43 @@ VERSION 0  FIXED ELASTICSEARCH-RELATED TARGETS
 ==============================================
 
    Version 0.21 - Few fixes
+      30/12/2017 00:36  0.20.5  various fixes
+         eecc76a Release of new version 0.21.0
+         dbbc591 Require RMT as dev dependency
+         f970fd2 Merge pull request #100 from K-Phoen/file-evaluator-race-condition
+         6d21653 Merge pull request #101 from K-Phoen/analysis-zOm4oB
+         9ad4bc9 Apply fixes from StyleCI
+         e0efd94 Checkstyle
+         028f449 Disable yoda fixer in styleci
+         bffb2fa Fix race condition related issues in the FileEvaluator
+         83109a0 Merge pull request #93 from K-Phoen/improve-doc
+         cdd6cff Only build PR and master on travis-ci
+         71f7f6f Merge pull request #94 from K-Phoen/analysis-8AB7pl
+         da867c2 Apply fixes from StyleCI
+         cfccdda Make it clearer that you can filter native collections (of arrays or objects)
+         b536b14 Add missing iterator_to_array() calls in the documentation
+         12557da Merge pull request #86 from iainmckay/generalized-doctrine-autojoin
+         941f4f1 Fixes StyleCI complaints
+         168970b Generalizes DoctrineAutoJoin
+         9b0ace6 Merge pull request #84 from bobdercole/doctrine-alias-conflict
+         e842b09 Also test against PHP 7.1
+         2f572dd Remove useless cache statements
+         b507a3c Reorganize a bit travis config
+         e77a0a7 Cache elasticsearch and solr packages
+         17de776 Fix solarium result retrieval
+         5dbd7d9 Use solr 5.3.1 in travis-ci tests
+         0f19964 Merge pull request #90 from K-Phoen/unwrap-arguments
+         9ffffb5 Merge pull request #91 from K-Phoen/fix-es-tests
+         85a0821 Force Elasticsearch 2.3 in tests
+         2eed7b0 Update specs
+         9533ccf Add a behat test case for object arguments in inline operators
+         43a9d95 Only try to unwrap target access for native code
+         feeb85c Fix example script
+         4dab1b9 Update a few tests to show the desired behavior
+         5e42d4a Unwrap arguments before giving them to operators
+         55164b1 Merge pull request #87 from nclsHart/fix-doc-examples
+         98243aa fix doc examples with up to date namespaces
+         cc46666 Fixes https://github.com/K-Phoen/rulerz/issues/79. This fix prevents alias conflicts for auto-joined associations that share the same dimension name.
       30/12/2017 00:36  0.21.0  initial release
          dbbc591 Require RMT as dev dependency
          f970fd2 Merge pull request #100 from K-Phoen/file-evaluator-race-condition
