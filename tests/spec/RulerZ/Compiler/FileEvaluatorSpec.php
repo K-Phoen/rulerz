@@ -5,6 +5,9 @@ namespace spec\RulerZ\Compiler;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use PhpSpec\ObjectBehavior;
+use RulerZ\Compiler\Evaluator;
+use RulerZ\Compiler\FileEvaluator;
+use RulerZ\Compiler\Filesystem;
 
 class FileEvaluatorSpec extends ObjectBehavior
 {
@@ -16,16 +19,16 @@ class FileEvaluatorSpec extends ObjectBehavior
     public function let()
     {
         $this->codeDirectory = vfsStream::setup('some_directory', null, [
-            'rulerz_executor_foo' => '<?php class DummyExecutor {}',
+            'rulerz_executor_foo' => '<?php class SomeDummyExecutor {}',
         ]);
 
-        $this->beConstructedWith($this->codeDirectory->url());
+        $this->beConstructedWith($this->codeDirectory->url(), new VfsFilesystem());
     }
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('RulerZ\Compiler\FileEvaluator');
-        $this->shouldHaveType('RulerZ\Compiler\Evaluator');
+        $this->shouldHaveType(FileEvaluator::class);
+        $this->shouldHaveType(Evaluator::class);
     }
 
     public function it_can_evaluate_a_rule_from_an_existing_file()
@@ -35,7 +38,7 @@ class FileEvaluatorSpec extends ObjectBehavior
         };
 
         $this->evaluate($ruleIdentifier, $compilerCallable);
-        $this->shouldHaveLoaded('DummyExecutor');
+        $this->shouldHaveLoaded('SomeDummyExecutor');
     }
 
     public function it_uses_the_compiler_if_no_file_exists()
@@ -56,5 +59,18 @@ class FileEvaluatorSpec extends ObjectBehavior
                 return class_exists($class, false);
             },
         ];
+    }
+}
+
+class VfsFilesystem implements Filesystem
+{
+    public function has($filePath)
+    {
+        return file_exists($filePath);
+    }
+
+    public function write($filePath, $content)
+    {
+        file_put_contents($filePath, $content);
     }
 }
