@@ -3,6 +3,7 @@
 namespace RulerZ\Target\Native;
 
 use RulerZ\Target\Operators\Definitions;
+use RulerZ\Target\Operators\OperatorTools;
 
 class NativeOperators
 {
@@ -13,37 +14,37 @@ class NativeOperators
     {
         $defaultInlineOperators = [
             'and' => function ($a, $b) {
-                return sprintf('(%s && %s)', $a, $b);
+                return sprintf('(%s)', OperatorTools::inlineMixedInstructions([$a, $b], '&&', false));
             },
             'or' => function ($a, $b) {
-                return sprintf('(%s || %s)', $a, $b);
+                return sprintf('(%s)', OperatorTools::inlineMixedInstructions([$a, $b], '||', false));
             },
             'not' => function ($a) {
-                return sprintf('!(%s)', $a);
+                return sprintf('!(%s)', OperatorTools::inlineMixedInstructions([$a], null, false));
             },
             '=' => function ($a, $b) {
-                return sprintf('%s == %s', $a, $b);
+                return OperatorTools::inlineMixedInstructions([$a, $b], '==', false);
             },
             'is' => function ($a, $b) {
-                return sprintf('%s === %s', $a, $b);
+                return OperatorTools::inlineMixedInstructions([$a, $b], '===', false);
             },
             '!=' => function ($a, $b) {
-                return sprintf('%s != %s', $a, $b);
+                return OperatorTools::inlineMixedInstructions([$a, $b], '!=', false);
             },
             '>' => function ($a, $b) {
-                return sprintf('%s > %s', $a, $b);
+                return OperatorTools::inlineMixedInstructions([$a, $b], '>', false);
             },
             '>=' => function ($a, $b) {
-                return sprintf('%s >= %s', $a, $b);
+                return OperatorTools::inlineMixedInstructions([$a, $b], '>=', false);
             },
             '<' => function ($a, $b) {
-                return sprintf('%s < %s', $a, $b);
+                return OperatorTools::inlineMixedInstructions([$a, $b], '<', false);
             },
             '<=' => function ($a, $b) {
-                return sprintf('%s <= %s', $a, $b);
+                return OperatorTools::inlineMixedInstructions([$a, $b], '<=', false);
             },
             'in' => function ($a, $b) {
-                return sprintf('in_array(%s, %s)', $a, $b);
+                return sprintf('in_array(%s)', OperatorTools::inlineMixedInstructions([$a, $b], ',', false));
             },
         ];
 

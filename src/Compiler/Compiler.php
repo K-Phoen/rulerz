@@ -4,6 +4,7 @@ namespace RulerZ\Compiler;
 
 use RulerZ\Executor\Executor;
 use RulerZ\Parser\Parser;
+use RulerZ\Target\Operators\CompileTimeOperator;
 
 class Compiler
 {
@@ -63,6 +64,8 @@ class Compiler
         }
 
         $commentedRule = str_replace(PHP_EOL, PHP_EOL.'    // ', $rule);
+        $compiledRule = $executorModel->getCompiledRule();
+        $escapedRule = is_string($compiledRule) ? $compiledRule : $compiledRule->format(false);
 
         return <<<EXECUTOR
 namespace RulerZ\Compiled\Executor;
@@ -78,7 +81,7 @@ class {$context['executor_classname']} implements Executor
     // $commentedRule
     protected function execute(\$target, array \$operators, array \$parameters)
     {
-        return {$executorModel->getCompiledRule()};
+        return {$escapedRule};
     }
 }
 EXECUTOR;

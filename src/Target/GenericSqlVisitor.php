@@ -7,6 +7,7 @@ use Hoa\Ruler\Model as AST;
 use RulerZ\Compiler\Context;
 use RulerZ\Exception\OperatorNotFoundException;
 use RulerZ\Model;
+use RulerZ\Target\Operators\CompileTimeOperator;
 use RulerZ\Target\Operators\Definitions as OperatorsDefinitions;
 
 /**
@@ -46,7 +47,13 @@ class GenericSqlVisitor extends GenericVisitor
     {
         $sql = parent::visitModel($element, $handle, $eldnah);
 
-        return '"'.$sql.'"';
+        if (is_string($sql)) {
+            return '"' . $sql . '"';
+        } elseif ($sql instanceof CompileTimeOperator) {
+            return '"' . $sql->format(true) . '"';
+        } else {
+            return $sql->format(false);
+        }
     }
 
     /**
