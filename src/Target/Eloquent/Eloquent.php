@@ -18,13 +18,23 @@ class Eloquent extends AbstractSqlTarget
     protected $allowEloquentBuilderAsQuery = false;
 
     /**
+     * Preserve positional parameters.
+     *
+     * @var bool
+     */
+    protected $preservePositionalParameters = false;
+
+    /**
      * @param bool $allowEloquentBuilderAsQuery Whether to allow the execution target to be eloquent builder instead of query builder.
      */
-    public function __construct($allowEloquentBuilderAsQuery = false)
-    {
+    public function __construct(
+        $allowEloquentBuilderAsQuery = false,
+        $preservePositionalParameters = false
+    ) {
         parent::__construct();
 
         $this->allowEloquentBuilderAsQuery = (bool) $allowEloquentBuilderAsQuery;
+        $this->preservePositionalParameters = (bool) $preservePositionalParameters;
     }
 
     /**
@@ -51,6 +61,12 @@ class Eloquent extends AbstractSqlTarget
      */
     protected function createVisitor(Context $context)
     {
-        return new EloquentVisitor($context, $this->getOperators(), $this->allowStarOperator, $this->allowEloquentBuilderAsQuery);
+        return new EloquentVisitor(
+            $context,
+            $this->getOperators(),
+            $this->allowStarOperator,
+            $this->allowEloquentBuilderAsQuery,
+            $this->preservePositionalParameters
+        );
     }
 }
