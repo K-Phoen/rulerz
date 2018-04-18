@@ -32,9 +32,9 @@
         "bin-dir": "bin/"
     },
     "require": {
-        "php": ">=5.5",
+        "php": ">=7.1",
         "hoa/ruler": "~2.0",
-        "symfony/property-access": "~2.3|~3.0|~4.0"
+        "symfony/property-access": "~3.0|~4.0"
     },
     "require-dev": {
         "vlucas/phpdotenv": "~2.1",
@@ -53,6 +53,8 @@
         "phpspec/phpspec": "~2.0,>=2.4@dev",
 
         "behat/behat": "~3.0",
+
+        "kphoen/rusty": "dev-master",
 
         "liip/rmt": "^1.2"
     },

@@ -17,10 +17,8 @@ branches:
         - master
 
 php:
-    - 5.5
-    - 5.6
-    - 7.0
     - 7.1
+    - 7.2
 
 matrix:
     fast_finish: true
@@ -36,10 +34,9 @@ before_install:
     - mkdir -p ./solr-5.3.1/example/multicore/rulerz_tests/conf && cp -r ./scripts/solr/config/conf/* ./solr-5.3.1/example/multicore/rulerz_tests/conf
 
 install:
-    - if [ "$TRAVIS_PHP_VERSION" = "7.0" ]; then composer require --dev --no-update kphoen/rusty dev-master; fi
     - composer install --optimize-autoloader --no-interaction
 
 script:
     - make databases
     - make tests
-    - if [ "$TRAVIS_PHP_VERSION" = "7.0" ]; then make rusty; fi
+    - make rusty
