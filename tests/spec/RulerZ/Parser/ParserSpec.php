@@ -2,13 +2,16 @@
 
 namespace spec\RulerZ\Parser;
 
+use Hoa\Compiler\Exception\Exception;
 use PhpSpec\ObjectBehavior;
+use RulerZ\Model\Rule;
+use RulerZ\Parser\Parser;
 
 class ParserSpec extends ObjectBehavior
 {
     public function it_is_initializable()
     {
-        $this->shouldHaveType('RulerZ\Parser\Parser');
+        $this->shouldHaveType(Parser::class);
     }
 
     /**
@@ -16,7 +19,7 @@ class ParserSpec extends ObjectBehavior
      */
     public function it_returns_an_ast_for_a_valid_rule($rule)
     {
-        $this->parse($rule)->shouldHaveType('RulerZ\Model\Rule');
+        $this->parse($rule)->shouldHaveType(Rule::class);
     }
 
     /**
@@ -24,7 +27,7 @@ class ParserSpec extends ObjectBehavior
      */
     public function it_throws_an_exception_for_an_invalid_rule($rule)
     {
-        $this->shouldThrow('Hoa\Compiler\Exception')->duringParse($rule);
+        $this->shouldThrow(Exception::class)->duringParse($rule);
     }
 
     public function validRules()

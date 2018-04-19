@@ -3,6 +3,7 @@
 namespace spec\RulerZ\Visitor;
 
 use PhpSpec\ObjectBehavior;
+use RulerZ\Model\Rule;
 use RulerZ\Parser\Parser;
 use RulerZ\Visitor\ParameterCollectorVisitor;
 
@@ -35,7 +36,7 @@ class ParameterCollectorVisitorSpec extends ObjectBehavior
         $compilationData['parameters']->shouldHaveKey(0);
     }
 
-    private function parse($rule)
+    private function parse(string $rule): Rule
     {
         return (new Parser())->parse($rule);
     }

@@ -4,13 +4,15 @@ namespace spec\RulerZ\Spec;
 
 use PhpSpec\ObjectBehavior;
 
+use RulerZ\Exception\ParameterOverridenException;
+use RulerZ\Spec\OrX;
 use RulerZ\Spec\Specification;
 
 class OrXSpec extends ObjectBehavior
 {
     public function it_is_initializable()
     {
-        $this->shouldHaveType('RulerZ\Spec\OrX');
+        $this->shouldHaveType(OrX::class);
     }
 
     public function it_can_be_initialized_with_specs(Specification $spec, Specification $otherSpec)
@@ -68,7 +70,7 @@ class OrXSpec extends ObjectBehavior
         $this->beConstructedWith([$spec, $otherSpec]);
 
         $this
-            ->shouldThrow('RulerZ\Exception\ParameterOverridenException')
+            ->shouldThrow(ParameterOverridenException::class)
             ->duringGetParameters();
     }
 }

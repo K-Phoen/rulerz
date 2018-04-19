@@ -15,7 +15,7 @@ class FilterTraitSpec extends ObjectBehavior
 
     public function let()
     {
-        $this->beAnInstanceOf('RulerZ\Stub\Executor\ElasticsearchExecutorStub');
+        $this->beAnInstanceOf(ElasticsearchExecutorStub::class);
     }
 
     public function it_can_apply_a_filter_on_a_target(Client $target)

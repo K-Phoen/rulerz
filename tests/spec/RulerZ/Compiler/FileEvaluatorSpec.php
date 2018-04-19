@@ -52,10 +52,10 @@ class FileEvaluatorSpec extends ObjectBehavior
         $this->shouldHaveLoaded('NewDummyExecutor');
     }
 
-    public function getMatchers()
+    public function getMatchers(): array
     {
         return [
-            'haveLoaded' => function ($subject, $class) {
+            'haveLoaded' => function ($subject, $class): bool {
                 return class_exists($class, false);
             },
         ];

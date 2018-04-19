@@ -3,13 +3,15 @@
 namespace spec\RulerZ\Compiler;
 
 use PhpSpec\ObjectBehavior;
+use RulerZ\Compiler\EvalEvaluator;
+use RulerZ\Compiler\Evaluator;
 
 class EvalEvaluatorSpec extends ObjectBehavior
 {
     public function it_is_initializable()
     {
-        $this->shouldHaveType('RulerZ\Compiler\EvalEvaluator');
-        $this->shouldHaveType('RulerZ\Compiler\Evaluator');
+        $this->shouldHaveType(EvalEvaluator::class);
+        $this->shouldHaveType(Evaluator::class);
     }
 
     public function it_can_evaluate_a_rule()
@@ -23,10 +25,10 @@ class EvalEvaluatorSpec extends ObjectBehavior
         $this->shouldHaveLoaded('WowExecutor');
     }
 
-    public function getMatchers()
+    public function getMatchers(): array
     {
         return [
-            'haveLoaded' => function ($subject, $class) {
+            'haveLoaded' => function ($subject, $class): bool {
                 return class_exists($class, false);
             },
         ];

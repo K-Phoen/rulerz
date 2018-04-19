@@ -11,6 +11,7 @@ use RulerZ\Compiler\CompilationTarget;
 use RulerZ\Context\ExecutionContext;
 use RulerZ\Exception\TargetUnsupportedException;
 use RulerZ\Executor\Executor;
+use RulerZ\RulerZ;
 use RulerZ\Target\Operators;
 use RulerZ\Spec\Specification;
 
@@ -25,7 +26,7 @@ class RulerZSpec extends ObjectBehavior
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('RulerZ\RulerZ');
+        $this->shouldHaveType(RulerZ::class);
     }
 
     public function it_accepts_new_executors_after_construction(CompilationTarget $anotherCompilationTarget)

@@ -4,6 +4,7 @@ namespace spec\RulerZ\Target;
 
 use PhpSpec\ObjectBehavior;
 use RulerZ\Compiler\CompilationTarget;
+use RulerZ\Model\Rule;
 use RulerZ\Parser\Parser;
 
 abstract class BaseTargetBehavior extends ObjectBehavior
@@ -16,7 +17,7 @@ abstract class BaseTargetBehavior extends ObjectBehavior
         $this->supports($type, CompilationTarget::MODE_FILTER)->shouldReturn(false);
     }
 
-    public function unsupportedTypes()
+    public function unsupportedTypes(): array
     {
         return [
             'string',
@@ -26,7 +27,7 @@ abstract class BaseTargetBehavior extends ObjectBehavior
         ];
     }
 
-    protected function parseRule($rule)
+    protected function parseRule(string $rule): Rule
     {
         return (new Parser())->parse($rule);
     }

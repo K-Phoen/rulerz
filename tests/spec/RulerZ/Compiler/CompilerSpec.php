@@ -6,6 +6,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 use RulerZ\Compiler\CompilationTarget;
+use RulerZ\Compiler\Compiler;
 use RulerZ\Compiler\Context as CompilationContext;
 use RulerZ\Compiler\EvalEvaluator;
 use RulerZ\Executor\Executor;
@@ -19,7 +20,7 @@ class CompilerSpec extends ObjectBehavior
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('RulerZ\Compiler\Compiler');
+        $this->shouldHaveType(Compiler::class);
     }
 
     public function it_delegates_code_evaluation_when_the_executor_is_not_loaded(EvalEvaluator $evaluator, CompilationTarget $target)

@@ -6,7 +6,7 @@ use PhpSpec\Exception\Example\FailureException;
 
 trait FilterResultMatcherTrait
 {
-    public function getMatchers()
+    public function getMatchers(): array
     {
         return [
             'returnResults' => function ($subject, iterable $expectedResults): bool {

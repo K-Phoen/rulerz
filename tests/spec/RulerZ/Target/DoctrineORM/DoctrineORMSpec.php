@@ -224,7 +224,7 @@ class DoctrineORMSpec extends BaseTargetBehavior
         ]);
     }
 
-    private function createContext()
+    private function createContext(): Context
     {
         return new Context([
             'em' => $this->em,

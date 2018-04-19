@@ -17,7 +17,7 @@ class FilterTraitSpec extends ObjectBehavior
 
     public function let()
     {
-        $this->beAnInstanceOf('RulerZ\Stub\Executor\EloquentExecutorStub');
+        $this->beAnInstanceOf(EloquentExecutorStub::class);
     }
 
     public function it_can_apply_a_filter_on_a_target(QueryBuilder $queryBuilder)
