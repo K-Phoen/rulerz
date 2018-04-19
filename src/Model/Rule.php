@@ -14,7 +14,7 @@ class Rule extends HoaModel\Model
      *
      * @return \Hoa\Ruler\Model\Bag\Context[]
      */
-    public function getAccesses()
+    public function getAccesses(): array
     {
         $visitor = new Visitor\AccessCollectorVisitor();
 
@@ -26,7 +26,7 @@ class Rule extends HoaModel\Model
      *
      * @return \Hoa\Ruler\Model\Operator[]
      */
-    public function getOperators()
+    public function getOperators(): array
     {
         $visitor = new Visitor\OperatorCollectorVisitor();
 
@@ -38,7 +38,7 @@ class Rule extends HoaModel\Model
      *
      * @return \RulerZ\Model\Parameter[]
      */
-    public function getParameters()
+    public function getParameters(): array
     {
         $visitor = new Visitor\ParameterCollectorVisitor();
 

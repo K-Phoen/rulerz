@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Context;
 
 use Symfony\Component\PropertyAccess\PropertyAccess;
