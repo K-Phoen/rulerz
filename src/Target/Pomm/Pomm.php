@@ -7,6 +7,8 @@ namespace RulerZ\Target\Pomm;
 use PommProject\ModelManager\Model\Model as PommModel;
 
 use RulerZ\Compiler\Context;
+use RulerZ\Executor\Polyfill\FilterBasedSatisfaction;
+use RulerZ\Executor\Pomm\FilterTrait;
 use RulerZ\Target\AbstractSqlTarget;
 use RulerZ\Target\Operators\Definitions;
 
@@ -36,8 +38,8 @@ class Pomm extends AbstractSqlTarget
     protected function getExecutorTraits()
     {
         return [
-            '\RulerZ\Executor\Pomm\FilterTrait',
-            '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',
+            FilterTrait::class,
+            FilterBasedSatisfaction::class,
         ];
     }
 

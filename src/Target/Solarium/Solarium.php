@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace RulerZ\Target\Solarium;
 
+use RulerZ\Executor\Polyfill\FilterBasedSatisfaction;
+use RulerZ\Executor\Solr\SolariumFilterTrait;
 use RulerZ\Target\AbstractCompilationTarget;
 use RulerZ\Target\Operators\Definitions;
 use RulerZ\Target\Operators\GenericSolrDefinitions;
@@ -35,8 +37,8 @@ class Solarium extends AbstractCompilationTarget
     protected function getExecutorTraits()
     {
         return [
-            '\RulerZ\Executor\Solr\SolariumFilterTrait',
-            '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',
+            SolariumFilterTrait::class,
+            FilterBasedSatisfaction::class,
         ];
     }
 

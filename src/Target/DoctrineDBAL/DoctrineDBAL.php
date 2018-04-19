@@ -6,6 +6,8 @@ namespace RulerZ\Target\DoctrineDBAL;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 
+use RulerZ\Executor\DoctrineDBAL\FilterTrait;
+use RulerZ\Executor\Polyfill\FilterBasedSatisfaction;
 use RulerZ\Target\AbstractSqlTarget;
 
 class DoctrineDBAL extends AbstractSqlTarget
@@ -24,8 +26,8 @@ class DoctrineDBAL extends AbstractSqlTarget
     protected function getExecutorTraits()
     {
         return [
-            '\RulerZ\Executor\DoctrineDBAL\FilterTrait',
-            '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',
+            FilterTrait::class,
+            FilterBasedSatisfaction::class,
         ];
     }
 }

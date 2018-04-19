@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace RulerZ\Target\Native;
 
 use RulerZ\Compiler\Context;
+use RulerZ\Executor\ArrayTarget\ArgumentUnwrappingTrait;
+use RulerZ\Executor\ArrayTarget\FilterTrait;
+use RulerZ\Executor\ArrayTarget\SatisfiesTrait;
 use RulerZ\Target\AbstractCompilationTarget;
 use RulerZ\Target\Operators\Definitions;
 
@@ -42,9 +45,9 @@ class Native extends AbstractCompilationTarget
     protected function getExecutorTraits()
     {
         return [
-            '\RulerZ\Executor\ArrayTarget\FilterTrait',
-            '\RulerZ\Executor\ArrayTarget\SatisfiesTrait',
-            '\RulerZ\Executor\ArrayTarget\ArgumentUnwrappingTrait',
+            FilterTrait::class,
+            SatisfiesTrait::class,
+            ArgumentUnwrappingTrait::class,
         ];
     }
 
