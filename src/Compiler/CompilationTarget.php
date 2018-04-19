@@ -10,11 +10,11 @@ use RulerZ\Target\Operators\Definitions;
 
 interface CompilationTarget
 {
-    const MODE_FILTER = 'filter';
+    public const MODE_FILTER = 'filter';
 
-    const MODE_APPLY_FILTER = 'apply_filter';
+    public const MODE_APPLY_FILTER = 'apply_filter';
 
-    const MODE_SATISFIES = 'satisfies';
+    public const MODE_SATISFIES = 'satisfies';
 
     /**
      * Compiles the given rule.

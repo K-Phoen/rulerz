@@ -19,7 +19,7 @@ class Compiler
      */
     private $evaluator;
 
-    public static function create($cacheDirectory = null)
+    public static function create($cacheDirectory = null): self
     {
         return new static(new FileEvaluator($cacheDirectory));
     }
