@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use PommProject\Foundation\Pomm;
 
 class PommContext extends BaseContext
@@ -13,7 +15,7 @@ class PommContext extends BaseContext
     {
         $this->pomm = new Pomm(['test_rulerz' => [
             'dsn' => sprintf('pgsql://%s:%s@%s:%d/%s', $_ENV['POSTGRES_USER'], $_ENV['POSTGRES_PASSWD'], $_ENV['POSTGRES_HOST'], $_ENV['POSTGRES_PORT'], $_ENV['POSTGRES_DB']),
-            'class:session_builder' => '\PommProject\ModelManager\SessionBuilder',
+            'class:session_builder' => \PommProject\ModelManager\SessionBuilder::class,
         ]]);
     }
 
@@ -30,6 +32,6 @@ class PommContext extends BaseContext
      */
     protected function getDefaultDataset()
     {
-        return $this->pomm['test_rulerz']->getModel('\Entity\Pomm\TestRulerz\PublicSchema\PlayersModel');
+        return $this->pomm['test_rulerz']->getModel(\Entity\Pomm\TestRulerz\PublicSchema\PlayersModel::class);
     }
 }

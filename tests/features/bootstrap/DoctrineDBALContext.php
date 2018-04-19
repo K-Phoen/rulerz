@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\DriverManager;
 

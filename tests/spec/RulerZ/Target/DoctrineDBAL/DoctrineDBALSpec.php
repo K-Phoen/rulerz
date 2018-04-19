@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\RulerZ\Target\DoctrineDBAL;
 
 use Doctrine\DBAL\Query\QueryBuilder;

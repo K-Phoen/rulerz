@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\RulerZ\Target\Native;
 
 use RulerZ\Compiler\CompilationTarget;
