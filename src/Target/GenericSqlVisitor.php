@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Target;
 
 use Hoa\Ruler\Model as AST;
@@ -31,12 +33,12 @@ class GenericSqlVisitor extends GenericVisitor
     /**
      * @param bool $allowStarOperator Whether to allow the star operator or not (ie: implicit support of unknown operators).
      */
-    public function __construct(Context $context, OperatorsDefinitions $operators, $allowStarOperator = true)
+    public function __construct(Context $context, OperatorsDefinitions $operators, bool $allowStarOperator = true)
     {
         parent::__construct($operators);
 
         $this->context = $context;
-        $this->allowStarOperator = (bool) $allowStarOperator;
+        $this->allowStarOperator = $allowStarOperator;
     }
 
     /**

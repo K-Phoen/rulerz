@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Target\Operators;
 
 use RulerZ\Exception\OperatorNotFoundException;
@@ -26,7 +28,7 @@ class Definitions
         $this->defineInlineOperators($inlineOperators);
     }
 
-    public function mergeWith(self $other)
+    public function mergeWith(self $other): Definitions
     {
         return new static(
             array_merge($this->operators, $other->operators),
@@ -38,10 +40,8 @@ class Definitions
      * Tells if an operator exists.
      *
      * @param string $operator The operator's name.
-     *
-     * @return bool
      */
-    public function hasOperator($operator)
+    public function hasOperator(string $operator): bool
     {
         return isset($this->operators[$operator]);
     }
@@ -51,7 +51,7 @@ class Definitions
      *
      * @param array<callable> $operators A list of operators to add, each one being a collable.
      */
-    public function defineOperators(array $operators)
+    public function defineOperators(array $operators): void
     {
         foreach ($operators as $name => $callable) {
             $this->defineOperator($name, $callable);
@@ -64,7 +64,7 @@ class Definitions
      * @param string   $operator    The operator's name.
      * @param callable $transformer Callable.
      */
-    public function defineOperator($operator, callable $transformer)
+    public function defineOperator(string $operator, callable $transformer): void
     {
         unset($this->inlineOperators[$operator]);
         $this->operators[$operator] = $transformer;
@@ -76,10 +76,8 @@ class Definitions
      * @param string $operator The operator's name.
      *
      * @throws OperatorNotFoundException
-     *
-     * @return callable
      */
-    protected function getOperator($operator)
+    protected function getOperator(string $operator): callable
     {
         if (!$this->hasOperator($operator)) {
             throw new OperatorNotFoundException($operator, sprintf('Operator "%s" does not exist.', $operator));
@@ -93,7 +91,7 @@ class Definitions
      *
      * @return array<callable>
      */
-    public function getOperators()
+    public function getOperators(): array
     {
         return $this->operators;
     }
@@ -104,10 +102,8 @@ class Definitions
      * @param string $operator The operator's name.
      *
      * @throws OperatorNotFoundException
-     *
-     * @return callable
      */
-    public function getInlineOperator($operator)
+    public function getInlineOperator(string $operator): callable
     {
         if (!$this->hasInlineOperator($operator)) {
             throw new OperatorNotFoundException($operator, sprintf('Inline operator "%s" does not exist.', $operator));
@@ -120,10 +116,8 @@ class Definitions
      * Tells if an inline-able operator exists.
      *
      * @param string $operator The operator's name.
-     *
-     * @return bool
      */
-    public function hasInlineOperator($operator)
+    public function hasInlineOperator(string $operator): bool
     {
         return isset($this->inlineOperators[$operator]);
     }
@@ -133,7 +127,7 @@ class Definitions
      *
      * @param array<callable> $operators A list of inline operators to add.
      */
-    public function defineInlineOperators(array $operators)
+    public function defineInlineOperators(array $operators): void
     {
         foreach ($operators as $name => $callable) {
             $this->defineInlineOperator($name, $callable);
@@ -146,7 +140,7 @@ class Definitions
      * @param string   $operator    The operator's name.
      * @param callable $transformer Callable.
      */
-    public function defineInlineOperator($operator, callable $transformer)
+    public function defineInlineOperator(string $operator, callable $transformer)
     {
         unset($this->operators[$operator]);
         $this->inlineOperators[$operator] = $transformer;
@@ -157,7 +151,7 @@ class Definitions
      *
      * @return array<callable>
      */
-    public function getInlineOperators()
+    public function getInlineOperators(): array
     {
         return $this->inlineOperators;
     }

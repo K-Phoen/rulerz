@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Model;
 
 use Hoa\Ruler\Model as HoaModel;

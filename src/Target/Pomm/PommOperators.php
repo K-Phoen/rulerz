@@ -1,15 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Target\Pomm;
 
 use RulerZ\Target\Operators;
 
 class PommOperators
 {
-    /**
-     * @return Operators\Definitions
-     */
-    public static function create(Operators\Definitions $customOperators)
+    public static function create(Operators\Definitions $customOperators): Operators\Definitions
     {
         $definitions = Operators\GenericSqlDefinitions::create($customOperators);
 

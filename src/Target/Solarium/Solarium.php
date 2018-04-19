@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Target\Solarium;
 
 use RulerZ\Target\AbstractCompilationTarget;
+use RulerZ\Target\Operators\Definitions;
 use RulerZ\Target\Operators\GenericSolrDefinitions;
 use Solarium\Client as SolariumClient;
 
@@ -13,7 +16,7 @@ class Solarium extends AbstractCompilationTarget
     /**
      * {@inheritdoc}
      */
-    public function supports($target, $mode)
+    public function supports($target, string $mode): bool
     {
         return $target instanceof SolariumClient;
     }
@@ -40,7 +43,7 @@ class Solarium extends AbstractCompilationTarget
     /**
      * {@inheritdoc}
      */
-    public function getOperators()
+    public function getOperators(): Definitions
     {
         return GenericSolrDefinitions::create(parent::getOperators());
     }

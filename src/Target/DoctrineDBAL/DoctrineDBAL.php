@@ -11,7 +11,7 @@ class DoctrineDBAL extends AbstractSqlTarget
     /**
      * {@inheritdoc}
      */
-    public function supports($target, $mode)
+    public function supports($target, string $mode): bool
     {
         return $target instanceof QueryBuilder;
     }

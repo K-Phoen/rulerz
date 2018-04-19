@@ -4,12 +4,13 @@ namespace spec\RulerZ\Visitor;
 
 use PhpSpec\ObjectBehavior;
 use RulerZ\Parser\Parser;
+use RulerZ\Visitor\ParameterCollectorVisitor;
 
 class ParameterCollectorVisitorSpec extends ObjectBehavior
 {
     public function it_is_initializable()
     {
-        $this->shouldHaveType('RulerZ\Visitor\ParameterCollectorVisitor');
+        $this->shouldHaveType(ParameterCollectorVisitor::class);
     }
 
     public function it_collects_parameters()

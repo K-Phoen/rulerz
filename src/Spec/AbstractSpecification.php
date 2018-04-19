@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Spec;
 
 /**
@@ -11,10 +13,8 @@ abstract class AbstractSpecification implements Specification
      * Create a conjunction with the current specification and another one.
      *
      * @param Specification $spec The other specification.
-     *
-     * @return Specification
      */
-    public function andX(Specification $spec)
+    public function andX(Specification $spec): AndX
     {
         return new AndX([$this, $spec]);
     }
@@ -23,10 +23,8 @@ abstract class AbstractSpecification implements Specification
      * Create a disjunction with the current specification and another one.
      *
      * @param Specification $spec The other specification.
-     *
-     * @return Specification
      */
-    public function orX(Specification $spec)
+    public function orX(Specification $spec): OrX
     {
         return new OrX([$this, $spec]);
     }
@@ -36,7 +34,7 @@ abstract class AbstractSpecification implements Specification
      *
      * @return Not
      */
-    public function not()
+    public function not(): Not
     {
         return new Not($this);
     }
@@ -44,7 +42,7 @@ abstract class AbstractSpecification implements Specification
     /**
      * {@inheritdoc}
      */
-    public function getParameters()
+    public function getParameters(): array
     {
         return [];
     }

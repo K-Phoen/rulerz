@@ -9,25 +9,15 @@ class Parameter implements Visitor\Element
     /**
      * The parameter's name.
      *
-     * @var string
+     * @var string|integer
      */
     private $name;
 
-    /**
-     * Constructor.
-     *
-     * @param string $name The name.
-     */
     public function __construct($name)
     {
         $this->name = $name;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
     public function getName()
     {
         return $this->name;

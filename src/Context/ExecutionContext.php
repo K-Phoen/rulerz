@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Context;
 
 class ExecutionContext implements \ArrayAccess
@@ -7,7 +9,7 @@ class ExecutionContext implements \ArrayAccess
     /**
      * @var array
      */
-    private $data = [];
+    private $data;
 
     /**
      * @param array $data The context data.
@@ -17,7 +19,7 @@ class ExecutionContext implements \ArrayAccess
         $this->data = $data;
     }
 
-    public function get($key, $default = null)
+    public function get(string $key, $default = null)
     {
         if (isset($this->data[$key])) {
             return $this->data[$key];

@@ -9,7 +9,7 @@ trait FilterResultMatcherTrait
     public function getMatchers()
     {
         return [
-            'returnResults' => function ($subject, $expectedResults) {
+            'returnResults' => function ($subject, iterable $expectedResults): bool {
                 if (!$subject instanceof \Traversable) {
                     throw new FailureException('The method did not return a \Traversable object');
                 }

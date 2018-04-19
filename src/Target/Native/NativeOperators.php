@@ -1,15 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Target\Native;
 
 use RulerZ\Target\Operators\Definitions;
 
 class NativeOperators
 {
-    /**
-     * @return Definitions
-     */
-    public static function create(Definitions $customOperators)
+    public static function create(Definitions $customOperators): Definitions
     {
         $defaultInlineOperators = [
             'and' => function ($a, $b) {

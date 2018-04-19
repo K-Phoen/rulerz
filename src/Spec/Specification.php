@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Spec;
 
 /**
@@ -9,15 +11,11 @@ interface Specification
 {
     /**
      * The rule representing the specification.
-     *
-     * @return string
      */
-    public function getRule();
+    public function getRule(): string;
 
     /**
      * The parameters used in the specification.
-     *
-     * @return array
      */
-    public function getParameters();
+    public function getParameters(): array;
 }

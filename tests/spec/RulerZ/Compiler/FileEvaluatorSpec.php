@@ -64,12 +64,12 @@ class FileEvaluatorSpec extends ObjectBehavior
 
 class VfsFilesystem implements Filesystem
 {
-    public function has($filePath)
+    public function has(string $filePath): bool
     {
         return file_exists($filePath);
     }
 
-    public function write($filePath, $content)
+    public function write(string $filePath, string $content): void
     {
         file_put_contents($filePath, $content);
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Executor\ArrayTarget;
 
 use RulerZ\Context\ObjectContext;

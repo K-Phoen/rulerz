@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Target\DoctrineORM;
 
 use Hoa\Ruler\Model as AST;
@@ -26,7 +28,7 @@ class DoctrineORMVisitor extends GenericSqlVisitor
     /**
      * {@inheritdoc}
      */
-    public function getCompilationData()
+    public function getCompilationData(): array
     {
         return [
             'detectedJoins' => $this->autoJoin->getDetectedJoins(),

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Spec;
 
 /**
@@ -38,7 +40,7 @@ abstract class ComposedSpecification extends AbstractSpecification
     /**
      * {@inheritdoc}
      */
-    public function getRule()
+    public function getRule(): string
     {
         $spec = $this->initializeSpecification();
 
@@ -48,7 +50,7 @@ abstract class ComposedSpecification extends AbstractSpecification
     /**
      * {@inheritdoc}
      */
-    public function getParameters()
+    public function getParameters(): array
     {
         $spec = $this->initializeSpecification();
 

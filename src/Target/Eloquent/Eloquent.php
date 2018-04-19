@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Target\Eloquent;
 
 use RulerZ\Compiler\Context;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
+use RulerZ\Executor\Eloquent\FilterTrait;
+use RulerZ\Executor\Polyfill\FilterBasedSatisfaction;
 use RulerZ\Target\AbstractSqlTarget;
 
 class Eloquent extends AbstractSqlTarget
@@ -20,17 +24,17 @@ class Eloquent extends AbstractSqlTarget
     /**
      * @param bool $allowEloquentBuilderAsQuery Whether to allow the execution target to be eloquent builder instead of query builder.
      */
-    public function __construct($allowEloquentBuilderAsQuery = false)
+    public function __construct(bool $allowEloquentBuilderAsQuery = false)
     {
         parent::__construct();
 
-        $this->allowEloquentBuilderAsQuery = (bool) $allowEloquentBuilderAsQuery;
+        $this->allowEloquentBuilderAsQuery = $allowEloquentBuilderAsQuery;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function supports($target, $mode)
+    public function supports($target, string $mode): bool
     {
         return $target instanceof QueryBuilder || $target instanceof EloquentBuilder;
     }
@@ -41,8 +45,8 @@ class Eloquent extends AbstractSqlTarget
     protected function getExecutorTraits()
     {
         return [
-            '\RulerZ\Executor\Eloquent\FilterTrait',
-            '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',
+            FilterTrait::class,
+            FilterBasedSatisfaction::class,
         ];
     }
 

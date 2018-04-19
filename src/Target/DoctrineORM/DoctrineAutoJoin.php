@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Target\DoctrineORM;
 
 use Doctrine\ORM\EntityManagerInterface as EntityManager;
@@ -49,12 +51,12 @@ class DoctrineAutoJoin
         }
     }
 
-    public function getDetectedJoins()
+    public function getDetectedJoins(): array
     {
         return $this->detectedJoins;
     }
 
-    public function buildAccessPath(array $dimensionNames)
+    public function buildAccessPath(array $dimensionNames): string
     {
         $currentEntity = current($this->rootEntities);
         $lastAlias = key($this->aliasMap);
@@ -125,7 +127,7 @@ class DoctrineAutoJoin
         return $lastAlias;
     }
 
-    private function columnExists($name, $rootEntity)
+    private function columnExists(string $name, string $rootEntity): bool
     {
         /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $classMetadata */
         $classMetadata = $this->em->getClassMetadata($rootEntity);
@@ -133,7 +135,7 @@ class DoctrineAutoJoin
         return $classMetadata->hasField($name);
     }
 
-    private function relationExists($name, $rootEntity)
+    private function relationExists(string $name, string $rootEntity): bool
     {
         /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $classMetadata */
         $classMetadata = $this->em->getClassMetadata($rootEntity);
@@ -141,7 +143,7 @@ class DoctrineAutoJoin
         return $classMetadata->hasAssociation($name);
     }
 
-    private function getRelation($name, $rootEntity)
+    private function getRelation(string $name, string $rootEntity): array
     {
         /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $classMetadata */
         $classMetadata = $this->em->getClassMetadata($rootEntity);
@@ -149,7 +151,7 @@ class DoctrineAutoJoin
         return $classMetadata->getAssociationMapping($name);
     }
 
-    private function embeddedExists($name, $rootEntity)
+    private function embeddedExists(string $name, string $rootEntity): bool
     {
         /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $classMetadata */
         $classMetadata = $this->em->getClassMetadata($rootEntity);
@@ -157,7 +159,7 @@ class DoctrineAutoJoin
         return isset($classMetadata->embeddedClasses) && isset($classMetadata->embeddedClasses[$name]);
     }
 
-    private function saveAlias($entity, $dimension, $alias)
+    private function saveAlias(string $entity, string $dimension, string $alias): void
     {
         if (!isset($this->knownEntities[$entity])) {
             $this->knownEntities[$entity] = [];
@@ -167,12 +169,12 @@ class DoctrineAutoJoin
         $this->aliasMap[$alias] = $entity;
     }
 
-    private function getAlias($entity, $dimension)
+    private function getAlias(string $entity, string $dimension): string
     {
         return $this->knownEntities[$entity][$dimension];
     }
 
-    private function getEntity($entity)
+    private function getEntity(string $entity): string
     {
         return $this->aliasMap[$entity];
     }

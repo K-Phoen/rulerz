@@ -4,12 +4,13 @@ namespace spec\RulerZ\Visitor;
 
 use PhpSpec\ObjectBehavior;
 use RulerZ\Parser\Parser;
+use RulerZ\Visitor\OperatorCollectorVisitor;
 
 class OperatorCollectorVisitorSpec extends ObjectBehavior
 {
     public function it_is_initializable()
     {
-        $this->shouldHaveType('RulerZ\Visitor\OperatorCollectorVisitor');
+        $this->shouldHaveType(OperatorCollectorVisitor::class);
     }
 
     public function it_collects_operators()

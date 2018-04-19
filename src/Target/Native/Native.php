@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Target\Native;
 
 use RulerZ\Compiler\Context;
 use RulerZ\Target\AbstractCompilationTarget;
+use RulerZ\Target\Operators\Definitions;
 
 class Native extends AbstractCompilationTarget
 {
     /**
      * {@inheritdoc}
      */
-    public function supports($target, $mode)
+    public function supports($target, string $mode): bool
     {
         if ($mode === self::MODE_APPLY_FILTER) {
             return false;
@@ -48,7 +51,7 @@ class Native extends AbstractCompilationTarget
     /**
      * {@inheritdoc}
      */
-    public function getOperators()
+    public function getOperators(): Definitions
     {
         return NativeOperators::create(parent::getOperators());
     }

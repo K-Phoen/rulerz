@@ -17,8 +17,6 @@ class ObjectContext implements \ArrayAccess
     private $accessor;
 
     /**
-     * Constructor.
-     *
      * @param mixed $object The object to extract data from.
      */
     public function __construct($object)

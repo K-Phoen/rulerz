@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Target\Eloquent;
 
 use RulerZ\Compiler\Context;
@@ -25,7 +27,7 @@ class EloquentVisitor extends GenericSqlVisitor
     /**
      * {@inheritdoc}
      */
-    public function getCompilationData()
+    public function getCompilationData(): array
     {
         return [
             'allowEloquentBuilderAsQuery ' => $this->allowEloquentBuilderAsQuery,

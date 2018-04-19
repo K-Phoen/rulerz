@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Compiler;
 
 /**
@@ -16,7 +18,7 @@ namespace RulerZ\Compiler;
  */
 class EvalEvaluator implements Evaluator
 {
-    public function evaluate($ruleIdentifier, callable $compiler)
+    public function evaluate(string $ruleIdentifier, callable $compiler): void
     {
         eval($compiler());
     }

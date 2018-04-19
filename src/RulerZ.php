@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ;
 
 use RulerZ\Compiler\Compiler;
@@ -37,7 +39,7 @@ class RulerZ
      *
      * @param CompilationTarget $compilationTarget The target compiler to register.
      */
-    public function registerCompilationTarget(CompilationTarget $compilationTarget)
+    public function registerCompilationTarget(CompilationTarget $compilationTarget): void
     {
         $this->compilationTargets[] = $compilationTarget;
     }
@@ -55,7 +57,7 @@ class RulerZ
      *
      * @throws TargetUnsupportedException
      */
-    public function applyFilter($target, $rule, array $parameters = [], array $executionContext = [])
+    public function applyFilter($target, string $rule, array $parameters = [], array $executionContext = [])
     {
         $targetCompiler = $this->findTargetCompiler($target, CompilationTarget::MODE_APPLY_FILTER);
         $compilationContext = $targetCompiler->createCompilationContext($target);
@@ -77,7 +79,7 @@ class RulerZ
      *
      * @throws TargetUnsupportedException
      */
-    public function filter($target, $rule, array $parameters = [], array $executionContext = [])
+    public function filter($target, string $rule, array $parameters = [], array $executionContext = [])
     {
         $targetCompiler = $this->findTargetCompiler($target, CompilationTarget::MODE_FILTER);
         $compilationContext = $targetCompiler->createCompilationContext($target);
@@ -129,11 +131,9 @@ class RulerZ
      * @param array  $parameters       The parameters used in the rule.
      * @param array  $executionContext The execution context.
      *
-     * @return bool
-     *
      * @throws TargetUnsupportedException
      */
-    public function satisfies($target, $rule, array $parameters = [], array $executionContext = [])
+    public function satisfies($target, string $rule, array $parameters = [], array $executionContext = []): bool
     {
         $targetCompiler = $this->findTargetCompiler($target, CompilationTarget::MODE_SATISFIES);
         $compilationContext = $targetCompiler->createCompilationContext($target);
@@ -150,11 +150,9 @@ class RulerZ
      * @param Specification $spec             The specification to use.
      * @param array         $executionContext The execution context.
      *
-     * @return bool
-     *
      * @throws TargetUnsupportedException
      */
-    public function satisfiesSpec($target, Specification $spec, array $executionContext = [])
+    public function satisfiesSpec($target, Specification $spec, array $executionContext = []): bool
     {
         return $this->satisfies($target, $spec->getRule(), $spec->getParameters(), $executionContext);
     }
@@ -165,11 +163,9 @@ class RulerZ
      * @param mixed  $target The target to filter.
      * @param string $mode   The execution mode (MODE_FILTER or MODE_SATISFIES).
      *
-     * @return CompilationTarget
-     *
      * @throws TargetUnsupportedException
      */
-    private function findTargetCompiler($target, $mode)
+    private function findTargetCompiler($target, $mode): CompilationTarget
     {
         /** @var CompilationTarget $targetCompiler */
         foreach ($this->compilationTargets as $targetCompiler) {

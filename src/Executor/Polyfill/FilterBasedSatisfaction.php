@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Executor\Polyfill;
 
 use RulerZ\Context\ExecutionContext;
@@ -14,7 +16,7 @@ trait FilterBasedSatisfaction
     /**
      * {@inheritdoc}
      */
-    public function satisfies($target, array $parameters, array $operators, ExecutionContext $context)
+    public function satisfies($target, array $parameters, array $operators, ExecutionContext $context): bool
     {
         return count($this->filter($target, $parameters, $operators, $context)) !== 0;
     }

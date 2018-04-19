@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Result;
 
 use ArrayIterator;
@@ -19,13 +21,11 @@ class IteratorTools
      * IteratorTools::ensureTraversable(new \ArrayIterator([1, 2, 3]));
      * ```
      *
-     * @param $items
-     *
-     * @return \Traversable
+     * @param mixed $items
      *
      * @throws \InvalidArgumentException
      */
-    public static function ensureTraversable($items)
+    public static function ensureTraversable($items): \Traversable
     {
         if ($items instanceof \Traversable) {
             return $items;
@@ -48,10 +48,8 @@ class IteratorTools
      * ```
      *
      * @param array $results
-     *
-     * @return \ArrayIterator
      */
-    public static function fromArray(array $results)
+    public static function fromArray(array $results): \Traversable
     {
         return new ArrayIterator($results);
     }
@@ -70,10 +68,8 @@ class IteratorTools
      * ```
      *
      * @param callable $generatorCallable A callable, which will return a generator once called.
-     *
-     * @return \Iterator
      */
-    public static function fromGenerator(callable $generatorCallable)
+    public static function fromGenerator(callable $generatorCallable): \Traversable
     {
         return $generatorCallable();
     }

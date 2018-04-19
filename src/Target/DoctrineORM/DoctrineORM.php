@@ -5,6 +5,8 @@ namespace RulerZ\Target\DoctrineORM;
 use Doctrine\ORM\QueryBuilder;
 
 use RulerZ\Compiler\Context;
+use RulerZ\Executor\DoctrineORM\FilterTrait;
+use RulerZ\Executor\Polyfill\FilterBasedSatisfaction;
 use RulerZ\Target\AbstractSqlTarget;
 
 class DoctrineORM extends AbstractSqlTarget
@@ -12,7 +14,7 @@ class DoctrineORM extends AbstractSqlTarget
     /**
      * {@inheritdoc}
      */
-    public function supports($target, $mode)
+    public function supports($target, string $mode): bool
     {
         return $target instanceof QueryBuilder;
     }
@@ -20,7 +22,7 @@ class DoctrineORM extends AbstractSqlTarget
     /**
      * {@inheritdoc}
      */
-    public function createCompilationContext($target)
+    public function createCompilationContext($target): Context
     {
         /* @var \Doctrine\ORM\QueryBuilder $target */
 
@@ -35,7 +37,7 @@ class DoctrineORM extends AbstractSqlTarget
     /**
      * {@inheritdoc}
      */
-    public function getRuleIdentifierHint($rule, Context $context)
+    public function getRuleIdentifierHint(string $rule, Context $context): string
     {
         $aliases = implode('', $context['root_aliases']);
         $entities = implode('', $context['root_entities']);
@@ -57,8 +59,8 @@ class DoctrineORM extends AbstractSqlTarget
     protected function getExecutorTraits()
     {
         return [
-            '\RulerZ\Executor\DoctrineORM\FilterTrait',
-            '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',
+            FilterTrait::class,
+            FilterBasedSatisfaction::class,
         ];
     }
 }
