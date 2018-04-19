@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\RulerZ\Spec;
 
 use PhpSpec\ObjectBehavior;
 
+use RulerZ\Spec\Not;
 use RulerZ\Spec\Specification;
 
 class NotSpec extends ObjectBehavior
@@ -11,7 +14,7 @@ class NotSpec extends ObjectBehavior
     public function it_is_initializable(Specification $spec)
     {
         $this->beConstructedWith($spec);
-        $this->shouldHaveType('RulerZ\Spec\Not');
+        $this->shouldHaveType(Not::class);
     }
 
     public function it_negates_the_given_spec(Specification $spec)

@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\RulerZ\Target\Native;
 
 use RulerZ\Compiler\CompilationTarget;
 use RulerZ\Compiler\Context;
+use RulerZ\Exception\OperatorNotFoundException;
 use RulerZ\Model\Executor;
 use spec\RulerZ\Target\BaseTargetBehavior;
 
@@ -33,7 +36,7 @@ class NativeSpec extends BaseTargetBehavior
 
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule), new Context());
-        $executorModel->shouldHaveType('RulerZ\Model\Executor');
+        $executorModel->shouldHaveType(Executor::class);
 
         $executorModel->getTraits()->shouldHaveCount(3);
         $executorModel->getCompiledRule()->shouldReturn('1 == 1');
@@ -86,7 +89,7 @@ class NativeSpec extends BaseTargetBehavior
     public function it_throws_an_exception_when_calling_an_unknown_operator()
     {
         $this
-            ->shouldThrow('RulerZ\Exception\OperatorNotFoundException')
+            ->shouldThrow(OperatorNotFoundException::class)
             ->duringCompile($this->parseRule('operator_that_does_not_exist() = 42'), new Context());
     }
 
@@ -103,7 +106,7 @@ class NativeSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn('($this->unwrapArgument($target["points"]) >= 42 && inline_always_true(42))');
     }
 
-    public function unsupportedTypes()
+    public function unsupportedTypes(): array
     {
         return [
             'string',

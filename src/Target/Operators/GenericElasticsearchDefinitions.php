@@ -1,13 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Target\Operators;
 
 class GenericElasticsearchDefinitions
 {
-    /**
-     * @return Definitions
-     */
-    public static function create(Definitions $customOperators)
+    public static function create(Definitions $customOperators): Definitions
     {
         $definitions = new Definitions();
 

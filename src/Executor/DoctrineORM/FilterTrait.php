@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Executor\DoctrineORM;
 
 use RulerZ\Context\ExecutionContext;
@@ -46,13 +48,6 @@ trait FilterTrait
         // execute the query
         $result = $target->getQuery()->getResult();
 
-        // and return the appropriate result type
-        if ($result instanceof \Traversable) {
-            return $result;
-        } elseif (is_array($result)) {
-            return IteratorTools::fromArray($result);
-        }
-
-        throw new \RuntimeException(sprintf('Unhandled result type: "%s"', get_class($result)));
+        return IteratorTools::ensureTraversable($result);
     }
 }

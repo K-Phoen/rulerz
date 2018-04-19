@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\RulerZ\Executor\Elastica;
 
 use Elastica\Search;
@@ -16,7 +18,7 @@ class FilterTraitSpec extends ObjectBehavior
 
     public function let()
     {
-        $this->beAnInstanceOf('RulerZ\Stub\Executor\ElasticaExecutorStub');
+        $this->beAnInstanceOf(ElasticaExecutorStub::class);
     }
 
     public function it_can_apply_a_filter_on_a_target(Search $target)

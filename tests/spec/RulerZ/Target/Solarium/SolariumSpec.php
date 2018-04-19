@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\RulerZ\Target\Solarium;
 
 use PhpSpec\Exception\Example\SkippingException;
@@ -31,7 +33,7 @@ class SolariumSpec extends BaseTargetBehavior
 
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule), new Context());
-        $executorModel->shouldHaveType('RulerZ\Model\Executor');
+        $executorModel->shouldHaveType(Executor::class);
 
         $executorModel->getTraits()->shouldHaveCount(2);
         $executorModel->getCompiledRule()->shouldReturn("'points:1'");

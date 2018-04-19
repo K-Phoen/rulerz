@@ -1,16 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\RulerZ\Spec;
 
 use PhpSpec\ObjectBehavior;
 
+use RulerZ\Exception\ParameterOverridenException;
+use RulerZ\Spec\AndX;
 use RulerZ\Spec\Specification;
 
 class AndXSpec extends ObjectBehavior
 {
     public function it_is_initializable()
     {
-        $this->shouldHaveType('RulerZ\Spec\AndX');
+        $this->shouldHaveType(AndX::class);
     }
 
     public function it_can_be_initialized_with_specs(Specification $spec, Specification $otherSpec)
@@ -68,7 +72,7 @@ class AndXSpec extends ObjectBehavior
         $this->beConstructedWith([$spec, $otherSpec]);
 
         $this
-            ->shouldThrow('RulerZ\Exception\ParameterOverridenException')
+            ->shouldThrow(ParameterOverridenException::class)
             ->duringGetParameters();
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Executor\Elasticsearch;
 
 use RulerZ\Context\ExecutionContext;

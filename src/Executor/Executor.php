@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Executor;
 
 use RulerZ\Context\ExecutionContext;
@@ -43,5 +45,5 @@ interface Executor
      *
      * @return bool
      */
-    public function satisfies($target, array $parameters, array $operators, ExecutionContext $context);
+    public function satisfies($target, array $parameters, array $operators, ExecutionContext $context): bool;
 }

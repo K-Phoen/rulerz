@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\RulerZ\Target\DoctrineORM;
 
 use Doctrine\ORM\EntityManager;
@@ -55,7 +57,7 @@ class DoctrineORMSpec extends BaseTargetBehavior
 
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule), $context);
-        $executorModel->shouldHaveType('RulerZ\Model\Executor');
+        $executorModel->shouldHaveType(Executor::class);
 
         $executorModel->getTraits()->shouldHaveCount(2);
         $executorModel->getCompiledRule()->shouldReturn('"1 = 1"');
@@ -224,7 +226,7 @@ class DoctrineORMSpec extends BaseTargetBehavior
         ]);
     }
 
-    private function createContext()
+    private function createContext(): Context
     {
         return new Context([
             'em' => $this->em,

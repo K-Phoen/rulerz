@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Target;
 
 use RulerZ\Compiler\Context;
 use RulerZ\Compiler\CompilationTarget;
 use RulerZ\Model;
 use RulerZ\Target\Operators\Definitions as OperatorsDefinitions;
+use RulerZ\Target\Operators\Definitions;
 
 /**
  * Generic visitor intended to be extended.
@@ -40,7 +43,7 @@ abstract class AbstractCompilationTarget implements CompilationTarget
     /**
      * {@inheritdoc}
      */
-    public function compile(Model\Rule $rule, Context $compilationContext)
+    public function compile(Model\Rule $rule, Context $compilationContext): Model\Executor
     {
         $visitor = $this->createVisitor($compilationContext);
         $compiledCode = $visitor->visit($rule);
@@ -55,7 +58,7 @@ abstract class AbstractCompilationTarget implements CompilationTarget
     /**
      * {@inheritdoc}
      */
-    public function createCompilationContext($target)
+    public function createCompilationContext($target): Context
     {
         return new Context();
     }
@@ -63,7 +66,7 @@ abstract class AbstractCompilationTarget implements CompilationTarget
     /**
      * {@inheritdoc}
      */
-    public function defineOperator($name, callable $transformer)
+    public function defineOperator(string $name, callable $transformer): void
     {
         $this->customOperators->defineOperator($name, $transformer);
     }
@@ -71,7 +74,7 @@ abstract class AbstractCompilationTarget implements CompilationTarget
     /**
      * {@inheritdoc}
      */
-    public function defineInlineOperator($name, callable $transformer)
+    public function defineInlineOperator(string $name, callable $transformer): void
     {
         $this->customOperators->defineInlineOperator($name, $transformer);
     }
@@ -79,7 +82,7 @@ abstract class AbstractCompilationTarget implements CompilationTarget
     /**
      * {@inheritdoc}
      */
-    public function getOperators()
+    public function getOperators(): Definitions
     {
         return $this->customOperators;
     }
@@ -87,7 +90,7 @@ abstract class AbstractCompilationTarget implements CompilationTarget
     /**
      * {@inheritdoc}
      */
-    public function getRuleIdentifierHint($rule, Context $context)
+    public function getRuleIdentifierHint(string $rule, Context $context): string
     {
         return '';
     }

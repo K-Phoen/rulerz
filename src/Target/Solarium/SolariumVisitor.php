@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Target\Solarium;
 
 use Hoa\Ruler\Model as AST;

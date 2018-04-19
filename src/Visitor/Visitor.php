@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Visitor;
 
 use Hoa\Ruler\Model as AST;

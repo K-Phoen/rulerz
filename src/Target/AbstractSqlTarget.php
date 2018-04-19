@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Target;
 
 use RulerZ\Compiler\Context;
+use RulerZ\Target\Operators\Definitions;
 use RulerZ\Target\Operators\GenericSqlDefinitions;
 
 abstract class AbstractSqlTarget extends AbstractCompilationTarget
@@ -27,7 +30,7 @@ abstract class AbstractSqlTarget extends AbstractCompilationTarget
     /**
      * {@inheritdoc}
      */
-    public function getOperators()
+    public function getOperators(): Definitions
     {
         return GenericSqlDefinitions::create(parent::getOperators());
     }

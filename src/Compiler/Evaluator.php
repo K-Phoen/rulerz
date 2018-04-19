@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Compiler;
 
 interface Evaluator
@@ -12,8 +14,6 @@ interface Evaluator
      *                           rule if it can not be evaluated from a cache.
      *
      * @note Evaluators are only called if the Executor does not already exists.
-     *
-     * @return void
      */
-    public function evaluate($ruleIdentifier, callable $compiler);
+    public function evaluate(string $ruleIdentifier, callable $compiler): void;
 }

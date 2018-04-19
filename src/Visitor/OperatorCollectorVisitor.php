@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Visitor;
 
 use Hoa\Ruler\Model as AST;
@@ -14,7 +16,7 @@ class OperatorCollectorVisitor extends Visitor
     /**
      * {@inheritdoc}
      */
-    public function getCompilationData()
+    public function getCompilationData(): array
     {
         return [
             'operators' => $this->operators,

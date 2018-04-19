@@ -1,16 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Target\Native;
 
 use RulerZ\Compiler\Context;
+use RulerZ\Executor\ArrayTarget\ArgumentUnwrappingTrait;
+use RulerZ\Executor\ArrayTarget\FilterTrait;
+use RulerZ\Executor\ArrayTarget\SatisfiesTrait;
 use RulerZ\Target\AbstractCompilationTarget;
+use RulerZ\Target\Operators\Definitions;
 
 class Native extends AbstractCompilationTarget
 {
     /**
      * {@inheritdoc}
      */
-    public function supports($target, $mode)
+    public function supports($target, string $mode): bool
     {
         if ($mode === self::MODE_APPLY_FILTER) {
             return false;
@@ -39,16 +45,16 @@ class Native extends AbstractCompilationTarget
     protected function getExecutorTraits()
     {
         return [
-            '\RulerZ\Executor\ArrayTarget\FilterTrait',
-            '\RulerZ\Executor\ArrayTarget\SatisfiesTrait',
-            '\RulerZ\Executor\ArrayTarget\ArgumentUnwrappingTrait',
+            FilterTrait::class,
+            SatisfiesTrait::class,
+            ArgumentUnwrappingTrait::class,
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getOperators()
+    public function getOperators(): Definitions
     {
         return NativeOperators::create(parent::getOperators());
     }

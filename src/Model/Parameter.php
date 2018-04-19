@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Model;
 
 use Hoa\Visitor;
@@ -9,25 +11,15 @@ class Parameter implements Visitor\Element
     /**
      * The parameter's name.
      *
-     * @var string
+     * @var string|int
      */
     private $name;
 
-    /**
-     * Constructor.
-     *
-     * @param string $name The name.
-     */
     public function __construct($name)
     {
         $this->name = $name;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
     public function getName()
     {
         return $this->name;

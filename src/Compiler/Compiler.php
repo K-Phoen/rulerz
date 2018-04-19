@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Compiler;
 
 use RulerZ\Executor\Executor;
@@ -17,7 +19,7 @@ class Compiler
      */
     private $evaluator;
 
-    public static function create($cacheDirectory = null)
+    public static function create($cacheDirectory = null): self
     {
         return new static(new FileEvaluator($cacheDirectory));
     }
@@ -28,10 +30,7 @@ class Compiler
         $this->evaluator = $evaluator;
     }
 
-    /**
-     * @return Executor
-     */
-    public function compile($rule, CompilationTarget $target, Context $context)
+    public function compile(string $rule, CompilationTarget $target, Context $context): Executor
     {
         $context['rule_identifier'] = $this->getRuleIdentifier($target, $context, $rule);
         $context['executor_classname'] = 'Executor_'.$context['rule_identifier'];
@@ -48,7 +47,7 @@ class Compiler
         return new $context['executor_fqcn']();
     }
 
-    protected function compileToSource($rule, CompilationTarget $compilationTarget, Context $context)
+    protected function compileToSource(string $rule, CompilationTarget $compilationTarget, Context $context): string
     {
         $ast = $this->parser->parse($rule);
         $executorModel = $compilationTarget->compile($ast, $context);
@@ -84,7 +83,7 @@ class {$context['executor_classname']} implements Executor
 EXECUTOR;
     }
 
-    protected function getRuleIdentifier(CompilationTarget $compilationTarget, Context $context, $rule)
+    protected function getRuleIdentifier(CompilationTarget $compilationTarget, Context $context, string $rule): string
     {
         return hash('crc32b', get_class($compilationTarget).$rule.$compilationTarget->getRuleIdentifierHint($rule, $context));
     }

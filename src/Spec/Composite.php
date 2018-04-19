@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Spec;
 
 use RulerZ\Exception\ParameterOverridenException;
@@ -34,7 +36,7 @@ class Composite implements Specification
     /**
      * {@inheritdoc}
      */
-    public function getRule()
+    public function getRule(): string
     {
         return implode(sprintf(' %s ', $this->operator), array_map(function (Specification $specification) {
             return sprintf('(%s)', $specification->getRule());
@@ -44,7 +46,7 @@ class Composite implements Specification
     /**
      * {@inheritdoc}
      */
-    public function getParameters()
+    public function getParameters(): array
     {
         $parametersCount = 0;
 
@@ -79,7 +81,7 @@ class Composite implements Specification
      *
      * @param Specification $specification
      */
-    public function addSpecification(Specification $specification)
+    public function addSpecification(Specification $specification): void
     {
         $this->specifications[] = $specification;
     }
@@ -91,7 +93,7 @@ class Composite implements Specification
      *
      * @return array Names of the overridden parameters.
      */
-    private function searchOverridenParameters(array $parametersList)
+    private function searchOverridenParameters(array $parametersList): array
     {
         $parametersUsageCount = [];
 

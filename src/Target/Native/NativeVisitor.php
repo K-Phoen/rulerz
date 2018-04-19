@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Target\Native;
 
 use Hoa\Ruler\Model as AST;

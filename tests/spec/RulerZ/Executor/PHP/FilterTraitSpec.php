@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\RulerZ\Executor\PHP;
 
 use PhpSpec\ObjectBehavior;
@@ -13,7 +15,7 @@ class FilterTraitSpec extends ObjectBehavior
 
     public function let()
     {
-        $this->beAnInstanceOf('RulerZ\Stub\Executor\ArrayExecutorStub');
+        $this->beAnInstanceOf(ArrayExecutorStub::class);
     }
 
     public function it_can_NOT_apply_a_filter_on_a_target()
@@ -21,7 +23,7 @@ class FilterTraitSpec extends ObjectBehavior
         $target = [['some' => 'item'], ['another' => 'item']];
 
         $this
-            ->shouldThrow('LogicException')
+            ->shouldThrow(\LogicException::class)
             ->duringApplyFilter($target, $parameters = [], $operators = [], new ExecutionContext());
     }
 

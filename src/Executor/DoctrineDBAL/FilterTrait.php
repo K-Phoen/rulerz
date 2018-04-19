@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Executor\DoctrineDBAL;
 
 use Doctrine\DBAL\Connection;

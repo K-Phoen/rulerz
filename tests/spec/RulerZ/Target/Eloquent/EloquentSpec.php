@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\RulerZ\Target\Eloquent;
 
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
@@ -42,7 +44,7 @@ class EloquentSpec extends BaseTargetBehavior
 
         /** @var Executor $executorModel */
         $executorModel = $this->compile($this->parseRule($rule), new Context());
-        $executorModel->shouldHaveType('RulerZ\Model\Executor');
+        $executorModel->shouldHaveType(Executor::class);
 
         $executorModel->getTraits()->shouldHaveCount(2);
         $executorModel->getCompiledRule()->shouldReturn('"1 = 1"');

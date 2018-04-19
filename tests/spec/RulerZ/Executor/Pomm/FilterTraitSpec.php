@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\RulerZ\Executor\Pomm;
 
 use PhpSpec\ObjectBehavior;
@@ -16,7 +18,7 @@ class FilterTraitSpec extends ObjectBehavior
 
     public function let()
     {
-        $this->beAnInstanceOf('RulerZ\Stub\Executor\PommExecutorStub');
+        $this->beAnInstanceOf(PommExecutorStub::class);
     }
 
     public function it_can_apply_a_filter_on_a_target(ModelStub $modelStub)

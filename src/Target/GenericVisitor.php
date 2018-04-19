@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Target;
 
 use Hoa\Ruler\Model as AST;
@@ -25,7 +27,7 @@ abstract class GenericVisitor implements RuleVisitor
      *
      * @note The aim of this method is to be overriden.
      */
-    public function getCompilationData()
+    public function getCompilationData(): array
     {
         return [];
     }

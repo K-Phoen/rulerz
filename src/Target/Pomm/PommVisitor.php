@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Target\Pomm;
 
 use Hoa\Ruler\Model as AST;

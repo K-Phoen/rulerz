@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Context;
 
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -17,8 +19,6 @@ class ObjectContext implements \ArrayAccess
     private $accessor;
 
     /**
-     * Constructor.
-     *
      * @param mixed $object The object to extract data from.
      */
     public function __construct($object)

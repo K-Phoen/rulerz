@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Target\DoctrineDBAL;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 
+use RulerZ\Executor\DoctrineDBAL\FilterTrait;
+use RulerZ\Executor\Polyfill\FilterBasedSatisfaction;
 use RulerZ\Target\AbstractSqlTarget;
 
 class DoctrineDBAL extends AbstractSqlTarget
@@ -11,7 +15,7 @@ class DoctrineDBAL extends AbstractSqlTarget
     /**
      * {@inheritdoc}
      */
-    public function supports($target, $mode)
+    public function supports($target, string $mode): bool
     {
         return $target instanceof QueryBuilder;
     }
@@ -22,8 +26,8 @@ class DoctrineDBAL extends AbstractSqlTarget
     protected function getExecutorTraits()
     {
         return [
-            '\RulerZ\Executor\DoctrineDBAL\FilterTrait',
-            '\RulerZ\Executor\Polyfill\FilterBasedSatisfaction',
+            FilterTrait::class,
+            FilterBasedSatisfaction::class,
         ];
     }
 }

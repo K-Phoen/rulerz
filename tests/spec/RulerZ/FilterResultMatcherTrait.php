@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\RulerZ;
 
 use PhpSpec\Exception\Example\FailureException;
 
 trait FilterResultMatcherTrait
 {
-    public function getMatchers()
+    public function getMatchers(): array
     {
         return [
-            'returnResults' => function ($subject, $expectedResults) {
+            'returnResults' => function ($subject, iterable $expectedResults): bool {
                 if (!$subject instanceof \Traversable) {
                     throw new FailureException('The method did not return a \Traversable object');
                 }

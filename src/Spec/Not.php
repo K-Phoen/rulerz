@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Spec;
 
 /**
@@ -25,7 +27,7 @@ class Not extends AbstractSpecification
     /**
      * {@inheritdoc}
      */
-    public function getRule()
+    public function getRule(): string
     {
         return sprintf('NOT (%s)', $this->specification->getRule());
     }
@@ -33,7 +35,7 @@ class Not extends AbstractSpecification
     /**
      * {@inheritdoc}
      */
-    public function getParameters()
+    public function getParameters(): array
     {
         return $this->specification->getParameters();
     }

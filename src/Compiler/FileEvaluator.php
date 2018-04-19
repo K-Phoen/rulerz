@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Compiler;
 
 class FileEvaluator implements Evaluator
@@ -22,7 +24,7 @@ class FileEvaluator implements Evaluator
     /**
      * {@inheritdoc}
      */
-    public function evaluate($ruleIdentifier, callable $compiler)
+    public function evaluate(string $ruleIdentifier, callable $compiler): void
     {
         $fileName = $this->directory.DIRECTORY_SEPARATOR.'rulerz_executor_'.$ruleIdentifier;
 

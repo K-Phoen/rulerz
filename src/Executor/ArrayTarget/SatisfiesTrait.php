@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RulerZ\Executor\ArrayTarget;
 
 use RulerZ\Context\ExecutionContext;
@@ -12,7 +14,7 @@ trait SatisfiesTrait
     /**
      * {@inheritdoc}
      */
-    public function satisfies($target, array $parameters, array $operators, ExecutionContext $context)
+    public function satisfies($target, array $parameters, array $operators, ExecutionContext $context): bool
     {
         $wrappedTarget = is_array($target) ? $target : new ObjectContext($target);
 
