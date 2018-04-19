@@ -11,7 +11,7 @@ class Parameter implements Visitor\Element
     /**
      * The parameter's name.
      *
-     * @var string|integer
+     * @var string|int
      */
     private $name;
 
