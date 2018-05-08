@@ -1,0 +1,169 @@
+{
+    "groups": {
+        "admin": {
+            "name": "Admin",
+            "role": "ROLE_ADMIN"
+        },
+        "players": {
+            "name": "Players",
+            "role": "ROLE_PLAYER"
+        }
+    },
+
+    "players": [
+        {
+            "pseudo": "Joe",
+            "group": "admin",
+            "fullname": "Joe la frite",
+            "gender": "M",
+            "birthday": "1924-03-02",
+            "points": 2500,
+            "address": {
+                "street": "Baker street",
+                "postalCode": "NW1 6XE",
+                "city": "London",
+                "country": "England"
+            }
+        },
+        {
+            "pseudo": "Bob",
+            "group": "players",
+            "fullname": "Bob Morane",
+            "gender": "M",
+            "birthday": "1995-10-02",
+            "points": 9001,
+            "address": {
+                "street": "Baker street",
+                "postalCode": "NW1 6XE",
+                "city": "London",
+                "country": "England"
+            }
+        },
+        {
+            "pseudo": "Ada",
+            "group": "players",
+            "fullname": "Ada Lovelace",
+            "gender": "F",
+            "birthday": "1997-10-02",
+            "points": 10000,
+            "address": {
+                "street": "Baker street",
+                "postalCode": "NW1 6XE",
+                "city": "London",
+                "country": "England"
+            }
+        },
+        {
+            "pseudo": "Kévin",
+            "group": "players",
+            "fullname": "Yup, that is me.",
+            "gender": "M",
+            "birthday": "1999-10-02",
+            "points": 100,
+            "address": {
+                "street": "Baker street",
+                "postalCode": "NW1 6XE",
+                "city": "London",
+                "country": "England"
+            }
+        },
+        {
+            "pseudo": "Margaret",
+            "group": "players",
+            "fullname": "Margaret Hamilton",
+            "gender": "F",
+            "birthday": "1936-08-17",
+            "points": 5000,
+            "address": {
+                "street": "Some street",
+                "postalCode": "47454",
+                "city": "Paoli",
+                "country": "United-States"
+            }
+        },
+        {
+            "pseudo": "Alice",
+            "group": "admin",
+            "fullname": "Alice Foo",
+            "gender": "F",
+            "birthday": "2001-10-02",
+            "points": 175,
+            "address": {
+                "street": "Baker street",
+                "postalCode": "NW1 6XE",
+                "city": "London",
+                "country": "England"
+            }
+        },
+        {
+            "pseudo": "Louise",
+            "group": "admin",
+            "fullname": "Louise Foo",
+            "gender": "F",
+            "birthday": "2002-10-02",
+            "points": 800,
+            "address": {
+                "street": "Other street",
+                "postalCode": "NW1 6XE",
+                "city": "London",
+                "country": "England"
+            }
+        },
+        {
+            "pseudo": "Francis",
+            "group": "admin",
+            "fullname": "Francis Foo",
+            "gender": "M",
+            "birthday": "1998-10-02",
+            "points": 345,
+            "address": {
+                "street": "Random street",
+                "postalCode": "NW1 6XE",
+                "city": "London",
+                "country": "England"
+            }
+        },
+        {
+            "pseudo": "John",
+            "group": "admin",
+            "fullname": "John Foo",
+            "gender": "M",
+            "birthday": "1987-10-02",
+            "points": 23,
+            "address": {
+                "street": "Doe street",
+                "postalCode": "NW1 6XE",
+                "city": "London",
+                "country": "England"
+            }
+        },
+        {
+            "pseudo": "Arthur",
+            "group": "admin",
+            "fullname": "Arthur Foo",
+            "gender": "M",
+            "birthday": "1989-10-02",
+            "points": 200,
+            "address": {
+                "street": "Round table street",
+                "postalCode": "NW1 6XE",
+                "city": "London",
+                "country": "England"
+            }
+        },
+        {
+            "pseudo": "Moon Moon",
+            "group": "admin",
+            "fullname": "Moon moon Foo",
+            "gender": "D",
+            "birthday": "1985-10-02",
+            "points": 300,
+            "address": {
+                "street": "Moon moon street",
+                "postalCode": "NW1 6XE",
+                "city": "London",
+                "country": "England"
+            }
+        }
+    ]
+}
