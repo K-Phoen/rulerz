@@ -79,22 +79,23 @@ class DoctrineAutoJoin
                 /** @var \Doctrine\ORM\Mapping\ClassMetadataInfo $classMetadata */
                 $classMetadata = $this->em->getClassMetadata($currentEntity);
                 $association = $classMetadata->getAssociationMapping($dimension);
+                $targetEntity = $association['targetEntity'];
 
-                if (!isset($this->knownEntities[$currentEntity], $this->knownEntities[$currentEntity][$association['fieldName']])) {
+                if (!isset($this->knownEntities[$targetEntity], $this->knownEntities[$targetEntity][$association['fieldName']])) {
                     $alias = sprintf('_%d_%s', count($this->knownEntities, COUNT_RECURSIVE), $dimension);
 
-                    $this->saveAlias($currentEntity, $association['fieldName'], $alias);
+                    $this->saveAlias($targetEntity, $association['fieldName'], $alias);
 
                     $this->detectedJoins[] = [
                         'root' => $lastAlias,
                         'column' => $dimension,
-                        'as' => $alias = $this->getAlias($currentEntity, $association['fieldName']),
+                        'as' => $alias = $this->getAlias($targetEntity, $association['fieldName']),
                     ];
                 } else {
-                    $alias = $this->getAlias($currentEntity, $association['fieldName']);
+                    $alias = $this->getAlias($targetEntity, $association['fieldName']);
                 }
 
-                $currentEntity = $association['targetEntity'];
+                $currentEntity = $targetEntity;
                 $lastAlias = $alias;
 
                 continue;
