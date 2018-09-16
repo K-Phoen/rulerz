@@ -55,6 +55,8 @@ class ParserSpec extends ObjectBehavior
             ['points > 30 and group = "member"'],
             ['(points > 30 and group in ["member", "guest"]) or group = "admin"'],
             ['not points > 30'],
+            ['a < -1'],
+            ['a > -0.05'],
         ];
     }
 
