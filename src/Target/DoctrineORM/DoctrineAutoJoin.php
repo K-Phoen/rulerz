@@ -46,7 +46,7 @@ class DoctrineAutoJoin
                 list($fromAlias, $attribute) = explode('.', $join->getJoin());
                 $relation = $this->getRelation($attribute, $this->getEntity($fromAlias));
 
-                $this->saveAlias($relation['targetEntity'], $relation['fieldName'], $join->getAlias());
+                $this->saveAlias($relation['targetEntity'], $relation['fieldName'], $join->getAlias(), $fromAlias);
             }
         }
     }
@@ -81,18 +81,18 @@ class DoctrineAutoJoin
                 $association = $classMetadata->getAssociationMapping($dimension);
                 $targetEntity = $association['targetEntity'];
 
-                if (!isset($this->knownEntities[$targetEntity], $this->knownEntities[$targetEntity][$association['fieldName']])) {
+                if (!isset($this->knownEntities[$targetEntity], $this->knownEntities[$targetEntity][$lastAlias][$association['fieldName']])) {
                     $alias = sprintf('_%d_%s', count($this->knownEntities, COUNT_RECURSIVE), $dimension);
 
-                    $this->saveAlias($targetEntity, $association['fieldName'], $alias);
+                    $this->saveAlias($targetEntity, $association['fieldName'], $alias, $lastAlias);
 
                     $this->detectedJoins[] = [
                         'root' => $lastAlias,
                         'column' => $dimension,
-                        'as' => $alias = $this->getAlias($targetEntity, $association['fieldName']),
+                        'as' => $alias = $this->getAlias($targetEntity, $association['fieldName'], $lastAlias),
                     ];
                 } else {
-                    $alias = $this->getAlias($targetEntity, $association['fieldName']);
+                    $alias = $this->getAlias($targetEntity, $association['fieldName'], $lastAlias);
                 }
 
                 $currentEntity = $targetEntity;
@@ -160,19 +160,23 @@ class DoctrineAutoJoin
         return isset($classMetadata->embeddedClasses) && isset($classMetadata->embeddedClasses[$name]);
     }
 
-    private function saveAlias(string $entity, string $dimension, string $alias): void
+    private function saveAlias(string $entity, string $dimension, string $alias, string $parentAlias): void
     {
         if (!isset($this->knownEntities[$entity])) {
             $this->knownEntities[$entity] = [];
         }
 
-        $this->knownEntities[$entity][$dimension] = $alias;
+        if (!isset($this->knownEntities[$entity][$parentAlias])) {
+            $this->knownEntities[$entity][$parentAlias] = [];
+        }
+
+        $this->knownEntities[$entity][$parentAlias][$dimension] = $alias;
         $this->aliasMap[$alias] = $entity;
     }
 
-    private function getAlias(string $entity, string $dimension): string
+    private function getAlias(string $entity, string $dimension, string $parentAlias): string
     {
-        return $this->knownEntities[$entity][$dimension];
+        return $this->knownEntities[$entity][$parentAlias][$dimension];
     }
 
     private function getEntity(string $entity): string
