@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace spec\RulerZ\Executor\DoctrineORM;
 
 use Doctrine\ORM\AbstractQuery as Query;
+use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
 use PhpSpec\ObjectBehavior;
 
@@ -45,8 +46,30 @@ class FilterTraitSpec extends ObjectBehavior
         $dql = 'some_dql';
 
         DoctrineORMExecutorStub::$executeReturn = $dql;
-
+        $target->getDQLPart('join')->willReturn(['root_alias' => []]);
         $target->leftJoin('root_alias.join_column', 'join_alias')->shouldBeCalled();
+        $target->setParameter('foo', 'bar')->shouldBeCalled();
+        $target->andWhere($dql)->shouldBeCalled();
+
+        $this->applyFilter($target, $parameters = ['foo' => 'bar'], $operators = [], new ExecutionContext())->shouldReturn($target);
+    }
+
+    public function it_does_not_apply_detected_joins_when_present(QueryBuilder $target, Expr\Join $expr)
+    {
+        $this->detectedJoins = [
+            [
+                'root' => 'root_alias',
+                'column' => 'join_column',
+                'as' => 'join_alias',
+            ],
+        ];
+        $dql = 'some_dql';
+
+        DoctrineORMExecutorStub::$executeReturn = $dql;
+        $expr->getAlias()->willReturn('join_alias');
+        $expr->getJoin()->willReturn('root_alias.join_column');
+        $target->getDQLPart('join')->willReturn(['root_alias' => [$expr]]);
+        $target->leftJoin('root_alias.join_column', 'join_alias')->shouldNotBeCalled();
         $target->setParameter('foo', 'bar')->shouldBeCalled();
         $target->andWhere($dql)->shouldBeCalled();
 
@@ -67,6 +90,7 @@ class FilterTraitSpec extends ObjectBehavior
 
         DoctrineORMExecutorStub::$executeReturn = $dql;
 
+        $target->getDQLPart('join')->willReturn(['root_alias' => []]);
         $target->leftJoin('root_alias.join_column', 'join_alias')->shouldBeCalled();
         $target->setParameter('foo', 'bar')->shouldBeCalled();
         $target->andWhere($dql)->shouldBeCalled();

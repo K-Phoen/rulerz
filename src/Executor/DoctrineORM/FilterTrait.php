@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace RulerZ\Executor\DoctrineORM;
 
+use Doctrine\ORM\QueryBuilder;
 use RulerZ\Context\ExecutionContext;
 use RulerZ\Result\IteratorTools;
+use Doctrine\ORM\Query\Expr;
 
 trait FilterTrait
 {
@@ -19,7 +21,9 @@ trait FilterTrait
         /* @var \Doctrine\ORM\QueryBuilder $target */
 
         foreach ($this->detectedJoins as $join) {
-            $target->leftJoin(sprintf('%s.%s', $join['root'], $join['column']), $join['as']);
+            if (!$this->hasExistingIdenticalJoin($target, $join)) {
+                $target->leftJoin(sprintf('%s.%s', $join['root'], $join['column']), $join['as']);
+            }
         }
 
         // this will return DQL code
@@ -49,5 +53,23 @@ trait FilterTrait
         $result = $target->getQuery()->getResult();
 
         return IteratorTools::ensureTraversable($result);
+    }
+
+    /**
+     * @param QueryBuilder $target
+     * @param array        $detectedJoin
+     *
+     * @return bool
+     */
+    private function hasExistingIdenticalJoin(QueryBuilder $target, array $detectedJoin): bool
+    {
+        $joins = $target->getDQLPart('join');
+        return isset($joins[$detectedJoin['root']]) && count(array_filter(
+            $joins[$detectedJoin['root']],
+            function (Expr\Join $joinExpr) use ($detectedJoin) {
+                return $joinExpr->getAlias() === $detectedJoin['as']
+                    && $joinExpr->getJoin() === $detectedJoin['root'].'.'.$detectedJoin['column'];
+            }
+        )) > 0;
     }
 }
