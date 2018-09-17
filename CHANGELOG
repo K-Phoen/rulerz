@@ -2,6 +2,27 @@
 VERSION 0  FIXED ELASTICSEARCH-RELATED TARGETS
 ==============================================
 
+   Version 0.21 - Make RulerZ PHP7-only
+      17/09/2018 10:43  0.21.0  initial release
+         c241a5c Merge pull request #104 from MySchoolManagement/incorrect-alias-reuse
+         18d2354 Merge branch 'master' into incorrect-alias-reuse
+         6db0236 Merge pull request #105 from MySchoolManagement/creates-duplicate-joins
+         d5f4a20 Fix grammar to support negative integers and floats
+         b9ddc00 DoctrineAutoJoin uses differing entities when restoring existing aliases and saving new ones
+         d68e44c Resolves an issue where the auto joiner picks the wrong alias
+         a0f9f62 Write fixtures as json
+         9b12f85 Merge pull request #103 from K-Phoen/php7
+         56a4652 Add missing hints
+         36e5a2c Fix checkstyles
+         5ced8e2 Stop referencing class names with strings in src/
+         be6533e Strict type everywhere in tests/
+         efcaa6a Strict type everywhere in src/
+         3f6b73b Stop referencing class names with strings in tests
+         d2ef50b Start adding typehints
+         3d27fa9 Drop symfony 2.x support and require PHP >= 7.1
+         ffd38a1 Merge pull request #102 from id2s/symfony4-compatibility
+         51d4c23 Updates symfony components versions requirements
+
    Version 0.21 - Few fixes
       30/12/2017 00:36  0.20.5  various fixes
          eecc76a Release of new version 0.21.0
