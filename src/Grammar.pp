@@ -55,8 +55,8 @@
 
 // Value
 %token  string        ("|')(.*?)(?<!\\)\1
-%token  float         \d+\.\d+
-%token  integer       \d+
+%token  float         -?\d+\.\d+
+%token  integer       -?\d+
 %token  parenthesis_  \(
 %token _parenthesis   \)
 %token  bracket_      \[
