@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace spec\RulerZ\Target\DoctrineORM;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 
@@ -123,6 +124,19 @@ class DoctrineORMSpec extends BaseTargetBehavior
                 ],
             ],
         ]);
+    }
+
+    public function it_generates_a_different_identifier_for_contexts_with_joins(Expr\Join $join)
+    {
+        $rule = 'group.name = "ADMIN" or group.name = "OWNER"';
+        $joinLessContext = $this->createContext();
+        $join->getJoin()->willReturn('test.group');
+        $join->getAlias()->willReturn('grp');
+        $contextWithJoins = $this->createContext();
+        $contextWithJoins['joins'] = ['some_root' => [$join->getWrappedObject()]];
+
+        $joinLessIdentifier = $this->getRuleIdentifierHint($rule, $joinLessContext)->getWrappedObject();
+        $this->getRuleIdentifierHint($rule, $contextWithJoins)->shouldNotReturn($joinLessIdentifier);
     }
 
     public function it_uses_the_metadata_to_detect_invalid_attribute_access()
