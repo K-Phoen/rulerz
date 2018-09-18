@@ -3,6 +3,13 @@ VERSION 0  FIXED ELASTICSEARCH-RELATED TARGETS
 ==============================================
 
    Version 0.21 - Make RulerZ PHP7-only
+      18/09/2018 17:15  0.21.1  Ensure that different executors are compiled for different Doctrine QB
+         c38ce6a Merge pull request #109 from jdeniau/patch-1
+         ff32ec1 Merge pull request #108 from Inventis/jan/incomplete_rule_identifier
+         1de9114 Update doc due to return types changes in 0.21.0
+         43a5309 add spacing for readability
+         e49cb65 add test to ensure different identifiers are generated for unrelated query builders
+         18662af ensure different executors are used for different query builders
       17/09/2018 10:43  0.21.0  initial release
          c241a5c Merge pull request #104 from MySchoolManagement/incorrect-alias-reuse
          18d2354 Merge branch 'master' into incorrect-alias-reuse
