@@ -45,12 +45,12 @@ use RulerZ\Spec\Specification;
 
 class IsFemale implements Specification
 {
-    public function getRule()
+    public function getRule(): string
     {
         return 'gender = "F"';
     }
 
-    public function getParameters()
+    public function getParameters(): array
     {
         return [];
     }
@@ -79,12 +79,12 @@ class PlayerMinScore implements Specification
         $this->min_score = $min_score;
     }
 
-    public function getRule()
+    public function getRule(): string
     {
         return 'points > :min_score';
     }
 
-    public function getParameters()
+    public function getParameters(): array
     {
         return [
             'min_score' => $this->min_score,
