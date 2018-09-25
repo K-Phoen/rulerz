@@ -56,7 +56,7 @@ class Composite implements Specification
             return $specification->getParameters();
         }, $this->specifications);
 
-        $mergedParameters = call_user_func_array('array_merge', $parametersList);
+        $mergedParameters = array_merge(...$parametersList);
 
         // error handling in case of overriden parameters
         if ($parametersCount !== count($mergedParameters)) {

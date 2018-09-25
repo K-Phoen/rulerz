@@ -47,6 +47,16 @@ class OrXSpec extends ObjectBehavior
         $this->getRule()->shouldReturn('(foo AND baz) OR (bar)');
     }
 
+    public function it_returns_no_parameters_if_base_specifications_dont_have_any(Specification $spec, Specification $otherSpec)
+    {
+        $spec->getParameters()->willReturn([]);
+        $otherSpec->getParameters()->willReturn([]);
+
+        $this->beConstructedWith([$spec, $otherSpec]);
+
+        $this->getParameters()->shouldReturn([]);
+    }
+
     public function it_builds_the_parameters_by_aggregating_the_specifications(Specification $spec, Specification $otherSpec)
     {
         $spec->getParameters()->willReturn(['foo' => 'bar']);
