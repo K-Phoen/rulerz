@@ -2,7 +2,8 @@
 /.gitignore      export-ignore
 /.travis.yml     export-ignore
 /.rmt.yml        export-ignore
-/.env            export-ignore
+/.styleci.yml    export-ignore
+/behat.yml       export-ignore
 /phpspec.yml     export-ignore
 /Vagrantfile     export-ignore
 /Makefile        export-ignore
@@ -12,4 +13,3 @@
 /doc             export-ignore
 /tests           export-ignore
 /examples        export-ignore
-/scripts         export-ignore
