@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Entity\Doctrine\Player;
 use Entity\Doctrine\Group;
+use RulerZ\Test\BaseContext;
 
 class ArrayContext extends BaseContext
 {

@@ -2,36 +2,31 @@
 
 declare(strict_types=1);
 
+namespace RulerZ\Test;
+
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Behat\Testwork\Hook\Scope\BeforeSuiteScope;
 
+/**
+ * @internal Meant to be used by the compilation target libraries.
+ */
 abstract class BaseContext implements Context
 {
-    /**
-     * @var \RulerZ\RulerZ
-     */
+    /** @var \RulerZ\RulerZ */
     protected $rulerz;
 
-    /**
-     * @var mixed
-     */
-    protected $dataset;
-
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $parameters = [];
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $executionContext = [];
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
+    protected $dataset;
+
+    /** @var mixed */
     protected $results;
 
     /**
@@ -50,9 +45,6 @@ abstract class BaseContext implements Context
 
     public function __construct()
     {
-        $dotenv = new Dotenv\Dotenv(__DIR__.'/../../../');
-        $dotenv->load();
-
         $this->initialize();
     }
 
