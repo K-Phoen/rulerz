@@ -6,6 +6,9 @@ namespace RulerZ\Spec;
 
 use RulerZ\Exception\ParameterOverridenException;
 
+/**
+ * @internal
+ */
 class Composite implements Specification
 {
     /**
@@ -78,6 +81,9 @@ class Composite implements Specification
 
     /**
      * Adds a new specification.
+     *
+     * @deprecated This method will not be public in the 1.0 release. You should inject specifications through the
+     *             constructor instead.
      *
      * @param Specification $specification
      */
