@@ -1,27 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SampleSpecs;
 
 use RulerZ\Spec\AbstractSpecification;
 
 class MinScore extends AbstractSpecification
 {
-    private $min_score;
+    private $minScore;
 
-    public function __construct($min_score)
+    public function __construct(int $minScore)
     {
-        $this->min_score = $min_score;
+        $this->minScore = $minScore;
     }
 
-    public function getRule()
+    public function getRule(): string
     {
         return 'points > :min_score';
     }
 
-    public function getParameters()
+    public function getParameters(): array
     {
         return [
-            'min_score' => $this->min_score,
+            'min_score' => $this->minScore,
         ];
     }
 }

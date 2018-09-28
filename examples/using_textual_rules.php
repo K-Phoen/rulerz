@@ -1,26 +1,18 @@
 <?php
 
-use Entity\Doctrine\Player;
+declare(strict_types=1);
+
+use Entity\Player;
 
 /** @var \RulerZ\RulerZ $rulerz */
-list($entityManager, $rulerz) = require __DIR__.'/bootstrap/bootstrap_doctrine.php';
+$rulerz = require __DIR__.'/bootstrap.php';
 
 // 1. Write a rule.
 $rule = 'gender = :gender and points > :points';
-$rule = 'gender = :gender and group.role.name = "ROLE_ADMIN"';
-$rule = 'and gender = :gender and address.city = "Paoli" and gr.role.name = "ROLE_PLAYER"';
-$rule = 'is_leap_year(birthday)';
 
 // 2. Define a few targets to filter
 
-// a QueryBuilder
-$playersQb = $entityManager
-    ->createQueryBuilder()
-    ->select('p')
-    ->from('Entity\Doctrine\Player', 'p')
-    ->leftJoin('p.group', 'gr');
-
-// or an array of arrays
+// like an array of arrays
 $playersArr = [
     ['pseudo' => 'Joe',   'fullname' => 'Joe la frite',             'gender' => 'M', 'points' => 2500],
     ['pseudo' => 'Moe',   'fullname' => 'Moe, from the bar!',       'gender' => 'M', 'points' => 1230],
@@ -36,7 +28,7 @@ $playersObj = [
 
 // 3. Enjoy!
 $parameters = [
-    //'points' => 3000,
+    'points' => 3000,
     'gender' => 'F',
 ];
 
@@ -44,10 +36,9 @@ $players = $rulerz->filter($playersObj, $rule, $parameters);
 var_dump(array_map(function ($player) {
     return $player->pseudo;
 }, iterator_to_array($players)));
-//var_dump($rulerz->filter($playersArr, $rule, $parameters));
-//var_dump($rulerz->filter($playersObj, $rule, $parameters));
+var_dump(iterator_to_array($rulerz->filter($playersArr, $rule, $parameters)));
+var_dump(iterator_to_array($rulerz->filter($playersObj, $rule, $parameters)));
 
 // check if a target satisfies a rule
-//var_dump($rulerz->satisfies($playersQb, $rule, $parameters));
-//var_dump($rulerz->satisfies($playersArr[0], $rule, $parameters));
-//var_dump($rulerz->satisfies($playersObj[2], $rule, $parameters));
+var_dump($rulerz->satisfies($playersArr[0], $rule, $parameters));
+var_dump($rulerz->satisfies($playersObj[2], $rule, $parameters));

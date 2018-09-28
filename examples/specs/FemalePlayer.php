@@ -1,18 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SampleSpecs;
 
 use RulerZ\Spec\AbstractSpecification;
 
 class FemalePlayer extends AbstractSpecification
 {
-    public function getRule()
+    public function getRule(): string
     {
         return 'gender = "F"';
-    }
-
-    public function getParameters()
-    {
-        return [];
     }
 }
