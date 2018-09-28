@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace spec\RulerZ\Target\Native;
 
+use PhpSpec\ObjectBehavior;
 use RulerZ\Compiler\CompilationTarget;
 use RulerZ\Compiler\Context;
 use RulerZ\Exception\OperatorNotFoundException;
 use RulerZ\Model\Executor;
-use spec\RulerZ\Target\BaseTargetBehavior;
+use RulerZ\Model\Rule;
+use RulerZ\Parser\Parser;
 
 /**
  * TODO: refactor. It currently tests both the Native and NativeVisitor classes.
  */
-class NativeSpec extends BaseTargetBehavior
+class NativeSpec extends ObjectBehavior
 {
     public function it_supports_satisfies_mode()
     {
@@ -28,6 +30,23 @@ class NativeSpec extends BaseTargetBehavior
     public function it_supports_satisfaction_tests_for_arrays()
     {
         $this->supports([], CompilationTarget::MODE_SATISFIES)->shouldReturn(true);
+    }
+
+    /**
+     * @dataProvider unsupportedTypes
+     */
+    public function it_can_not_filter_other_types($type)
+    {
+        $this->supports($type, CompilationTarget::MODE_FILTER)->shouldReturn(false);
+    }
+
+    public function unsupportedTypes(): array
+    {
+        return [
+            'string',
+            42,
+            new \stdClass(),
+        ];
     }
 
     public function it_can_returns_an_executor_model()
@@ -106,12 +125,8 @@ class NativeSpec extends BaseTargetBehavior
         $executorModel->getCompiledRule()->shouldReturn('($this->unwrapArgument($target["points"]) >= 42 && inline_always_true(42))');
     }
 
-    public function unsupportedTypes(): array
+    protected function parseRule(string $rule): Rule
     {
-        return [
-            'string',
-            42,
-            new \stdClass(),
-        ];
+        return (new Parser())->parse($rule);
     }
 }
