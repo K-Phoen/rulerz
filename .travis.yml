@@ -1,16 +1,10 @@
 language: php
 
-sudo: required
+sudo: false
 
 cache:
     directories:
         - $HOME/.composer/cache
-
-addons:
-    postgresql: "9.4"
-
-services:
-    - postgresql
 
 branches:
     only:
@@ -26,17 +20,9 @@ matrix:
 before_install:
     - phpenv config-rm xdebug.ini || true
 
-    # setup elasticsearch
-    - curl -O https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.3.0/elasticsearch-2.3.0.deb && sudo dpkg -i --force-confnew elasticsearch-2.3.0.deb && sudo service elasticsearch restart
-
-    # setup solr
-    - curl -sSL https://raw.githubusercontent.com/moliware/travis-solr/master/travis-solr.sh | SOLR_VERSION=5.3.1 SOLR_CORE=rulerz_tests SOLR_CONFS="./scripts/solr/config/conf/schema.xml ./scripts/solr/config/conf/solrconfig.xml" bash
-    - mkdir -p ./solr-5.3.1/example/multicore/rulerz_tests/conf && cp -r ./scripts/solr/config/conf/* ./solr-5.3.1/example/multicore/rulerz_tests/conf
-
 install:
     - composer install --optimize-autoloader --no-interaction
 
 script:
-    - make databases
     - make tests
     - make rusty
