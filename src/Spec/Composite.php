@@ -24,16 +24,25 @@ class Composite implements Specification
     /**
      * Builds a composite specification.
      *
-     * @param string $operator       The operator used to join the specifications.
-     * @param array  $specifications A list of initial specifications.
+     * @param string $operator The operator used to join the specifications.
+     * @param array $specifications A list specifications to combine.
      */
     public function __construct($operator, array $specifications = [])
     {
         $this->operator = $operator;
 
+        if (empty($specifications)) {
+            throw new \LogicException('No specifications given.');
+        }
+
         foreach ($specifications as $specification) {
             $this->addSpecification($specification);
         }
+    }
+
+    private function addSpecification(Specification $specification): void
+    {
+        $this->specifications[] = $specification;
     }
 
     /**
@@ -80,22 +89,7 @@ class Composite implements Specification
     }
 
     /**
-     * Adds a new specification.
-     *
-     * @deprecated This method will not be public in the 1.0 release. You should inject specifications through the
-     *             constructor instead.
-     *
-     * @param Specification $specification
-     */
-    public function addSpecification(Specification $specification): void
-    {
-        $this->specifications[] = $specification;
-    }
-
-    /**
      * Search the parameters that were overridden during the parameters-merge phase.
-     *
-     * @param array $parametersList
      *
      * @return array Names of the overridden parameters.
      */

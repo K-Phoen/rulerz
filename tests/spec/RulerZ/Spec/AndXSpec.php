@@ -22,11 +22,6 @@ class AndXSpec extends ObjectBehavior
         $this->beConstructedWith([$spec, $otherSpec]);
     }
 
-    public function it_accepts_new_specifications_after_initialization(Specification $spec)
-    {
-        $this->addSpecification($spec);
-    }
-
     public function it_builds_the_rule_by_aggregating_the_specifications(Specification $spec, Specification $otherSpec)
     {
         $spec->getRule()->willReturn('foo');
