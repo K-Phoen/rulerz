@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace spec\RulerZ\Executor\PHP;
+namespace spec\RulerZ\Executor\ArrayTarget;
 
 use PhpSpec\ObjectBehavior;
 use RulerZ\Context\ExecutionContext;
