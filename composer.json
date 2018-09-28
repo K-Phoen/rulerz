@@ -23,7 +23,6 @@
         "psr-4": {
             "Entity\\": "examples/entities/",
             "SampleSpecs\\": "examples/specs/",
-            "MyDb\\": "pomm/MyDb",
             "RulerZ\\Stub\\": "tests/stub/",
             "spec\\RulerZ\\": "tests/spec/RulerZ/"
         }
@@ -41,15 +40,6 @@
 
         "vlucas/phpdotenv": "~2.1",
 
-        "doctrine/orm": "~2.4",
-        "elasticsearch/elasticsearch": "~1.0",
-        "ruflin/elastica": "~1.0",
-        "pomm-project/foundation": "~2.0@dev",
-        "pomm-project/model-manager": "~2.0.@dev",
-        "pomm-project/cli": "~2.0@dev",
-        "illuminate/database": "~5.0",
-        "solarium/solarium": "~3.0",
-
         "mikey179/vfsStream": "~1.4",
         "coduo/phpspec-data-provider-extension": "~1.0,!=1.0.2",
         "phpspec/phpspec": "~2.0,>=2.4@dev",
@@ -62,9 +52,11 @@
     },
     "suggest": {
         "kphoen/rulerz-spec-builder": "If you want a specification builder",
-        "doctrine/orm": "To execute rules as Doctrine queries",
-        "elasticsearch/elasticsearch": "To execute rules as Elasticsearch queries",
-        "pomm-project/model-manager": "To execute rules as Pomm queries",
-        "solarium/solarium": "To execute rules as Solr queries"
+        "rulerz-php/eloquent": "To execute rules against Eloquent targets",
+        "rulerz-php/pomm": "To execute rules against Pomm targets",
+        "rulerz-php/solarium": "To execute rules against Solarium targets",
+        "rulerz-php/elasticsearch": "To execute rules against Elasticsearch targets",
+        "rulerz-php/doctrine-dbal": "To execute rules against Doctrine DBAL targets",
+        "rulerz-php/doctrine-orm": "To execute rules against Doctrine ORM targets"
     }
 }
