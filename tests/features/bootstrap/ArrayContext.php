@@ -9,6 +9,7 @@ use RulerZ\Test\BaseContext;
 class ArrayContext extends BaseContext
 {
     private $arrayDataset;
+
     private $objectDataset;
 
     /**

@@ -9,7 +9,7 @@ $rulerz = new \RulerZ\RulerZ(
         new RulerZ\Target\Native\Native([
             'length' => function ($item) {
                 return is_array($item) ? count($item) : strlen($item);
-            }
+            },
         ]),
         // other compilation targets...
     ]
