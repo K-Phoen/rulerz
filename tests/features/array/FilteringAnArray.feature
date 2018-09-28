@@ -27,9 +27,11 @@ Feature: RulerZ can filter an array
         And I use the array of objects dataset
         When I filter the dataset with the rule:
             """
-            group.name = "Estasia"
+            group.name = "Players"
             """
         Then I should have the following results:
             | pseudo   |
-            | Joe      |
+            | Bob      |
+            | Ada      |
+            | Kévin    |
             | Margaret |

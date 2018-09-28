@@ -8,6 +8,9 @@ use RulerZ\Test\BaseContext;
 
 class ArrayContext extends BaseContext
 {
+    private $arrayDataset;
+    private $objectDataset;
+
     /**
      * {@inheritdoc}
      */
@@ -49,48 +52,37 @@ class ArrayContext extends BaseContext
         $this->dataset = $this->getArrayOfObjectsDataset();
     }
 
-    private function getArrayOfArraysDataset()
+    private function getArrayOfArraysDataset(): array
     {
-        return [
-            // Born on a leap year
-            ['pseudo' => 'Joe',       'fullname' => 'Joe la frite',      'gender' => 'M', 'points' => 2500,  'birthday' => new DateTime('1924-03-02')],
-            ['pseudo' => 'Bob',       'fullname' => 'Bob Morane',        'gender' => 'M', 'points' => 9001,  'birthday' => new DateTime('1995-10-02')],
-            ['pseudo' => 'Ada',       'fullname' => 'Ada Lovelace',      'gender' => 'F', 'points' => 10000, 'birthday' => new DateTime('1997-10-02')],
-            ['pseudo' => 'Kévin',     'fullname' => 'Yup, that is me.',  'gender' => 'M', 'points' => 100,   'birthday' => new DateTime('1999-10-02')],
-            // Born on a leap year
-            ['pseudo' => 'Margaret',  'fullname' => 'Margaret Hamilton', 'gender' => 'F', 'points' => 5000,  'birthday' => new DateTime('1936-08-17')],
-            ['pseudo' => 'Alice',     'fullname' => 'Alice foo',         'gender' => 'F', 'points' => 175,   'birthday' => new DateTime('2001-10-02')],
-            ['pseudo' => 'Louise',    'fullname' => 'Louise foo',        'gender' => 'F', 'points' => 800,   'birthday' => new DateTime('2002-10-02')],
-            ['pseudo' => 'Francis',   'fullname' => 'Francis foo',       'gender' => 'M', 'points' => 345,   'birthday' => new DateTime('1998-10-02')],
-            ['pseudo' => 'John',      'fullname' => 'John foo',          'gender' => 'M', 'points' => 23,    'birthday' => new DateTime('1987-10-02')],
-            ['pseudo' => 'Arthur',    'fullname' => 'Arthur foo',        'gender' => 'M', 'points' => 200,   'birthday' => new DateTime('1989-10-02')],
-            ['pseudo' => 'Moon Moon', 'fullname' => 'Moon moon foo',     'gender' => 'D', 'points' => 300,   'birthday' => new DateTime('1985-10-02')],
-        ];
+        if ($this->arrayDataset !== null) {
+            return $this->arrayDataset;
+        }
+
+        $fixtures = json_decode(file_get_contents(__DIR__.'/../../../examples/fixtures.json'), true);
+        $players = [];
+
+        foreach ($fixtures['players'] as $player) {
+            $players[] = array_merge($player, [
+                'birthday' => new DateTime($player['birthday']),
+            ]);
+        }
+
+        return $this->arrayDataset = $players;
     }
 
     private function getArrayOfObjectsDataset()
     {
-        $groups = [
-            new Group('Océania'),
-            new Group('Eurasia'),
-            new Group('Estasia'),
-        ];
+        if ($this->objectDataset !== null) {
+            return $this->objectDataset;
+        }
 
-        $groupsMapping = [
-            'Joe' => 2,
-            'Bob' => 0,
-            'Ada' => 1,
-            'Kévin' => 1,
-            'Margaret' => 2,
-            'Alice' => 0,
-            'Louise' => 1,
-            'Francis' => 1,
-            'John' => 1,
-            'Arthur' => 1,
-            'Moon Moon' => 1,
-        ];
-
+        $fixtures = json_decode(file_get_contents(__DIR__.'/../../../examples/fixtures.json'), true);
+        $groups = [];
         $players = [];
+
+        foreach ($fixtures['groups'] as $slug => $data) {
+            $groups[$slug] = new Group($data['name']);
+        }
 
         foreach ($this->getArrayOfArraysDataset() as $data) {
             $players[] = new Player(
@@ -98,11 +90,11 @@ class ArrayContext extends BaseContext
                 $data['fullname'],
                 $data['gender'],
                 $data['points'],
-                $groups[$groupsMapping[$data['pseudo']]],
+                $groups[$data['group']],
                 $data['birthday']
             );
         }
 
-        return $players;
+        return $this->objectDataset = $players;
     }
 }
