@@ -26,15 +26,18 @@ single classes and referred to as *specifications*.
 Once a rule (or a specification) is written, it can be used to check if a single
 candidate satisfies it or directly to query a datasource.
 
-The currently supported datasources are:
+The following datasources are supported natively:
 
  * array of arrays,
- * array of objects,
- * Doctrine ORM QueryBuilders,
- * [Pomm](http://www.pomm-project.org/) models,
- * Elasticsearch (using the [official client](https://github.com/elasticsearch/elasticsearch-php)
-   or [ruflin/Elastica](https://github.com/ruflin/Elastica))
- * Laravel's [Eloquent ORM](http://laravel.com/docs/5.0/eloquent).
+ * array of objects.
+
+And support for each one of these is provided by an additional library:
+
+ * Doctrine DBAL QueryBuilders: [rulerz-php/doctrine-dbal](https://github.com/rulerz-php/doctrine-dbal/),
+ * Doctrine ORM QueryBuilders: [rulerz-php/doctrine-orm](https://github.com/rulerz-php/doctrine-orm/),
+ * [Pomm](http://www.pomm-project.org/) models: [rulerz-php/pomm](https://github.com/rulerz-php/pomm/),
+ * Elasticsearch (using the [official client](https://github.com/elasticsearch/elasticsearch-php): [rulerz-php/elasticsearch](https://github.com/rulerz-php/elasticsearch/),
+ * Laravel's [Eloquent ORM](http://laravel.com/docs/5.0/eloquent): [rulerz-php/eloquent](https://github.com/rulerz-php/eloquent/).
 
 **Killer feature:** when working with Doctrine, Pomm, or Elasticsearch, RulerZ
 is able to convert rules directly in queries and does not need to fetch data
