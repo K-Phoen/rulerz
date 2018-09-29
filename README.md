@@ -37,6 +37,7 @@ And support for each one of these is provided by an additional library:
  * Doctrine ORM QueryBuilders: [rulerz-php/doctrine-orm](https://github.com/rulerz-php/doctrine-orm/),
  * [Pomm](http://www.pomm-project.org/) models: [rulerz-php/pomm](https://github.com/rulerz-php/pomm/),
  * Elasticsearch (using the [official client](https://github.com/elasticsearch/elasticsearch-php): [rulerz-php/elasticsearch](https://github.com/rulerz-php/elasticsearch/),
+ * Solr (using the [solarium](https://github.com/solariumphp/solarium): [rulerz-php/solarium](https://github.com/rulerz-php/solarium/),
  * Laravel's [Eloquent ORM](http://laravel.com/docs/5.0/eloquent): [rulerz-php/eloquent](https://github.com/rulerz-php/eloquent/).
 
 **Killer feature:** when working with Doctrine, Pomm, or Elasticsearch, RulerZ

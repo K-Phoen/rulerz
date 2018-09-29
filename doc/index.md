@@ -27,12 +27,12 @@ composer require 'kphoen/rulerz'
 ## Cookbooks
 
  * [Using native PHP arrays or objects](filter.md)
- * [Using Doctrine ORM](cookbooks/doctrine_orm.md)
- * [Using Pomm](cookbooks/pomm.md)
- * [Using Elasticsearch and ruflin/Elastica](cookbooks/ruflin_elastica.md)
- * [Using Elasticsearch and elastic/elasticsearch-php](cookbooks/elastic_elasticsearch_php.md)
- * [Using Eloquent ORM](cookbooks/eloquent_orm.md)
- * [Using Solr and Solarium](cookbooks/solarium.md)
+ * [Using Doctrine DBAL](https://github.com/rulerz-php/doctrine-dbal/#readme)
+ * [Using Doctrine ORM](https://github.com/rulerz-php/doctrine-orm/#readme)
+ * [Using Pomm](https://github.com/rulerz-php/pomm/#readme)
+ * [Using Elasticsearch](https://github.com/rulerz-php/elasticsearch/#readme)
+ * [Using Eloquent ORM](https://github.com/rulerz-php/eloquent/#readme)
+ * [Using Solr and Solarium](https://github.com/rulerz-php/solarium/#readme)
 
 ## Integrations
 
