@@ -7,3 +7,4 @@ disabled:
     - phpdoc_no_empty_return
     - phpdoc_summary
     - yoda_style
+    - single_line_throw
