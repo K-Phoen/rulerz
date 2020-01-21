@@ -10,6 +10,8 @@ use Hoa\Visitor\Element as VisitorElement;
 use RulerZ\Compiler\RuleVisitor;
 use RulerZ\Exception\OperatorNotFoundException;
 use RulerZ\Model;
+use RulerZ\Target\Operators\CompileTimeOperator;
+use RulerZ\Target\Operators\RuntimeOperator;
 use RulerZ\Target\Operators\Definitions as OperatorsDefinitions;
 
 /**
@@ -116,12 +118,12 @@ abstract class GenericVisitor implements RuleVisitor
         if ($this->operators->hasInlineOperator($operatorName)) {
             $callable = $this->operators->getInlineOperator($operatorName);
 
-            return call_user_func_array($callable, $arguments);
+            return new CompileTimeOperator(
+                call_user_func_array($callable, $arguments)
+            );
         }
 
-        $inlinedArguments = empty($arguments) ? '' : ', '.implode(', ', $arguments);
-
         // or defer it.
-        return sprintf('call_user_func($operators["%s"]%s)', $operatorName, $inlinedArguments);
+        return new RuntimeOperator(sprintf('$operators["%s"]', $operatorName), $arguments);
     }
 }
