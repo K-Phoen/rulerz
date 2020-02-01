@@ -112,6 +112,8 @@ abstract class GenericVisitor implements RuleVisitor
             return $argument->accept($this, $handle, $eldnah);
         }, $element->getArguments());
 
+        $arguments[] = '$this';
+
         // and either inline the operator call
         if ($this->operators->hasInlineOperator($operatorName)) {
             $callable = $this->operators->getInlineOperator($operatorName);
