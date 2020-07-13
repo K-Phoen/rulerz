@@ -13,16 +13,23 @@ branches:
 php:
     - 7.1
     - 7.2
+    - 7.3
+    - 7.4
 
-matrix:
-    fast_finish: true
+jobs:
+    include:
+        - php: 7.1
+          env: COMPOSER_FLAGS="--prefer-lowest"
+        - php: 7.4
+          env: VALIDATE_DOCS=true
 
 before_install:
     - phpenv config-rm xdebug.ini || true
 
 install:
+    - if [ "$VALIDATE_DOCS" != true ]; then composer remove --dev --no-update kphoen/rusty; fi
     - composer install --optimize-autoloader --no-interaction
 
 script:
     - make tests
-    - make rusty
+    - if [ "$VALIDATE_DOCS" = true ]; then make rusty; fi
