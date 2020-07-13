@@ -23,9 +23,6 @@ jobs:
         - php: 7.4
           env: VALIDATE_DOCS=true
 
-matrix:
-    fast_finish: true
-
 before_install:
     - phpenv config-rm xdebug.ini || true
 
