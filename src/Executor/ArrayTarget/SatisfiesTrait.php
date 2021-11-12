@@ -18,6 +18,6 @@ trait SatisfiesTrait
     {
         $wrappedTarget = is_array($target) ? $target : new ObjectContext($target);
 
-        return $this->execute($wrappedTarget, $operators, $parameters);
+        return (bool) $this->execute($wrappedTarget, $operators, $parameters);
     }
 }
