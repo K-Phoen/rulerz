@@ -28,7 +28,7 @@
     },
     "require": {
         "php": ">=7.1",
-        "hoa/ruler": "~2.0",
+        "niro/hoa-ruler": "~2.0",
         "symfony/property-access": "~3.0|~4.0"
     },
     "require-dev": {
@@ -43,7 +43,7 @@
         "illuminate/database": "~5.0",
         "solarium/solarium": "~3.0",
 
-        "mikey179/vfsStream": "~1.4",
+        "mikey179/vfsstream": "~1.4",
         "coduo/phpspec-data-provider-extension": "~1.0,!=1.0.2",
         "phpspec/phpspec": "~2.0,>=2.4@dev",
 
