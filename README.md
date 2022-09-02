@@ -1,6 +1,8 @@
 RulerZ [![Build Status](https://travis-ci.org/K-Phoen/rulerz.svg?branch=master)](https://travis-ci.org/K-Phoen/rulerz) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/K-Phoen/rulerz/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/K-Phoen/rulerz/?branch=master)
 ======
 
+:warning: **This project is no longer maintained**, reach out to me if you are interested in becoming maintainer :warning:
+
 > The central idea of Specification is to separate the statement of how to match
 > a candidate, from the candidate object that it is matched against.
 >
